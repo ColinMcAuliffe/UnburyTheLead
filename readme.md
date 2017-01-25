@@ -11,3 +11,5 @@ pyproj
 matplotlib
 bs4
 us
+
+The census shapefiles used here can be found on the census website https://www.census.gov/geo/maps-data/data/tiger-cart-boundary.html
