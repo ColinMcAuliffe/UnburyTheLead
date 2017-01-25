@@ -16,6 +16,7 @@ states = ['AL','AK','AZ','AR','CA','CO','CT','DC','DE','FL','GA','HI','ID','IL',
 
 figDir       = "Figures"
 
+#Note, the state and county shape files must be downloaded from the census website and unzipped in the location as indicated below
 shapeFileStates   = "../CommonData/ShapeFiles/cb_2015_us_state_500k/cb_2015_us_state_500k.shp"
 shapeFileCounties = "../CommonData/ShapeFiles/cb_2015_us_county_500k/cb_2015_us_county_500k.shp"
 countyData        = "../CommonData/Presidential_Election_2016_Results/2016_pres_votes_by_county.csv"
