@@ -30,7 +30,7 @@ print "%10.2f percent of votes are from %10.2f percent of counties" %(pct80_vote
 df_electors = pd.read_csv("electors.csv")
 
 # headers for csv export
-data = [['state_abbr','STATEFP', 'electoral_votes','dem_votes','rep_votes','ind_votes','votes_total','el_votes_per_pop_vote','min_counties_for_state_win','rep_margin','rep_margin_as_frac_of_min_county_votes','el_vote_per_county_frac','el_vote_per_county_frac_per_diff','el_vote_per_county_frac_per_frac','lost_votes','dem_lost','rep_lost','ind_lost','win_margin','allStateMajInNatMaj','dem_votesInTop5','rep_votesInTop5','ind_votesInTop5']]
+data = [['state_abbr','STATEFP', 'electoral_votes','dem_votes','rep_votes','ind_votes','votes_total','flipped_by_ind','el_votes_per_pop_vote','min_counties_for_state_win','rep_margin','rep_margin_as_frac_of_min_county_votes','el_vote_per_county_frac','el_vote_per_county_frac_per_diff','el_vote_per_county_frac_per_frac','lost_votes','dem_lost','rep_lost','ind_lost','win_margin','allStateMajInNatMaj','dem_votesInTop5','rep_votesInTop5','ind_votesInTop5']]
 
 state_countyIdx = {}
 demWinners = []
@@ -56,20 +56,27 @@ for state in states:
     electoralPerPopular = electors/tot_votes
 
     #Determine who won the state, compute win margin and lost votes, or votes that were not cast for the state wide winner
+    flipped_by_ind = "No"
     if dem_votes > rep_votes:
         demWinners.append(state)
         lost_votes = rep_votes+ind_votes
         demLost    = 0
         repLost    = rep_votes
         indLost    = ind_votes
-        win_margin = (dem_votes - rep_votes)/tot_votes
+        win_gap    = dem_votes-rep_votes
+        win_margin = win_gap/tot_votes
+        if ind_votes > win_gap:
+            flipped_by_ind = "To Trump"
     else:
         repWinners.append(state)
         lost_votes = dem_votes+ind_votes
         demLost    = dem_votes
         repLost    = 0
         indLost    = ind_votes
-        win_margin = (rep_votes - dem_votes)/tot_votes
+        win_gap    = rep_votes-dem_votes
+        win_margin = win_gap/tot_votes
+        if ind_votes > win_gap:
+            flipped_by_ind = "To Clinton"
     
     #Counties are already sorted by the number of votes, so we can use the same technique to find the number of counties controlling 50% of the vote in a state that we used to compute the counties controlling a nationwide majority
     vote_pct           = df.tot_votes.values[stateMatches]/tot_votes
@@ -100,7 +107,7 @@ for state in states:
     el_vote_per_county_frac_per_frac = electors/(min_counties_for_win*rep_margin_asFrac)
 
     #Add data to a list
-    data.append([state,FIPS, electors, dem_votes,rep_votes,ind_votes,tot_votes,electoralPerPopular,min_counties_for_win,rep_margin,rep_margin_asFrac,el_vote_per_county_frac,el_vote_per_county_frac_per_diff,el_vote_per_county_frac_per_frac,lost_votes,demLost,repLost,indLost,win_margin,allStateMajInNatMaj,rep_votesInTop5,dem_votesInTop5,ind_votesInTop5])
+    data.append([state,FIPS, electors, dem_votes,rep_votes,ind_votes,tot_votes,flipped_by_ind,electoralPerPopular,min_counties_for_win,rep_margin,rep_margin_asFrac,el_vote_per_county_frac,el_vote_per_county_frac_per_diff,el_vote_per_county_frac_per_frac,lost_votes,demLost,repLost,indLost,win_margin,allStateMajInNatMaj,rep_votesInTop5,dem_votesInTop5,ind_votesInTop5])
     
 #Convert list to a data frame, create header, and save the result for later
 stateData = pd.DataFrame(data)

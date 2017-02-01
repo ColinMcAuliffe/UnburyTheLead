@@ -132,7 +132,7 @@ utl.plotGDF(os.path.join(figDir,"pop_votesByCounty.png"),dfCounties,"USALL",colo
 
 print "plotting electoral map for extreme win candidate"
 boolDict = {"conditions":{"allStateMajInNatMaj":'b'},"default":'r'}
-utl.plotGDF(os.path.join(figDir,"electoralMapExtreme.png"),dfStates,"USALL",colorby="boolDict",boolDict=boolDict,title="Electoral Map for Extreme Candidate")
+utl.plotGDF(os.path.join(figDir,"electoralMapExtreme.png"),dfStates,"USALL",colorby="boolDict",boolDict=boolDict,title="Electoral Map for Candidate Winning Top 5% counties")
 
 print "plotting total votes by state"
 utl.plotGDF(os.path.join(figDir,"pop_votesByState.png"),dfStates,"USALL",colorby="data",colorCol="votes_total",cmap=plt.cm.Greens,cmapScale=1.e-6,title="Votes by State (millions)")
