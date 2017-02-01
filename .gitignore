@@ -1,3 +1,5 @@
 *.shp
 *.shx
 *.swp
+*.DS_STORE
+*.pyc
