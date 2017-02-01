@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import geopandas as gpd
 import pandas as pd
 import numpy as np
+import shapely
 import pyproj
 
 #Utility functions for unbury the lead projects
@@ -60,17 +61,20 @@ def plotPolygon(geom,ax,proj=None,scale=None,shift=None,color='k',facecolor=None
         ax.add_patch(Polygon(zip(x,y),facecolor=facecolor,edgecolor=color,linewidth=linewidth))
     return ax
    
-def plotShapely(geom,ax,proj=None,scale=None,shift=None,onlyIdx=None,color='k',facecolor=None,linewidth=0.5):
+def plotShapely(geom,ax,proj=None,scale=None,shift=None,bbox=None,color='k',facecolor=None,linewidth=0.5):
     if geom.geom_type == "Polygon":
         ax = plotPolygon(geom,ax,proj=proj,scale=scale,shift=shift,color=color,facecolor=facecolor,linewidth=linewidth)
     elif geom.geom_type == "MultiPolygon":
         for i,part in enumerate(geom):
-            if onlyIdx is None or i in onlyIdx:
+            if bbox is None:
                 ax = plotPolygon(part,ax,proj=proj,scale=scale,shift=shift,color=color,facecolor=facecolor,linewidth=linewidth)
+            else:
+                if part.intersects(bbox):
+                    ax = plotPolygon(part,ax,proj=proj,scale=scale,shift=shift,color=color,facecolor=facecolor,linewidth=linewidth)
     
     return ax
 
-def plotGDF(fname,gdf,projection,colorby=None,boolDict=None,colorCol=None,cmap=None,cmapScale=1.,title=None,linewidth=0.5,climits=None):
+def plotGDF(fname,gdf,projection,colorby=None,boolDict=None,colorCol=None,cmap=None,cbar=True,cmapScale=1.,title=None,linewidth=0.5,climits=None):
     if projection == "USALL":
         #use Albers equal area projection for contiguous 48, local state plane projections for HI and AK
         proj   = pyproj.Proj("+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=37.5 +lon_0=-96 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs")
@@ -93,29 +97,29 @@ def plotGDF(fname,gdf,projection,colorby=None,boolDict=None,colorCol=None,cmap=N
                 scale = .35
                 shift = (-1700000.,-1300000.)
                 cProj = projAK
-                onlyIdx = None
+                bbox = None
             elif row.STATEFP == u"15":
                 scale = None
                 shift = (-1100000.,-1200000.)
                 cProj = projHI
-                onlyIdx = [0,1,2,3,4,8]
+                bbox  = shapely.geometry.box(-161.,-151.,18.,22.)
             else:
                 scale = None
                 shift = None
                 cProj = proj
-                onlyIdx = None
+                bbox = None
 
         if colorby is None:
             ax = plotShapely(geom,ax,proj=cProj,scale=scale,shift=shift,onlyIdx=onlyIdx,color='k',linewidth=linewidth)
         elif colorby == "data":
             color = rgb2hex(cmap((row[colorCol]-climits[0])/(climits[1]-climits[0]))[:3])
-            ax = plotShapely(geom,ax,proj=cProj,scale=scale,shift=shift,onlyIdx=onlyIdx,color='k',facecolor=color,linewidth=linewidth)
+            ax = plotShapely(geom,ax,proj=cProj,scale=scale,shift=shift,bbox=bbox,color='k',facecolor=color,linewidth=linewidth)
         elif colorby == "boolDict":
             color = boolDict["default"]
             for column,trueColor in boolDict["conditions"].iteritems():
                 if row[column]:
                     color = trueColor
-            ax = plotShapely(geom,ax,proj=cProj,scale=scale,shift=shift,onlyIdx=onlyIdx,color='k',facecolor=color,linewidth=linewidth)
+            ax = plotShapely(geom,ax,proj=cProj,scale=scale,shift=shift,bbox=bbox,color='k',facecolor=color,linewidth=linewidth)
 
             
 
@@ -123,7 +127,7 @@ def plotGDF(fname,gdf,projection,colorby=None,boolDict=None,colorCol=None,cmap=N
     ax.axis("off")
     ax.autoscale_view()
     
-    if cmap is not None:
+    if cmap is not None and cbar:
         ncolors = 10.
         mappable = plt.cm.ScalarMappable(cmap=cmap)
         mappable.set_array([])
