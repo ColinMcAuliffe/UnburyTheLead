@@ -74,12 +74,15 @@ def plotShapely(geom,ax,proj=None,scale=None,shift=None,bbox=None,color='k',face
     
     return ax
 
-def plotGDF(fname,gdf,projection,colorby=None,boolDict=None,colorCol=None,cmap=None,cbar=True,cmapScale=1.,title=None,linewidth=0.5,climits=None):
+def plotGDF(fname,gdf,projection,colorby=None,boolDict=None,colorCol=None,cmap=None,cbar=True,cmapScale=1.,title=None,linewidth=0.5,climits=None,cfmt="%3.1f"):
     if projection == "USALL":
         #use Albers equal area projection for contiguous 48, local state plane projections for HI and AK
         proj   = pyproj.Proj("+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=37.5 +lon_0=-96 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs")
         projHI = pyproj.Proj("+init=EPSG:26962")
         projAK = pyproj.Proj("+init=EPSG:26935")
+    elif projection == "LOWER48":
+        #use Albers equal area projection for contiguous 48
+        proj   = pyproj.Proj("+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=37.5 +lon_0=-96 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs")
 
     # data range
     if colorby == "data":
@@ -108,6 +111,11 @@ def plotGDF(fname,gdf,projection,colorby=None,boolDict=None,colorCol=None,cmap=N
                 shift = None
                 cProj = proj
                 bbox = None
+        elif projection == "LOWER48":
+            scale = None
+            shift = None
+            cProj = proj
+            bbox = None
 
         if colorby is None:
             ax = plotShapely(geom,ax,proj=cProj,scale=scale,shift=shift,onlyIdx=onlyIdx,color='k',linewidth=linewidth)
@@ -137,7 +145,7 @@ def plotGDF(fname,gdf,projection,colorby=None,boolDict=None,colorCol=None,cmap=N
         ticklabels = np.linspace(llim,ulim,ncolors)
         colorbar = fig.colorbar(mappable,orientation='horizontal',shrink=0.7,pad=0.)
         colorbar.set_ticks(np.linspace(0, ncolors, ncolors))
-        ticklabels = ["%3.1f" % x for x in np.nditer(ticklabels)]
+        ticklabels = [cfmt % x for x in np.nditer(ticklabels)]
         if llim > dmin*cmapScale:
             ticklabels[0] += "-"
         if ulim < dmax*cmapScale:
@@ -150,4 +158,92 @@ def plotGDF(fname,gdf,projection,colorby=None,boolDict=None,colorCol=None,cmap=N
     fig.savefig(fname)
     plt.close()
     return
+#Compute efficiency gap
+def getEfficiencyGap(df):
+    demWinnersIdx = df[df['dem_votes'] > df['rep_votes']].index.tolist()
+    repWinnersIdx = df[df['dem_votes'] < df['rep_votes']].index.tolist()
+
+    dem_votes   = np.sum(df.dem_votes.values)
+    rep_votes   = np.sum(df.rep_votes.values)
+    total_votes   = np.sum(df.dem_votes.values)+np.sum(df.rep_votes.values)
+    total_votesEV = np.sum(df.votes_total.values*df.electoral_votes.values)
+    #Wasted votes are votes for the losing party in a state, as well as votes beyond what was neccesary for the state win
+    demWasted = np.sum(df.dem_votes.values[repWinnersIdx]) + np.sum(df.dem_votes.values[demWinnersIdx]-df.rep_votes.values[demWinnersIdx]-1)
+    repWasted = np.sum(df.rep_votes.values[demWinnersIdx]) + np.sum(df.rep_votes.values[repWinnersIdx]-df.dem_votes.values[repWinnersIdx]-1)
+    EG = 100.*float(demWasted-repWasted)/float(total_votes)
+    
+    demWastedEV = np.sum(df.dem_votes.values[repWinnersIdx]*df.electoral_votes.values[repWinnersIdx]) + np.sum((df.dem_votes.values[demWinnersIdx]-df.rep_votes.values[demWinnersIdx]-1)*df.electoral_votes.values[demWinnersIdx])
+    repWastedEV = np.sum(df.rep_votes.values[demWinnersIdx]*df.electoral_votes.values[demWinnersIdx]) + np.sum((df.rep_votes.values[repWinnersIdx]-df.dem_votes.values[repWinnersIdx]-1)*df.electoral_votes.values[repWinnersIdx])
+    EGEV = 100.*float(demWastedEV-repWastedEV)/float(total_votesEV)
+
+    demVotePct  = 100.*np.sum(df.dem_votes.values)/float(total_votes)
+    demStatePct = 100.*float(len(demWinnersIdx))/51.
+    demEVotePct = 100.*float(np.sum(df.electoral_votes.values[demWinnersIdx]))/538.
+    return demWasted,repWasted,EG,EGEV,demVotePct,demStatePct,demEVotePct
+
+#Compute votes Evotes
+def getVotesEvotesCurve(df,swingRange,n):
+    #get original vote percentages
+    increment = df.dem_votes.values*swingRange/float(n)
+    
+    #start at lower end
+    df["dem_votes"] -= increment*n
+    df["rep_votes"] += increment*n
+    demWinnersIdx = df[df['dem_votes'] > df['rep_votes']].index.tolist()
+    total_votes   = np.sum(df.dem_votes.values)+np.sum(df.rep_votes.values)
+    demVoteFrac   = np.sum(df.dem_votes.values)/float(total_votes)
+    demVotes  = [demVoteFrac]
+    demEVotes = [float(np.sum(df.electoral_votes.values[demWinnersIdx]))/538.]
+    for i in range(2*n):
+        df["dem_votes"] += increment
+        df["rep_votes"] -= increment
+        total_votes   = np.sum(df.dem_votes.values)+np.sum(df.rep_votes.values)
+        demVoteFrac   = np.sum(df.dem_votes.values)/float(total_votes)
+        demVotes.append(demVoteFrac)
+        demWinnersIdx = df[df['dem_votes'] > df['rep_votes']].index.tolist()
+        demEVotes.append(float(np.sum(df.electoral_votes.values[demWinnersIdx]))/538.)
+
+    #return as percentage
+    demVotes = np.array(demVotes)*100.
+    demEVotes = np.array(demEVotes)*100.
+
+    return demVotes,demEVotes
+
+def getSVAsymmetry(V,S):
+    #Find excess seats at 50% vote
+    idx = np.argmin(np.abs(V-50.))
+    needInterp = True
+    if V[idx] < 50.:
+        idx1 = idx
+        idx2 = idx+1
+    elif V[idx] >50.:
+        idx1 = idx-1
+        idx2 = idx
+    else:
+        needInterp = False
+
+    if needInterp:
+        excessAt50 = S[idx1] + (50.-V[idx1])*(S[idx2]-S[idx1])/(V[idx2]-V[idx1])
+    else:
+        excessAt50 = S[idx]
+
+
+    #Find votes needed for a majority of seats
+    idx = np.argmin(np.abs(S-50.))
+    needInterp = True
+    if S[idx] < 50.:
+        idx1 = idx
+        idx2 = idx+1
+    elif S[idx] >50.:
+        idx1 = idx-1
+        idx2 = idx
+    else:
+        needInterp = False
+
+    if needInterp:
+        votesForMaj = V[idx1] + (50.-S[idx1])*(V[idx2]-V[idx1])/(S[idx2]-S[idx1])
+    else:
+        votesForMaj = V[idx]
+
+    return excessAt50,votesForMaj
     
