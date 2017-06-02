@@ -5,3 +5,12 @@
 *.pyc
 Jan2017_TrumpFinances/P80001571-ALL.csv
 Jan2017_TrumpFinances/P80001571D-ALL.csv
+CommonData/ShapeFiles/CensusTracts/
+CommonData/ShapeFiles/cb_2015_01_sldl_500k/
+CommonData/ShapeFiles/cb_2015_us_cbsa_500k/
+CommonData/ShapeFiles/cb_2015_us_cd114_500k/
+CommonData/ShapeFiles/cb_2015_us_county_500k/
+CommonData/ShapeFiles/cb_2015_us_state_500k/
+CommonData/ShapeFiles/cb_2015_us_ua10_500k/
+CommonData/2010CensusSummaryFiles/
+
