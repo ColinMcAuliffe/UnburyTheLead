@@ -1,5 +1,10 @@
 from matplotlib.patches import Polygon
 from matplotlib.colors import rgb2hex
+from scipy import stats
+
+from sklearn.model_selection import GridSearchCV
+from sklearn.neighbors import KernelDensity
+from sklearn import mixture
 
 import matplotlib.pyplot as plt
 import geopandas as gpd
@@ -7,6 +12,7 @@ import pandas as pd
 import numpy as np
 import shapely
 import pyproj
+import os
 
 #Utility functions for unbury the lead projects
 
@@ -247,3 +253,452 @@ def getSVAsymmetry(V,S):
 
     return excessAt50,votesForMaj
     
+def asymTestAD(x):
+    if len(x) < 3:
+        return 0.,1.
+    mean = np.mean(x)
+    #reflect data around the mean
+    xref = 2.*mean-x
+    AD,C,p = stats.anderson_ksamp((x,xref))
+    return AD,p
+
+def asymTestKS(x):
+    if len(x) < 3:
+        return 0.,1.
+    mean = np.mean(x)
+    #reflect data around the mean
+    xref = 2.*mean-x
+    return stats.ks_2samp(x,xref)
+
+def lopsidedWinsTest(demPct,repPct):
+    demWon = demPct[demPct > repPct]
+    repWon = repPct[repPct > demPct]
+    if len(demWon) < 2 or len(repWon) < 2:
+        return demWon,repWon,0.,0.,True
+
+    t,p = stats.ttest_ind(demWon, repWon, equal_var = False)
+    #Get one sided p value
+    p = p/2.
+    winDiff = np.mean(demWon) - np.mean(repWon)
+    return demWon,repWon,winDiff,p,False
+
+def getWinMargins(df,demColumn,repColumn,state=None):
+    if state is not None:
+        df = df[df["CD"].str.contains(state)]
+
+    demWon = df[df[demColumn] > df[repColumn]][demColumn].tolist()
+    repWon = df[df[repColumn] > df[demColumn]][repColumn].tolist()
+    return demWon,repWon
+
+def MADSkewTest(x):
+    n = float(len(x))
+    if n < 3.: return 0.,1.
+    X = np.mean(x)
+    M = np.median(x)
+    MAD = 1.4826*np.median(np.abs(x-M))
+    C = (X-M)/MAD
+    p = 2.*(1.-stats.norm.cdf(np.abs(C)*np.sqrt(n/0.5708)))
+
+    return C,p
+
+def IQRSkewTest(x):
+    n = float(len(x))
+    X = np.mean(x)
+    M = np.median(x)
+    q75, q25 = np.percentile(x, [75 ,25])
+    iqr = q75 - q25
+    C = (X-M)/iqr
+
+    return C
+
+def cabilioSkewTest(x):
+    n = float(len(x))
+    if n < 3.: return 0.,1.
+    X = np.mean(x)
+    M = np.median(x)
+    s = np.std(x,ddof=1)
+    C = (X-M)/s
+    p = 2.*(1.-stats.norm.cdf(np.abs(C)*np.sqrt(n/0.5708)))
+
+    return C,p
+
+def miaoSkewTest(x):
+    n = float(len(x))
+    X = np.mean(x)
+    M = np.median(x)
+    J = np.sqrt(np.pi/2.)*np.mean(np.abs(x-M))
+    T = (X-M)/J
+    p = 2.*(1.-stats.norm.cdf(np.abs(T)*np.sqrt(n/0.5708)))
+
+    return T,p
+
+def specificAsym(x):
+    n = len(x)
+    if n < 3: return 0
+    Votes = np.mean(x)
+    Seats = len(x[x>.5])
+    if Votes > .5:
+        SeatsFlipped = len(x[x>2.*Votes-.5])
+    else:
+        SeatsFlipped = len(x[x<2.*Votes-.5])
+
+    return Seats-SeatsFlipped
+
+def vertAsymSigned(x):
+    n = float(len(x))
+    if n < 3.: return 0.
+    X = np.mean(x)
+    nOver = float(len(x[x>X]))/n
+    return 0.5-nOver
+
+def vertAsym(x):
+    n = float(len(x))
+    if n < 3.: return 0.
+    X = np.mean(x)
+    nOver = float(len(x[x>X]))/n
+    return np.abs(0.5-nOver)
+
+def dispersionTest(x):
+    n   = float(len(x))
+    q75, q25 = np.percentile(x, [75 ,25])
+    iqr = q75 - q25
+    s   = np.std(x,ddof=1)
+    q = iqr/s-1.349
+    p = 2*(1.-stats.norm.cdf(np.sqrt(n)*np.abs(q),scale=np.sqrt(1.566)))
+    return q,p
+
+def safeWinsTestSafe(x):
+    n = len(x)
+    if n == 1: return 0.,1.
+    q,p = dispersionTest(x)
+    #Get one sided p value
+    p = p/2.
+
+    return q,p
+
+def twoSidedFromSim(sim,s):
+    p = float(len(sim[sim<=-np.abs(s)]))/float(len(sim))
+    p+= float(len(sim[sim>np.abs(s)]))/float(len(sim))
+    return p
+
+def mmDiffSD(x,sim=None):
+    n = len(x)
+    if n < 3: return 0.,1.,0.,1.
+    
+    C1,p = cabilioSkewTest(x)
+    if sim is None: sim = np.loadtxt(os.path.join("/Users/Christina/Desktop/UTL/Utilities/SAST",str(n)+"skewSD.txt"))
+    p1 = twoSidedFromSim(sim,C1)
+
+    return C1,p1
+
+def mmDiffMAD(x,sim=None):
+    n = len(x)
+    if n < 3: return 0.,1.
+    
+    C   = MADSkewTest(x)
+    if sim is None: sim = np.loadtxt(os.path.join("/Users/Christina/Desktop/UTL/Utilities/SAST",str(n)+"skewMAD.txt"))
+    p = twoSidedFromSim(sim,C)
+
+    return C,p
+
+def mmDiffIQR(x,sim=None):
+    n = len(x)
+    if n < 3: return 0.,1.,0.,1.
+    
+    C2   = IQRSkewTest(x)
+    if sim is None: sim = np.loadtxt(os.path.join("/Users/Christina/Desktop/UTL/Utilities/SAST",str(n)+"skewIQR.txt"))
+    p2 = twoSidedFromSim(sim,C2)
+
+    return C2,p2
+
+def dispersionMAD(x):
+    n = len(x)
+    if n < 3: return 0.
+    
+    M = np.median(x)
+    MAD = 1.4826*np.median(np.abs(x-M))
+    s   = np.std(x,ddof=1)
+
+    M   = s/MAD-1.
+
+    return M
+
+def dispersionMNum(x,sim=None):
+    n = len(x)
+    if n < 3: return 0.,1.
+    
+    M = np.median(x)
+    MAD = 1.4826*np.median(np.abs(x-M))
+    s   = np.std(x,ddof=1)
+
+    M   = s/MAD-1.
+    if sim is None: sim = np.loadtxt(os.path.join("/Users/Christina/Desktop/UTL/Utilities/SAST",str(n)+"dispM.txt"))
+    p3 = twoSidedFromSim(sim,M)
+
+    return M,p3
+
+def dispersionRNum(x,sim=None):
+    n = len(x)
+    if n < 3: return 0.,1.
+    
+    X = np.mean(x)
+    M = np.median(x)
+    J = np.sqrt(np.pi/2.)*np.mean(np.abs(x-M))
+    s   = np.std(x,ddof=1)
+
+    R   = s/J-1.
+    if sim is None: sim = np.loadtxt(os.path.join("/Users/Christina/Desktop/UTL/Utilities/SAST",str(n)+"dispJ.txt"))
+    p3 = twoSidedFromSim(sim,R)
+
+    return R,p3
+
+def dispersionNum(x,sim=None):
+    n = len(x)
+    if n < 3: return 0.,1.
+    
+    q,p = dispersionTest(x)
+    if sim is None: sim = np.loadtxt(os.path.join("/Users/Christina/Desktop/UTL/Utilities/SAST",str(n)+"disp.txt"))
+    p3 = twoSidedFromSim(sim,q)
+
+    return q,p3
+
+
+def sastOmni(x,sim=None):
+    n = len(x)
+    if n < 3: return 0.,1.
+    
+    mmd = np.mean(x) - np.median(x)
+    C1,p = cabilioSkewTest(x)
+    q,p = dispersionTest(x)
+    if sim is None: sim = np.loadtxt(os.path.join("/Users/Christina/Desktop/UTL/Utilities/SAST",str(n)+"SASTomni.txt"))
+    ss = C1**2+q**2
+    p = twoSidedFromSim(sim,ss)
+
+    return ss,p
+
+def mmDiffCompare(x,sim1=None,sim2=None,sim3=None):
+    n = len(x)
+    if n < 3: return 0.,1.,0.,1.
+    
+    mmd = np.mean(x) - np.median(x)
+    C1,p = cabilioSkewTest(x)
+    C2   = IQRSkewTest(x)
+    q,p = dispersionTest(x)
+    if sim1 is None: sim1 = np.loadtxt(os.path.join("/Users/Christina/Desktop/UTL/Utilities/SAST",str(n)+"skewSD.txt"))
+    if sim2 is None: sim2 = np.loadtxt(os.path.join("/Users/Christina/Desktop/UTL/Utilities/SAST",str(n)+"skewIQR.txt"))
+    if sim3 is None: sim3 = np.loadtxt(os.path.join("/Users/Christina/Desktop/UTL/Utilities/SAST",str(n)+"disp.txt"))
+    p1 = twoSidedFromSim(sim1,C1)
+    p2 = twoSidedFromSim(sim2,C2)
+    p3 = twoSidedFromSim(sim3,q)
+
+    return C1,p1,C2,p2,q,p3
+
+def safeWinsTestSwing(x):
+    n = len(x)
+    if n == 1: return 0.,1.
+    
+    mmd = np.mean(x) - np.median(x)
+    C,p = cabilioSkewTest(x)
+    #Get one sided p value
+    p = p/2.
+    return C,p
+
+def getCDshorth(x):
+    X = np.mean(x)
+    M = np.median(x)
+    s = np.std(x,ddof=1)
+    C = (X-M)/s
+
+    shorth,mShorth = getShorth(x)
+    D = shorth/s-1.349
+    return C,D
+
+def getCD(x):
+    X = np.mean(x)
+    M = np.median(x)
+    s = np.std(x,ddof=1)
+    C = (X-M)/s
+
+    q75, q25 = np.percentile(x, [75 ,25])
+    iqr = q75 - q25
+    D = iqr/s-1.349
+    return C,D
+
+def SASTshorth(x):
+    n = len(x)
+    if len(x) < 3: return 1.
+    sim = np.loadtxt(os.path.join("/Users/Christina/Desktop/UTL/Utilities/SAST",str(n)+"SASTshorth.txt"))
+    C,D = getCDshorth(x)
+    if C >= 0. and D >= 0.:
+        #idx = sim[:,0] >= C
+        idx = (sim[:,0] >= C) & (sim[:,1] >= D)
+        #idx = sim[:,1] >= D
+    elif C >= 0. and D < 0.:
+        #idx = sim[:,0] >= C
+        idx = (sim[:,0] >= C) & (sim[:,1] <= D)
+        #idx = sim[:,1] <= D
+    elif C < 0. and D < 0.:
+        #idx = sim[:,0] <= C
+        idx = (sim[:,0] <= C) & (sim[:,1] <= D)
+        #idx = sim[:,1] <= D
+    elif C < 0. and D >= 0.:
+        #idx = sim[:,0] <= C
+        idx = (sim[:,0] <= C) & (sim[:,1] >= D)
+        #idx = sim[:,1] >= D
+
+    N    = float(len(sim[:,0]))
+    prob = float(len(sim[idx,0]))/N
+    return prob
+        
+def SAST(x,sim=None):
+    n = len(x)
+    if len(x) < 5: return 1.
+    if sim is None:sim = np.loadtxt(os.path.join("/Users/Christina/Desktop/UTL/Utilities/SAST",str(n)+".txt"))
+    C,D = getCD(x)
+    if C >= 0. and D >= 0.:
+        #idx = sim[:,0] >= C
+        idx = (sim[:,0] >= C) & (sim[:,1] >= D)
+        #idx = sim[:,1] >= D
+    elif C >= 0. and D < 0.:
+        #idx = sim[:,0] >= C
+        idx = (sim[:,0] >= C) & (sim[:,1] <= D)
+        #idx = sim[:,1] <= D
+    elif C < 0. and D < 0.:
+        #idx = sim[:,0] <= C
+        idx = (sim[:,0] <= C) & (sim[:,1] <= D)
+        #idx = sim[:,1] <= D
+    elif C < 0. and D >= 0.:
+        #idx = sim[:,0] <= C
+        idx = (sim[:,0] <= C) & (sim[:,1] >= D)
+        #idx = sim[:,1] >= D
+
+    N    = float(len(sim[:,0]))
+    prob = float(len(sim[idx,0]))/N
+    return prob
+        
+def getShorth(x):
+    n = len(x)
+    nShorth = int(round(float(n)/2.))
+    shorth = np.abs(np.max(x) - np.min(x))
+    sIdx   = 0
+    x = np.sort(x)
+    for i in range(n-nShorth+1):
+        cRange = np.abs(x[i+nShorth-1] - x[i])
+        if cRange < shorth:
+            shorth = cRange
+            sIdx   = i
+
+    mShorth = np.mean(x[sIdx:sIdx+nShorth])
+    return shorth,mShorth
+
+def shorthTest(x):
+    if len(x) < 3: return 0.,1.
+    shorth,mShorth = getShorth(x)
+    s = np.std(x,ddof=1)
+    D = shorth/s-1.349
+    n = len(x)
+    sim = np.loadtxt(os.path.join("/Users/Christina/Desktop/UTL/Utilities/SAST/"+str(n)+"shorth.txt"))
+    if D <= 0.:
+        p = float(len(sim[sim<=D]))/float(len(sim))
+    else:
+        p = float(len(sim[sim>=D]))/float(len(sim))
+    return D,p
+
+
+def get2PartySeatShare(demPct,repPct):
+    demWon = demPct[demPct > repPct]
+    repWon = repPct[repPct > demPct]
+    demFrac = float(len(demWon))/float(len(demPct))
+    return demFrac
+
+def get2PartyVoteShare(df,state):
+    idx = df[df["state_abbr"] == state].index.tolist()
+    if len(idx) == 1:
+        dem = df.dem_votes.values[idx[0]]
+        rep = df.rep_votes.values[idx[0]]
+        demFrac = float(dem)/float(dem+rep)
+    else:
+        demFrac = 0.
+    
+    return demFrac
+
+def gmmSimple(model,x):
+    p = np.zeros((len(x)))
+    for w,m,s in model:
+        p += w*stats.norm.pdf(x,loc=m,scale=s)
+    return p
+
+
+def getGMMLikelihood(model,x):
+    p = gmmSimple(model,x)
+    l = np.sum(np.log(p))
+    return l
+
+def estFromWins(x):
+    #estimate single component model
+    weights1 = [1.]
+    means1 = [np.mean(x)]
+    stdvs1 = [np.std(x)]
+    model1 = zip(weights1,means1,stdvs1)
+    #estimate two component model
+    wins = x[x >= 50.]
+    loss = x[x < 50.]
+    if len(wins) > 2 and len(loss) > 2:
+        wMean = np.mean(wins)
+        lMean = np.mean(loss)
+        means2 = [wMean,lMean]
+        wStd  = np.std(wins)
+        lStd  = np.std(loss)
+        stdvs2 = [wStd,lStd]
+        wWeight = float(len(wins))/float(len(x))
+        lWeight = float(len(loss))/float(len(x))
+        weights2 = [wWeight,lWeight]
+        model2 = zip(weights2,means2,stdvs2)
+    else:
+        model2 = None
+    return model1,model2
+
+def getAICw(AIC):
+    AIC = np.array(AIC)
+    minAIC = np.min(AIC)
+    delAIC = AIC-minAIC
+    AICw = np.exp(-0.5*delAIC) 
+    AICw = AICw/np.sum(AICw)
+    return AICw
+
+def gmmAPriori(x):
+    #estimate parameters
+    model1,model2 = estFromWins(x)
+    if model2 is None:
+        l1 = getGMMLikelihood(model1,x)
+        AIC = [4.-2.*l1]
+        return [model1],AIC
+    else:
+        l1 = getGMMLikelihood(model1,x)
+        l2 = getGMMLikelihood(model2,x)
+        AIC = [4.-2.*l1,10.-2.*l2]
+        return [model1,model2],AIC
+
+def gaussianMixture(samples,NCOMP):
+    models = []
+    for ncomp in NCOMP:
+        gmix = mixture.GaussianMixture(n_components=ncomp, covariance_type='full')
+        gmix.fit(samples)
+        #If a mixture component has a very small covariance it might be the result of a singularity
+        if np.all(gmix.covariances_ > 1.0E-6):
+            models.append(gmix)
+    AIC    = [m.aic(samples) for m in models]
+    return models,AIC
+
+def bayesianGaussianMixture(samples,NCOMP):
+    models = []
+    for ncomp in NCOMP:
+        gmix = mixture.BayesianGaussianMixture(n_components=ncomp, covariance_type='full')
+        models.append(gmix.fit(samples))
+    return models
+
+def fit_kde(x,numBandwidth=40,hmin=0.1,hmax=1.0):
+    grid = GridSearchCV(KernelDensity(),{'bandwidth': np.linspace(hmin, hmax, numBandwidth)},cv=20) # 20-fold cross-validation
+    grid.fit(x[:, None])
+    print grid.best_params_
+    return grid.best_estimator_
