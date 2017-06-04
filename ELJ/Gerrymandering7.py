@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
 import utlUtilities as utl
 import geopandas as gpd
+from matplotlib.patches import Rectangle
 
 import pandas as pd
 import numpy as np
@@ -9,6 +10,7 @@ import os
 import us
 from scipy import stats
 
+#Function definitions{{{1
 def getDemVotesAndSeats(dem,rep):
     dem_total = float(np.sum(dem))
     rep_total = float(np.sum(rep))
@@ -85,7 +87,7 @@ def list2df(data,dname):
     data.columns = new_header #set the header row as the df header
     data.index = range(len(data))
     data.to_csv(dname+".csv")
-
+#1}}}
 states = us.states.STATES
 abbr2name = us.states.mapping('abbr', 'name')
 
@@ -101,7 +103,7 @@ cyc00 = [2002,2004,2006,2008,2010]
 cyc10 = [2012,2014,2016]
 cycles = [cyc70,cyc80,cyc90,cyc00,cyc10]
 cnames = [1970,1980,1990,2000,2010]
-
+#Compute specific asymmetry and historic mean and stdv{{{1
 data      = [['State','cycle','AreaNumber','Mean','Stdv','Var']]
 stateData = [['State','STATEFP','year','demVotes','repVotes','demVoteFrac','repVoteFrac','demSeats','demSeatFrac','specAsym (seats)','specAsym (fraction)']]
 fig = plt.figure(figsize=(10,8))
@@ -141,86 +143,6 @@ stateData = pd.read_csv("historicSAsym.csv",dtype={"STATEFP": object})
 
 stateDataLarge = stateData[stateData['specAsym (seats)'].abs() > 2]
 stateDataLarge.to_csv("historicSAsymLarge.csv")
-
-
-
-#Get mean variance for each cycle
-expVar = {}
-for cyc in cnames:
-    dfCycle = data[data["cycle"]==cyc]
-    expVar[cyc] = np.mean(dfCycle["Var"].values)
-
-dataAB      = [['State','cycle','AreaNumber','alpha','beta']]
-dataABState = [['State','cycle','alpha','beta']]
-for state in states:
-    abbr = state.abbr
-    if abbr == "DC": continue
-    dfState = congress[congress["State"].str.contains(state.name)]
-    for cyc,cnm in zip(cycles,cnames):
-        dfCycle = dfState[dfState["raceYear"].isin(cyc)]
-        #beta params for the state popular vote
-        pop = []
-        for year in cyc:
-            dfYear = dfCycle[dfCycle["raceYear"] == year]
-            dem_total,rep_total,popVote,seats,seatFrac = getDemVotesAndSeats(dfYear["imputedDem"].values,dfYear["imputedRep"].values)
-            pop.append(popVote)
-
-        alpha,beta = betaMOM(pop)
-        dataABState.append([abbr,cnm,alpha,beta])
-
-        numDistricts = dfCycle["AreaNumber"].max()
-        #Beta params for each district
-        for i in range(numDistricts):
-            dfDistrict = dfCycle[dfCycle["AreaNumber"] == i+1]
-            votePct = np.array(dfDistrict["imputedDem"].values/(dfDistrict["imputedRep"].values+dfDistrict["imputedDem"].values))
-            alpha,beta = betaMOM(votePct,shrinkage=expVar[cnm])
-            dataAB.append([abbr,cnm,i+1,alpha,beta])
-
-list2df(dataAB,"betaParams")
-dataAB = pd.read_csv("betaParams.csv")
-
-list2df(dataABState,"betaParamsState")
-dataABState = pd.read_csv("betaParamsState.csv")
-
-
-dataExp = [['State','cycle','expectedAsym']]
-fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(18,10))
-
-axhist  = [ax1,ax2,ax3,ax4,ax5]
-bins = np.linspace(0.,12.,24)-6.
-for cnm,ax in zip(cnames,axhist):
-    dfCycle      = dataAB[dataAB["cycle"]==cnm]
-    dfCyclePop   = dataABState[dataABState["cycle"]==cnm]
-    sims = []
-    for state in states:
-        abbr = state.abbr
-        if abbr == "DC": continue
-        dfState    = dfCycle[dfCycle["State"].str.contains(abbr)]
-        dfStatePop = dfCyclePop[dfCyclePop["State"].str.contains(abbr)]
-        betaParams = zip(dfState["alpha"].tolist(),dfState["beta"].tolist())
-        stateBeta  = (dfStatePop["alpha"].tolist()[0],dfStatePop["beta"].tolist()[0])
-        betaParams.append(stateBeta)
-        if len(dfState) > 1:
-            expAsym = getExpAsym(betaParams)
-            sims+=expAsym.tolist()
-        else:
-            expAsym = np.zeros((10000))
-        dataExp.append([abbr,cnm,np.mean(expAsym)])
-
-    ax.hist(sims,bins=bins,normed=True)
-    print cnm,np.mean(sims)
-    ax.xaxis.set_major_locator(MaxNLocator(6))
-    ax.yaxis.set_major_locator(MaxNLocator(6))
-    ax.set_xlabel(str(cnm))
-    ax.grid()
-
-fig.savefig(os.path.join(figDir,"ExpasmHist2.png"))
-
-list2df(dataExp,"expAsym")
-dataExp = pd.read_csv("expAsym.csv")
-
-stateDataLarge = dataExp[dataExp['expectedAsym'].abs() > 2]
-stateDataLarge.to_csv("expSAsymLarge.csv")
 
 ax.grid()
 ax  = fig.add_subplot(212)
@@ -285,66 +207,11 @@ for cyc,cnm in zip(cycles,cnames):
 
 ax.grid()
 fig.savefig(os.path.join(figDir,"historicSA.png"))
-
-#shapeFileStates   = "../CommonData/ShapeFiles/cb_2015_us_state_500k/cb_2015_us_state_500k.shp"
-#gdf = gpd.read_file(shapeFileStates)
-#for cyc in cycles:
-#    for year in cyc:
-#        dfYear  = stateData[stateData["year"] == year]
-#        gdfYear = gdf.merge(dfYear,on="STATEFP") 
-#        utl.plotGDF(os.path.join(figDir,"spa_"+str(year)+".png"),gdfYear,"USALL",colorby="data",colorCol="specAsym (seats)",cmap=plt.cm.bwr,climits=(-6,6))
-#        d = np.min([0.5 - np.min(dfYear["demVoteFrac"].values),np.max(dfYear["demVoteFrac"].values) - 0.5])
-#        utl.plotGDF(os.path.join(figDir,"pop_"+str(year)+".png"),gdfYear,"USALL",colorby="data",colorCol="repVoteFrac",cmap=plt.cm.bwr,climits=(.5-d,0.5+d),cfmt="%0.2f")
-#        
-
 ax2.grid()
 ax2.legend()
 fig2.savefig(os.path.join(figDir,"sv.png"))
 
-fig = plt.figure()
-ax  = fig.add_subplot(111)
-ax.scatter(stateData["demVoteFrac"].values,stateData["specAsym (seats)"].values)
-fig.savefig(os.path.join(figDir,"sct.png"))
-
-fig = plt.figure()
-ax  = fig.add_subplot(111)
-ax.scatter(stateData["demVoteFrac"].values,stateData["demSeatFrac"].values)
-fig.savefig(os.path.join(figDir,"sct2.png"))
-
-fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(18,10))
-
-axhist  = [ax1,ax2,ax3,ax4,ax5]
-bins = np.linspace(0.,12.,24)-6.
-for cyc,cnm,ax in zip(cycles,cnames,axhist):
-    dfYear = dataExp[dataExp["cycle"]==cnm]
-    ax.hist(dfYear["expectedAsym"].values,bins=bins)
-    ax.xaxis.set_major_locator(MaxNLocator(6))
-    ax.yaxis.set_major_locator(MaxNLocator(6))
-    ax.set_xlabel(str(cnm))
-    ax.grid()
-fig.savefig(os.path.join(figDir,"ExpasmHist.png"))
-
-fig = plt.figure()
-ax  = fig.add_subplot(111)
-ax.scatter(stateData["demVoteFrac"].values,stateData["demSeatFrac"].values)
-fig.savefig(os.path.join(figDir,"sct2.png"))
-
-fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(18,10))
-
-axhist  = [ax1,ax2,ax3,ax4,ax5]
-bins = np.linspace(0.,12.,24)-6.
-for cyc,cnm,ax in zip(cycles,cnames,axhist):
-    spasm = []
-    for year in cyc:
-        dfYear = stateData[stateData["year"]==year]
-        spasm = np.concatenate((spasm,dfYear["specAsym (seats)"].values))
-    ax.hist(spasm,bins=bins,rwidth=0.5)
-    ax.xaxis.set_major_locator(MaxNLocator(6))
-    ax.yaxis.set_major_locator(MaxNLocator(6))
-    ax.set_xlabel(str(cnm))
-    ax.grid()
-fig.savefig(os.path.join(figDir,"SpasmHist.png"))
-
+#Plot histograms of the stdv for each cycle
 fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(10,8))
 x   = np.linspace(0.,.3,100)
 
@@ -376,6 +243,26 @@ for cyc,ax in zip(cnames,axhist):
     p75.append(np.percentile(dfCycle.Stdv.values,75))
 fig.savefig(os.path.join(figDir,"StdvHist.png"))
 
+#Plot histograms of the mean for each cycle
+fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(10,8))
+x   = np.linspace(0.,.3,100)
+
+ax1.hist(data.Mean.values,50,normed=True)
+ax1.xaxis.set_major_locator(MaxNLocator(4))
+ax1.yaxis.set_major_locator(MaxNLocator(4))
+ax1.set_xlabel("All Cycles")
+ax1.grid()
+
+axhist  = [ax2,ax3,ax4,ax5,ax6]
+for cyc,ax in zip(cnames,axhist):
+    dfCycle = data[data["cycle"]==cyc]
+    ax.hist(dfCycle.Mean.values,50,normed=True)
+    ax.xaxis.set_major_locator(MaxNLocator(4))
+    ax.yaxis.set_major_locator(MaxNLocator(4))
+    ax.set_xlabel(str(cyc))
+    ax.grid()
+fig.savefig(os.path.join(figDir,"MeanHist.png"))
+
 fig = plt.figure()
 ax  = fig.add_subplot(111)
 ax.plot(cnames,mean,label="mean")
@@ -393,4 +280,268 @@ yvals = np.arange(len(sorted))/float(len(sorted))
 ax.plot(sorted, yvals)
 ax.grid()
 fig.savefig(os.path.join(figDir,"edf.png"))
+
+#1}}}
+#Obtain beta distribution parameters{{{1
+#Get mean variance for each cycle
+expVar = {}
+for cyc in cnames:
+    dfCycle = data[data["cycle"]==cyc]
+    expVar[cyc] = np.mean(dfCycle["Var"].values)
+dataAB      = [['State','cycle','AreaNumber','alpha','beta']]
+dataABState = [['State','cycle','alpha','beta']]
+for state in states:
+    abbr = state.abbr
+    if abbr == "DC": continue
+    dfState = congress[congress["State"].str.contains(state.name)]
+    for cyc,cnm in zip(cycles,cnames):
+        dfCycle = dfState[dfState["raceYear"].isin(cyc)]
+        #beta params for the state popular vote
+        pop = []
+        for year in cyc:
+            dfYear = dfCycle[dfCycle["raceYear"] == year]
+            dem_total,rep_total,popVote,seats,seatFrac = getDemVotesAndSeats(dfYear["imputedDem"].values,dfYear["imputedRep"].values)
+            pop.append(popVote)
+
+        alpha,beta = betaMOM(pop)
+        dataABState.append([abbr,cnm,alpha,beta])
+
+        numDistricts = dfCycle["AreaNumber"].max()
+        #Beta params for each district
+        for i in range(numDistricts):
+            dfDistrict = dfCycle[dfCycle["AreaNumber"] == i+1]
+            votePct = np.array(dfDistrict["imputedDem"].values/(dfDistrict["imputedRep"].values+dfDistrict["imputedDem"].values))
+            alpha,beta = betaMOM(votePct,shrinkage=expVar[cnm])
+            dataAB.append([abbr,cnm,i+1,alpha,beta])
+
+list2df(dataAB,"betaParams")
+dataAB = pd.read_csv("betaParams.csv")
+
+list2df(dataABState,"betaParamsState")
+dataABState = pd.read_csv("betaParamsState.csv")
+#1}}}
+#Compute and plot expected asymmetry{{{1
+dataExp = [['State','cycle','expectedAsym']]
+fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(18,10))
+
+axhist  = [ax2,ax3,ax4,ax5,ax6]
+bins6 = np.linspace(-6.25,6.25,26)
+bins7 = np.linspace(-7.25,7.25,30)
+
+allSims = []
+fig2, ((axs1, axs2), (axs3, axs4)) = plt.subplots(2, 2, sharex="col", sharey=True,figsize=(18,10))
+
+
+for cnm,ax in zip(cnames,axhist):
+    dfCycle      = dataAB[dataAB["cycle"]==cnm]
+    dfCyclePop   = dataABState[dataABState["cycle"]==cnm]
+    sims = []
+    for state in states:
+        abbr = state.abbr
+        if abbr == "DC": continue
+        dfState    = dfCycle[dfCycle["State"].str.contains(abbr)]
+        dfStatePop = dfCyclePop[dfCyclePop["State"].str.contains(abbr)]
+        betaParams = zip(dfState["alpha"].tolist(),dfState["beta"].tolist())
+        stateBeta  = (dfStatePop["alpha"].tolist()[0],dfStatePop["beta"].tolist()[0])
+        betaParams.append(stateBeta)
+        if len(dfState) > 1:
+            expAsym = getExpAsym(betaParams).tolist()
+            sims+=expAsym
+            allSims+=expAsym
+        else:
+            expAsym = np.zeros((10000))
+        #plot some selected states and cycles
+        if abbr == "TX" and cnm == 1980:
+            N, binedges = np.histogram(expAsym,bins=bins7,density=True)
+            for i in range(len(binedges)-1):
+                axs1.add_patch(Rectangle((1982,binedges[i]),8,0.5,alpha=N[i]))
+
+            df = stateData[stateData["State"]=="TX"]
+            df = df[df["year"].isin(cyc80)]
+            axs1.plot(df["year"].values,df["specAsym (seats)"].values,color='k',linewidth=4)
+            axs1.set_ylim((-7,7))
+            axs1.set_xlabel("TX, 1980's")
+            axs1.grid()
+            axs1.get_xaxis().get_major_formatter().set_useOffset(False)
+        if abbr == "CA" and cnm == 1980:
+            N, binedges = np.histogram(expAsym,bins=bins7,density=True)
+            for i in range(len(binedges)-1):
+                axs3.add_patch(Rectangle((1982,binedges[i]),8,0.5,alpha=N[i]))
+
+            df = stateData[stateData["State"]=="CA"]
+            df = df[df["year"].isin(cyc80)]
+            axs3.plot(df["year"].values,df["specAsym (seats)"].values,color='k',linewidth=4)
+            axs3.set_ylim((-7,7))
+            axs3.set_xlabel("CA, 1980's")
+            axs3.grid()
+            axs3.get_xaxis().get_major_formatter().set_useOffset(False)
+        if abbr == "PA" and cnm == 2010:
+            N, binedges = np.histogram(expAsym,bins=bins7,density=True)
+            for i in range(len(binedges)-1):
+                axs2.add_patch(Rectangle((2012,binedges[i]),8,0.5,alpha=N[i]))
+
+            df = stateData[stateData["State"]=="PA"]
+            df = df[df["year"].isin(cyc10)]
+            axs2.plot(df["year"].values,df["specAsym (seats)"].values,color='k',linewidth=4)
+            axs2.set_ylim((-7,7))
+            axs2.set_xlabel("PA, 2010's")
+            axs2.grid()
+            axs2.get_xaxis().get_major_formatter().set_useOffset(False)
+        if abbr == "NC" and cnm == 2010:
+            N, binedges = np.histogram(expAsym,bins=bins7,density=True)
+            for i in range(len(binedges)-1):
+                axs4.add_patch(Rectangle((2012,binedges[i]),8,0.5,alpha=N[i]))
+
+            df = stateData[stateData["State"]=="NC"]
+            df = df[df["year"].isin(cyc10)]
+            axs4.plot(df["year"].values,df["specAsym (seats)"].values,color='k',linewidth=4)
+            axs4.set_ylim((-7,7))
+            axs4.set_xlabel("NC, 2010's")
+            axs4.grid()
+            axs4.get_xaxis().get_major_formatter().set_useOffset(False)
+        dataExp.append([abbr,cnm,np.mean(expAsym)])
+
+    N, bins, patches = ax.hist(sims,bins=bins6,normed=True)
+    for i in range(len(patches)):
+        center = (bins[i]+bins[i+1])/2.
+        if center < 0.:
+            patches[i].set_facecolor('b')
+        elif center > 0.:
+            patches[i].set_facecolor('r')
+
+        if np.abs(center) < 1.E-10:
+            patches[i].set_facecolor('.75')
+    ax.xaxis.set_major_locator(MaxNLocator(6))
+    ax.yaxis.set_major_locator(MaxNLocator(6))
+    ax.set_xlabel(str(cnm))
+    ax.grid()
+
+fig2.savefig(os.path.join(figDir,"80vs10.png"))
+
+N, bins, patches = ax1.hist(allSims,bins=bins6,normed=True)
+for i in range(len(patches)):
+    center = (bins[i]+bins[i+1])/2.
+    if center < 0.:
+        patches[i].set_facecolor('b')
+    elif center > 0.:
+        patches[i].set_facecolor('r')
+
+    if np.abs(center) < 1.E-10:
+        patches[i].set_facecolor('.75')
+ax1.xaxis.set_major_locator(MaxNLocator(6))
+ax1.yaxis.set_major_locator(MaxNLocator(6))
+ax1.set_xlabel("All Cycles")
+ax1.grid()
+
+fig.savefig(os.path.join(figDir,"ExpasmHist2.png"))
+
+list2df(dataExp,"expAsym")
+dataExp = pd.read_csv("expAsym.csv")
+
+stateDataLarge = dataExp[dataExp['expectedAsym'].abs() > 2]
+stateDataLarge.to_csv("expSAsymLarge.csv")
+#1}}}
+
+#Plot maps of sp asymmetry{{{1
+#shapeFileStates   = "../CommonData/ShapeFiles/cb_2015_us_state_500k/cb_2015_us_state_500k.shp"
+#gdf = gpd.read_file(shapeFileStates)
+#for cyc in cycles:
+#    for year in cyc:
+#        dfYear  = stateData[stateData["year"] == year]
+#        gdfYear = gdf.merge(dfYear,on="STATEFP") 
+#        utl.plotGDF(os.path.join(figDir,"spa_"+str(year)+".png"),gdfYear,"USALL",colorby="data",colorCol="specAsym (seats)",cmap=plt.cm.bwr,climits=(-6,6))
+#        d = np.min([0.5 - np.min(dfYear["demVoteFrac"].values),np.max(dfYear["demVoteFrac"].values) - 0.5])
+#        utl.plotGDF(os.path.join(figDir,"pop_"+str(year)+".png"),gdfYear,"USALL",colorby="data",colorCol="repVoteFrac",cmap=plt.cm.bwr,climits=(.5-d,0.5+d),cfmt="%0.2f")
+#        
+#1}}}
+
+fig = plt.figure()
+ax  = fig.add_subplot(111)
+ax.scatter(stateData["demVoteFrac"].values,stateData["specAsym (seats)"].values)
+fig.savefig(os.path.join(figDir,"sct.png"))
+
+fig = plt.figure()
+ax  = fig.add_subplot(111)
+ax.scatter(stateData["demVoteFrac"].values,stateData["demSeatFrac"].values)
+fig.savefig(os.path.join(figDir,"sct2.png"))
+
+fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(18,10))
+
+axhist  = [ax2,ax3,ax4,ax5,ax6]
+allAsym = []
+for cyc,cnm,ax in zip(cycles,cnames,axhist):
+    dfYear = dataExp[dataExp["cycle"]==cnm]
+    N, bins, patches = ax.hist(dfYear["expectedAsym"].values,bins=bins6,normed=True)
+    allAsym+=dfYear["expectedAsym"].tolist()
+    for i in range(len(patches)):
+        center = (bins[i]+bins[i+1])/2.
+        if center < 0.:
+            patches[i].set_facecolor('b')
+        elif center > 0.:
+            patches[i].set_facecolor('r')
+    
+        if np.abs(center) < 1.E-10:
+            patches[i].set_facecolor('.75')
+    ax.xaxis.set_major_locator(MaxNLocator(6))
+    ax.yaxis.set_major_locator(MaxNLocator(6))
+    ax.set_xlabel(str(cnm))
+    ax.grid()
+
+N, bins, patches = ax1.hist(allAsym,bins=bins6,normed=True)
+ax1.set_xlabel("All Cycles")
+ax1.grid()
+for i in range(len(patches)):
+    center = (bins[i]+bins[i+1])/2.
+    if center < 0.:
+        patches[i].set_facecolor('b')
+    elif center > 0.:
+        patches[i].set_facecolor('r')
+
+    if np.abs(center) < 1.E-10:
+        patches[i].set_facecolor('.75')
+fig.savefig(os.path.join(figDir,"ExpasmHist.png"))
+
+fig = plt.figure()
+ax  = fig.add_subplot(111)
+ax.scatter(stateData["demVoteFrac"].values,stateData["demSeatFrac"].values)
+fig.savefig(os.path.join(figDir,"sct2.png"))
+
+fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(18,10))
+
+axhist  = [ax2,ax3,ax4,ax5,ax6]
+spasmAll = []
+for cyc,cnm,ax in zip(cycles,cnames,axhist):
+    spasm = []
+    for year in cyc:
+        dfYear = stateData[stateData["year"]==year]
+        spasm = np.concatenate((spasm,dfYear["specAsym (seats)"].values))
+        spasmAll = np.concatenate((spasmAll,dfYear["specAsym (seats)"].values))
+    N, bins, patches = ax.hist(spasm,bins=bins6,normed=True)
+    for i in range(len(patches)):
+        center = (bins[i]+bins[i+1])/2.
+        if center < 0.:
+            patches[i].set_facecolor('b')
+        elif center > 0.:
+            patches[i].set_facecolor('r')
+    
+        if np.abs(center) < 1.E-10:
+            patches[i].set_facecolor('.75')
+    ax.xaxis.set_major_locator(MaxNLocator(6))
+    ax.yaxis.set_major_locator(MaxNLocator(6))
+    ax.set_xlabel(str(cnm))
+    ax.grid()
+
+N, bins, patches = ax1.hist(spasmAll,bins=bins6,normed=True)
+ax1.set_xlabel("All Cycles")
+ax1.grid()
+for i in range(len(patches)):
+    center = (bins[i]+bins[i+1])/2.
+    if center < 0.:
+        patches[i].set_facecolor('b')
+    elif center > 0.:
+        patches[i].set_facecolor('r')
+
+    if np.abs(center) < 1.E-10:
+        patches[i].set_facecolor('.75')
+fig.savefig(os.path.join(figDir,"SpasmHist.png"))
 
