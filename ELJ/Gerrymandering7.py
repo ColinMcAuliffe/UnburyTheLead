@@ -122,6 +122,11 @@ for state in states:
             sp = get_spasym(dfYear["imputedDem"].values,dfYear["imputedRep"].values)
             mm.append(sp)
             dem_total,rep_total,popVote,seats,seatFrac = getDemVotesAndSeats(dfYear["imputedDem"].values,dfYear["imputedRep"].values)
+            pcts = dfYear["imputedDem"].values/(dfYear["imputedDem"].values+dfYear["imputedRep"].values)
+            pcts = np.concatenate((pcts,[popVote]))
+            sp2 = get_asymFromPct(pcts)
+            if sp != sp2:
+                print sp,sp2
             stateData.append([abbr,state.fips,year,dem_total,rep_total,popVote,1.-popVote,seats,seatFrac,sp,sp/float(len(dfYear))])
         ax.plot(cyc,mm,marker='x',color='0.5')
 
@@ -247,7 +252,14 @@ fig.savefig(os.path.join(figDir,"StdvHist.png"))
 fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(10,8))
 x   = np.linspace(0.,.3,100)
 
-ax1.hist(data.Mean.values,50,normed=True)
+binsm = np.linspace(0.,1.0,51)
+N, bins, patches = ax1.hist(data.Mean.values,bins=binsm,normed=True)
+for i in range(len(patches)):
+    center = (bins[i]+bins[i+1])/2.
+    if center > 0.5:
+        patches[i].set_facecolor('b')
+    elif center < 0.5:
+        patches[i].set_facecolor('r')
 ax1.xaxis.set_major_locator(MaxNLocator(4))
 ax1.yaxis.set_major_locator(MaxNLocator(4))
 ax1.set_xlabel("All Cycles")
@@ -256,7 +268,13 @@ ax1.grid()
 axhist  = [ax2,ax3,ax4,ax5,ax6]
 for cyc,ax in zip(cnames,axhist):
     dfCycle = data[data["cycle"]==cyc]
-    ax.hist(dfCycle.Mean.values,50,normed=True)
+    N, bins, patches = ax.hist(dfCycle.Mean.values,bins=binsm,normed=True)
+    for i in range(len(patches)):
+        center = (bins[i]+bins[i+1])/2.
+        if center > 0.5:
+            patches[i].set_facecolor('b')
+        elif center < 0.5:
+            patches[i].set_facecolor('r')
     ax.xaxis.set_major_locator(MaxNLocator(4))
     ax.yaxis.set_major_locator(MaxNLocator(4))
     ax.set_xlabel(str(cyc))
@@ -331,11 +349,17 @@ bins7 = np.linspace(-7.25,7.25,30)
 allSims = []
 fig2, ((axs1, axs2), (axs3, axs4)) = plt.subplots(2, 2, sharex="col", sharey=True,figsize=(18,10))
 
+fig3, axh = plt.subplots(1,1)
 
-for cnm,ax in zip(cnames,axhist):
+fig4, ((axh1, axh2,axh3), (axh4, axh5, axh6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(18,10))
+axhist4  = [axh2,axh3,axh4,axh5,axh6]
+
+binsTot = np.linspace(9.5,70.5,62)
+for cnm,cyc,ax,axhs4 in zip(cnames,cycles,axhist,axhist4):
     dfCycle      = dataAB[dataAB["cycle"]==cnm]
     dfCyclePop   = dataABState[dataABState["cycle"]==cnm]
     sims = []
+    simsByState = []
     for state in states:
         abbr = state.abbr
         if abbr == "DC": continue
@@ -347,9 +371,12 @@ for cnm,ax in zip(cnames,axhist):
         if len(dfState) > 1:
             expAsym = getExpAsym(betaParams).tolist()
             sims+=expAsym
+            simsByState.append(expAsym)
             allSims+=expAsym
         else:
             expAsym = np.zeros((10000))
+
+
         #plot some selected states and cycles
         if abbr == "TX" and cnm == 1980:
             N, binedges = np.histogram(expAsym,bins=bins7,density=True)
@@ -416,7 +443,32 @@ for cnm,ax in zip(cnames,axhist):
     ax.set_xlabel(str(cnm))
     ax.grid()
 
+    simsByState = np.abs(np.array(simsByState))
+    totalAsym = np.sum(simsByState,axis=0)
+    axhs4.hist(totalAsym,bins=binsTot)
+    axhs4.grid()
+    axhs4.set_xlabel(str(cnm))
+    meanAsym = np.mean(totalAsym)
+    asymp75  = np.percentile(totalAsym,75)
+    asymp25  = np.percentile(totalAsym,25)
+    axh.plot(cyc,[meanAsym]*len(cyc),color='0.75',linewidth=4)
+    axh.plot(cyc,[asymp75]*len(cyc),color='0.75',linewidth=2)
+    axh.plot(cyc,[asymp25]*len(cyc),color='0.75',linewidth=2)
+
 fig2.savefig(os.path.join(figDir,"80vs10.png"))
+
+
+for cyc,cnm in zip(cycles,cnames):
+    dfCycle = congress[congress["raceYear"].isin(cyc)]
+    mm = []
+    for year in cyc:
+        dfYear = stateData[stateData["year"] == year]
+        mm.append(np.sum(np.abs(dfYear["specAsym (seats)"].values)))
+    axh.plot(cyc,mm,marker='x',color='k',linewidth=4)
+
+axh.grid()
+fig3.savefig(os.path.join(figDir,"totalAsym.png"))
+fig4.savefig(os.path.join(figDir,"totalAsymHist.png"))
 
 N, bins, patches = ax1.hist(allSims,bins=bins6,normed=True)
 for i in range(len(patches)):
