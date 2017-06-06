@@ -1,7 +1,5 @@
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
-import utlUtilities as utl
-import geopandas as gpd
 from matplotlib.patches import Rectangle
 
 import pandas as pd
@@ -133,7 +131,7 @@ for cnm,cyc,ax,axhs4 in zip(cnames,cycles,axhist,axhist4):
     ax.set_xlabel(str(cnm))
     ax.grid()
 
-    #simsByState = np.abs(np.array(simsByState))
+    #simsByState = np.absolute(np.array(simsByState))
     simsByState = np.array(simsByState)
     totalAsym = np.sum(simsByState,axis=0)
     N, bins, patches = axhs4.hist(totalAsym,bins=binsTot,normed=True)

@@ -223,7 +223,7 @@ for cyc in cnames:
     dfCycle = data[data["cycle"]==cyc]
     expVar[cyc] = np.mean(dfCycle["Var"].values)
 dataAB      = [['State','cycle','AreaNumber','alpha','beta']]
-dataABState = [['State','cycle','alpha','beta']]
+dataABState = [['State','cycle','mean','alpha','beta','stdv of votePct']]
 for state in states:
     abbr = state.abbr
     if abbr == "DC": continue
@@ -232,13 +232,16 @@ for state in states:
         dfCycle = dfState[dfState["raceYear"].isin(cyc)]
         #beta params for the state popular vote
         pop = []
+        std = []
         for year in cyc:
             dfYear = dfCycle[dfCycle["raceYear"] == year]
             dem_total,rep_total,popVote,seats,seatFrac = getDemVotesAndSeats(dfYear["imputedDem"].values,dfYear["imputedRep"].values)
+            demPct = dfYear["imputedDem"].values/(dfYear["imputedDem"].values+dfYear["imputedRep"].values)
             pop.append(popVote)
+            std.append(np.std(demPct,ddof=1))
 
         alpha,beta = betaMOM(pop)
-        dataABState.append([abbr,cnm,alpha,beta])
+        dataABState.append([abbr,cnm,np.mean(pop),alpha,beta,np.mean(std)])
 
         numDistricts = dfCycle["AreaNumber"].max()
         #Beta params for each district

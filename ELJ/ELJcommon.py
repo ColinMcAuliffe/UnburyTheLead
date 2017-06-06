@@ -45,6 +45,27 @@ def get_asymFromPct(demPct):
     else:
         return 0.
 
+def getMeanMeanDiff(x):
+    dem = x[x>0.5]
+    rep = x[x<0.5]
+    rep = 1.-rep
+    if len(dem) > 1 and len(rep) > 1:
+        t,p = stats.ttest_ind(dem, rep, equal_var = True)
+        return t
+    else:
+        return 0.
+
+def getExpMMandT(params,nsims=10000):
+    #simulate
+    results = []
+    for a,b in params:
+        results.append(np.random.beta(a,b,size=nsims))
+    results = np.array(results)
+    mean    = np.mean(results,axis=0)
+    median  = np.median(results,axis=0)
+    t       = np.apply_along_axis(getMeanMeanDiff,0,results)
+    return mean-median,t
+
 def getExpAsym(params,nsims=10000):
     #simulate
     results = []
