@@ -49,7 +49,7 @@ for cnm,cyc in zip(cnames,cycles):
         dfStatePop = dfCyclePop[dfCyclePop["State"].str.contains(abbr)]
         if np.abs(0.5-dfStatePop["mean"].values[0]) > limit: continue
         dfState    = dfCycle[dfCycle["State"].str.contains(abbr)]
-        betaParams = zip(dfState["alpha"].tolist(),dfState["beta"].tolist())
+        betaParams = zip(dfState["alpha"].tolist(),dfState["beta"].tolist(),dfState["loc"].tolist(),dfState["scale"].tolist())
         if len(dfState) > 2:
             expMM,expT = getExpMMandT(betaParams)
 

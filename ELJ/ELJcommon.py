@@ -58,8 +58,8 @@ def getMeanMeanDiff(x):
 def getExpMMandT(params,nsims=10000):
     #simulate
     results = []
-    for a,b in params:
-        results.append(np.random.beta(a,b,size=nsims))
+    for a,b,loc,scale in params:
+        results.append(stats.beta.rvs(a,b,loc=loc,scale=scale,size=nsims))
     results = np.array(results)
     mean    = np.mean(results,axis=0)
     median  = np.median(results,axis=0)
@@ -69,8 +69,8 @@ def getExpMMandT(params,nsims=10000):
 def getExpAsym(params,nsims=10000):
     #simulate
     results = []
-    for a,b in params:
-        results.append(np.random.beta(a,b,size=nsims))
+    for a,b,loc,scale in params:
+        results.append(stats.beta.rvs(a,b,loc=loc,scale=scale,size=nsims))
     results = np.array(results)
     asym    = np.apply_along_axis(get_asymFromPct,0,results)
     return asym
@@ -79,19 +79,32 @@ def varWithShrinkage(x,shrinkVar):
     N = float(len(x))
     if N == 0.: return shrinkVar
     mean = np.mean(x)
-    var = (N*np.sum((x - mean)**2)/(N+1.)+shrinkVar)/(N+1.)
+    #var = (N*np.sum((x - mean)**2)/(N+1.)+shrinkVar)/(N+1.)
+    var = (np.sum((x - mean)**2)+shrinkVar)/(N+1.)
     return var
 
-def betaMOM(x,shrinkage=None):
+def betaMOM(x,shrinkage=None,useLocScale=False):
     if shrinkage is None:
         var = np.var(x,ddof=1)
     else:
         var = varWithShrinkage(x,shrinkage)
     mean = np.mean(x)
+    if useLocScale:
+        if mean < 0.5:
+            loc   = 0.
+            scale = mean*2.
+        else:
+            scale = (1.-mean)*2.
+            loc   = 1.-scale
+    else:
+        loc, scale = 0.,1.
+    #account for location and scale
+    mean = (mean-loc)/scale
+    var  = var/scale**2
     c = mean*(1.-mean)/var-1.
     alpha = mean*c
     beta  = (1.-mean)*c
-    return alpha,beta
+    return alpha,beta,loc,scale
 
 def list2df(data,dname):
     data = pd.DataFrame(data)
@@ -112,3 +125,10 @@ def colorBins(bins,patches,lim,lt='b',gt='r',gray=True):
         if gray and np.abs(center) < 1.E-10:
             patches[i].set_facecolor('.75')
     return bins,patches
+
+def setLimits(ax):
+    lims = ax.get_ylim()
+    y1 = np.max(np.abs(lims))
+    y0 = -1.*y1
+    ax.set_ylim([y0,y1])
+    return ax

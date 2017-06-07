@@ -61,8 +61,9 @@ for state in states:
             votePct = np.array(dfDistrict["Dem Vote %"].values)
             votePct = votePct[(votePct != 0.0) & (votePct != 1.0)] 
             if len(votePct) > 1:
-                std = np.std(votePct,ddof=1)
-                var = np.var(votePct,ddof=1)
+                ddof = 0
+                std = np.std(votePct,ddof=ddof)
+                var = np.var(votePct,ddof=ddof)
                 mean = np.mean(votePct)
                 data.append([abbr,cnm,i+1,mean,std,var])
 
@@ -222,8 +223,8 @@ expVar = {}
 for cyc in cnames:
     dfCycle = data[data["cycle"]==cyc]
     expVar[cyc] = np.mean(dfCycle["Var"].values)
-dataAB      = [['State','cycle','AreaNumber','alpha','beta']]
-dataABState = [['State','cycle','mean','alpha','beta','stdv of votePct']]
+dataAB      = [['State','cycle','AreaNumber','alpha','beta','loc','scale','mean','skew']]
+dataABState = [['State','cycle','mean','alpha','beta','loc','scale','stdv of votePct']]
 for state in states:
     abbr = state.abbr
     if abbr == "DC": continue
@@ -240,16 +241,23 @@ for state in states:
             pop.append(popVote)
             std.append(np.std(demPct,ddof=1))
 
-        alpha,beta = betaMOM(pop)
-        dataABState.append([abbr,cnm,np.mean(pop),alpha,beta,np.mean(std)])
+        if np.std(pop) < 0.00001:
+            alpha,beta,loc,scale = betaMOM(pop,useLocScale=False)
+        else:
+            alpha,beta,loc,scale = stats.beta.fit(pop,floc=0.,fscale=1.)
+        dataABState.append([abbr,cnm,np.mean(pop),alpha,beta,loc,scale,np.mean(std)])
 
         numDistricts = dfCycle["AreaNumber"].max()
         #Beta params for each district
         for i in range(numDistricts):
             dfDistrict = dfCycle[dfCycle["AreaNumber"] == i+1]
             votePct = np.array(dfDistrict["imputedDem"].values/(dfDistrict["imputedRep"].values+dfDistrict["imputedDem"].values))
-            alpha,beta = betaMOM(votePct,shrinkage=expVar[cnm])
-            dataAB.append([abbr,cnm,i+1,alpha,beta])
+            if np.std(votePct) < 0.001:
+                alpha,beta,loc,scale = betaMOM(votePct,shrinkage=expVar[cnm],useLocScale=False)
+            else:
+                alpha,beta,loc,scale = stats.beta.fit(votePct,floc=0.,fscale=1.)
+            mean,skew = stats.beta.stats(alpha, beta, loc=loc, scale=scale, moments='ms')
+            dataAB.append([abbr,cnm,i+1,alpha,beta,loc,scale,mean,skew])
 
 list2df(dataAB,os.path.join(dataDir,"betaParams"))
 dataAB = pd.read_csv(os.path.join(dataDir,"betaParams.csv"))
@@ -282,8 +290,11 @@ fig.savefig(os.path.join(figDir,"sct2.png"))
 
 fig = plt.figure()
 ax  = fig.add_subplot(111)
-ax.scatter(stateData["demVoteFrac"].values,stateData["demSeatFrac"].values)
-fig.savefig(os.path.join(figDir,"sct2.png"))
+ax.scatter(dataAB["mean"].values,dataAB["skew"].values)
+ax.set_xlabel("mean of estimated beta")
+ax.set_ylabel("skew of estimated beta")
+ax.grid()
+fig.savefig(os.path.join(figDir,"sctMS.png"))
 
 fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(18,10))
 

@@ -8,7 +8,7 @@ import os
 import us
 from scipy import stats
 
-from ELJcommon import getDemVotesAndSeats,get_spasym,get_asymFromPct,getExpAsym,varWithShrinkage,betaMOM,list2df,colorBins
+from ELJcommon import getDemVotesAndSeats,get_spasym,get_asymFromPct,getExpAsym,varWithShrinkage,betaMOM,list2df,colorBins,setLimits
 
 states = us.states.STATES
 abbr2name = us.states.mapping('abbr', 'name')
@@ -33,13 +33,12 @@ cnames = [1970,1980,1990,2000,2010]
 bins6 = np.linspace(-6.25,6.25,26)
 bins7 = np.linspace(-7.25,7.25,30)
 #Compute and plot expected asymmetry{{{1
-dataExp = [['State','cycle','expectedAsym']]
+dataExp = [['State','cycle','expectedAsym','mode','p05','p95']]
 fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(18,10))
 
 axhist  = [ax2,ax3,ax4,ax5,ax6]
 
 allSims = []
-fig2, ((axs1, axs2), (axs3, axs4)) = plt.subplots(2, 2, sharex="col", sharey=True,figsize=(18,10))
 
 fig3, axh = plt.subplots(1,1)
 
@@ -48,7 +47,6 @@ axhist4  = [axh1,axh2,axh3,axh4,axh5]
 
 binsTot = np.linspace(9.5,70.5,62)
 binsTot = np.linspace(-40.5,40.5,82)
-simsByStateAll = []
 for cnm,cyc,ax,axhs4 in zip(cnames,cycles,axhist,axhist4):
     dfCycle      = dataAB[dataAB["cycle"]==cnm]
     dfCyclePop   = dataABState[dataABState["cycle"]==cnm]
@@ -59,69 +57,27 @@ for cnm,cyc,ax,axhs4 in zip(cnames,cycles,axhist,axhist4):
         if abbr == "DC": continue
         dfState    = dfCycle[dfCycle["State"].str.contains(abbr)]
         dfStatePop = dfCyclePop[dfCyclePop["State"].str.contains(abbr)]
-        betaParams = zip(dfState["alpha"].tolist(),dfState["beta"].tolist())
-        stateBeta  = (dfStatePop["alpha"].tolist()[0],dfStatePop["beta"].tolist()[0])
+        betaParams = zip(dfState["alpha"].tolist(),dfState["beta"].tolist(),dfState["loc"].tolist(),dfState["scale"].tolist())
+        stateBeta  = (dfStatePop["alpha"].tolist()[0],dfStatePop["beta"].tolist()[0],dfStatePop["loc"].tolist()[0],dfStatePop["scale"].tolist()[0])
         betaParams.append(stateBeta)
         if len(dfState) > 1:
             expAsym = getExpAsym(betaParams).tolist()
             sims+=expAsym
             simsByState.append(expAsym)
-            simsByStateAll.append(expAsym)
             allSims+=expAsym
+            mean = np.mean(expAsym)
+            mode = stats.mode(expAsym)[0][0]
+            p05  = np.percentile(expAsym,5)
+            p95  = np.percentile(expAsym,95)
         else:
             expAsym = np.zeros((10000))
+            mode = 0.
+            mean = 0.
+            p05  = 0.
+            p95  = 0.
 
 
-        #plot some selected states and cycles
-        if abbr == "TX" and cnm == 1980:
-            N, binedges = np.histogram(expAsym,bins=bins7,density=True)
-            for i in range(len(binedges)-1):
-                axs1.add_patch(Rectangle((1982,binedges[i]),8,0.5,alpha=N[i]))
-
-            df = stateData[stateData["State"]=="TX"]
-            df = df[df["year"].isin(cyc80)]
-            axs1.plot(df["year"].values,df["specAsym (seats)"].values,color='k',linewidth=4)
-            axs1.set_ylim((-7,7))
-            axs1.set_xlabel("TX, 1980's")
-            axs1.grid()
-            axs1.get_xaxis().get_major_formatter().set_useOffset(False)
-        if abbr == "CA" and cnm == 1980:
-            N, binedges = np.histogram(expAsym,bins=bins7,density=True)
-            for i in range(len(binedges)-1):
-                axs3.add_patch(Rectangle((1982,binedges[i]),8,0.5,alpha=N[i]))
-
-            df = stateData[stateData["State"]=="CA"]
-            df = df[df["year"].isin(cyc80)]
-            axs3.plot(df["year"].values,df["specAsym (seats)"].values,color='k',linewidth=4)
-            axs3.set_ylim((-7,7))
-            axs3.set_xlabel("CA, 1980's")
-            axs3.grid()
-            axs3.get_xaxis().get_major_formatter().set_useOffset(False)
-        if abbr == "PA" and cnm == 2010:
-            N, binedges = np.histogram(expAsym,bins=bins7,density=True)
-            for i in range(len(binedges)-1):
-                axs2.add_patch(Rectangle((2012,binedges[i]),8,0.5,alpha=N[i]))
-
-            df = stateData[stateData["State"]=="PA"]
-            df = df[df["year"].isin(cyc10)]
-            axs2.plot(df["year"].values,df["specAsym (seats)"].values,color='k',linewidth=4)
-            axs2.set_ylim((-7,7))
-            axs2.set_xlabel("PA, 2010's")
-            axs2.grid()
-            axs2.get_xaxis().get_major_formatter().set_useOffset(False)
-        if abbr == "NC" and cnm == 2010:
-            N, binedges = np.histogram(expAsym,bins=bins7,density=True)
-            for i in range(len(binedges)-1):
-                axs4.add_patch(Rectangle((2012,binedges[i]),8,0.5,alpha=N[i]))
-
-            df = stateData[stateData["State"]=="NC"]
-            df = df[df["year"].isin(cyc10)]
-            axs4.plot(df["year"].values,df["specAsym (seats)"].values,color='k',linewidth=4)
-            axs4.set_ylim((-7,7))
-            axs4.set_xlabel("NC, 2010's")
-            axs4.grid()
-            axs4.get_xaxis().get_major_formatter().set_useOffset(False)
-        dataExp.append([abbr,cnm,np.mean(expAsym)])
+        dataExp.append([abbr,cnm,mean,mode,p05,p95])
 
     N, bins, patches = ax.hist(sims,bins=bins6,normed=True)
     bins,patches = colorBins(bins,patches,0.)
@@ -131,8 +87,8 @@ for cnm,cyc,ax,axhs4 in zip(cnames,cycles,axhist,axhist4):
     ax.set_xlabel(str(cnm))
     ax.grid()
 
-    #simsByState = np.absolute(np.array(simsByState))
-    simsByState = np.array(simsByState)
+    simsByState = np.absolute(np.array(simsByState))
+    #simsByState = np.array(simsByState)
     totalAsym = np.sum(simsByState,axis=0)
     N, bins, patches = axhs4.hist(totalAsym,bins=binsTot,normed=True)
     bins,patches = colorBins(bins,patches,0.)
@@ -146,16 +102,44 @@ for cnm,cyc,ax,axhs4 in zip(cnames,cycles,axhist,axhist4):
     axh.plot(cyc,[asymp75]*len(cyc),color='0.75',linewidth=2)
     axh.plot(cyc,[asymp25]*len(cyc),color='0.75',linewidth=2)
 
-fig2.savefig(os.path.join(figDir,"80vs10.png"))
+list2df(dataExp,os.path.join(dataDir,"expAsym"))
+dataExp = pd.read_csv(os.path.join(dataDir,"expAsym.csv"))
 
+for state in states:
+    abbr = state.abbr
+    if abbr == "DC": continue
+    dfState    = dataExp[dataExp["State"].str.contains(abbr)]
+    dfState2   = stateData[stateData["State"].str.contains(abbr)]
+    fig2 = plt.figure()
+    axst = fig2.add_subplot(111)
+    for cyc,cnm in zip(cycles,cnames):
+        dfCycle = dfState[dfState["cycle"] == cnm]
+        meanAsym = dfCycle['expectedAsym'].values[0]
+        mode     = dfCycle['mode'].values[0]
+        asymp95  = dfCycle['p95'].values[0]
+        asymp05  = dfCycle['p05'].values[0]
+        axst.plot(cyc,[meanAsym]*len(cyc),color='0.75',linewidth=4)
+        axst.plot(cyc,[mode]*len(cyc),color='b',linewidth=4)
+        axst.plot(cyc,[asymp95]*len(cyc),color='0.75',linewidth=2)
+        axst.plot(cyc,[asymp05]*len(cyc),color='0.75',linewidth=2)
+        mm = []
+        for year in cyc:
+            dfYear = dfState2[dfState2["year"] == year]
+            mm.append(dfYear["specAsym (seats)"].values[0])
+        axst.plot(cyc,mm,marker='x',color='k',linewidth=4)
+    axst.grid()
+    axst = setLimits(axst)
+
+
+    fig2.savefig(os.path.join(figDir,"expAsym"+abbr+".png"))
+    plt.close(fig2)
 
 for cyc,cnm in zip(cycles,cnames):
-    dfCycle = congress[congress["raceYear"].isin(cyc)]
     mm = []
     for year in cyc:
         dfYear = stateData[stateData["year"] == year]
-        #mm.append(np.sum(np.abs(dfYear["specAsym (seats)"].values)))
-        mm.append(np.sum(dfYear["specAsym (seats)"].values))
+        mm.append(np.sum(np.abs(dfYear["specAsym (seats)"].values)))
+        #mm.append(np.sum(dfYear["specAsym (seats)"].values))
     axh.plot(cyc,mm,marker='x',color='k',linewidth=4)
 
 axh.grid()
@@ -173,9 +157,6 @@ ax1.set_xlabel("All Cycles")
 ax1.grid()
 
 fig.savefig(os.path.join(figDir,"ExpasmHist2.png"))
-
-list2df(dataExp,os.path.join(dataDir,"expAsym"))
-dataExp = pd.read_csv(os.path.join(dataDir,"expAsym.csv"))
 
 stateDataLarge = dataExp[dataExp['expectedAsym'].abs() > 2]
 stateDataLarge.to_csv(os.path.join(dataDir,"expSAsymLarge.csv"))
