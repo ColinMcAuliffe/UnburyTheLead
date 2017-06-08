@@ -133,4 +133,26 @@ for idx,row in congress.iterrows():
         imputedDem.append(row["DemVotes"])
 congress['imputedRep'] = pd.Series(imputedRep, index=congress.index)
 congress['imputedDem'] = pd.Series(imputedDem, index=congress.index)
+
+#centered totals
+congress['centeredRep'] = congress['imputedRep']
+congress['centeredDem'] = congress['imputedDem']
+for state in states:
+    abbr = state.abbr
+    if abbr == "DC": continue
+    dfState = congress[congress["State"].str.contains(state.name)]
+    for cyc,cnm in zip(cycles,cnames):
+        dfCycle = dfState[dfState["raceYear"].isin(cyc)]
+        for year in cyc:
+            dfYear = dfCycle[dfCycle["raceYear"] == year]
+            idx = dfYear.index.tolist()
+            totalDem = np.sum(dfYear["imputedDem"].values)
+	    totalRep = np.sum(dfYear["imputedRep"].values)
+	    totalAvg = (totalDem+totalRep)/2.
+	    multDem = totalAvg/totalDem
+	    multRep = totalAvg/totalRep
+            
+	    congress.iloc[idx,congress.columns.get_loc('centeredDem')] = dfYear["imputedDem"].values*multDem
+	    congress.iloc[idx,congress.columns.get_loc('centeredRep')] = dfYear["imputedRep"].values*multRep
+
 congress.to_csv(os.path.join(dataDir,"congressImputed.csv"))

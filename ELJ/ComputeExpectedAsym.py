@@ -35,6 +35,7 @@ bins7 = np.linspace(-7.25,7.25,30)
 #Compute and plot expected asymmetry{{{1
 dataExp = [['State','cycle','expectedAsym','mode','p05','p95']]
 fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(18,10))
+fig2, ((axs1, axs2), (axs3, axs4)) = plt.subplots(2, 2, sharex="col", sharey=True,figsize=(18,10))
 
 axhist  = [ax2,ax3,ax4,ax5,ax6]
 
@@ -70,7 +71,6 @@ for cnm,cyc,ax,axhs4 in zip(cnames,cycles,axhist,axhist4):
             p05  = np.percentile(expAsym,5)
             p95  = np.percentile(expAsym,95)
         else:
-            expAsym = np.zeros((10000))
             mode = 0.
             mean = 0.
             p05  = 0.
@@ -78,6 +78,31 @@ for cnm,cyc,ax,axhs4 in zip(cnames,cycles,axhist,axhist4):
 
 
         dataExp.append([abbr,cnm,mean,mode,p05,p95])
+        if abbr == "TX" and cnm == 1980:
+            N, bins, patches = axs1.hist(expAsym,bins=bins6,normed=1.)
+            bins,patches = colorBins(bins,patches,0.)
+            axs1.set_xlabel("TX, 1980's")
+            axs1.grid()
+
+        if abbr == "CA" and cnm == 1980:
+            N, bins, patches = axs3.hist(expAsym,bins=bins6,normed=1.)
+            bins,patches = colorBins(bins,patches,0.)
+            axs3.set_xlabel("CA, 1980's")
+            axs3.grid()
+
+        if abbr == "PA" and cnm == 2010:
+            N, bins, patches = axs2.hist(expAsym,bins=bins6,normed=1.)
+            bins,patches = colorBins(bins,patches,0.)
+            axs2.set_xlabel("PA, 2010's")
+            axs2.grid()
+
+        if abbr == "NC" and cnm == 2010:
+            N, bins, patches = axs4.hist(expAsym,bins=bins6,normed=1.)
+            bins,patches = colorBins(bins,patches,0.)
+            axs4.set_xlabel("NC, 2010's")
+            axs4.grid()
+
+        
 
     N, bins, patches = ax.hist(sims,bins=bins6,normed=True)
     bins,patches = colorBins(bins,patches,0.)
@@ -88,6 +113,7 @@ for cnm,cyc,ax,axhs4 in zip(cnames,cycles,axhist,axhist4):
     ax.grid()
 
     simsByState = np.absolute(np.array(simsByState))
+    #simsByState = np.floor(np.absolute(np.array(simsByState)))
     #simsByState = np.array(simsByState)
     totalAsym = np.sum(simsByState,axis=0)
     N, bins, patches = axhs4.hist(totalAsym,bins=binsTot,normed=True)
@@ -98,9 +124,13 @@ for cnm,cyc,ax,axhs4 in zip(cnames,cycles,axhist,axhist4):
     meanAsym = np.mean(totalAsym)
     asymp75  = np.percentile(totalAsym,75)
     asymp25  = np.percentile(totalAsym,25)
+    asymp95  = np.percentile(totalAsym,95)
+    asymp05  = np.percentile(totalAsym, 5)
+    axh.add_patch(Rectangle((cyc[0],asymp05),8,asymp95-asymp05,color='0.75',alpha=0.2))
+    axh.add_patch(Rectangle((cyc[0],asymp25),8,asymp75-asymp25,color='0.75',alpha=0.5))
     axh.plot(cyc,[meanAsym]*len(cyc),color='0.75',linewidth=4)
-    axh.plot(cyc,[asymp75]*len(cyc),color='0.75',linewidth=2)
-    axh.plot(cyc,[asymp25]*len(cyc),color='0.75',linewidth=2)
+
+fig2.savefig(os.path.join(figDir,"80vs10.png"))
 
 list2df(dataExp,os.path.join(dataDir,"expAsym"))
 dataExp = pd.read_csv(os.path.join(dataDir,"expAsym.csv"))
@@ -118,10 +148,9 @@ for state in states:
         mode     = dfCycle['mode'].values[0]
         asymp95  = dfCycle['p95'].values[0]
         asymp05  = dfCycle['p05'].values[0]
+        axst.add_patch(Rectangle((cyc[0],asymp05),8,asymp95-asymp05,color='0.75',alpha=0.2))
         axst.plot(cyc,[meanAsym]*len(cyc),color='0.75',linewidth=4)
         axst.plot(cyc,[mode]*len(cyc),color='b',linewidth=4)
-        axst.plot(cyc,[asymp95]*len(cyc),color='0.75',linewidth=2)
-        axst.plot(cyc,[asymp05]*len(cyc),color='0.75',linewidth=2)
         mm = []
         for year in cyc:
             dfYear = dfState2[dfState2["year"] == year]
@@ -139,10 +168,13 @@ for cyc,cnm in zip(cycles,cnames):
     for year in cyc:
         dfYear = stateData[stateData["year"] == year]
         mm.append(np.sum(np.abs(dfYear["specAsym (seats)"].values)))
+        #mm.append(np.sum(np.floor(np.abs(dfYear["specAsym (seats)"].values))))
         #mm.append(np.sum(dfYear["specAsym (seats)"].values))
     axh.plot(cyc,mm,marker='x',color='k',linewidth=4)
 
 axh.grid()
+y0,y1 = axh.get_ylim()
+axh.set_ylim((0,y1))
 fig3.savefig(os.path.join(figDir,"totalAsym.png"))
 
 axh6.set_axis_off()

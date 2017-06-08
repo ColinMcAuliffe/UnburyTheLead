@@ -30,13 +30,20 @@ def get_spasym(dem,rep):
     else:
         return 0.
 
-def get_asymFromPct(demPct):
+def get_asymFromPct(demPct,decenter=True):
     #popular vote is last element in demPct
     popVote   = demPct[-1]
     dem  = np.array(demPct[0:-1])
+    rep  = 1.-dem
+    if decenter:
+        demTotal = np.sum(dem)
+        repTotal = np.sum(rep)
+        pct = demTotal/(demTotal+repTotal)
+        dem = dem*popVote/pct
+        rep = 1.-dem
+
     actSeats = float(len(dem[dem<0.5]))
     if len(dem) > 1:
-        rep     = 1.0-dem
         repFlp  = rep*popVote/(1.-popVote)
         demFlp  = dem*(1.-popVote)/popVote
         demVote = demFlp/(demFlp+repFlp)
@@ -75,20 +82,27 @@ def getExpAsym(params,nsims=10000):
     asym    = np.apply_along_axis(get_asymFromPct,0,results)
     return asym
 
+def meanWithShrinkage(x,shrinkMean):
+    N = float(len(x))
+    if N == 0.: return shrinkMean
+    mean = (np.sum(x)+shrinkMean)/(N+1.)
+    return mean
+
 def varWithShrinkage(x,shrinkVar):
     N = float(len(x))
     if N == 0.: return shrinkVar
     mean = np.mean(x)
-    #var = (N*np.sum((x - mean)**2)/(N+1.)+shrinkVar)/(N+1.)
-    var = (np.sum((x - mean)**2)+shrinkVar)/(N+1.)
+    var = (N*np.sum((x - mean)**2)/(N+1.)+shrinkVar)/(N+1.)
+    #var = (np.sum((x - mean)**2)+shrinkVar)/(N+1.)
     return var
 
-def betaMOM(x,shrinkage=None,useLocScale=False):
+def betaMOM(x,shrinkage=None,mean=None,useLocScale=False):
+    if mean is None: mean = np.mean(x)
     if shrinkage is None:
-        var = np.var(x,ddof=1)
+        var  = np.var(x,ddof=1)
     else:
         var = varWithShrinkage(x,shrinkage)
-    mean = np.mean(x)
+        #mean = meanWithShrinkage(x,0.5)
     if useLocScale:
         if mean < 0.5:
             loc   = 0.

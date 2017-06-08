@@ -50,7 +50,7 @@ for state in states:
             dem_total,rep_total,popVote,seats,seatFrac = getDemVotesAndSeats(dfYear["imputedDem"].values,dfYear["imputedRep"].values)
             pcts = dfYear["imputedDem"].values/(dfYear["imputedDem"].values+dfYear["imputedRep"].values)
             pcts = np.concatenate((pcts,[popVote]))
-            sp2 = get_asymFromPct(pcts)
+            sp2 = get_asymFromPct(pcts,decenter=False)
             if sp != sp2:
                 print sp,sp2
             stateData.append([abbr,state.fips,year,dem_total,rep_total,popVote,1.-popVote,seats,seatFrac,sp,sp/float(len(dfYear))])
@@ -61,7 +61,7 @@ for state in states:
             votePct = np.array(dfDistrict["Dem Vote %"].values)
             votePct = votePct[(votePct != 0.0) & (votePct != 1.0)] 
             if len(votePct) > 1:
-                ddof = 0
+                ddof = 1
                 std = np.std(votePct,ddof=ddof)
                 var = np.var(votePct,ddof=ddof)
                 mean = np.mean(votePct)
@@ -241,21 +241,15 @@ for state in states:
             pop.append(popVote)
             std.append(np.std(demPct,ddof=1))
 
-        if np.std(pop) < 0.00001:
-            alpha,beta,loc,scale = betaMOM(pop,useLocScale=False)
-        else:
-            alpha,beta,loc,scale = stats.beta.fit(pop,floc=0.,fscale=1.)
+        alpha,beta,loc,scale = betaMOM(pop,useLocScale=False)
         dataABState.append([abbr,cnm,np.mean(pop),alpha,beta,loc,scale,np.mean(std)])
 
         numDistricts = dfCycle["AreaNumber"].max()
         #Beta params for each district
         for i in range(numDistricts):
             dfDistrict = dfCycle[dfCycle["AreaNumber"] == i+1]
-            votePct = np.array(dfDistrict["imputedDem"].values/(dfDistrict["imputedRep"].values+dfDistrict["imputedDem"].values))
-            if np.std(votePct) < 0.001:
-                alpha,beta,loc,scale = betaMOM(votePct,shrinkage=expVar[cnm],useLocScale=False)
-            else:
-                alpha,beta,loc,scale = stats.beta.fit(votePct,floc=0.,fscale=1.)
+            votePct = dfDistrict["centeredDem"].values/(dfDistrict["centeredDem"].values+dfDistrict["centeredRep"].values)
+            alpha,beta,loc,scale = betaMOM(votePct,shrinkage=expVar[cnm],useLocScale=False)
             mean,skew = stats.beta.stats(alpha, beta, loc=loc, scale=scale, moments='ms')
             dataAB.append([abbr,cnm,i+1,alpha,beta,loc,scale,mean,skew])
 
