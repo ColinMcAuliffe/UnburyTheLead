@@ -30,6 +30,21 @@ def get_spasym(dem,rep):
     else:
         return 0.
 
+def get_asymFromCenteredPct(demPct):
+    #popular vote is last element in demPct
+    popVoteDem   = demPct[-1]
+    popVoteRep   = 1.-popVoteDem
+    dem  = np.array(demPct[0:-1])
+    rep  = 1.-dem
+    nseats = float(len(dem))
+
+    if len(dem) > 1:
+        demSeats = float(len(rep[rep<=popVoteDem]))
+        repSeats = nseats - float(len(rep[rep<=popVoteRep]))
+        return (repSeats-demSeats)/2.
+    else:
+        return 0.
+
 def get_asymFromPct(demPct,decenter=True):
     #popular vote is last element in demPct
     popVote   = demPct[-1]
@@ -42,7 +57,8 @@ def get_asymFromPct(demPct,decenter=True):
         dem = dem*popVote/pct
         rep = 1.-dem
 
-    actSeats = float(len(dem[dem<0.5]))
+    demVote = dem/(dem+rep)
+    actSeats = float(len(demVote[demVote<0.5]))
     if len(dem) > 1:
         repFlp  = rep*popVote/(1.-popVote)
         demFlp  = dem*(1.-popVote)/popVote
@@ -65,8 +81,8 @@ def getMeanMeanDiff(x):
 def getExpMMandT(params,nsims=10000):
     #simulate
     results = []
-    for a,b,loc,scale in params:
-        results.append(stats.beta.rvs(a,b,loc=loc,scale=scale,size=nsims))
+    for a,b in params:
+        results.append(stats.beta.rvs(a,b,size=nsims))
     results = np.array(results)
     mean    = np.mean(results,axis=0)
     median  = np.median(results,axis=0)
@@ -76,10 +92,10 @@ def getExpMMandT(params,nsims=10000):
 def getExpAsym(params,nsims=10000):
     #simulate
     results = []
-    for a,b,loc,scale in params:
-        results.append(stats.beta.rvs(a,b,loc=loc,scale=scale,size=nsims))
+    for a,b in params:
+        results.append(stats.beta.rvs(a,b,size=nsims))
     results = np.array(results)
-    asym    = np.apply_along_axis(get_asymFromPct,0,results)
+    asym    = np.apply_along_axis(get_asymFromCenteredPct,0,results)
     return asym
 
 def meanWithShrinkage(x,shrinkMean):
@@ -93,7 +109,7 @@ def varWithShrinkage(x,shrinkVar):
     if N == 0.: return shrinkVar
     mean = np.mean(x)
     var = (N*np.sum((x - mean)**2)/(N+1.)+shrinkVar)/(N+1.)
-    #var = (np.sum((x - mean)**2)+shrinkVar)/(N+1.)
+    #var = (np.sum((x - mean)**2)+shrinkVar)/N
     return var
 
 def betaMOM(x,shrinkage=None,mean=None,useLocScale=False):
@@ -146,3 +162,16 @@ def setLimits(ax):
     y0 = -1.*y1
     ax.set_ylim([y0,y1])
     return ax
+
+def year2Cycle(year):
+    if 1972 <= year and year <=1980:
+        return 1970
+    elif 1982 <= year and year <=1990:
+        return 1980
+    elif 1992 <= year and year <=2000:
+        return 1990
+    elif 2002 <= year and year <=2010:
+        return 2000
+    else:
+        return 2010
+

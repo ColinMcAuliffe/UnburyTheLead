@@ -10,13 +10,14 @@ import os
 import us
 from scipy import stats
 
-from ELJcommon import getDemVotesAndSeats,get_spasym,get_asymFromPct,getExpAsym,varWithShrinkage,betaMOM,list2df,colorBins
+from ELJcommon import getDemVotesAndSeats,get_spasym,get_asymFromPct,getExpAsym,varWithShrinkage,betaMOM,list2df,colorBins,get_asymFromCenteredPct
 
 states = us.states.STATES
 abbr2name = us.states.mapping('abbr', 'name')
 
-figDir       = "Figures"
+figDir       = os.path.join("Figures","HistoricAsymmetry")
 dataDir      = "Data"
+figExt       = ".tiff"
 
 congress = pd.read_csv(os.path.join(dataDir,"congressImputed.csv"))
 
@@ -30,6 +31,7 @@ cnames = [1970,1980,1990,2000,2010]
 bins6 = np.linspace(-6.25,6.25,26)
 bins7 = np.linspace(-7.25,7.25,30)
 #Compute specific asymmetry and historic mean and stdv{{{1
+#Compute data{{{2
 data      = [['State','cycle','AreaNumber','Mean','Stdv','Var']]
 stateData = [['State','STATEFP','year','demVotes','repVotes','demVoteFrac','repVoteFrac','demSeats','demSeatFrac','specAsym (seats)','specAsym (fraction)']]
 fig = plt.figure(figsize=(10,8))
@@ -37,7 +39,7 @@ ax  = fig.add_subplot(211)
 for state in states:
     abbr = state.abbr
     if abbr == "DC": continue
-    dfState = congress[congress["State"].str.contains(state.name)]
+    dfState = congress[congress["State"] == state.name]
     for cyc,cnm in zip(cycles,cnames):
         dfCycle = dfState[dfState["raceYear"].isin(cyc)]
         numDistricts = dfCycle["AreaNumber"].max()
@@ -54,6 +56,12 @@ for state in states:
             if sp != sp2:
                 print sp,sp2
             stateData.append([abbr,state.fips,year,dem_total,rep_total,popVote,1.-popVote,seats,seatFrac,sp,sp/float(len(dfYear))])
+            pcts = dfYear["centeredDem"].values/(dfYear["centeredDem"].values+dfYear["centeredRep"].values)
+            pcts = np.concatenate((pcts,[popVote]))
+            sp2 = get_asymFromCenteredPct(pcts)
+            if sp != sp2:
+                print dfYear
+
         ax.plot(cyc,mm,marker='x',color='0.5')
 
         for i in range(numDistricts):
@@ -75,7 +83,8 @@ stateData = pd.read_csv(os.path.join(dataDir,"historicSAsym.csv"),dtype={"STATEF
 
 stateDataLarge = stateData[stateData['specAsym (seats)'].abs() > 2]
 stateDataLarge.to_csv(os.path.join(dataDir,"historicSAsymLarge.csv"))
-
+#2}}}
+#Plot historic asymmetry and seats vs votes{{{2
 ax.grid()
 ax  = fig.add_subplot(212)
 fig2 = plt.figure()
@@ -88,7 +97,7 @@ for cyc,cnm in zip(cycles,cnames):
     for state in states:
         abbr = state.abbr
         if abbr == "DC": continue
-        dfState = dfCycle[dfCycle["State"].str.contains(state.name)]
+        dfState = dfCycle[dfCycle["State"] == state.name]
         votePct = np.array(dfState["Dem Vote %"].values)
         demWon  = len(votePct[votePct > 0.5])
         if demWon > len(dfState)/2.:
@@ -138,12 +147,12 @@ for cyc,cnm in zip(cycles,cnames):
         ax2.plot(cyc,sas,color='r')
 
 ax.grid()
-fig.savefig(os.path.join(figDir,"historicSA.png"))
+fig.savefig(os.path.join(figDir,"historicSA"+figExt))
 ax2.grid()
 ax2.legend()
-fig2.savefig(os.path.join(figDir,"sv.png"))
-
-#Plot histograms of the stdv for each cycle
+fig2.savefig(os.path.join(figDir,"sv"+figExt))
+#2}}}
+#Plot histograms of the stdv for each cycle{{{2
 fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(10,8))
 x   = np.linspace(0.,.3,100)
 
@@ -173,9 +182,9 @@ for cyc,ax in zip(cnames,axhist):
     mean.append(np.mean(dfCycle.Stdv.values))
     med.append(np.median(dfCycle.Stdv.values))
     p75.append(np.percentile(dfCycle.Stdv.values,75))
-fig.savefig(os.path.join(figDir,"StdvHist.png"))
-
-#Plot histograms of the mean for each cycle
+fig.savefig(os.path.join(figDir,"StdvHist"+figExt))
+#2}}}
+#Plot histograms of the mean for each cycle{{{2
 fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(10,8))
 x   = np.linspace(0.,.3,100)
 
@@ -196,8 +205,9 @@ for cyc,ax in zip(cnames,axhist):
     ax.yaxis.set_major_locator(MaxNLocator(4))
     ax.set_xlabel(str(cyc))
     ax.grid()
-fig.savefig(os.path.join(figDir,"MeanHist.png"))
-
+fig.savefig(os.path.join(figDir,"MeanHist"+figExt))
+#2}}}
+#Plot change in the stdv over time{{{2
 fig = plt.figure()
 ax  = fig.add_subplot(111)
 ax.plot(cnames,mean,label="mean")
@@ -206,16 +216,8 @@ ax.plot(cnames,p75,label="75th percentile")
 ax.grid()
 ax.set_xlabel("election cycle")
 ax.legend()
-fig.savefig(os.path.join(figDir,"stdvDS.png"))
-
-fig = plt.figure()
-ax  = fig.add_subplot(111)
-sorted = np.sort(data.Stdv.values)
-yvals = np.arange(len(sorted))/float(len(sorted))
-ax.plot(sorted, yvals)
-ax.grid()
-fig.savefig(os.path.join(figDir,"edf.png"))
-
+fig.savefig(os.path.join(figDir,"stdvDS"+figExt))
+#2}}}
 #1}}}
 #Obtain beta distribution parameters{{{1
 #Get mean variance for each cycle
@@ -223,12 +225,13 @@ expVar = {}
 for cyc in cnames:
     dfCycle = data[data["cycle"]==cyc]
     expVar[cyc] = np.mean(dfCycle["Var"].values)
-dataAB      = [['State','cycle','AreaNumber','alpha','beta','loc','scale','mean','skew']]
-dataABState = [['State','cycle','mean','alpha','beta','loc','scale','stdv of votePct']]
+expVarGlob = np.mean(data["Var"].values)
+dataAB      = [['State','cycle','AreaNumber','alpha','beta','alphaCen','betaCen']]
+dataABState = [['State','cycle','mean','alpha','beta','stdv of votePct']]
 for state in states:
     abbr = state.abbr
     if abbr == "DC": continue
-    dfState = congress[congress["State"].str.contains(state.name)]
+    dfState = congress[congress["State"] == state.name]
     for cyc,cnm in zip(cycles,cnames):
         dfCycle = dfState[dfState["raceYear"].isin(cyc)]
         #beta params for the state popular vote
@@ -239,56 +242,46 @@ for state in states:
             dem_total,rep_total,popVote,seats,seatFrac = getDemVotesAndSeats(dfYear["imputedDem"].values,dfYear["imputedRep"].values)
             demPct = dfYear["imputedDem"].values/(dfYear["imputedDem"].values+dfYear["imputedRep"].values)
             pop.append(popVote)
-            std.append(np.std(demPct,ddof=1))
+            if len(demPct) > 1:
+                std.append(np.std(demPct,ddof=1))
+            else:
+                std.append(0.)
 
         alpha,beta,loc,scale = betaMOM(pop,useLocScale=False)
-        dataABState.append([abbr,cnm,np.mean(pop),alpha,beta,loc,scale,np.mean(std)])
+        dataABState.append([abbr,cnm,np.mean(pop),alpha,beta,np.mean(std)])
 
         numDistricts = dfCycle["AreaNumber"].max()
         #Beta params for each district
         for i in range(numDistricts):
             dfDistrict = dfCycle[dfCycle["AreaNumber"] == i+1]
             votePct = dfDistrict["centeredDem"].values/(dfDistrict["centeredDem"].values+dfDistrict["centeredRep"].values)
-            alpha,beta,loc,scale = betaMOM(votePct,shrinkage=expVar[cnm],useLocScale=False)
-            mean,skew = stats.beta.stats(alpha, beta, loc=loc, scale=scale, moments='ms')
-            dataAB.append([abbr,cnm,i+1,alpha,beta,loc,scale,mean,skew])
+            alphaCen,betaCen,locCen,scaleCen = betaMOM(votePct,shrinkage=expVarGlob,useLocScale=False)
+            votePct = dfDistrict["imputedDem"].values/(dfDistrict["imputedDem"].values+dfDistrict["imputedRep"].values)
+            alpha,beta,loc,scale = betaMOM(votePct,shrinkage=expVarGlob,useLocScale=False)
+            dataAB.append([abbr,cnm,i+1,alpha,beta,alphaCen,betaCen])
 
 list2df(dataAB,os.path.join(dataDir,"betaParams"))
 dataAB = pd.read_csv(os.path.join(dataDir,"betaParams.csv"))
+#dAB = dataAB[dataAB["State"]=="WI"]
+#dAB = dAB[dAB["cycle"]==2010]
+#print dAB
 
 list2df(dataABState,os.path.join(dataDir,"betaParamsState"))
 dataABState = pd.read_csv(os.path.join(dataDir,"betaParamsState.csv"))
-#1}}}
-#Plot maps of sp asymmetry{{{1
-#shapeFileStates   = "../CommonData/ShapeFiles/cb_2015_us_state_500k/cb_2015_us_state_500k.shp"
-#gdf = gpd.read_file(shapeFileStates)
-#for cyc in cycles:
-#    for year in cyc:
-#        dfYear  = stateData[stateData["year"] == year]
-#        gdfYear = gdf.merge(dfYear,on="STATEFP") 
-#        utl.plotGDF(os.path.join(figDir,"spa_"+str(year)+".png"),gdfYear,"USALL",colorby="data",colorCol="specAsym (seats)",cmap=plt.cm.bwr,climits=(-6,6))
-#        d = np.min([0.5 - np.min(dfYear["demVoteFrac"].values),np.max(dfYear["demVoteFrac"].values) - 0.5])
-#        utl.plotGDF(os.path.join(figDir,"pop_"+str(year)+".png"),gdfYear,"USALL",colorby="data",colorCol="repVoteFrac",cmap=plt.cm.bwr,climits=(.5-d,0.5+d),cfmt="%0.2f")
-#        
+#dAB = dataABState[dataABState["State"]=="WI"]
+#dAB = dAB[dAB["cycle"]==2010]
+#print dAB
 #1}}}
 
 fig = plt.figure()
 ax  = fig.add_subplot(111)
 ax.scatter(stateData["demVoteFrac"].values,stateData["specAsym (seats)"].values)
-fig.savefig(os.path.join(figDir,"sct.png"))
+fig.savefig(os.path.join(figDir,"sct"+figExt))
 
 fig = plt.figure()
 ax  = fig.add_subplot(111)
 ax.scatter(stateData["demVoteFrac"].values,stateData["demSeatFrac"].values)
-fig.savefig(os.path.join(figDir,"sct2.png"))
-
-fig = plt.figure()
-ax  = fig.add_subplot(111)
-ax.scatter(dataAB["mean"].values,dataAB["skew"].values)
-ax.set_xlabel("mean of estimated beta")
-ax.set_ylabel("skew of estimated beta")
-ax.grid()
-fig.savefig(os.path.join(figDir,"sctMS.png"))
+fig.savefig(os.path.join(figDir,"sct2"+figExt))
 
 fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(18,10))
 
@@ -313,5 +306,5 @@ bins,patches = colorBins(bins,patches,0.)
 
 ax1.set_xlabel("All Cycles")
 ax1.grid()
-fig.savefig(os.path.join(figDir,"SpasmHist.png"))
+fig.savefig(os.path.join(figDir,"SpasmHist"+figExt))
 

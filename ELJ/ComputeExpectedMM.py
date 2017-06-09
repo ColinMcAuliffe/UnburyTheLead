@@ -55,7 +55,7 @@ for cnm,cyc in zip(cnames,cycles):
 
             mn = np.mean(expMM)
             st = np.std(expMM,ddof=1)
-            stA = dfStatePop["stdv of votePct"].values[0]/np.sqrt(float(len(dfState)))
+            stA = dfStatePop["stdv of votePct"].values[0]*np.sqrt(0.5708/float(len(dfState)))
             p5  = stats.norm.ppf(.95,scale=st)
             p5A = stats.norm.ppf(.95,scale=stA)
             p5d = stats.norm.cdf(p5,scale=stA)

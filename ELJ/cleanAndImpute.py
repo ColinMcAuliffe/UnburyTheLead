@@ -45,7 +45,7 @@ dataSC     = [['State','cycle','avgDemVoteInMostPartisanDem','avgRepVoteInMostPa
 for state in states:
     abbr = state.abbr
     if abbr == "DC": continue
-    dfState = congress[congress["State"].str.contains(state.name)]
+    dfState = congress[congress["State"] == state.name]
     for cyc,cnm in zip(cycles,cnames):
         dfCycle = dfState[dfState["raceYear"].isin(cyc)]
         numDistricts = dfCycle["AreaNumber"].max()
@@ -140,14 +140,14 @@ congress['centeredDem'] = congress['imputedDem']
 for state in states:
     abbr = state.abbr
     if abbr == "DC": continue
-    dfState = congress[congress["State"].str.contains(state.name)]
+    dfState = congress[congress["State"] == state.name]
     for cyc,cnm in zip(cycles,cnames):
         dfCycle = dfState[dfState["raceYear"].isin(cyc)]
         for year in cyc:
             dfYear = dfCycle[dfCycle["raceYear"] == year]
             idx = dfYear.index.tolist()
-            totalDem = np.sum(dfYear["imputedDem"].values)
-	    totalRep = np.sum(dfYear["imputedRep"].values)
+            totalDem = dfYear["imputedDem"].sum()
+	    totalRep = dfYear["imputedRep"].sum()
 	    totalAvg = (totalDem+totalRep)/2.
 	    multDem = totalAvg/totalDem
 	    multRep = totalAvg/totalRep
