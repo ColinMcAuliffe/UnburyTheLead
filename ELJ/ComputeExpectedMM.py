@@ -13,7 +13,7 @@ from ELJcommon import getDemVotesAndSeats,get_spasym,get_asymFromPct,getExpAsym,
 states = us.states.STATES
 abbr2name = us.states.mapping('abbr', 'name')
 
-figDir       = "Figures"
+figDir       = os.path.join("Figures","SimVsAsymptotic")
 dataDir      = "Data"
 
 congress    = pd.read_csv(os.path.join(dataDir,"congressImputed.csv"))
@@ -49,7 +49,7 @@ for cnm,cyc in zip(cnames,cycles):
         dfStatePop = dfCyclePop[dfCyclePop["State"].str.contains(abbr)]
         if np.abs(0.5-dfStatePop["mean"].values[0]) > limit: continue
         dfState    = dfCycle[dfCycle["State"].str.contains(abbr)]
-        betaParams = zip(dfState["alpha"].tolist(),dfState["beta"].tolist(),dfState["loc"].tolist(),dfState["scale"].tolist())
+        betaParams = zip(dfState["alpha"].tolist(),dfState["beta"].tolist())
         if len(dfState) > 2:
             expMM,expT = getExpMMandT(betaParams)
 

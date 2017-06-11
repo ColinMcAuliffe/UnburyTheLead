@@ -16,7 +16,7 @@ abbr2name = us.states.mapping('abbr', 'name')
 figDir       = os.path.join("Figures","ExpectedAsymmetry")
 figDirHBS    = os.path.join(figDir,"HistogramsByState")
 figDirLBS    = os.path.join(figDir,"LinePlotsByState")
-figExt       = ".tiff"
+figExt       = ".png"
 dataDir      = "Data"
 
 congress    = pd.read_csv(os.path.join(dataDir,"congressImputed.csv"))
@@ -51,6 +51,8 @@ axhist4  = [axh1,axh2,axh3,axh4,axh5]
 
 fig5, ((axn1, axn2,axn3), (axn4, axn5, axn6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(18,10))
 axhist5  = [axn1,axn2,axn3,axn4,axn5]
+
+fig6, axn = plt.subplots(1,1)
 
 binsTot = np.linspace(-0.5,60.5,42)
 binsNet = np.linspace(-40.5,40.5,82)
@@ -141,6 +143,15 @@ for cnm,cyc,ax,axhs4,axhn5 in zip(cnames,cycles,axhist,axhist4,axhist5):
     axh.add_patch(Rectangle((cyc[0],asymp25),8,asymp75-asymp25,color='0.75',alpha=0.5))
     axh.plot(cyc,[meanAsym]*len(cyc),color='0.75',linewidth=4)
 
+    meanAsym = np.mean(netAsym)
+    asymp75  = np.percentile(netAsym,75)
+    asymp25  = np.percentile(netAsym,25)
+    asymp95  = np.percentile(netAsym,95)
+    asymp05  = np.percentile(netAsym, 5)
+    axn.add_patch(Rectangle((cyc[0],asymp05),8,asymp95-asymp05,color='0.75',alpha=0.2))
+    axn.add_patch(Rectangle((cyc[0],asymp25),8,asymp75-asymp25,color='0.75',alpha=0.5))
+    axn.plot(cyc,[meanAsym]*len(cyc),color='0.75',linewidth=4)
+
 fig2.savefig(os.path.join(figDir,"80vs10"+figExt))
 
 list2df(dataExp,os.path.join(dataDir,"expAsym"))
@@ -175,18 +186,25 @@ for state in states:
     plt.close(fig2)
 
 for cyc,cnm in zip(cycles,cnames):
-    mm = []
+    st = []
+    sn = []
     for year in cyc:
         dfYear = stateData[stateData["year"] == year]
-        mm.append(np.sum(np.abs(dfYear["specAsym (seats)"].values)))
+        st.append(np.sum(np.abs(dfYear["specAsym (seats)"].values)))
+        sn.append(np.sum(dfYear["specAsym (seats)"].values))
         #mm.append(np.sum(np.floor(np.abs(dfYear["specAsym (seats)"].values))))
         #mm.append(np.sum(dfYear["specAsym (seats)"].values))
-    axh.plot(cyc,mm,marker='x',color='k',linewidth=4)
+    axh.plot(cyc,st,marker='x',color='k',linewidth=4)
+    axn.plot(cyc,sn,marker='x',color='k',linewidth=4)
 
 axh.grid()
 y0,y1 = axh.get_ylim()
 axh.set_ylim((0,y1))
 fig3.savefig(os.path.join(figDir,"totalAsym"+figExt))
+
+axn.grid()
+axn = setLimits(axn)
+fig6.savefig(os.path.join(figDir,"netAsym"+figExt))
 
 axh6.set_axis_off()
 axn6.set_axis_off()

@@ -33,7 +33,7 @@ bins7 = np.linspace(-7.25,7.25,30)
 #Compute specific asymmetry and historic mean and stdv{{{1
 #Compute data{{{2
 data      = [['State','cycle','AreaNumber','Mean','Stdv','Var']]
-stateData = [['State','STATEFP','year','demVotes','repVotes','demVoteFrac','repVoteFrac','demSeats','demSeatFrac','specAsym (seats)','specAsym (fraction)']]
+stateData = [['State','STATEFP','year','demVotes','repVotes','demVoteFrac','repVoteFrac','demSeats','demSeatFrac','specAsym (seats)','specAsym (fraction)','mean-median','margin']]
 fig = plt.figure(figsize=(10,8))
 ax  = fig.add_subplot(211)
 for state in states:
@@ -51,16 +51,11 @@ for state in states:
             mm.append(sp)
             dem_total,rep_total,popVote,seats,seatFrac = getDemVotesAndSeats(dfYear["imputedDem"].values,dfYear["imputedRep"].values)
             pcts = dfYear["imputedDem"].values/(dfYear["imputedDem"].values+dfYear["imputedRep"].values)
-            pcts = np.concatenate((pcts,[popVote]))
-            sp2 = get_asymFromPct(pcts,decenter=False)
-            if sp != sp2:
-                print sp,sp2
-            stateData.append([abbr,state.fips,year,dem_total,rep_total,popVote,1.-popVote,seats,seatFrac,sp,sp/float(len(dfYear))])
-            pcts = dfYear["centeredDem"].values/(dfYear["centeredDem"].values+dfYear["centeredRep"].values)
-            pcts = np.concatenate((pcts,[popVote]))
-            sp2 = get_asymFromCenteredPct(pcts)
-            if sp != sp2:
-                print dfYear
+            if len(dfYear) > 1:
+                meanMed = np.mean(pcts)-np.median(pcts)
+            else:
+                meanMed = 0.
+            stateData.append([abbr,state.fips,year,dem_total,rep_total,popVote,1.-popVote,seats,seatFrac,sp,sp/float(len(dfYear)),meanMed,0.5-popVote])
 
         ax.plot(cyc,mm,marker='x',color='0.5')
 
@@ -151,6 +146,17 @@ fig.savefig(os.path.join(figDir,"historicSA"+figExt))
 ax2.grid()
 ax2.legend()
 fig2.savefig(os.path.join(figDir,"sv"+figExt))
+#2}}}
+#plot asymmetry vs mean median difference{{{2
+fig = plt.figure()
+ax  = fig.add_subplot(111)
+ax.scatter(stateData["specAsym (fraction)"].values,stateData["mean-median"].values)
+closeStates = stateData[stateData["margin"].abs() < 0.03]
+ax.scatter(closeStates["specAsym (fraction)"].values,closeStates["mean-median"].values,color='g')
+ax.grid()
+ax.set_xlabel("Specific Asymmetry")
+ax.set_ylabel("Mean - Median")
+fig.savefig(os.path.join(figDir,"sctMM"+figExt))
 #2}}}
 #Plot histograms of the stdv for each cycle{{{2
 fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(10,8))
