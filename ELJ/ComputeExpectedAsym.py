@@ -36,7 +36,7 @@ cnames = [1970,1980,1990,2000,2010]
 bins6 = np.linspace(-6.25,6.25,26)
 bins7 = np.linspace(-7.25,7.25,30)
 #Compute and plot expected asymmetry{{{1
-dataExp = [['State','cycle','expectedAsym','expectedAsymPct','mode','p05','p95']]
+dataExp = [['State','cycle','expectedAsym','expectedAsymPct','mode','p05','p95','ndist']]
 fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(18,10))
 fig2, ((axs1, axs2), (axs3, axs4)) = plt.subplots(2, 2, sharex="col", sharey=True,figsize=(18,10))
 
@@ -85,7 +85,7 @@ for cnm,cyc,ax,axhs4,axhn5 in zip(cnames,cycles,axhist,axhist4,axhist5):
             p95  = 0.
 
 
-        dataExp.append([abbr,cnm,mean,mean/float(len(dfState)),mode,p05,p95])
+        dataExp.append([abbr,cnm,mean,mean/float(len(dfState)),mode,p05,p95,len(dfState)])
         if abbr == "TX" and cnm == 1980:
             N, bins, patches = axs1.hist(expAsym,bins=bins6,normed=1.)
             bins,patches = colorBins(bins,patches,0.)
@@ -229,8 +229,12 @@ ax  = fig.add_subplot(111)
 rank = range(1,51)
 for cyc,cnm in zip(cycles,cnames):
     dfCycle      = dataExp[dataExp["cycle"]==cnm]
+    dfCycle['abs'] = dfCycle['expectedAsym'].abs()
+    dfCycle      = dfCycle.sort('abs',ascending=False)
+    print dfCycle[0:10]
     expAsym = np.sort(dfCycle['expectedAsym'].abs())[::-1]
     ax.plot(rank,expAsym,marker='.',label=str(cnm))
+print "______"
 ax.legend()
 ax.set_xlabel("Rank")
 ax.set_ylabel("Expected Asymmetry")
@@ -242,10 +246,12 @@ ax  = fig.add_subplot(111)
 rank = range(1,51)
 for cyc,cnm in zip(cycles,cnames):
     dfCycle      = dataExp[dataExp["cycle"]==cnm]
-    dfCycle      = dfCycle.sort('expectedAsymPct',ascending=False)
-    print dfCycle[0:5]
+    dfCycle      = dfCycle[dfCycle["ndist"]>5]
+    dfCycle['abs'] = dfCycle['expectedAsymPct'].abs()
+    dfCycle      = dfCycle.sort('abs',ascending=False)
+    print dfCycle[0:10]
     expAsym = np.sort(dfCycle['expectedAsymPct'].abs())[::-1]
-    ax.plot(rank,expAsym,marker='.',label=str(cnm))
+    ax.plot(rank[0:len(expAsym)],expAsym,marker='.',label=str(cnm))
 ax.legend()
 ax.set_xlabel("Rank")
 ax.set_ylabel("Expected Asymmetry as a % of Available Seats")
