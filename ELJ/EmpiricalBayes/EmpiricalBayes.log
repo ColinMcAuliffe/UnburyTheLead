@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  10 JUN 2017 22:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  12 JUN 2017 21:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -393,47 +393,89 @@ File: uesint.fd
 ) [1
 
 {/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (14.56459pt too wide) in paragraph at lines 89--112
+Overfull \hbox (14.56459pt too wide) in paragraph at lines 99--125
  [][] 
  []
 
-<../Figures/ExpectedAsymmetry/netAsymHist.png, id=13, 1300.86pt x 722.7pt>
+[2] [3] <../Figures/ExpectedAsymmetry/netAsym.png, id=20, 578.16pt x 433.62pt>
+File: ../Figures/ExpectedAsymmetry/netAsym.png Graphic file (type png)
+
+<use ../Figures/ExpectedAsymmetry/netAsym.png>
+Package pdftex.def Info: ../Figures/ExpectedAsymmetry/netAsym.png used on input
+ line 172.
+(pdftex.def)             Requested size: 346.89867pt x 260.17401pt.
+
+<../Figures/ExpectedAsymmetry/netAsymHist.png, id=22, 1300.86pt x 722.7pt>
 File: ../Figures/ExpectedAsymmetry/netAsymHist.png Graphic file (type png)
 
 <use ../Figures/ExpectedAsymmetry/netAsymHist.png>
 Package pdftex.def Info: ../Figures/ExpectedAsymmetry/netAsymHist.png used on i
-nput line 122.
+nput line 178.
 (pdftex.def)             Requested size: 520.3348pt x 289.07487pt.
 
-Overfull \hbox (50.57977pt too wide) in paragraph at lines 122--123
+Overfull \hbox (50.57977pt too wide) in paragraph at lines 178--179
  [] 
  []
 
-[2] [3 <../Figures/ExpectedAsymmetry/netAsymHist.png>] [4
+[4 <../Figures/ExpectedAsymmetry/netAsym.png>]
+Overfull \hbox (18.01195pt too wide) in paragraph at lines 191--202
+[]\T1/cmr/m/n/12 Differences in method-ol-ogy aside, the re-sult that the ex-pe
+cted asym-me-try fa-vor-ing Democrats
+ []
 
-]
-(./EmpiricalBayes.aux) ) 
+<../Figures/ExpectedAsymmetry/80vs10.png, id=27, 1300.86pt x 722.7pt>
+File: ../Figures/ExpectedAsymmetry/80vs10.png Graphic file (type png)
+
+<use ../Figures/ExpectedAsymmetry/80vs10.png>
+Package pdftex.def Info: ../Figures/ExpectedAsymmetry/80vs10.png used on input 
+line 205.
+(pdftex.def)             Requested size: 520.3348pt x 289.07487pt.
+
+Overfull \hbox (50.57977pt too wide) in paragraph at lines 205--206
+ [] 
+ []
+
+<../Figures/ExpectedAsymmetry/totalAsym.png, id=28, 578.16pt x 433.62pt>
+File: ../Figures/ExpectedAsymmetry/totalAsym.png Graphic file (type png)
+
+<use ../Figures/ExpectedAsymmetry/totalAsym.png>
+Package pdftex.def Info: ../Figures/ExpectedAsymmetry/totalAsym.png used on inp
+ut line 217.
+(pdftex.def)             Requested size: 346.89867pt x 260.17401pt.
+ [5 <../Figures/ExpectedAsymmetry/netAsymHist.png>] [6 <../Figures/ExpectedAsym
+metry/80vs10.png> <../Figures/ExpectedAsymmetry/totalAsym.png>]
+<../Figures/ExpectedAsymmetry/asymRank.png, id=38, 578.16pt x 433.62pt>
+File: ../Figures/ExpectedAsymmetry/asymRank.png Graphic file (type png)
+
+<use ../Figures/ExpectedAsymmetry/asymRank.png>
+Package pdftex.def Info: ../Figures/ExpectedAsymmetry/asymRank.png used on inpu
+t line 234.
+(pdftex.def)             Requested size: 346.89867pt x 260.17401pt.
+ [7 <../Figures/ExpectedAsymmetry/asymRank.png>] [8
+
+] (./EmpiricalBayes.aux) ) 
 Here is how much of TeX's memory you used:
- 4940 strings out of 492995
- 73012 string characters out of 6132704
- 152623 words of memory out of 5000000
- 8384 multiletter control sequences out of 15000+600000
- 20436 words of font info for 63 fonts, out of 8000000 for 9000
+ 4966 strings out of 492995
+ 73858 string characters out of 6132704
+ 154655 words of memory out of 5000000
+ 8405 multiletter control sequences out of 15000+600000
+ 21120 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 44i,8n,42p,355b,344s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/cm-
-super/cm-super-t1.enc}</usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm
--super/sfbx1095.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-s
-uper/sfbx1728.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-sup
-er/sfrm1095.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super
-/sfrm1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/s
-frm1440.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfr
-m2074.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfti1
-095.pfb>
-Output written on EmpiricalBayes.pdf (4 pages, 182348 bytes).
+ 44i,8n,42p,425b,344s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/c
+m-super/cm-super-t1.enc}</usr/local/texlive/2017/texmf-dist/fonts/type1/public/
+cm-super/sfbx1095.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm
+-super/sfbx1728.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-s
+uper/sfrm1095.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-sup
+er/sfrm1200.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super
+/sfrm1440.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/s
+frm2074.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sft
+i1095.pfb></usr/local/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfti1
+200.pfb>
+Output written on EmpiricalBayes.pdf (8 pages, 360824 bytes).
 PDF statistics:
- 49 PDF objects out of 1000 (max. 8388607)
- 33 compressed objects within 1 object stream
+ 75 PDF objects out of 1000 (max. 8388607)
+ 46 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 26 words of extra memory for PDF output out of 10000 (max. 10000000)
 

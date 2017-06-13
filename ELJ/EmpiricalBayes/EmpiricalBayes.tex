@@ -49,6 +49,11 @@ Partisan state legislatures have used the redistricting process in pursuit of va
 Opportunities to manipulate the redistricting process for partisan advantage abound, particularly with the advent of sophisticated algorithms for redistricting as well as high degree of partisan and geographic polarization in the current political climate. 
 However, the supreme court has yet to rule definitively on the justicability of partisan gerrymandering, and recent rulings suggest that a manageable standard for measuring gerrymandering is a prerequisite for a ruling on justicability CITE.
 
+A ruling on the justicability of partisan gerrymandering would have significant consequences for democracy in the United States.
+Partisan gerrymandering not only distorts the composition of legislative bodies, it represents a dilution of the voter's ability to attempt to influence policy by electing representatives of their choosing.
+The ability of state legislatures to use redistricting to influence the outcome of election comes at the direct expense of voter's ability to use their ballot to influence the outcome of elections.
+However, in order to properly asses the harm caused by partisan gerrymandering, courts require mathematical tools for analyzing partisan bias in a redistricting plan.
+
 Development of a standard that fits with existing rulings, accurately measures partisan bias under generic conditions, and is simple enough to be effectively communicated to a court is not an easy task.
 For example, a common sense standard might be to require that a party's share of seats is proportional to its share of votes, which is simple and applicable to swing states as well as more partisan states.
 However, even when redistricting is fair, single winner voting systems tend not to produce such proportional outcomes CITE, and the supreme court has stated that proportionality is not acceptable CITE.
@@ -64,7 +69,7 @@ Grofman and King proposed a metric based on the deficit in seats at 50\% votes i
 
 A special group of standards are those where a particular metric is associated with an existing analytic statistical model.
 Among these are the lopsided wins test, the mean median difference test, and the chi square test proposed by Wang CITE.
-These standards are attractive because they based on statistics with properties that are well understood, that are used broadly for applications across many fields, and relatively simple.
+These standards are attractive because they based on statistics with properties that are well understood, that are used broadly for applications across many fields, and are relatively simple.
 However, these tests have some drawbacks.
 Namely, the models used for computing the significance level for those tests are valid asymptotically as the number of districts increases, meaning that the statistical power of these standards is diminished for states with just a few districts.
 Additionally, these models assume that samples are independent and identically distributed (IID), which is an assumption that is crucial for the tests to be analytic (and hence simple) but not necessarily realistic for elections.
@@ -78,9 +83,14 @@ This method can be used to establish whether a not a party's vote share wins the
 The standard that we propose is also based on Monte Carlo simulation.
 The metric, which we refer to as the specific asymmetry (see section \ref{sec:MB}), is a measure of partisan bias that determines discrepancy in seats won by the losing party under a reversal in statewide partisanship.  
 The model, described in section \ref{sec:FB}, uses a Monte Carlo technique based simulations of an empirically estimated probability model for district and statewide partisanship.
-The drawback of Monte Carlo based standards is complexity, in fact, the supreme court has expressed skepticism of this type of approach CITE.
-Whether or not a court can be convinced to warm up to such an approach has yet to be determined, but what is clear is that monte carlo based methods are powerful tools for examination of bias that has occurred in past elections as well as bias that could occur under a proposed redistricting plan.
-In fact, the empirical bayesian model that we propose is compatible with all of the metrics we have discussed thus far, and can be used as a part of a standard itself, or can be used to test the robustness of simpler standards. 
+The drawback of Monte Carlo based standards is complexity, in fact, despite the fact that Monte Carlo simulation is a common and highly conventional technique, the supreme court has expressed skepticism of this type of approach CITE.
+Whether or not a court can be convinced to warm up to such an approach has yet to be determined, but what is clear is that monte carlo based methods are powerful tools for examination of bias.
+
+The empirical Bayesian framework that we propose is not only appropriate for assessing bias that has existed in past redistricting plans, but it is useful for understanding how bias could be introduced into future redistricting plans, even as strategies for gerrymandering change in response to the introduction of a hypothetical standard.
+In fact, the empirical Bayesian model that we propose is compatible with all of the metrics we have discussed thus far, and can be used as a part of a standard itself, or can be used to test the robustness of standards that do not require Monte Carlo simulation. 
+We therefore contend that regardless of whether or not the approach we present is acceptable judicial standard itself, it remains a powerful tool for assessing partisan bias in redistricting plans that will prove useful for researchers and advocates of redistricting reform.
+For example, the Monte Carlo technique can be used to evaluate the properties of metrics which do not have well known analytic statistical properties such as the efficiency gap and the specific asymmetry metric proposed in section \ref{sec:MB}, or to evaluate the effect of the IID assumption for metrics which do have known analytic properties such as the mean median difference and the t-test.
+Additionally, the technique could be used to help develop an understanding of the conditions where different metric may agree or disagree with one another.
 For fast reference, table \ref{tab:Stand} summarizes each of the standards discussed here. 
 
 \begin{table}[htb!]
@@ -105,6 +115,9 @@ Lopsided wins test & difference in party  & asymptotic distribution \\
 Test III & Party seat share & MC sampling of national \\
          &                  & district voting results\\
 \hline
+Chen and Rodden & Party seat share & MC sampling of randomly \\
+         &                         & generated districting plans\\
+\hline
 Present study & Specific Asymmetry & MC sampling of the \\
               &                    & empirical Bayesian model\\
 \hline
@@ -113,14 +126,113 @@ Present study & Specific Asymmetry & MC sampling of the \\
 
 \section{Measuring Bias with the Specific Asymmetry\label{sec:MB}}
 
+Measuring partisan bias accurately presents several challenges from a mathematical and legal perspective.
+Redistricting will always be an artificial process, and therefore we must establish what characteristics of a redistricting plan can be regarded as normative before attempting to measure deviations from the normative standard.
+We propose the following definition: \emph{a fair redistricting plan is one that, on average, will not be biased in favor of either of the two major parties}
+With this definition in mind, we turn our attention to several challenges in devising a metric for bias.
+First, single winner elections tend not to produce outcomes CITE, and we therefore can not use proportionality or the lack thereof as a measure of bias.
+Bias should therefore be a measure of symmetry, which permits disproportionate outcomes but requires that any advantage that might arise from the disproportionate nature of the single winner election system be equally available to either party.
+
+A few measures of bias that follow this definition exist in the literature, such a Grofman and King, and the mean median difference CITE.
+However, these measures of bias tend to apply only to states which are close to 50-50 partisanship CITE.
+For more partisan states, these measures become more difficult to interpret except as the bias which could have occurred had the partisanship in the state in question been closer to even.
+Another approach is to consider the bias at levels of partisanship by using the geometric area between the seats votes curve and its reflection CITE.
+Useful information may be gleaned from these approaches, but Justice Kennedy expressed a dislike for measures based on a hypothetical state of affairs.
+Additionally, measurement of bias at different levels of hypothetical partisanship may lead to significantly different results depending on the partisanship level considered.
+For example, the seats votes curve for the Wisconsin state assembly shows substantial bias favoring Republicans at close to even partisanship, but the complete reverse at high levels of Democratic partisanship.
+This means that bias measures which do not consider the actual partisanship in a state could result in false positives and false negatives.
+In light of this a measure of bias that is applicable to any level of partisanship, and that directly considers the actual level of partisanship in a given state seems appropriate.
+To address these challenges, we propose a measure of bias which we call the specific asymmetry, which is the deviation of the seats votes curve from the asymmetry line measured at the statewide popular vote.
+
+Bias by any measure may occur by chance in an otherwise fair redistricting plan, it is even possible for an antimajoritarian outcome to result from chance.
+It is also important not only to consider the harm a plan has caused to voters, but to also seek to assess the likelihood that a plan will cause harm to voters in future elections.
+For example, the plaintiffs in \emph{Whitford v. Gil} argued that based on an examination of a large body of election data, and observed efficiency gap of greater than 7\% in a given election was strongly suggestive of that bias in favor of the redistricting party would persist.
+In other words, the observation of a large bias was not only indicative of harm to voters that had already occurred, but it was also a strong predictor of likely future harm to voters.
+Analysis of historic data is not the only way to asses likely future harm due to bias, and we would like to use a method that takes advantage of as much specific information about the redistricting plan in question as possible.
+Therefore we employ an empirical statistical model to determine whether a particular redistricting plan will be unbiased \emph{on average}, or if bias is a persistent feature of the plan.
+This allows us to distinguish between chance occurrences of bias on an otherwise fair map, and to asses the magnitude of likely future harm a map can be expected to cause. 
+Full details of the particular model employed here are presented in the following section.
+
+
 \section{Modeling the Likelihood of Bias in Future Elections\label{sec:FB}}
 
 \section{Partisan Bias in the U.S. Congress 1972-2016\label{sec:Hist}}
-nice pictures etc
+We present an examination of partisan bias in the United States congress for elections from 1972 to 2016 by computing the expected specific asymmetry for each state and redistricting cycle using 10,000 Monte Carlo samples, as well as the observed specific asymmetry for each state and election.
+First, we consider the net asymmetry, which is indicative of how gerrymandering may have affected the partisan composition of congress.
+In figure \ref{fig:NetAsym}, the net observed asymmetry is shown for each election.
+The expected net asymmetry for each redistricting cycle is also shown with 25 and 5\% confidence bounds.
+A progression is observed where the net asymmetry strongly favored democrats in the 70's and 80's, mildly favoring democrats in the 90's, was roughly zero net asymmetry in the 2000's, to strongly favoring republicans in the 2010 cycle.
+Histograms for the simulations can be found in figure \ref{fig:NetAsymHist}, which shows the expectation and variance of the net specific asymmetry.
+In the 80's for example, the Democrats could expect about 20 seats on average due to redistricting bias, with a negligibly small probability that the net national asymmetry would favor Republicans.
+This situation has reversed entirely by the 2010 cycle, where republicans can expect 18 seats on average due to redistricting bias.
+Interestingly the 2000's show zero net bias on average, but this does not mean that the country was free of gerrymandering.
+As we will show later in this section, there was significant gerrymandering by republicans and democrats in their respective territories, but the net effect of these gerrymanders tended to roughly cancel.
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.6]{../Figures/ExpectedAsymmetry/netAsym.png}
+        \caption{Net national asymmetry based on 10,000 simulations}\label{fig:NetAsym}
+    \end{center}
+\end{figure}
 \begin{figure}[htb!]
     \begin{center}
         \includegraphics[scale=0.4]{../Figures/ExpectedAsymmetry/netAsymHist.png}
         \caption{Net national asymmetry based on 10,000 simulations}\label{fig:NetAsymHist}
+    \end{center}
+\end{figure}
+
+The results for the 2010s showing significant Republican gerrymandering are consistent with the well known REDMAP program, where Republicans lead a highly successful effort to gain control of several state houses in advance of the 2010 redistricting.
+For earlier cycles, we observe qualitative agreement with similar studies CITE in terms which party benefited on net from gerrymandering.
+Quantitatively, we observe some disagreement in terms of the magnitude of gerrymandering, with the present approach attributing more seats to redistricting bias.
+This can be explained by differences in the analysis methodology.
+The simulation technique employed in CITE draws a 'fantasy' delegation from national voting results in order to determine if a party is winning seats excessively relative to its vote share.
+National voting results are used as a baseline, but this baseline may contain substantial bias which means only large gerrymanders will be successfully identified. 
+In contrast, the present approach does not use a national baseline, and instead detects asymmetry in each state on a case by case basis.
+
+Differences in methodology aside, the result that the expected asymmetry favoring Democrats in the 80's is larger than that favoring Republicans in the 2010 cycle is surprising.
+In the 2010 cycle, Republicans had the advantages of sophisticated redistricting algorithms, a high degree of geographic polarization, and low variability in voter preferences.
+These factors enable effective gerrymandering and would not have been available to redistricters in the 80's.
+On the other hand, Democrats controlled a significant number of states in the 80's and the national level of Democratic partisanship in congressional elections was fairly high, while it is closer to even in the 2010 cycle.
+Democrats obtained seats due to small levels of bias in a number of states, and additionally obtained significant numbers of seats in larger states like California and Texas.
+Figure \ref{fig:80vs10} compares the simulated asymmetry distributions for California and Texas in the 80's and for Pennsylvania and North Carolina in the 2010's.
+We can see that the variability of the asymmetry in Texas and California was higher than that of Pennsylvania and North Carolina.
+It is also worth noting that the number of seats available in these states in the cycles under consideration.
+In the 80's Texas has 24 seats and  California had 43, Pennsylvania had 18 seats in the 2010s and North Carolina had 13.
+More district lines offers more opportunities for parties to manipulate redistricting to obtain a partisan advantage, and as a fraction of available seats, the gerrymanders in Pennsylvania and North Carolina are truly remarkable.
+This is consistent with the fact that conditions and technology to produce highly stable gerrymanders would exist to a greater degree in the 2010s than in the 1980s.
+
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.4]{../Figures/ExpectedAsymmetry/80vs10.png}
+        \caption{Histograms of the simulated asymmetries in Texas and California in the 1980's, and Pennsylvania and North Carolina in the 2010s}\label{fig:80vs10}
+    \end{center}
+\end{figure}
+
+Net zero gerrymandering is preferable to a distorted congress, but net zero gerrymandering may still result in the congressional delegations of individual states being highly distorted.
+We would therefore also like to examine the total asymmetry, or the sum of asymmetries in all states without regard to which party the asymmetry favors.
+This tells us to what extent redistricting is being used to control election outcomes nationally.
+This is plotted for each election cycle in \ref{fig:totalAsym}, where we observe that the total asymmetry has held fairly constant over each cycle.
+Regardless of which party benefited from bias on balance, bias in redistricting appears to have affected the representation of millions of voters.
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.6]{../Figures/ExpectedAsymmetry/totalAsym.png}
+        \caption{Total national asymmetry based on 10,000 simulations}\label{fig:totalAsym}
+    \end{center}
+\end{figure}
+
+While the total national asymmetry has held roughly constant over time, that is not to say that gerrymandering practices have held constant.
+To the contrary, some aspects of the 2010 redistricting cycle are quite unprecedented.
+Simultaneously, asymmetry has reduced in some states (at least in part due to redistricting reforms enacted in some of those states), while asymmetry has exploded in others.
+States known to have been targeted by the REDMAP program are gerrymandered very aggressively in terms of the number of seats available and the level of partisanship in those states.
+We can visualize how extreme the most aggressive gerrymanders are in each cycle are by sorting the expected asymmetry (as a percentage of available seats) in descending order for each state.
+This is shown in figure \ref{fig:asymRank}, where the 2010 cycle stands out as having four states with expected asymmetries that exceeded anything seen previously.
+These are Pennsylvania (19.7\%), North Carolina (19.5\%), Mississippi (18.8\%), and Georgia (16.7\%).
+The high percentage asymmetry in Mississippi is party due to a small number of available seats in the state, but all four of these states showed a sudden increase in asymmetry in favor of Republicans after the 2010 redistricting.
+Previous cycles may have had moderate asymmetries in a larger number of states, but in terms of extreme gerrymandering, there has been no time since the 70's that is comparable to the 2010 cycle.
+
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.6]{../Figures/ExpectedAsymmetry/asymRank.png}
+        \caption{Expected asymmetry as a percentage of seats ranked in descending order for each redistricting cycle}\label{fig:asymRank}
     \end{center}
 \end{figure}
 

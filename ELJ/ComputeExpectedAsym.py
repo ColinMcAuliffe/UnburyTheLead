@@ -101,7 +101,7 @@ for cnm,cyc,ax,axhs4,axhn5 in zip(cnames,cycles,axhist,axhist4,axhist5):
         if abbr == "PA" and cnm == 2010:
             N, bins, patches = axs2.hist(expAsym,bins=bins6,normed=1.)
             bins,patches = colorBins(bins,patches,0.)
-            axs2.set_xlabel("WI, 2010's")
+            axs2.set_xlabel("PA, 2010's")
             axs2.grid()
 
         if abbr == "NC" and cnm == 2010:
@@ -223,6 +223,34 @@ fig.savefig(os.path.join(figDir,"ExpasmHist2"+figExt))
 
 stateDataLarge = dataExp[dataExp['expectedAsym'].abs() > 2]
 stateDataLarge.to_csv(os.path.join(dataDir,"expSAsymLarge.csv"))
+
+fig = plt.figure()
+ax  = fig.add_subplot(111)
+rank = range(1,51)
+for cyc,cnm in zip(cycles,cnames):
+    dfCycle      = dataExp[dataExp["cycle"]==cnm]
+    expAsym = np.sort(dfCycle['expectedAsym'].abs())[::-1]
+    ax.plot(rank,expAsym,marker='.',label=str(cnm))
+ax.legend()
+ax.set_xlabel("Rank")
+ax.set_ylabel("Expected Asymmetry")
+ax.grid()
+fig.savefig(os.path.join(figDir,"asymRankS"+figExt))
+
+fig = plt.figure()
+ax  = fig.add_subplot(111)
+rank = range(1,51)
+for cyc,cnm in zip(cycles,cnames):
+    dfCycle      = dataExp[dataExp["cycle"]==cnm]
+    dfCycle      = dfCycle.sort('expectedAsymPct',ascending=False)
+    print dfCycle[0:5]
+    expAsym = np.sort(dfCycle['expectedAsymPct'].abs())[::-1]
+    ax.plot(rank,expAsym,marker='.',label=str(cnm))
+ax.legend()
+ax.set_xlabel("Rank")
+ax.set_ylabel("Expected Asymmetry as a % of Available Seats")
+ax.grid()
+fig.savefig(os.path.join(figDir,"asymRank"+figExt))
 #1}}}
 #skew plot
 sk = []
