@@ -51,25 +51,25 @@ However, the supreme court has yet to rule definitively on the justicability of 
 
 A ruling on the justicability of partisan gerrymandering would have significant consequences for democracy in the United States.
 Partisan gerrymandering not only distorts the composition of legislative bodies, it represents a dilution of the voter's ability to attempt to influence policy by electing representatives of their choosing.
-The ability of state legislatures to use redistricting to influence the outcome of election comes at the direct expense of voter's ability to use their ballot to influence the outcome of elections.
+The ability of state legislatures to use redistricting to influence the outcome of elections comes at the direct expense of voter's ability to use their ballot to influence the outcome of elections.
 However, in order to properly asses the harm caused by partisan gerrymandering, courts require mathematical tools for analyzing partisan bias in a redistricting plan.
 
 Development of a standard that fits with existing rulings, accurately measures partisan bias under generic conditions, and is simple enough to be effectively communicated to a court is not an easy task.
 For example, a common sense standard might be to require that a party's share of seats is proportional to its share of votes, which is simple and applicable to swing states as well as more partisan states.
 However, even when redistricting is fair, single winner voting systems tend not to produce such proportional outcomes CITE, and the supreme court has stated that proportionality is not acceptable CITE.
-A second example is the mean median difference test CITE, which fits with existing rulings since it measures partisan bias without regard to proportionality and is simple enough to calculated by a judge without an expert witness.
-However, it is only effective in measuring bias for states which are close to even in terms of partisanship CITE.
+A second example is the mean median difference test CITE, which fits with existing rulings since it measures partisan bias without regard to proportionality and is simple enough to be calculated by a judge without an expert witness.
+However, it is only effective in measuring bias for states which are close to even in terms of partisanship CITE: I'M NOT SURE THERE'S A CITATION FOR THIS - IT MIGHT BE A NOVEL STATEMENT.
 
 Several standards have been proposed in literature, and for clarity we describe a standard as consisting of two parts.
 The first part is a metric, which is some quantity that can be calculated from a given election result and is a measure of the unfairness or bias.
 The second part is a model (or in the absence of a statistical model per se an analysis of the metric in historical elections), which allows one to asses whether or not the observed value of the metric can be regarded as the result of chance in an otherwise unbiased redistricting plan, or if bias is a persistent feature of the plan.
 For example, the plaintiffs in Whitford v. Gil used a metric called the efficiency gap CITE, which measures the discrepancy in the so called wasted votes between the two major parties.
-An examination of historical election data determined that it is reasonable to assume that observing an efficiency gap of greater than 7\% 
+An examination of historical election data determined that it is reasonable to assume that observing an efficiency gap of greater than 7\%.
 Grofman and King proposed a metric based on the deficit in seats at 50\% votes in a seats votes curve CITE, and Nagle has proposed several other metrics based on the seats votes curve, including the geometric area between the seats votes curve and its reflection.
 
 A special group of standards are those where a particular metric is associated with an existing analytic statistical model.
 Among these are the lopsided wins test, the mean median difference test, and the chi square test proposed by Wang CITE.
-These standards are attractive because they based on statistics with properties that are well understood, that are used broadly for applications across many fields, and are relatively simple.
+These standards are attractive because they are based on statistics with properties that are well understood, that are used broadly for applications across many fields, and are relatively simple.
 However, these tests have some drawbacks.
 Namely, the models used for computing the significance level for those tests are valid asymptotically as the number of districts increases, meaning that the statistical power of these standards is diminished for states with just a few districts.
 Additionally, these models assume that samples are independent and identically distributed (IID), which is an assumption that is crucial for the tests to be analytic (and hence simple) but not necessarily realistic for elections.
@@ -79,18 +79,19 @@ The effects of small sample sizes are discussed in the statistics literature CIT
 Another group of standards are those based on Monte Carlo simulation CITE.
 The main advantages of Monte Carlo based standards are flexibility, since they can be used with a wide variety of metrics or even multiple metrics in combinations, and robustness.
 An example is test III proposed by Wang CITE, where the metric used was the proportion of seats won by a party, and the model was a Monte Carlo technique where 'fantasy' congressional delegations were sampled from national congressional voting results.
-This method can be used to establish whether a not a party's vote share wins them seats excessively relative to a national baseline.
+This method can be used to establish whether or not a party's vote share wins them seats excessively relative to a national baseline.
 The standard that we propose is also based on Monte Carlo simulation.
 The metric, which we refer to as the specific asymmetry (see section \ref{sec:MB}), is a measure of partisan bias that determines discrepancy in seats won by the losing party under a reversal in statewide partisanship.  
 The model, described in section \ref{sec:FB}, uses a Monte Carlo technique based simulations of an empirically estimated probability model for district and statewide partisanship.
-The drawback of Monte Carlo based standards is complexity, in fact, despite the fact that Monte Carlo simulation is a common and highly conventional technique, the supreme court has expressed skepticism of this type of approach CITE.
-Whether or not a court can be convinced to warm up to such an approach has yet to be determined, but what is clear is that monte carlo based methods are powerful tools for examination of bias.
+The drawback of Monte Carlo based standards is complexity.
+In fact, despite the fact that Monte Carlo simulation is a common and highly conventional technique, the supreme court has expressed skepticism of this type of approach CITE I'M NOT SURE THAT'S TRUE.
+Whether or not a court can be convinced to warm up to such an approach has yet to be determined, but what is clear is that Monte Carlo based methods are powerful tools for examination of bias and robustness.
 
 The empirical Bayesian framework that we propose is not only appropriate for assessing bias that has existed in past redistricting plans, but it is useful for understanding how bias could be introduced into future redistricting plans, even as strategies for gerrymandering change in response to the introduction of a hypothetical standard.
-In fact, the empirical Bayesian model that we propose is compatible with all of the metrics we have discussed thus far, and can be used as a part of a standard itself, or can be used to test the robustness of standards that do not require Monte Carlo simulation. 
-We therefore contend that regardless of whether or not the approach we present is acceptable judicial standard itself, it remains a powerful tool for assessing partisan bias in redistricting plans that will prove useful for researchers and advocates of redistricting reform.
+In fact, the empirical Bayesian model that we propose is compatible with all of the metrics we have discussed thus far, and can be used as part of a standard itself, or can be used to test the robustness of standards that do not require Monte Carlo simulation. 
+We therefore contend that regardless of whether or not the approach we present is an acceptable judicial standard itself, it remains a powerful tool for assessing partisan bias in redistricting plans that will prove useful for researchers and advocates of redistricting reform.
 For example, the Monte Carlo technique can be used to evaluate the properties of metrics which do not have well known analytic statistical properties such as the efficiency gap and the specific asymmetry metric proposed in section \ref{sec:MB}, or to evaluate the effect of the IID assumption for metrics which do have known analytic properties such as the mean median difference and the t-test.
-Additionally, the technique could be used to help develop an understanding of the conditions where different metric may agree or disagree with one another.
+Additionally, the technique could be used to help develop an understanding of the conditions where different metrics may agree or disagree with one another.
 For fast reference, table \ref{tab:Stand} summarizes each of the standards discussed here. 
 
 \begin{table}[htb!]
