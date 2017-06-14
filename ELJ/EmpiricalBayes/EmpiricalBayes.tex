@@ -131,8 +131,9 @@ Measuring partisan bias accurately presents several challenges from a mathematic
 Redistricting will always be an artificial process, and therefore we must establish what characteristics of a redistricting plan can be regarded as normative before attempting to measure deviations from the normative standard.
 We propose the following definition: \emph{a fair redistricting plan is one that, on average, will not be biased in favor of either of the two major parties}
 With this definition in mind, we turn our attention to several challenges in devising a metric for bias.
-First, single winner elections tend not to produce outcomes CITE, and we therefore can not use proportionality or the lack thereof as a measure of bias.
+First, single winner elections tend not to produce proportional outcomes CITE, and we therefore can not use proportionality or the lack thereof as a measure of bias.
 Bias should therefore be a measure of symmetry, which permits disproportionate outcomes but requires that any advantage that might arise from the disproportionate nature of the single winner election system be equally available to either party.
+In other words, we say that the result is unbiased if and only if any advantage gained by a party, above what is proportional, is a consequence of the disproportionate nature of the single winner election system, and not an additional bias piled on top of that.
 
 A few measures of bias that follow this definition exist in the literature, such a Grofman and King, and the mean median difference CITE.
 However, these measures of bias tend to apply only to states which are close to 50-50 partisanship CITE.
@@ -142,14 +143,14 @@ Useful information may be gleaned from these approaches, but Justice Kennedy exp
 Additionally, measurement of bias at different levels of hypothetical partisanship may lead to significantly different results depending on the partisanship level considered.
 For example, the seats votes curve for the Wisconsin state assembly shows substantial bias favoring Republicans at close to even partisanship, but the complete reverse at high levels of Democratic partisanship.
 This means that bias measures which do not consider the actual partisanship in a state could result in false positives and false negatives.
-In light of this a measure of bias that is applicable to any level of partisanship, and that directly considers the actual level of partisanship in a given state seems appropriate.
-To address these challenges, we propose a measure of bias which we call the specific asymmetry, which is the deviation of the seats votes curve from the asymmetry line measured at the statewide popular vote.
+In light of this, a measure of bias that is applicable to any level of partisanship and that directly considers the actual level of partisanship in a given state seems appropriate.
+To address these challenges, we propose a measure of bias which we call the specific asymmetry, which is the deviation of the seats votes curve from the symmetry line measured at the statewide popular vote.
 
 Bias by any measure may occur by chance in an otherwise fair redistricting plan, it is even possible for an antimajoritarian outcome to result from chance.
 It is also important not only to consider the harm a plan has caused to voters, but to also seek to assess the likelihood that a plan will cause harm to voters in future elections.
-For example, the plaintiffs in \emph{Whitford v. Gil} argued that based on an examination of a large body of election data, and observed efficiency gap of greater than 7\% in a given election was strongly suggestive of that bias in favor of the redistricting party would persist.
+For example, the plaintiffs in \emph{Whitford v. Gil} argued that based on an examination of a large body of election data, an observed efficiency gap of greater than 7\% in a given election was strongly suggestive that bias in favor of the redistricting party would persist.
 In other words, the observation of a large bias was not only indicative of harm to voters that had already occurred, but it was also a strong predictor of likely future harm to voters.
-Analysis of historic data is not the only way to asses likely future harm due to bias, and we would like to use a method that takes advantage of as much specific information about the redistricting plan in question as possible.
+Analysis of historical data is not the only way to assess likely future harm due to bias, and we would like to use a method that takes advantage of as much specific information about the redistricting plan in question as possible.
 Therefore we employ an empirical statistical model to determine whether a particular redistricting plan will be unbiased \emph{on average}, or if bias is a persistent feature of the plan.
 This allows us to distinguish between chance occurrences of bias on an otherwise fair map, and to asses the magnitude of likely future harm a map can be expected to cause. 
 Full details of the particular model employed here are presented in the following section.
