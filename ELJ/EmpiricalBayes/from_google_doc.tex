@@ -1,0 +1,192 @@
+\documentclass[preprint,12pt]{article}
+
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{wrapfig}
+\usepackage{subfig}
+\usepackage{framed}
+\usepackage{color}
+\usepackage{bm}
+
+\usepackage{multirow}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+%\usepackage{units}
+\usepackage{esint}
+
+\geometry{legalpaper,  margin=1in}
+%\makeatother
+
+%\usepackage{babel}fs
+
+\begin{document}
+
+\section{Modeling the Likelihood of Bias in Future Elections\label{sec:FB}}
+ 
+In order to show that the result is durable -- in other words, that future elections are likely to be impacted, we must, by definition, compute the probabilities of future outcomes given the historical data.  In other words, there are no “actual” results for future harm, since the future hasn’t happened yet.  So we can only predict the likelihood of different degrees of harm based on knowledge about the stochastic process and its statistical moments.
+ 
+Our first task in doing this correctly is to select the proper “probability model”.  Since we know the underlying process (people voting), we can deduce the correct model from first principles.  In particular, we look at what the underlying Stochastic_process is, and how the information that we are interested in relates to it.
+ 
+Model selection
+ 
+Small partisan asymmetries may be observed by chance on an otherwise fairly drawn map. A probability model will allow us to distinguish between cases where an asymmetric result occurred by chance on a fair map, and cases where the legislative map was drawn such that asymmetry is a persistent feature. 
+ 
+To chose a model appropriately, we must carefully consider the underlying process. The Beta distribution is a natural choice for many processes that involve percentages, and is appropriate for modeling election outcomes. This choice of probability model for modeling an election is not new. It has been used in numerous academic papers, and continues to be used in literature published quite recently. ( Paolino 2001, Kaplan and Barnett 2002, Murr 2015)  Indeed, teaching materials about the Beta distribution often use elections as an example.  Some academic papers have extended this model to take into account third parties by using the Dirichlet distribution (Rigdon et al 2009).  (The Dirichlet distribution is the multivariate extension of the Beta distribution.) 
+ 
+The choice of the Beta distribution follows directly from first principles. In fact, two different points of view of the underlying stochastic process of election results both lead us to the Beta distribution. In our present case, depending on our point of view, the underlying stochastic process is either a Bernoulli process (a number of trials that can each have one of two outcomes -- votes that can be for either one party or another) or a pair of Poisson processes (a series of events occurring at a certain rate -- voters for a party turning out to cast a vote).  
+ 
+In the first perspective (Bernoulli process), we are interested in the number of votes for a given party out of all the votes - the number of “successes” in a sequence of trials.  This leads us to the Binomial distribution.  However, we do not know the rate of “successes” - that is what we are trying to estimate.  To estimate the rate parameter of a Binomial distribution, we use its “conjugate prior distribution”, which is the Beta distribution.
+ 
+In the second perspective (Poisson process), we are interested in the number of times a voter for a party turns out to vote in a given amount of time (Election day) - the number of events in a fixed interval. This leads us to the Poisson distribution.  However, we do not know the rate of “events” - that is what we are trying to estimate.  To estimate the rate parameter of a Poisson distribution, we use its “conjugate prior distribution”, which is the Gamma distribution.  However, we are not done yet - we are interested in what fraction of events between the two poisson processes are from the first.  Where G(X) is the (unknown) rate of voter turnout for one party, and G(Y) the (unknown) rate for the other, we are interested in G(X) / ( G(X) + G(Y) ).  This leads us to the Beta distribution.
+ 
+Thus, deduction from first principles leads us to select the Beta distribution as our probability model for the outcome of an election, regardless of which perspective we initially take.
+ 
+Parameter estimation
+ 
+Now that we have selected the appropriate probability distribution (Beta), the next task is to estimate the parameters of the distribution.  Since we are estimating the parameters of a “prior” distribution -- that is, we are using a Beta distribution to model the distribution of the parameter p of a Binomial distribution -- directly from empirical data, what we are doing is called an “Empirical Bayes method”.
+ 
+Ideally, we’d use the maximum likelihood method for estimating the parameters, but unfortunately the Beta distribution does not have a closed form solution for that, so instead we use the method-of-moments .  We estimate the parameters of the Beta distribution of the total popular vote, and for the popular vote in each district.  
+ 
+To estimate the second moment (variance), we use an unbiased estimator.  The primary difference is that the statistical dispersion is a little greater.  Because we use an unbiased estimator, our model is also a model of future elections, not just previous elections.  More precisely, using an unbiased estimator makes our model a model of the “population” as opposed to only the “samples”.
+ 
+Note that to construct a seats-votes curve, we need to mean-center the total votes before estimating the parameters for the districts.  This has the added benefit that it helps to take into account systemic correlations among the districts.  That is, it encapsulates any information about uniform partisan swings in the likelihood function for the statewide vote totals, and removes this extra variance from the district totals.
+ 
+
+ 
+Below are twelve sample seats-votes curves and popular vote percentages drawn from such a probability model, using the 2012, 2014, and 2016 Wisconsin congressional election vote counts as inputs.  The solid curve is the seats-votes curve.  The dashed curve is the 2-axis reflection of the seats-votes curve.  The dotted vertical line is the popular vote percentage.  The drawn samples show a consistent and large asymmetry in favor of Republicans.
+
+ 
+ 
+Extending the model with the Gamma distribution
+ 
+The basic model outlined above does not give vote counts, only vote percentages.  To extend the model to one that estimates vote counts, one can use Gamma distribution to model voter turnout, both at the district level and at the state level.
+ 
+First we estimate the statewide Gamma distributions, as well as the average statewide turnout over all sample elections.   Then we take the district counts for each election and multiply them by a per-election constant factor to make their statewide totals match the average statewide totals.  Then we estimate the per-district Gamma parameters from those average-centered numbers.
+ 
+To draw an outcome from this hierarchical model, we first draw vote percentages from the basic model. Then we draw turnouts from the average-centered per-district Gamma distributions, then we use the drawn per-district vote percentages to split those into the Democratic turnout and Republican turnout.  We do the same with the statewide turnout -- we draw a sample and split it into Democratic and Republican vote turnout. 
+ 
+Finally, for each party, we multiply the per-party-per-district turnout by a constant factor to match the per-party-statewide turnout.  This gives us vote counts for each party and district, whose vote percentages match the basic model, and whose turnouts match the turnout model.
+ 
+As a sanity check, we compared results of the extended model with the basic model.  Our tests showed that the two models are in very strong agreement. 
+ 
+Below is a picture giving a basic overview of the extended model.  The top half is the basic model.  To get the more advanced model you combine both the top half and the bottom half.
+
+
+ 
+
+Using empirical priors for 1-sample tests or to improve estimates
+ 
+This method of creating a probability model is good when you have enough historical elections to create a model from, but what if you have data for only 1 election?
+ 
+If you have only 1 historical election, you can use your single sample as the mean of the Beta distribution, and for the variance of the Beta distribution you can use the expectation of the historical variance since 1972.
+ 
+We computed the standard deviation (unbiased estimate) for the 2 party democratic vote share over the redistricting cycle for federal congressional elections from 1972-2016 for all states in the country. We ignored uncontested elections since, with 2,076 data points, we had plenty of data to compute a typical standard deviation from without the need to impute missing data.
+ 
+Below is a histogram of the results.  The mean is 6.1%, the median is 5.2%, and close to 85% of districts had a standard deviation of less than 10%. 
+
+ 
+For a single sample, one can use the expectation of the standard deviation -- 6.1% or 0.061 -- as a plug-in estimator for the standard deviation. (The variance is the square of this: 0.003721.)  Then one can combine that with their single sample serving as the mean, and use the method of moments to estimate the alpha and beta parameters of the Beta distribution for each district.
+ 
+For more than 1 sample, to improve the accuracy of an estimator, one can fit the histogram to a Beta distribution (since the values vary between 0 and 1).  We computed the alpha and beta parameters of a fitted Beta distribution (shown by the green line in the chart) using maximum likelihood estimation (MLE). They come out to:
+ 
+{ alpha: 2.17183630081, beta: 33.2358219613 }
+ 
+You can use this Beta distribution as a Bayesian prior on the standard deviation for district partisanship for federal congressional elections.  Then you can compute the maximum likelihood estimation of the Beta distribution parameters for each district by way of Bayes’ Rule.  
+ 
+That is, where p(A) is the prior likelihood of having a given standard deviation according to the above graph, and p(B|A) is the conditional probability of the observations (B) given the standard deviation A and the sample mean, the most likely standard deviation given the data p(A|B) is the one that maximizes the likelihood of p(B|A)*p(A): 
+ 
+
+ 
+Additionally we could go a step deeper and, instead of calculating the expected value of p(A|B), integrate over all possible values for A, weighted by their posterior likelihoods, p(A|B).
+
+
+\section{Partisan Bias in the Wisconsin State Assembly, post 2010 census\label{sec:Wis}}
+
+Data preparation
+Imputing uncontested elections
+ 
+Some elections are uncontested.   This poses a problem for data analysis, as it amounts to missing data.  There are three ways we can deal with the missing data: 
+ 
+treat them as contested elections with unanimous support, 
+throw out the uncontested elections, and 
+estimate what the results would be if they were contested, 
+ 
+The academic consensus is that the third option leads to the most accurate data analysis.  Indeed, the other two options produce highly skewed results.
+ 
+To estimate the uncontested races, we use the presidential vote count where available, and the federal congressional vote count in years where there was no presidential election.
+ 
+Our imputation process is as follows:
+ 
+Calculate the total votes for each party for both sets of elections, counting only those districts that were contested in both.
+Multiply the by-district totals in the data set used to impute by the totals in step 1 for the data set with the missing data, and divide by the total in step 1 for the set used to impute.  We call this “swing adjusting”, because it makes both data sets have the same overall swing.  It also matches the voter turnout.
+Substitute in these swing-adjusted districts for the missing data.
+ 
+De-aggregating and re-aggregating for different precinct shapes (pre-2010 census)
+ 
+In order to have more data to use, we take imputed data from prior to the post-2010 census maps, de-aggregate them to block level (proportional to voting age population), and then re-aggregate that back to district level, for the post-2010 census districts.
+ 
+We limit the data to only going back a little over 10 years, to keep it recent.  That still gives us 6 elections to work with.
+ 
+Future election result likelihoods (District partisanship likelihoods)
+ 
+Below is a graph of district partisanship, including dispersion.  To generate this graph, a Beta distribution for each districts was calculated using the method of moments.  Additionally a Beta distribution for the total popular vote was calculated using the method of moments.  Then the probability density function was plotted out for each one of them.  (The black curve in the middle is the total popular vote.) Results that lead to a Democrat winning the seat are colored in blue, and results that lead to a Republican winning the seat are colored in red.
+ 
+The phenomena of packing and cracking discussed in the above section is clearly evident.  Note, in addition to the the average of the past 6 elections, the graph also shows the statistical dispersion, from which the durability of this effect for future elections can be assessed.
+
+ 
+Note that Democratic-leaning districts are both far to the left, showing high partisanship (and thus low voter impact), and low dispersion -- meaning the voters are unlikely to change their minds; they are “safe” Democratic voters.  Conversely, the Republican-leaning districts are closer to the middle, but still safely to the right, and all centered around about the same place.   These are characteristic signs of packing and cracking.  Let me rephrase that: this is the very definition of “packing and cracking”.  The Democratic voters were packed - hence far to the left.  By concentrating Democratic voters in few districts, this reduces the number of seats that Democratic voters can win.  The remaining population was “cracked” to get the Republican-leaning districts all to about the same level of moderately (but safely) Republican-leaning partisanship, thus increasing the number of seats that Republican voters can win.  The net effect is to maximize the impact of Republican votes, and minimize the impact of Democratic votes.
+ 
+Shown below are twelve seats-votes curves drawn from these distributions (solid curve), along with their 2-axis reflection (dashed curve), and a popular vote percentage drawn from the statewide beta distribution (vertical dotted gray line).  A large and consistent asymmetry in favor of Republicans is immediately evident.
+ 
+
+
+Numerical integrations of likelihood functions
+District partisanship histogram
+ 
+Another way we can see this is by looking at the histogram of district partisanship.
+ 
+Similarly to how we modeled vote percentages with Beta distributions, we used Gamma distributions to model voter turnout.  We then combined these two to model actual vote counts in each district.  This allowed us to compute likelihood functions for specific vote counts in every district.  We then used Monte Carlo integration to construct the likelihood function for district partisanship, over all districts.
+ 
+The resulting curve leaves no room for interpretation.  The high red peak close to the center but still safely to the side shows that Republican districts are heavily cracked.  Conversely, the mass of blue far to the side and comparative lack of a strong peak close to the center shows that Democratic districts are heavily packed.
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+Comparing this chart with the empirical district partisanship histogram for all U.S. congressional elections for all states since 1972, we see that it stands in stark congress to the almost even distribution over all cycles, and even stands out from the 2010 cycle, which the Republican State Leadership Committee has openly advertised that they successfully gerrymandered (REDMAP).
+
+ 
+Statewide seat count likelihoods
+ 
+The seat count likelihoods produced by this packing and cracking can be shown by integrating the statewide and district partisanship likelihood functions.  As these distributions, like most Bayesian models, don’t lend themselves to analytic integration, numerical integration must be used. Using the Monte-Carlo numerical integration method, with 100,000 samples, we constructed the probability mass function for the Republican seat count results from an election, given the current districts and voter demographics.  The results are shown in the graph below.
+ 
+Particularly striking about this result is that, while the popular vote likelihoods in the above graph centers around 50/50, favoring Democratic representatives more than 40% of the time, the seat count likelihoods never put Democratic representatives in the majority.  Indeed, out of 100,000 samples, it never even gives them 44 out of 99 of the seats.  On average Republican representatives maintain a 63-36 seat advantage.   This shows a sizable and durable partisan advantage for Republicans, despite the actual voters showing no clear preference, and indeed, preferring Democrats almost half the time.
+
+ 
+
+Specific partisan asymmetry likelihoods
+ 
+To get the likelihood function for partisan asymmetry, we again use Monte-Carlo numerical integration, but this time we subtract the seat counts Democrats would get with that share of the vote from the number Republicans would get under the same share of the vote.  Below are the results.
+ 
+
+ 
+Note the mode of the distribution - the most likely result - is a partisan asymmetry of 20% of the available seats.  For instance, the most likely result might be that Republicans get 6/10ths of the legislative seats, whereas if the popular vote count were reversed, Democrats would get only 4/10th of the legislative seats.  Remedying this would give Democrats 10% more seats.  This means that roughly 10% of the entire Democratic-voting population of the state of Wisconsin were effectively disenfranchised, in violation of the one person, one vote principle.  Conversely, 10% of the Republican-voting population effectively got an extra vote.  That’s approximately 306,000 felonies.
+ 
+Note, out of 100,000 sample points, none of them resulted in specific partisan asymmetry favoring Democrats.  Since an assembly district election occurs every 2 years, this shows that, without significant changes in geo-spatial demographics, the asymmetric pro-Republican partisan advantage inherent in this redistricting will persist for the next 200,000 years.  (Though no doubt there will be significant geo-spatial demographic changes before then.  Indeed, there will probably even be some geological changes.)
+
+
+
+\section{Conclusions}
+
+
+\end{document}
