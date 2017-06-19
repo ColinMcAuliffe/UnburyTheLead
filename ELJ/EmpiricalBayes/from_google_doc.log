@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.19)  19 JUN 2017 11:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.19)  19 JUN 2017 17:04
 entering extended mode
 **./from_google_doc.tex
 (from_google_doc.tex
@@ -390,10 +390,10 @@ File: ../Figures/WI2010/probabilityModel.png Graphic file (type png)
 
 <use ../Figures/WI2010/probabilityModel.png>
 Package pdftex.def Info: ../Figures/WI2010/probabilityModel.png used on input l
-ine 62.
+ine 64.
 (pdftex.def)             Requested size: 531.48433pt x 566.11362pt.
 
-Overfull \hbox (61.72931pt too wide) in paragraph at lines 62--63
+Overfull \hbox (61.72931pt too wide) in paragraph at lines 64--65
  [] 
  []
 
@@ -403,10 +403,10 @@ File: ../Figures/WI2010/sv_curves_congress.png Graphic file (type png)
 
 <use ../Figures/WI2010/sv_curves_congress.png>
 Package pdftex.def Info: ../Figures/WI2010/sv_curves_congress.png used on input
- line 71.
+ line 73.
 (pdftex.def)             Requested size: 536.00664pt x 399.29483pt.
 
-Overfull \hbox (66.25162pt too wide) in paragraph at lines 71--72
+Overfull \hbox (66.25162pt too wide) in paragraph at lines 73--74
  [] 
  []
 
@@ -416,31 +416,31 @@ File: ../Figures/WI2010/hyperprior.png Graphic file (type png)
 
 <use ../Figures/WI2010/hyperprior.png>
 Package pdftex.def Info: ../Figures/WI2010/hyperprior.png used on input line 10
-1.
+3.
 (pdftex.def)             Requested size: 481.80373pt x 361.35278pt.
 
-Overfull \hbox (12.0487pt too wide) in paragraph at lines 101--102
+Overfull \hbox (12.0487pt too wide) in paragraph at lines 103--104
  [] 
  []
 
 [4 <../Figures/WI2010/hyperprior.png>] [5] [6]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 185.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 187.
 
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 185.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 187.
  [7] [8]
 <../Figures/WI2010/betas.png, id=39, 494.84875pt x 282.05376pt>
 File: ../Figures/WI2010/betas.png Graphic file (type png)
 
 <use ../Figures/WI2010/betas.png>
-Package pdftex.def Info: ../Figures/WI2010/betas.png used on input line 245.
+Package pdftex.def Info: ../Figures/WI2010/betas.png used on input line 250.
 (pdftex.def)             Requested size: 494.84755pt x 282.05305pt.
 
-Overfull \hbox (25.09253pt too wide) in paragraph at lines 245--246
+Overfull \hbox (25.09253pt too wide) in paragraph at lines 250--251
  [] 
  []
 
@@ -449,10 +449,10 @@ File: ../Figures/WI2010/sv_curves_assembly.png Graphic file (type png)
 
 <use ../Figures/WI2010/sv_curves_assembly.png>
 Package pdftex.def Info: ../Figures/WI2010/sv_curves_assembly.png used on input
- line 256.
+ line 261.
 (pdftex.def)             Requested size: 531.1886pt x 396.8858pt.
 
-Overfull \hbox (61.43358pt too wide) in paragraph at lines 256--257
+Overfull \hbox (61.43358pt too wide) in paragraph at lines 261--262
  [] 
  []
 
@@ -464,7 +464,7 @@ File: ../Figures/WI2010/district_partisan_likelihoods.png Graphic file (type pn
 g)
  <use ../Figures/WI2010/district_partisan_likelihoods.png>
 Package pdftex.def Info: ../Figures/WI2010/district_partisan_likelihoods.png us
-ed on input line 272.
+ed on input line 277.
 (pdftex.def)             Requested size: 266.19655pt x 260.77626pt.
 
 <../Figures/WI2010/cycle_partisan_likelihoods.png, id=49, 1003.75pt x 803.0pt>
@@ -472,7 +472,7 @@ File: ../Figures/WI2010/cycle_partisan_likelihoods.png Graphic file (type png)
 
 <use ../Figures/WI2010/cycle_partisan_likelihoods.png>
 Package pdftex.def Info: ../Figures/WI2010/cycle_partisan_likelihoods.png used 
-on input line 281.
+on input line 286.
 (pdftex.def)             Requested size: 401.49289pt x 321.1943pt.
 
 <../Figures/WI2010/seat_count_likelihoods.png, id=50, 409.53pt x 130.4875pt>
@@ -480,7 +480,7 @@ File: ../Figures/WI2010/seat_count_likelihoods.png Graphic file (type png)
 
 <use ../Figures/WI2010/seat_count_likelihoods.png>
 Package pdftex.def Info: ../Figures/WI2010/seat_count_likelihoods.png used on i
-nput line 294.
+nput line 299.
 (pdftex.def)             Requested size: 245.7199pt x 78.29309pt.
 
 <../Figures/WI2010/asymmetry_likelihoods.png, id=51, 268.00125pt x 431.6125pt>
@@ -488,15 +488,11 @@ File: ../Figures/WI2010/asymmetry_likelihoods.png Graphic file (type png)
 
 <use ../Figures/WI2010/asymmetry_likelihoods.png>
 Package pdftex.def Info: ../Figures/WI2010/asymmetry_likelihoods.png used on in
-put line 306.
+put line 311.
 (pdftex.def)             Requested size: 160.80197pt x 258.96948pt.
- [11 <../Figures/WI2010/district_partisan_likelihoods.png>]
-
-LaTeX Warning: Text page 12 contains only floats.
-
-[12 <../Figures/WI2010/cycle_partisan_likelihoods.png> <../Figures/WI2010/seat_
-count_likelihoods.png> <../Figures/WI2010/asymmetry_likelihoods.png>] [13]
-[14] [15
+ [11 <../Figures/WI2010/district_partisan_likelihoods.png>] [12 <../Figures/WI2
+010/cycle_partisan_likelihoods.png> <../Figures/WI2010/seat_count_likelihoods.p
+ng>] [13 <../Figures/WI2010/asymmetry_likelihoods.png>] [14] [15
 
 ] (from_google_doc.aux) ) 
 Here is how much of TeX's memory you used:
@@ -513,7 +509,7 @@ X\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk> <C:\Users\kbaas.000\AppDa
 ta\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk> <C:\Users\k
 baas.000\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1728.p
 k><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on from_google_doc.pdf (15 pages, 225768 bytes).
+Output written on from_google_doc.pdf (15 pages, 226171 bytes).
 PDF statistics:
  294 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

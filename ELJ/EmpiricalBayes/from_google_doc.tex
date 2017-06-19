@@ -57,6 +57,8 @@ To estimate the second moment (variance), we use an unbiased estimator.  The pri
  
 Note that to construct a seats-votes curve, we need to mean-center the total votes before estimating the parameters for the districts.  This has the added benefit that it helps to take into account systemic correlations among the districts.  That is, it encapsulates any information about uniform partisan swings in the likelihood function for the statewide vote totals, and removes this extra variance from the district totals.
 
+A summary of this probability model is shown in figure \ref{fig:ProbabilityModel}.
+
 \begin{figure}[htb!]
     \begin{center}
         \includegraphics[scale=1.0]{../Figures/WI2010/probabilityModel.png}
@@ -64,7 +66,7 @@ Note that to construct a seats-votes curve, we need to mean-center the total vot
     \end{center}
 \end{figure}
 
-Below are twelve sample seats-votes curves and popular vote percentages drawn from such a probability model, using the 2012, 2014, and 2016 Wisconsin congressional election vote counts as inputs.  The solid curve is the seats-votes curve.  The dashed curve is the 2-axis reflection of the seats-votes curve.  The dotted vertical line is the popular vote percentage.  The drawn samples show a consistent and large asymmetry in favor of Republicans.
+Shown in figure \ref{fig:SVCongress} are twelve sample seats-votes curves and popular vote percentages drawn from such a probability model, using the 2012, 2014, and 2016 Wisconsin congressional election vote counts as inputs.  The solid curve is the seats-votes curve.  The dashed curve is the 2-axis reflection of the seats-votes curve.  The dotted vertical line is the popular vote percentage.  The drawn samples show a consistent and large asymmetry in favor of Republicans.
 
 \begin{figure}[htb!]
     \begin{center}
@@ -94,7 +96,7 @@ If you have only 1 historical election, you can use your single sample as the me
  
 We computed the standard deviation (unbiased estimate) for the 2 party democratic vote share over the redistricting cycle for federal congressional elections from 1972-2016 for all states in the country. We ignored uncontested elections since, with 2,076 data points, we had plenty of data to compute a typical standard deviation from without the need to impute missing data.
  
-Below is a histogram of the results.  The mean is 6.1\%, the median is 5.2\%, and close to 85\% of districts had a standard deviation of less than 10\%. 
+Shown in figure \ref{fig:Hyperprior} is a histogram of the results.  The mean is 6.1\%, the median is 5.2\%, and close to 85\% of districts had a standard deviation of less than 10\%. 
 
 \begin{figure}[htb!]
     \begin{center}
@@ -190,7 +192,7 @@ Before applying this metric to a concrete example, we'd like to highlight some o
  
 \item Takes into account non-uniform swings - By looking at not only the average partisanship of each district, but how much the partisanship of each individual district changes from election to election, this metric is able to take into account the changes in voter sentiment that are not uniform throughout the state; that are perhaps concentrated in only certain districts.
 
-\item Shows durability - By computing an entire likelihood function for specific partisan asymmetry, rather than a single point estimate, this metric enables quick and accurate assessment of how durable a gerrymander; how much more harm it will cause in the future, including what the likelihood is that it will not cause harm.
+\item Shows durability - By computing an entire likelihood function for specific partisan asymmetry, rather than a single point estimate, this metric enables quick and accurate assessment of how durable a gerrymander is; how much more harm it will cause in the future, including what the likelihood is that it will not cause harm.
  
 \item Measures partisan vote packing - Asymmetry in the seats-votes curve measures imbalance between how one party's voters are packed vs cracked compared to the other's. The specific partisan asymmetry distribution calculates the various likelihoods of that for future elections, using results from actual elections.  Thus, this measure measures, as directly as possible, the unfair advantage given to people with a given political belief (and disadvantage to another) due to partisan vote packing, and the durability of this imbalance.
 
@@ -212,9 +214,12 @@ Before applying this metric to a concrete example, we'd like to highlight some o
  
 Some elections are uncontested.   This poses a problem for data analysis, as it amounts to missing data.  There are three ways we can deal with the missing data: 
  
-treat them as contested elections with unanimous support, 
-throw out the uncontested elections, and 
-estimate what the results would be if they were contested, 
+
+\begin{enumerate}
+\item treat them as contested elections with unanimous support, 
+\item throw out the uncontested elections, and 
+\item estimate what the results would be if they were contested
+\end{enumerate}
  
 The academic consensus is that the third option leads to the most accurate data analysis.  Indeed, the other two options produce highly skewed results.
  
@@ -236,7 +241,7 @@ We limit the data to only going back a little over 10 years, to keep it recent. 
  
 \subsection{Future election result likelihoods (District partisanship likelihoods)}
  
-Below is a graph of district partisanship, including dispersion.  To generate this graph, a Beta distribution for each districts was calculated using the method of moments.  Additionally a Beta distribution for the total popular vote was calculated using the method of moments.  Then the probability density function was plotted out for each one of them.  (The black curve in the middle is the total popular vote.) Results that lead to a Democrat winning the seat are colored in blue, and results that lead to a Republican winning the seat are colored in red.
+Shown in figure \ref{fig:Betas} is a graph of district partisanship, including dispersion.  To generate this graph, a Beta distribution for each district was calculated using the method of moments.  Additionally a Beta distribution for the total popular vote was calculated using the method of moments.  Then the probability density function was plotted out for each one of them.  (The black curve in the middle is the total popular vote.) Results that lead to a Democrat winning the seat are colored in blue, and results that lead to a Republican winning the seat are colored in red.
  
 The phenomena of packing and cracking discussed in the above section is clearly evident.  Note, in addition to the the average of the past 6 elections, the graph also shows the statistical dispersion, from which the durability of this effect for future elections can be assessed.
 
@@ -249,7 +254,7 @@ The phenomena of packing and cracking discussed in the above section is clearly 
  
 Note that Democratic-leaning districts are both far to the left, showing high partisanship (and thus low voter impact), and low dispersion -- meaning the voters are unlikely to change their minds; they are "safe" Democratic voters.  Conversely, the Republican-leaning districts are closer to the middle, but still safely to the right, and all centered around about the same place.   These are characteristic signs of packing and cracking.  Let me rephrase that: this is the very definition of "packing and cracking".  The Democratic voters were packed - hence far to the left.  By concentrating Democratic voters in few districts, this reduces the number of seats that Democratic voters can win.  The remaining population was "cracked" to get the Republican-leaning districts all to about the same level of moderately (but safely) Republican-leaning partisanship, thus increasing the number of seats that Republican voters can win.  The net effect is to maximize the impact of Republican votes, and minimize the impact of Democratic votes.
  
-Shown below are twelve seats-votes curves drawn from these distributions (solid curve), along with their 2-axis reflection (dashed curve), and a popular vote percentage drawn from the statewide beta distribution (vertical dotted gray line).  A large and consistent asymmetry in favor of Republicans is immediately evident.
+Shown in figure \ref{fig:SVAssembly} are twelve seats-votes curves drawn from these distributions (solid curve), along with their 2-axis reflection (dashed curve), and a popular vote percentage drawn from the statewide beta distribution (vertical dotted gray line).  A large and consistent asymmetry in favor of Republicans is immediately evident.
 
 \begin{figure}[htb!]
     \begin{center}
@@ -265,7 +270,7 @@ Another way we can see this is by looking at the histogram of district partisans
  
 Similarly to how we modeled vote percentages with Beta distributions, we used Gamma distributions to model voter turnout.  We then combined these two to model actual vote counts in each district.  This allowed us to compute likelihood functions for specific vote counts in every district.  We then used Monte Carlo integration to construct the likelihood function for district partisanship, over all districts.
  
-The resulting curve leaves no room for interpretation.  The high red peak close to the center but still safely to the side shows that Republican districts are heavily cracked.  Conversely, the mass of blue far to the side and comparative lack of a strong peak close to the center shows that Democratic districts are heavily packed.
+The resulting curve shown in figure \ref{fig:LikelihoodsDistrictPartisanship} leaves no room for interpretation.  The high red peak close to the center but still safely to the side shows that Republican districts are heavily cracked.  Conversely, the mass of blue far to the side and comparative lack of a strong peak close to the center shows that Democratic districts are heavily packed.
  
 \begin{figure}[htb!]
     \begin{center}
@@ -274,7 +279,7 @@ The resulting curve leaves no room for interpretation.  The high red peak close 
     \end{center}
 \end{figure}
 
-Comparing this chart with the empirical district partisanship histogram for all U.S. congressional elections for all states since 1972, we see that it stands in stark congress to the almost even distribution over all cycles, and even stands out from the 2010 cycle, which the Republican State Leadership Committee has openly advertised that they successfully gerrymandered (REDMAP).
+Comparing this chart with the empirical district partisanship histogram for all U.S. congressional elections for all states since 1972, (figure \ref{fig:LikelihoodsDistrictPartisanshipAll}) we see that it stands in stark congress to the almost even distribution over all cycles, and even stands out from the 2010 cycle, which the Republican State Leadership Committee has openly advertised that they successfully gerrymandered (REDMAP).
 
 \begin{figure}[htb!]
     \begin{center}
@@ -285,7 +290,7 @@ Comparing this chart with the empirical district partisanship histogram for all 
  
 \subsubsection{Statewide seat count likelihoods}
  
-The seat count likelihoods produced by this packing and cracking can be shown by integrating the statewide and district partisanship likelihood functions.  As these distributions, like most Bayesian models, don't lend themselves to analytic integration, numerical integration must be used. Using the Monte-Carlo numerical integration method, with 100,000 samples, we constructed the probability mass function for the Republican seat count results from an election, given the current districts and voter demographics.  The results are shown in the graph below.
+The seat count likelihoods produced by this packing and cracking can be shown by integrating the statewide and district partisanship likelihood functions.  As these distributions, like most Bayesian models, don't lend themselves to analytic integration, numerical integration must be used. Using the Monte-Carlo numerical integration method, with 100,000 samples, we constructed the probability mass function for the Republican seat count results from an election, given the current districts and voter demographics.  The results are shown in figure \ref{fig:LikelihoodsSeatCounts}.
  
 Particularly striking about this result is that, while the popular vote likelihoods in the above graph centers around 50/50, favoring Democratic representatives more than 40\% of the time, the seat count likelihoods never put Democratic representatives in the majority.  Indeed, out of 100,000 samples, it never even gives them 44 out of 99 of the seats.  On average Republican representatives maintain a 63-36 seat advantage.   This shows a sizable and durable partisan advantage for Republicans, despite the actual voters showing no clear preference, and indeed, preferring Democrats almost half the time.
 
@@ -299,7 +304,7 @@ Particularly striking about this result is that, while the popular vote likeliho
 
 \subsubsection{Specific partisan asymmetry likelihoods}
  
-To get the likelihood function for partisan asymmetry, we again use Monte-Carlo numerical integration, but this time we subtract the seat counts Democrats would get with that share of the vote from the number Republicans would get under the same share of the vote.  Below are the results.
+To get the likelihood function for partisan asymmetry, we again use Monte-Carlo numerical integration, but this time we subtract the seat counts Democrats would get with that share of the vote from the number Republicans would get under the same share of the vote. The results are shown in figure \ref{fig:LikelihoodsAsymmetry}.
  
 \begin{figure}[htb!]
     \begin{center}
