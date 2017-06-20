@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.19)  19 JUN 2017 17:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.19)  20 JUN 2017 10:49
 entering extended mode
 **./from_google_doc.tex
 (from_google_doc.tex
@@ -433,14 +433,14 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 187.
  [7] [8]
-<../Figures/WI2010/betas.png, id=39, 494.84875pt x 282.05376pt>
+<../Figures/WI2010/betas.png, id=39, 2055.68pt x 2055.68pt>
 File: ../Figures/WI2010/betas.png Graphic file (type png)
 
 <use ../Figures/WI2010/betas.png>
 Package pdftex.def Info: ../Figures/WI2010/betas.png used on input line 250.
-(pdftex.def)             Requested size: 494.84755pt x 282.05305pt.
+(pdftex.def)             Requested size: 513.91875pt x 513.91875pt.
 
-Overfull \hbox (25.09253pt too wide) in paragraph at lines 250--251
+Overfull \hbox (44.16373pt too wide) in paragraph at lines 250--251
  [] 
  []
 
@@ -456,9 +456,8 @@ Overfull \hbox (61.43358pt too wide) in paragraph at lines 261--262
  [] 
  []
 
-[9] [10 <../Figures/WI2010/betas.png> <../Figures/WI2010/sv_curves_assembly.png
->]
-<../Figures/WI2010/district_partisan_likelihoods.png, id=48, 443.6575pt x 434.6
+[9]
+<../Figures/WI2010/district_partisan_likelihoods.png, id=44, 443.6575pt x 434.6
 2375pt>
 File: ../Figures/WI2010/district_partisan_likelihoods.png Graphic file (type pn
 g)
@@ -467,51 +466,65 @@ Package pdftex.def Info: ../Figures/WI2010/district_partisan_likelihoods.png us
 ed on input line 277.
 (pdftex.def)             Requested size: 266.19655pt x 260.77626pt.
 
-<../Figures/WI2010/cycle_partisan_likelihoods.png, id=49, 1003.75pt x 803.0pt>
+<../Figures/WI2010/cycle_partisan_likelihoods.png, id=45, 1003.75pt x 803.0pt>
 File: ../Figures/WI2010/cycle_partisan_likelihoods.png Graphic file (type png)
 
 <use ../Figures/WI2010/cycle_partisan_likelihoods.png>
 Package pdftex.def Info: ../Figures/WI2010/cycle_partisan_likelihoods.png used 
 on input line 286.
-(pdftex.def)             Requested size: 401.49289pt x 321.1943pt.
+(pdftex.def)             Requested size: 501.87378pt x 401.49902pt.
 
-<../Figures/WI2010/seat_count_likelihoods.png, id=50, 409.53pt x 130.4875pt>
-File: ../Figures/WI2010/seat_count_likelihoods.png Graphic file (type png)
+Overfull \hbox (32.11876pt too wide) in paragraph at lines 286--287
+ [] 
+ []
 
-<use ../Figures/WI2010/seat_count_likelihoods.png>
-Package pdftex.def Info: ../Figures/WI2010/seat_count_likelihoods.png used on i
-nput line 299.
-(pdftex.def)             Requested size: 245.7199pt x 78.29309pt.
+[10 <../Figures/WI2010/betas.png>] [11 <../Figures/WI2010/sv_curves_assembly.pn
+g> <../Figures/WI2010/district_partisan_likelihoods.png>]
+<../Figures/WI2010/seats.png, id=54, 2055.68pt x 2055.68pt>
+File: ../Figures/WI2010/seats.png Graphic file (type png)
 
-<../Figures/WI2010/asymmetry_likelihoods.png, id=51, 268.00125pt x 431.6125pt>
-File: ../Figures/WI2010/asymmetry_likelihoods.png Graphic file (type png)
+<use ../Figures/WI2010/seats.png>
+Package pdftex.def Info: ../Figures/WI2010/seats.png used on input line 299.
+(pdftex.def)             Requested size: 513.91875pt x 513.91875pt.
 
-<use ../Figures/WI2010/asymmetry_likelihoods.png>
-Package pdftex.def Info: ../Figures/WI2010/asymmetry_likelihoods.png used on in
-put line 311.
-(pdftex.def)             Requested size: 160.80197pt x 258.96948pt.
- [11 <../Figures/WI2010/district_partisan_likelihoods.png>] [12 <../Figures/WI2
-010/cycle_partisan_likelihoods.png> <../Figures/WI2010/seat_count_likelihoods.p
-ng>] [13 <../Figures/WI2010/asymmetry_likelihoods.png>] [14] [15
+Overfull \hbox (44.16373pt too wide) in paragraph at lines 299--300
+ [] 
+ []
 
-] (from_google_doc.aux) ) 
+<../Figures/WI2010/asymmetry.png, id=55, 2055.68pt x 2055.68pt>
+File: ../Figures/WI2010/asymmetry.png Graphic file (type png)
+
+<use ../Figures/WI2010/asymmetry.png>
+Package pdftex.def Info: ../Figures/WI2010/asymmetry.png used on input line 311
+.
+(pdftex.def)             Requested size: 513.91875pt x 513.91875pt.
+
+Overfull \hbox (44.16373pt too wide) in paragraph at lines 311--312
+ [] 
+ []
+
+[12 <../Figures/WI2010/cycle_partisan_likelihoods.png>] [13 <../Figures/WI2010/
+seats.png>] [14 <../Figures/WI2010/asymmetry.png>] [15] [16
+
+]
+(from_google_doc.aux) ) 
 Here is how much of TeX's memory you used:
  4939 strings out of 493323
- 73465 string characters out of 3139054
+ 73320 string characters out of 3139054
  152249 words of memory out of 3000000
  8385 multiletter control sequences out of 15000+200000
  8823 words of font info for 22 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  44i,7n,42p,1222b,338s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\kbaas.000\AppData\Local\MiKTeX\2.9\fonts\pk
-\ljfour\jknappen\ec\dpi600\ecbx1200.pk> <C:\Users\kbaas.000\AppData\Local\MiKTe
-X\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk> <C:\Users\kbaas.000\AppDa
-ta\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk> <C:\Users\k
-baas.000\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1728.p
-k><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on from_google_doc.pdf (15 pages, 226171 bytes).
+ <C:\Users\kbaas.000\AppData\Local\MiKTeX\2.9\fonts\pk\l
+jfour\jknappen\ec\dpi600\ecbx1200.pk> <C:\Users\kbaas.000\AppData\Local\MiKTeX\
+2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk> <C:\Users\kbaas.000\AppData
+\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk> <C:\Users\kba
+as.000\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1728.pk>
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on from_google_doc.pdf (16 pages, 522643 bytes).
 PDF statistics:
- 294 PDF objects out of 1000 (max. 8388607)
+ 300 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  46 words of extra memory for PDF output out of 10000 (max. 10000000)
 
