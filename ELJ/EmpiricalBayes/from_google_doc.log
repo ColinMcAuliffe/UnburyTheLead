@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.19)  20 JUN 2017 12:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.19)  20 JUN 2017 12:16
 entering extended mode
 **./from_google_doc.tex
 (from_google_doc.tex
@@ -433,18 +433,15 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 187.
  [7] [8]
-<../Figures/WI2010/betas.png, id=39, 2055.68pt x 2055.68pt>
-File: ../Figures/WI2010/betas.png Graphic file (type png)
+<../Figures/WI2010/betas_cropped.png, id=39, 1541.00719pt x 788.19469pt>
+File: ../Figures/WI2010/betas_cropped.png Graphic file (type png)
 
-<use ../Figures/WI2010/betas.png>
-Package pdftex.def Info: ../Figures/WI2010/betas.png used on input line 250.
-(pdftex.def)             Requested size: 513.91875pt x 513.91875pt.
-
-Overfull \hbox (44.16373pt too wide) in paragraph at lines 250--251
- [] 
- []
-
-<../Figures/WI2010/sv_curves_assembly.png, id=40, 885.3075pt x 661.47125pt>
+<use ../Figures/WI2010/betas_cropped.png>
+Package pdftex.def Info: ../Figures/WI2010/betas_cropped.png used on input line
+ 250.
+(pdftex.def)             Requested size: 385.25085pt x 197.04819pt.
+ [9 <../Figures/WI2010/betas_cropped.png>]
+<../Figures/WI2010/sv_curves_assembly.png, id=44, 885.3075pt x 661.47125pt>
 File: ../Figures/WI2010/sv_curves_assembly.png Graphic file (type png)
 
 <use ../Figures/WI2010/sv_curves_assembly.png>
@@ -456,20 +453,17 @@ Overfull \hbox (61.43358pt too wide) in paragraph at lines 261--262
  [] 
  []
 
-[9]
-<../Figures/WI2010/district_partisanship_new.png, id=44, 2055.68pt x 2055.68pt>
-File: ../Figures/WI2010/district_partisanship_new.png Graphic file (type png)
-<use ../Figures/WI2010/district_partisanship_new.png>
-Package pdftex.def Info: ../Figures/WI2010/district_partisanship_new.png used o
-n input line 277.
-(pdftex.def)             Requested size: 513.91875pt x 513.91875pt.
+[10 <../Figures/WI2010/sv_curves_assembly.png>]
+<../Figures/WI2010/district_partisanship_cropped.png, id=49, 1479.27657pt x 601
+.4972pt>
+File: ../Figures/WI2010/district_partisanship_cropped.png Graphic file (type pn
+g)
+ <use ../Figures/WI2010/district_partisanship_cropped.png>
+Package pdftex.def Info: ../Figures/WI2010/district_partisanship_cropped.png us
+ed on input line 277.
+(pdftex.def)             Requested size: 369.81824pt x 150.37393pt.
 
-Overfull \hbox (44.16373pt too wide) in paragraph at lines 277--278
- [] 
- []
-
-
-<../Figures/WI2010/cycle_partisan_likelihoods.png, id=45, 1003.75pt x 803.0pt>
+<../Figures/WI2010/cycle_partisan_likelihoods.png, id=50, 1003.75pt x 803.0pt>
 File: ../Figures/WI2010/cycle_partisan_likelihoods.png Graphic file (type png)
 
 <use ../Figures/WI2010/cycle_partisan_likelihoods.png>
@@ -481,43 +475,31 @@ Overfull \hbox (32.11876pt too wide) in paragraph at lines 286--287
  [] 
  []
 
-[10 <../Figures/WI2010/betas.png>]
-<../Figures/WI2010/seats.png, id=50, 2055.68pt x 2055.68pt>
-File: ../Figures/WI2010/seats.png Graphic file (type png)
+[11 <../Figures/WI2010/district_partisanship_cropped.png> <../Figures/WI2010/cy
+cle_partisan_likelihoods.png>]
+<../Figures/WI2010/seats_cropped.png, id=56, 1464.97313pt x 346.29375pt>
+File: ../Figures/WI2010/seats_cropped.png Graphic file (type png)
 
-<use ../Figures/WI2010/seats.png>
-Package pdftex.def Info: ../Figures/WI2010/seats.png used on input line 299.
-(pdftex.def)             Requested size: 513.91875pt x 513.91875pt.
+<use ../Figures/WI2010/seats_cropped.png>
+Package pdftex.def Info: ../Figures/WI2010/seats_cropped.png used on input line
+ 299.
+(pdftex.def)             Requested size: 439.49533pt x 103.88892pt.
 
-Overfull \hbox (44.16373pt too wide) in paragraph at lines 299--300
- [] 
- []
-
-<../Figures/WI2010/asymmetry_alt.png, id=51, 869.49844pt x 429.10312pt>
+<../Figures/WI2010/asymmetry_alt.png, id=57, 869.49844pt x 429.10312pt>
 File: ../Figures/WI2010/asymmetry_alt.png Graphic file (type png)
 
 <use ../Figures/WI2010/asymmetry_alt.png>
 Package pdftex.def Info: ../Figures/WI2010/asymmetry_alt.png used on input line
  311.
 (pdftex.def)             Requested size: 434.74815pt x 214.55103pt.
- [11 <../Figures/WI2010/sv_curves_assembly.png>] [12 <../Figures/WI2010/distric
-t_partisanship_new.png>] [13 <../Figures/WI2010/cycle_partisan_likelihoods.png>
-]
-
-LaTeX Warning: Text page 14 contains only floats.
-
-
-Overfull \vbox (2.22972pt too high) has occurred while \output is active []
-
-
-[14 <../Figures/WI2010/seats.png> <../Figures/WI2010/asymmetry_alt.png>]
-[15] [16
+ [12 <../Figures/WI2010/seats_cropped.png> <../Figures/WI2010/asymmetry_alt.png
+>] [13] [14] [15
 
 ] (from_google_doc.aux) ) 
 Here is how much of TeX's memory you used:
  4939 strings out of 493323
- 73320 string characters out of 3139054
- 152249 words of memory out of 3000000
+ 73420 string characters out of 3139054
+ 152248 words of memory out of 3000000
  8385 multiletter control sequences out of 15000+200000
  8823 words of font info for 22 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -528,9 +510,9 @@ X\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk> <C:\Users\kbaas.000\AppDa
 ta\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk> <C:\Users\k
 baas.000\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1728.p
 k><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on from_google_doc.pdf (16 pages, 520756 bytes).
+Output written on from_google_doc.pdf (15 pages, 488966 bytes).
 PDF statistics:
- 301 PDF objects out of 1000 (max. 8388607)
+ 298 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  46 words of extra memory for PDF output out of 10000 (max. 10000000)
 
