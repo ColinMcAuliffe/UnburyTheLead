@@ -76,10 +76,12 @@ public class BetaStuff implements VoteCounts {
 				
 		actual.showBetas();
 		System.out.println("done 0");
-		actual.computeAsymmetry(false);
-		actual.showAsymmetry();
+		actual.computeSeatProbs(false);
+		actual.showSeats();
+		//actual.computeAsymmetry(false);
+		//actual.showAsymmetry();
 		System.out.println("done 1");
-		actual.showHistogram();
+		//actual.showHistogram();
 		System.out.println("done 2");
 		
 		//System.out.println("mid");
@@ -90,9 +92,7 @@ public class BetaStuff implements VoteCounts {
 		//actual.sh
 		//maxdem.showBetas();
 		
-		actual.showBetas();
-		actual.computeSeatProbs(false);
-		actual.showSeats();
+		//actual.showBetas();
 		//actual.computeSeatProbs(true);
 		//actual.showSeats();
 		
@@ -102,7 +102,7 @@ public class BetaStuff implements VoteCounts {
 		//System.out.println("packing....");
 		//actual.showPacking();
 
-		actual.showBetaParameters();
+		//actual.showBetaParameters();
 		//actual.showPacking();
 		System.out.println("done 2");
 		

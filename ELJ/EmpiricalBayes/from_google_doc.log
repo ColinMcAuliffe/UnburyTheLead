@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.19)  20 JUN 2017 12:16
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.19)  21 JUN 2017 12:29
 entering extended mode
 **./from_google_doc.tex
 (from_google_doc.tex
@@ -433,13 +433,13 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 187.
  [7] [8]
-<../Figures/WI2010/betas_cropped.png, id=39, 1541.00719pt x 788.19469pt>
+<../Figures/WI2010/betas_cropped.png, id=39, 1541.00719pt x 797.22844pt>
 File: ../Figures/WI2010/betas_cropped.png Graphic file (type png)
 
 <use ../Figures/WI2010/betas_cropped.png>
 Package pdftex.def Info: ../Figures/WI2010/betas_cropped.png used on input line
  250.
-(pdftex.def)             Requested size: 385.25085pt x 197.04819pt.
+(pdftex.def)             Requested size: 385.25085pt x 199.30663pt.
  [9 <../Figures/WI2010/betas_cropped.png>]
 <../Figures/WI2010/sv_curves_assembly.png, id=44, 885.3075pt x 661.47125pt>
 File: ../Figures/WI2010/sv_curves_assembly.png Graphic file (type png)
@@ -477,13 +477,13 @@ Overfull \hbox (32.11876pt too wide) in paragraph at lines 286--287
 
 [11 <../Figures/WI2010/district_partisanship_cropped.png> <../Figures/WI2010/cy
 cle_partisan_likelihoods.png>]
-<../Figures/WI2010/seats_cropped.png, id=56, 1464.97313pt x 346.29375pt>
+<../Figures/WI2010/seats_cropped.png, id=56, 1509.38907pt x 377.15906pt>
 File: ../Figures/WI2010/seats_cropped.png Graphic file (type png)
 
 <use ../Figures/WI2010/seats_cropped.png>
 Package pdftex.def Info: ../Figures/WI2010/seats_cropped.png used on input line
  299.
-(pdftex.def)             Requested size: 439.49533pt x 103.88892pt.
+(pdftex.def)             Requested size: 452.82022pt x 113.14859pt.
 
 <../Figures/WI2010/asymmetry_alt.png, id=57, 869.49844pt x 429.10312pt>
 File: ../Figures/WI2010/asymmetry_alt.png Graphic file (type png)
@@ -510,7 +510,7 @@ X\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk> <C:\Users\kbaas.000\AppDa
 ta\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk> <C:\Users\k
 baas.000\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1728.p
 k><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on from_google_doc.pdf (15 pages, 488966 bytes).
+Output written on from_google_doc.pdf (15 pages, 501232 bytes).
 PDF statistics:
  298 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

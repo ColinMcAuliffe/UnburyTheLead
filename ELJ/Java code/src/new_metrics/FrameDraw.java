@@ -133,24 +133,27 @@ public class FrameDraw extends JFrame {
 			    	int min_x = 0;
 			    	int length = (int)((size-100)/seats.length);
 			    	int x = 50;
-			    	for( int i = 0; i < seats.length; i++) {
+			    	for( int i = seats.length-1; i >= 0; i--) {
 			    		int height = (int)(seats[i]*size);
 			    		if( x < size/2) {
-						    graphics.setColor(Color.blue);
+						    graphics.setColor(Color.red);
 						    if( x+length > size/2) {
 						    	graphics.setColor(Color.gray);
 						    }
 			    			
 			    		} else {
-						    graphics.setColor(Color.red);
+						    graphics.setColor(Color.blue);
 
 			    		}
 			    		graphics.fillRect(x, size-100-height, length, height);
 			    		String s = ""+i+" rep";
+			    		String s2 = ""+(seats.length-i-1)+" dem";
 			    		int textx = x + length/2 - graphics.stringWidth(s)/2;
 			    		if( textx > min_x) {
 			    			graphics.drawString(s, textx, size-80);
-			    			min_x = textx + graphics.stringWidth(s+"  ");
+			    			graphics.drawString(s2, textx, size-60);
+			    			min_x = textx + (graphics.stringWidth(s+"  ") > graphics.stringWidth(s2+"   ") ? graphics.stringWidth(s+"   ") : graphics.stringWidth(s2+"   "));
+			    			//min_x = textx + graphics.stringWidth(s2+"  ");
 			    		}
 			    		x += length;
 			    	}
@@ -163,12 +166,12 @@ public class FrameDraw extends JFrame {
  					    	double last_x = 0;
  					    	double last_y = 0;
  					    	while(x <= 1) {
- 					    		double y = dist.density(x);
+ 					    		double y = dist.density(1-x);
  					    		if( x > 0.5) {
- 								    graphics.setColor(Color.blue);
+ 								    graphics.setColor(Color.red);
  					    			
  					    		} else {
- 								    graphics.setColor(Color.red);
+ 								    graphics.setColor(Color.blue);
 
  					    		}
  					    		
@@ -183,15 +186,12 @@ public class FrameDraw extends JFrame {
  					    graphics.drawString("Popular vote", (size/2)-graphics.stringWidth("Popular vote")/2, size-80);
  						
  					    graphics.setColor(Color.blue);
- 						graphics.drawString("Democratic seats", 10, size-80);
+ 						graphics.drawString("Democratic seats", size-graphics.stringWidth("Democratic seats")-10, size-80);
  						
  					    graphics.setColor(Color.red);
- 						graphics.drawString("Republican seats", size-graphics.stringWidth("Republican seats")-20, size-80);
+ 						graphics.drawString("Republican seats", 10, size-80);
  				    }
  				    graphics.setColor(Color.black);
- 	    		}
-			    
-			    if( true) {
 			    
 				    if( dist != null) {
 					    double inc = 0.0001;
@@ -199,7 +199,7 @@ public class FrameDraw extends JFrame {
 				    	double last_x = 0;
 				    	double last_y = 0;
 				    	while(x <= 1) {
-				    		double y = dist.density(x);
+				    		double y = dist.density(1-x);
 				    		
 				    		graphics.drawLine(transformx(last_x),transformy(last_y),transformx(x),transformy(y));
 				    		
