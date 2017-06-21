@@ -258,6 +258,36 @@ ax.set_ylabel("Expected Asymmetry as a % of Available Seats")
 ax.grid()
 fig.savefig(os.path.join(figDir,"asymRank"+figExt))
 #1}}}
+#make a table for the a few states from 2000 to 2010
+states2010 = ["PA","NC","GA","VA","MI","OH","WI","CA","NY","IL"]
+df2010      = dataExp[dataExp["cycle"]==2010]
+df2000      = dataExp[dataExp["cycle"]==2000]
+def getStringFromAsym(asym):
+    if asym < 0.:
+        return "D %2.2f" %(abs(asym))
+    else:
+        return "R %2.2f" %(asym)
+with open(os.path.join("EmpiricalBayes","largeStatesTab.tex"),"w") as f: 
+    f.write(r"\begin{table}[htb!]"+"\n")
+    f.write(r"\centering"+"\n")
+    f.write(r"\caption{Change in Expected Specific Asymmetry from 2000 to 2010 for states with large asymmetries in 2010 \label{tab:Asym2000to2010}}"+"\n")
+    f.write(r"\begin{tabular}{|l|l|l|l|}"+"\n")
+    f.write(r"\hline"+"\n")
+    f.write(r"State & Expected Specific     & Expected Specific & Net Change\\"+"\n")
+    f.write(r"      & Asymmetry, 2000 Cycle & Asymmetry, 2010 Cycle & \\"+"\n")
+    f.write(r"\hline"+"\n")
+    f.write(r"\hline"+"\n")
+    for st in states2010:
+        esa2000 = df2000[df2000["State"]==st].expectedAsymPct.values[0]*100.
+        esa2010 = df2010[df2010["State"]==st].expectedAsymPct.values[0]*100.
+        diff = getStringFromAsym(esa2010-esa2000)
+        esa2000 = getStringFromAsym(esa2000)
+        esa2010 = getStringFromAsym(esa2010)
+        f.write(abbr2name[st]+" & "+esa2000+r"\% & "+esa2010+r"\% & " + diff + r"\\"+"\n")
+        f.write(r"\hline"+"\n")
+    f.write(r"\end{tabular}"+"\n")
+    f.write(r"\end{table}"+"\n")
+
 #skew plot
 sk = []
 for idx,row in stateData.iterrows():
