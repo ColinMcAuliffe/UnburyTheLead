@@ -3,6 +3,8 @@
 *.swp
 *.DS_STORE
 *.pyc
+*.aux
+*.log
 Jan2017_TrumpFinances/P80001571-ALL.csv
 Jan2017_TrumpFinances/P80001571D-ALL.csv
 CommonData/ShapeFiles/CensusTracts/
