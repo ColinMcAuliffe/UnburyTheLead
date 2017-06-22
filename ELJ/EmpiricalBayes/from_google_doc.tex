@@ -242,6 +242,10 @@ In order to have more data to use, we take imputed data from prior to the post-2
 We limit the data to only going back a little over 10 years, to keep it recent.  That still gives us 6 elections to work with.
  
 \subsection{Future election result likelihoods (District partisanship likelihoods)}
+
+To calculate future election result likelihoods, we construct an Empirical Bayesian probability model from the district-level vote counts. 
+This takes into account ALL possible changes in voter sentiment in proportion to their likelihoods as calculated from the empirical bayesian probability model that is fitted to actual election data at district resolution, for the 6 most recent elections.
+
  
 Shown in figure \ref{fig:Betas} is a graph of district partisanship, including dispersion.  To generate this graph, a Beta distribution for each district was calculated using the method of moments.  Additionally a Beta distribution for the total popular vote was calculated using the method of moments.  Then the probability density function was plotted out for each one of them.  (The black curve in the middle is the total popular vote.) Results that lead to a Democrat winning the seat are colored in blue, and results that lead to a Republican winning the seat are colored in red.
  
@@ -266,6 +270,7 @@ Shown in figure \ref{fig:SVAssembly} are twelve seats-votes curves drawn from th
 \end{figure}
 
 \subsection{Numerical integrations of likelihood functions}
+
 \subsubsection{District partisanship histogram}
  
 Another way we can see this is by looking at the histogram of district partisanship.
