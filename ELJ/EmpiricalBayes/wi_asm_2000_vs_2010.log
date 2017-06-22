@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.19)  22 JUN 2017 17:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.6.19)  22 JUN 2017 17:46
 entering extended mode
 **./wi_asm_2000_vs_2010.tex
 (wi_asm_2000_vs_2010.tex
@@ -398,38 +398,94 @@ LaTeX Font Info:    Try loading font information for U+esint on input line 36.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\esint\uesint.fd"
 File: uesint.fd 
 )
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 55.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 63.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 55.
-
-No file wi_asm_2000_vs_2010.bbl.
-[1
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 63.
+ [1
 
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}] [2]
-(wi_asm_2000_vs_2010.aux) ) 
+<../Figures/WI2010/Betas_cropped.png, id=15, 1541.00719pt x 797.22844pt>
+File: ../Figures/WI2010/Betas_cropped.png Graphic file (type png)
+
+<use ../Figures/WI2010/Betas_cropped.png>
+Package pdftex.def Info: ../Figures/WI2010/Betas_cropped.png used on input line
+ 97.
+(pdftex.def)             Requested size: 385.25085pt x 199.30663pt.
+
+<../Figures/WI2010/sv_curves_assembly.png, id=17, 885.3075pt x 661.47125pt>
+File: ../Figures/WI2010/sv_curves_assembly.png Graphic file (type png)
+
+<use ../Figures/WI2010/sv_curves_assembly.png>
+Package pdftex.def Info: ../Figures/WI2010/sv_curves_assembly.png used on input
+ line 108.
+(pdftex.def)             Requested size: 442.65266pt x 330.73482pt.
+ [3 <../Figures/WI2010/Betas_cropped.png>]
+<../Figures/WI2010/asymmetry_alt.png, id=22, 869.49844pt x 429.10312pt>
+File: ../Figures/WI2010/asymmetry_alt.png Graphic file (type png)
+
+<use ../Figures/WI2010/asymmetry_alt.png>
+Package pdftex.def Info: ../Figures/WI2010/asymmetry_alt.png used on input line
+ 121.
+(pdftex.def)             Requested size: 434.74815pt x 214.55103pt.
+ [4 <../Figures/WI2010/sv_curves_assembly.png> <../Figures/WI2010/asymmetry_alt
+.png>]
+<../Figures/WI2010/district_partisanship_cropped.png, id=29, 1479.27657pt x 601
+.4972pt>
+File: ../Figures/WI2010/district_partisanship_cropped.png Graphic file (type pn
+g)
+ <use ../Figures/WI2010/district_partisanship_cropped.png>
+Package pdftex.def Info: ../Figures/WI2010/district_partisanship_cropped.png us
+ed on input line 140.
+(pdftex.def)             Requested size: 369.81824pt x 150.37393pt.
+
+<../Figures/WI2010/cycle_partisan_likelihoods.png, id=30, 1003.75pt x 803.0pt>
+File: ../Figures/WI2010/cycle_partisan_likelihoods.png Graphic file (type png)
+
+<use ../Figures/WI2010/cycle_partisan_likelihoods.png>
+Package pdftex.def Info: ../Figures/WI2010/cycle_partisan_likelihoods.png used 
+on input line 149.
+(pdftex.def)             Requested size: 501.87378pt x 401.49902pt.
+
+Overfull \hbox (32.11876pt too wide) in paragraph at lines 149--150
+ [] 
+ []
+
+<../Figures/WI2010/seats_cropped.png, id=31, 1509.38907pt x 377.15906pt>
+File: ../Figures/WI2010/seats_cropped.png Graphic file (type png)
+
+<use ../Figures/WI2010/seats_cropped.png>
+Package pdftex.def Info: ../Figures/WI2010/seats_cropped.png used on input line
+ 162.
+(pdftex.def)             Requested size: 452.82022pt x 113.14859pt.
+ [5 <../Figures/WI2010/district_partisanship_cropped.png>] [6 <../Figures/WI201
+0/cycle_partisan_likelihoods.png> <../Figures/WI2010/seats_cropped.png>]
+No file wi_asm_2000_vs_2010.bbl.
+[7] (wi_asm_2000_vs_2010.aux) ) 
 Here is how much of TeX's memory you used:
- 5076 strings out of 493323
- 73830 string characters out of 3139054
- 152690 words of memory out of 3000000
- 8514 multiletter control sequences out of 15000+200000
- 13367 words of font info for 40 fonts, out of 3000000 for 9000
+ 5124 strings out of 493323
+ 75357 string characters out of 3139054
+ 154738 words of memory out of 3000000
+ 8552 multiletter control sequences out of 15000+200000
+ 14918 words of font info for 42 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 44i,6n,42p,515b,201s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\kbaas.000\AppData\Local\MiKTeX\2.9\fonts\
-pk\ljfour\jknappen\ec\dpi600\ecti1200.pk> <C:\Users\kbaas.000\AppData\Local\MiK
-TeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk> <C:\Users\kbaas.000\App
-Data\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1728.pk> <C:\Users
-\kbaas.000\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1440
-.pk> <C:\Users\kbaas.000\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\d
-pi600\ecrm2074.pk><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
-msy10.pfb>
-Output written on wi_asm_2000_vs_2010.pdf (2 pages, 62840 bytes).
+ 44i,7n,42p,1053b,340s stack positions out of 5000i,500n,10000p,200000b,50000s
+ <C:\Users\kbaas.000\AppData\Local\MiKTeX\2.9\fo
+nts\pk\ljfour\jknappen\ec\dpi600\ecbx1200.pk> <C:\Users\kbaas.000\AppData\Local
+\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecbx1440.pk> <C:\Users\kbaas.000
+\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecti1200.pk> <C:\U
+sers\kbaas.000\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm
+1200.pk> <C:\Users\kbaas.000\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\
+ec\dpi600\ecbx1728.pk> <C:\Users\kbaas.000\AppData\Local\MiKTeX\2.9\fonts\pk\lj
+four\jknappen\ec\dpi600\ecrm1440.pk> <C:\Users\kbaas.000\AppData\Local\MiKTeX\2
+.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm2074.pk><C:/Program Files/MiKTeX 2.9/
+fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on wi_asm_2000_vs_2010.pdf (7 pages, 427568 bytes).
 PDF statistics:
- 167 PDF objects out of 1000 (max. 8388607)
+ 283 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 
