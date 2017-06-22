@@ -9,6 +9,7 @@ import us
 from scipy import stats
 
 from ELJcommon import getDemVotesAndSeats,get_spasym,get_asymFromPct,getExpAsym,varWithShrinkage,betaMOM,list2df,colorBins,setLimits,year2Cycle
+from matplotlib.patches import Polygon
 
 states = us.states.STATES
 abbr2name = us.states.mapping('abbr', 'name')
@@ -260,6 +261,7 @@ fig.savefig(os.path.join(figDir,"asymRank"+figExt))
 #1}}}
 #make a table for the a few states from 2000 to 2010
 states2010 = ["PA","NC","GA","VA","MI","OH","WI","CA","NY","IL"]
+lens = len(states2010)+2
 df2010      = dataExp[dataExp["cycle"]==2010]
 df2000      = dataExp[dataExp["cycle"]==2000]
 def getStringFromAsym(asym):
@@ -267,6 +269,11 @@ def getStringFromAsym(asym):
         return "D %2.2f" %(abs(asym))
     else:
         return "R %2.2f" %(asym)
+
+fig = plt.figure()
+ax  = fig.add_subplot(111)
+hly  = 0.2
+hlx  = 1.0
 with open(os.path.join("EmpiricalBayes","largeStatesTab.tex"),"w") as f: 
     f.write(r"\begin{table}[htb!]"+"\n")
     f.write(r"\centering"+"\n")
@@ -277,17 +284,47 @@ with open(os.path.join("EmpiricalBayes","largeStatesTab.tex"),"w") as f:
     f.write(r"      & Asymmetry, 2000 Cycle & Asymmetry, 2010 Cycle & \\"+"\n")
     f.write(r"\hline"+"\n")
     f.write(r"\hline"+"\n")
-    for st in states2010:
+    for i,st in enumerate(states2010):
         esa2000 = df2000[df2000["State"]==st].expectedAsymPct.values[0]*100.
         esa2010 = df2010[df2010["State"]==st].expectedAsymPct.values[0]*100.
-        diff = getStringFromAsym(esa2010-esa2000)
+        diff = esa2010-esa2000
+        #sign change
+        if esa2000*esa2010 < 0:
+            if esa2000 < 0:
+                ax.plot([esa2000,0.0],[lens-i-2,lens-i-2],color='b',linewidth=4)
+                ax.plot([0.0,esa2010],[lens-i-2,lens-i-2],color='r',linewidth=4)
+            else:
+                ax.plot([esa2000,0.0],[lens-i-2,lens-i-2],color='r',linewidth=4)
+                ax.plot([0.0,esa2010],[lens-i-2,lens-i-2],color='b',linewidth=4)
+        else:
+            if esa2000 < 0:
+                ax.plot([esa2000,esa2010],[lens-i-2,lens-i-2],color='b',linewidth=4)
+            else:
+                ax.plot([esa2000,esa2010],[lens-i-2,lens-i-2],color='r',linewidth=4)
+
+        if esa2010 < 0:
+            color='b'
+        else:
+            color='r'
+
+        if diff < 0:
+            ax.plot([esa2010],[lens-i-2],color=color,marker='<',markersize=14)
+        else:
+            ax.plot([esa2010],[lens-i-2],color=color,marker='>',markersize=14)
+        
         esa2000 = getStringFromAsym(esa2000)
         esa2010 = getStringFromAsym(esa2010)
+        diff = getStringFromAsym(diff)
         f.write(abbr2name[st]+" & "+esa2000+r"\% & "+esa2010+r"\% & " + diff + r"\\"+"\n")
         f.write(r"\hline"+"\n")
     f.write(r"\end{tabular}"+"\n")
     f.write(r"\end{table}"+"\n")
-
+ax.set_ylim((0,len(states2010)+1))
+ax.grid()
+ax.set_xlim((-22,22))
+ax.yaxis.set_major_locator(MaxNLocator(len(states2010)+2))
+ax.set_yticklabels([""]+states2010[::-1]+[""])
+fig.savefig(os.path.join(figDir,"diff2000to2010"+figExt))
 #skew plot
 sk = []
 for idx,row in stateData.iterrows():
