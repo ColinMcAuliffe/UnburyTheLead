@@ -61,38 +61,43 @@ However, in order to properly asses the harm caused by partisan gerrymandering, 
 
 Development of a standard that fits with existing rulings, accurately measures partisan bias under generic conditions, and is simple enough to be effectively communicated to a court is not an easy task.
 For example, a common sense standard might be to require that a party's share of seats is proportional to its share of votes, which is simple and applicable to swing states as well as more partisan states.
-However, even when redistricting is fair, single winner voting systems tend not to produce such proportional outcomes \cite{Kendall_1950_10.2307/588113}, and the supreme court has stated that proportionality is not acceptable CITE.
-A second example is the mean median difference test \cite{Wang__,Wang_2016_10.1089/elj.2016.0387}, which fits with existing rulings since it measures partisan bias without regard to proportionality and is simple enough to be calculated by a judge without an expert witness.
+However, even when redistricting is fair, single winner voting systems tend not to produce such proportional outcomes \cite{Kendall_1950_10.2307/588113}, and the supreme court has stated that proportionality is not acceptable CITE.\CM{Do you recall which ruling htis was?}
+A second example is the mean median difference test \cite{Wang__,Wang_2016_10.1089/elj.2016.0387,McDonald_2015_10.1089/elj.2015.0358}, which fits with existing rulings since it measures partisan bias without regard to proportionality and is simple enough to be calculated by a judge without an expert witness.
 However, it is only effective in measuring bias for states which are close to even in terms of partisanship \cite{Wang_2016_10.1089/elj.2016.0387}: 
 \KB{I'M NOT SURE THERE'S A CITATION FOR THIS - IT MIGHT BE A NOVEL STATEMENT.}
-\CM{I believe it is discussed specifically for mean-median by Sam Wang in his ELJ article, will double check}
+\CM{it's mentioned in the cited article}
 
 Several standards have been proposed in literature, and for clarity we describe a standard as consisting of two parts.
 The first part is a metric, which is some quantity that can be calculated from a given election result and is a measure of the unfairness or bias.
 The second part is a model (or in the absence of a statistical model per se an analysis of the metric in historical elections), which allows one to asses whether or not the observed value of the metric can be regarded as the result of chance in an otherwise unbiased redistricting plan, or if bias is a persistent feature of the plan.
-For example, the plaintiffs in Whitford v. Gil used a metric called the efficiency gap CITE, which measures the discrepancy in the so called wasted votes between the two major parties.
-An examination of historical election data determined that it is reasonable to assume that observing an efficiency gap of greater than 7\%.
-Grofman and King proposed a metric based on the deficit in seats at 50\% votes in a seats votes curve CITE, and Nagle has proposed several other metrics based on the seats votes curve, including the geometric area between the seats votes curve and its reflection.
+For example, the plaintiffs in Whitford v. Gil used a metric called the efficiency gap \cite{Stephanopoulos_2014_}, which measures the discrepancy in the so called wasted votes between the two major parties.
+An examination of historical election data determined that it is reasonable to assume that observing an efficiency gap of greater than 7\% in favor of the redistricting party would typically be predictive of efficiency gaps favoring that party for the entire redistricting cycle.
+Browning, Grofman and King proposed a metric based on the deficit in seats at 50\% votes in a seats votes curve \cite{Browning_1987_,Grofman_2008_}, which was used in a Bayesian model for evaluating redistricting plans in \cite{Gelman_1994_,Gelman_1994_a}.
+Nagle has proposed several other metrics based on the seats votes curve \cite{Nagle_2015_10.1089/elj.2015.0311}, including the geometric area between the seats votes curve and its reflection, although no accompanying model was proposed.
 
 A special group of standards are those where a particular metric is associated with an existing analytic statistical model.
-Among these are the lopsided wins test, the mean median difference test, and the chi square test proposed by Wang CITE.
+Among these are the lopsided wins test, the mean median difference test, and the chi square test proposed by Wang \cite{Wang__,Wang_2016_10.1089/elj.2016.0387}.
 These standards are attractive because they are based on statistics with properties that are well understood, that are used broadly for applications across many fields, and are relatively simple.
 However, these tests have some drawbacks.
 Namely, the models used for computing the significance level for those tests are valid asymptotically as the number of districts increases, meaning that the statistical power of these standards is diminished for states with just a few districts.
-Additionally, these models assume that samples are independent and identically distributed (IID), which is an assumption that is crucial for the tests to be analytic (and hence simple) but not necessarily realistic for elections.
+Additionally, a null distribution must be specified for each of the test statistics in question. 
+This is a relatively minor point, since the null distributions used in the t-test and chi squared test are well established and the effect of the null distribution on the mean median difference test is small in many cases \cite{Cabilio_1996_10.2307/3315744,Zheng_2010_}
+lastly and most importantly, these models assume that samples are independent and identically distributed (IID), which is an assumption that is crucial for the tests to be analytic (and hence simple) but not necessarily realistic for elections.
 For instance, the IID assumption would imply that the probability of a deeply partisan Republican district being won by a Republican is the same as the probability of a deeply partisan Democratic district in the same state being won by a Republican.
-The effects of small sample sizes are discussed in the statistics literature CITE, and the effect of the IID assumption is an area we are currently investigating.
+Violation of the IID assumption can have a noticeable effect on statistical tests, for an example in securities law see \cite{Gel_2009_10.1093/lpr/mgp008}. 
+Use of this assumption may make this group of standards too restrictive or too permissive depending on the specific circumstances.
+Despite these objections, standards based on analytic models are potentially very powerful due to their relative simplicity, and we are currently investigating the effect the IID assumption has on the robustness of such standards.
 
-Another group of standards are those based on Monte Carlo simulation CITE.
+Another group of standards are those based on Monte Carlo simulation.
 The main advantages of Monte Carlo based standards are flexibility, since they can be used with a wide variety of metrics or even multiple metrics in combinations, and robustness.
-An example is test III proposed by Wang CITE, where the metric used was the proportion of seats won by a party, and the model was a Monte Carlo technique where 'fantasy' congressional delegations were sampled from national congressional voting results.
+An example is test III proposed by Wang \cite{Wang__,Wang_2016_10.1089/elj.2016.0387}, where the metric used was the proportion of seats won by a party, and the model was a Monte Carlo technique where 'fantasy' congressional delegations were sampled from national congressional voting results.
 This method can be used to establish whether or not a party's vote share wins them seats excessively relative to a national baseline.
+A second example of a Monte Carlo based standard is that of Chen et al \cite{Chen_2015_10.1089/elj.2015.0317,Chen_2016_10.1016/j.electstud.2016.06.014}, where electoral maps satisfying basic redistricting criteria are generated randomly and compared against the actual map.
 The standard that we propose is also based on Monte Carlo simulation.
 The metric, which we refer to as the specific asymmetry (see section \ref{sec:MB}), is a measure of partisan bias that determines discrepancy in seats won by the losing party under a reversal in statewide partisanship.  
 The model, described in section \ref{sec:FB}, uses a Monte Carlo technique based simulations of an empirically estimated probability model for district and statewide partisanship.
-The drawback of Monte Carlo based standards is complexity.
-In fact, despite the fact that Monte Carlo simulation is a common and highly conventional technique, the supreme court has expressed skepticism of this type of approach CITE \KB{I'M NOT SURE THAT'S TRUE}\CM{you may be right, I have a vague reccolection on this but I'll need to look further}.
-Whether or not a court can be convinced to warm up to such an approach has yet to be determined, but what is clear is that Monte Carlo based methods are powerful tools for examination of bias and robustness.
+The drawback of Monte Carlo based standards is complexity relative to analytic standards which do not require a computer to implement.
+Nonetheless, Monte Carlo simulation techniques are highly conventional tools that is in widespread use across numerous disciplines \cite{Kroese_2014_10.1002/wics.1314}, and are useful for examination of bias in redistricting.
 
 The empirical Bayesian framework that we propose is not only appropriate for assessing bias that has existed in past redistricting plans, but it is useful for understanding how bias could be introduced into future redistricting plans, even as strategies for gerrymandering change in response to the introduction of a hypothetical standard.
 In fact, the empirical Bayesian model that we propose is compatible with all of the metrics we have discussed thus far, and can be used as part of a standard itself, or can be used to test the robustness of standards that do not require Monte Carlo simulation. 
@@ -109,19 +114,32 @@ For fast reference, table \ref{tab:Stand} summarizes each of the standards discu
 Standard & Metric & Model\\
 \hline
 \hline
-Grofman and King & Deficit in Seats at 50\% of the vote & ?\\
+Grofman and King & Deficit in Seats at 50\% of the vote & None proposed\\
 \hline
-Mean Median Difference & mean median difference & asymptotic distribution \\
- &                                              & assuming IID samples CITE\\
+Nagle & Various metrics of seats & None proposed\\
+      & votes curve asymmetry &  \\
 \hline
-Chi square test & mean median difference & asymptotic distribution \\
-                &                        & assuming IID samples CITE\\
+Stephanopolous and McGhee & Efficiency gap & None proposed,\\
+                          &                & historical analysis used\\
+                          &                & in \emph{Whitford v. Gil}\\
 \hline
-Lopsided wins test & difference in party  & asymptotic distribution \\
-                   &  mean winning vote share & assuming IID samples CITE\\
+Gelman et al & Deficit in Seats at 50\% of the vote, & Bayesian simulation\\
+             & various others & Bayesian simulation\\
 \hline
-Test III & Party seat share & MC sampling of national \\
-         &                  & district voting results\\
+Mean Median Difference & Mean median difference & asymptotic distribution \\
+ &                                              & (unit normal) \\
+ &                                              & assuming IID samples \\
+\hline
+Chi square test & Party in state and national  & asymptotic distribution  \\
+                & winning vote share variances  & (chi squared) \\
+                &   & assuming IID samples \\
+\hline
+Lopsided wins test & Difference in party  & asymptotic distribution  \\
+                   &  mean winning vote share & (student's t) \\
+                   &   & assuming IID samples \\
+\hline
+Test III \cite{Wang_2016_10.1089/elj.2016.0387} & Party seat share & MC sampling of national \\
+or 'excess seats test'         &                  & district voting results\\
 \hline
 Chen and Rodden & Party seat share & MC sampling of randomly \\
          &                         & generated districting plans\\

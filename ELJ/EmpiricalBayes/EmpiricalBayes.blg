@@ -1,6 +1,49 @@
-This is BibTeX, Version 0.99dThe top-level auxiliary file: EmpiricalBayes.aux
+This is BibTeX, Version 0.99d (TeX Live 2017)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: EmpiricalBayes.aux
 A level-1 auxiliary file: largeStatesTab.aux
 The style file: unsrt.bst
 Database file #1: gerrymandering.bib
 Warning--empty year in Wang__
+You've used 16 entries,
+            1791 wiz_defined-function locations,
+            561 strings with 6606 characters,
+and the built_in function-call counts, 3672 in all, are:
+= -- 358
+> -- 125
+< -- 1
++ -- 48
+- -- 32
+* -- 297
+:= -- 585
+add.period$ -- 48
+call.type$ -- 16
+change.case$ -- 16
+chr.to.int$ -- 0
+cite$ -- 17
+duplicate$ -- 142
+empty$ -- 361
+format.name$ -- 32
+if$ -- 784
+int.to.chr$ -- 0
+int.to.str$ -- 16
+missing$ -- 15
+newline$ -- 83
+num.names$ -- 16
+pop$ -- 17
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 56
+stack$ -- 0
+substring$ -- 347
+swap$ -- 16
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 1
+while$ -- 45
+width$ -- 18
+write$ -- 178
 (There was 1 warning)
