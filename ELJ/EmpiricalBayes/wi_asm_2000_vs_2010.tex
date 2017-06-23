@@ -55,25 +55,23 @@ This represent the number of seats Republicans won in excess of what they would 
 If the number is negative, that represents an asymmetry in favor of Democrats.
 We call this "specific partisan asymmetry".
 
-\subsection{Advantages of this metric}
- 
-Before applying this metric to concretes example, we'd like to highlight some of the advantages of it.
+Before applying this metric to concrete examples, we'd like to highlight some of the advantages of it.
 
 \begin{itemize}
 
-\item Doesn't assume proportionality in results - The seats-votes curve for single-winner elections naturally take on a cumulative Beta-binomial distribution, as opposed to a diagonal line representing seats proportional to votes.  This metric doesn't assume a diagonal curve representing proportionality.  It tests a looser (less strict) criteria: asymmetry, which still retains the essential feature of measuring disenfranchisement based on political belief.  SCOTUS has ruled that seats proportional to votes can not be a legal standard (Thornburg v. Gingles 1986).   But they remain open to a legal standard based on the idea of partisan symmetry.
+\item It Doesn't assume proportionality in results - The seats-votes curve for single-winner elections naturally take on a cumulative Beta-binomial distribution, as opposed to a diagonal line representing seats proportional to votes.  This metric doesn't assume a diagonal curve representing proportionality.  It tests a looser (less strict) criteria: asymmetry, which still retains the essential feature of measuring disenfranchisement based on political belief.  SCOTUS has ruled that seats proportional to votes can not be a legal standard (Thornburg v. Gingles 1986).   But they remain open to a legal standard based on the idea of partisan symmetry.
  
-\item Distinguishes between artificial partisan bias and the natural multiplying effect of single-winner elections -  Single-winner aka "Majoritarian" elections naturally over-favor the majority party, giving them a larger fraction of the seats than they get of the popular vote.  
+\item It dstinguishes between artificial partisan bias and the natural multiplying effect of single-winner elections -  Single-winner aka "Majoritarian" elections naturally over-favor the majority party, giving them a larger fraction of the seats than they get of the popular vote.  
 While some measures might mistakenly identify this as gerrymandering, specific asymmetry explicitly takes this into account by calculating and then subtracting this natural multiplying effect.
 In other words, it does not mistake disproportionality due to the sigmoidal shape of marjoritian election seats-votes curves with gerrymandering.
 
-\item Works for states with partisanship far from 50/50 - By sampling the asymmetry at the actual vote counts rather than e.g. 50/50, this metric maintains full relevance even for the most extremely partisan states.
+\item It works for states with partisanship far from 50/50 - By sampling the asymmetry at the actual vote counts rather than e.g. 50/50, this metric maintains full relevance even for the most extremely partisan states.
 
-\item Represents deviation from what is practically achievable - It is trivial for a computer algorithm to design districts that make the seats-votes curve perfectly symmetric, while satisfying all constitutional requirements.  
+\item It represents deviation from what is practically achievable - It is trivial for a computer algorithm to design districts that make the seats-votes curve perfectly symmetric, while satisfying all constitutional requirements.  
 Thus, to convert this absolute score to one relative to what can be accomplished by a redesign that meets all traditional redistricting principles, one simply subtracts zero.  
 This "new" relative score gives you the number of voters whose votes were effectively stolen by the map drawers with the current map, and whose right to representation can be returned by a remedy map that can be trivially designed by a computer employing a multi-objective heuristic optimization algorithm.
 
-\item The only possible improvements are shift, scale, and shape - Since it is well ordered and monotonic with respect to actual partisan advantage, any "better" measure can only be better in the sense of having a more appropriate "center" point, a more appropriate scale, or a more appropriate "shape" (change of slope as you go up and down the scale).  The scale varies from -1 to 1, or alternatively from negative the number of seats available to the positive of that.  The "center",  zero, is a non-arbitrary and very reasonable choice, representing a perfectly symmetric situation.   The "shape" is the number (or percentage) of congressional seats affected.
+\item The only possible improvements to it are shift, scale, and shape - Since it is well ordered and monotonic with respect to actual partisan advantage, any "better" measure can only be better in the sense of having a more appropriate "center" point, a more appropriate scale, or a more appropriate "shape" (change of slope as you go up and down the scale).  The scale varies from -1 to 1, or alternatively from negative the number of seats available to the positive of that.  The "center",  zero, is a non-arbitrary and very reasonable choice, representing a perfectly symmetric situation.   The "shape" is the number (or percentage) of congressional seats affected.
 
 \item It gives a result in an empirically meaningful unit: number of seats, which can be directly converted into number of ballots/voters affected by multiplying by the number of ballots cast and dividing by the number of districts.
 
@@ -82,51 +80,69 @@ This "new" relative score gives you the number of voters whose votes were effect
 \end{itemize}
 
 
-\section{Past elections}
+\section{Observed partisan asymmetries in past elections}
+
+\KB{once we have the graphics we can start writting this up}
 
 
-\section{Future elections}
-
-
-Before applying this model to a concrete examples, we'd like to highlight some of the advantages of it.
-
+\section{Expected  partisan asymmetries in future elections}
 
 \subsection{Probability model}
 
-\subsection{Advantages of this model}
- 
+To calculate the expected partisan asymemtries for future elections, we need to construct a probability model and compute the most likely parameters for it based on past observations.
+We choose our probability model by deduction from first principles.
+
+An election between two parties is a number of repeated trials, each resulting in one of two outcomes.  This is known in mathematical literature as a Bernoulli process.
+In our case, the rate of "success" (of getting the first of the two options) in the Bernoulli process -- known as the "rate parameter" -- is unknown.
+For reasons which we won't go into here, the standard accepted distribution for modeling an unknown rate parameterof a Bernoulli process, is a Beta distribution.
+Using a Beta distribution here amounts to making the fewest possible assumptions about the value of the rate parameter.
+
+For our probability model we model at the resolution of districts vote percentages.
+We use a Beta distribution for the vote counts in each district, and one for the total popular vote.
+This allows us to calculate a likelihood for every possible outcome, without relying on any prior assumptions.
+
+Before applying this model to a concrete examples, we'd like to highlight some of the advantages of this approach.
+
 \begin{itemize}
 
-\item Takes into account non-uniform swings - By looking at not only the average partisanship of each district, but how much the partisanship of each individual district changes from election to election, this metric is able to take into account the changes in voter sentiment that are not uniform throughout the state; that are perhaps concentrated in only certain districts.
+\item It takes into account non-uniform swings - By looking at not only the average partisanship of each district, but how much the partisanship of each individual district changes from election to election, this metric is able to take into account the changes in voter sentiment that are not uniform throughout the state; that are perhaps concentrated in only certain districts.
 
 \item It takes into account all possibilities, weighted by likelihood - Every possible seats-votes curve and every possible popular vote ratio is taken into consideration, weighted by the combined likelihood of the two.
 
-\item Shows durability - By computing an entire likelihood function for specific partisan asymmetry, rather than a single point estimate, this metric enables quick and accurate assessment of how durable a gerrymander is; how much more harm it will cause in the future, including what the likelihood is that it will not cause harm.
+\item It shows durability - By computing an entire likelihood function for specific partisan asymmetry, rather than a single point estimate, this approach enables quick and accurate assessment of how durable a gerrymander is; how much more harm it will cause in the future, including what the likelihood is that it will not cause harm.
 
 \end{itemize}
 
+\KB{i need to change these sections to talk about both 2000 and 2010 and how they compare, instead of just 2010}
 
-\section{2010 districts results}
-\subsection{Future election result likelihoods (District partisanship likelihoods)}
- 
-Shown in figure \ref{fig:Betas} is a graph of district partisanship, including dispersion.  To generate this graph, a Beta distribution for each district was calculated using the method of moments.  Additionally a Beta distribution for the total popular vote was calculated using the method of moments.  Then the probability density function was plotted out for each one of them.  (The black curve in the middle is the total popular vote.) Results that lead to a Democrat winning the seat are colored in blue, and results that lead to a Republican winning the seat are colored in red.
-Note, in addition to the the average of the past 6 elections, the graph also shows the statistical dispersion, from which the durability of this effect for future elections can be assessed.
+\subsection{Future election result likelihoods}
 
 \begin{figure}[htb!]
     \begin{center}
-        \includegraphics[scale=0.25]{../Figures/WI2010/Betas_cropped.png}
-        \caption{Beta distributions for Wisconsin 2010-cycle Assembly districts}\label{fig:Betas}
+        \includegraphics[scale=0.25]{../Figures/WI_compared/Betas_cropped.png}
+        \caption{Beta distributions for Wisconsin 2010-cycle Assembly districts, Top: 2000 cycle districts, Bottom: 2010 cycle districts}\label{fig:Betas}
     \end{center}
 \end{figure}
  
+Shown in figure \ref{fig:Betas} is a graph of district partisanship, including dispersion.  On top is 2000 cycle districts, and on bottom is 2010 cycle districts.   To generate this graph, a Beta distribution for each district was calculated using the method of moments.  Additionally a Beta distribution for the total popular vote was calculated using the method of moments.  Then the probability density function was plotted out for each one of them.  (The black curve in the middle is the total popular vote.) Results that lead to a Democrat winning the seat are colored in blue, and results that lead to a Republican winning the seat are colored in red.
+Note, in addition to the the average of the past 6 elections, the graph also shows the statistical dispersion, from which the durability of this effect for future elections can be assessed.
+
+ 
 Note that Democratic-leaning districts are both far to the right, showing high partisanship (and thus low voter impact), and low dispersion -- meaning the voters are unlikely to change their minds; they are "safe" Democratic voters.  Conversely, the Republican-leaning districts are closer to the middle, but still safely to the left, and all centered around about the same place.   These are characteristic signs of Betag.  Let me rephrase that: this is the very definition of "packing and cracking".  The Democratic voters were packed - hence far to the left.  By concentrating Democratic voters in few districts, this reduces the number of seats that Democratic voters can win.  The remaining population was "cracked" to get the Republican-leaning districts all to about the same level of moderately (but safely) Republican-leaning partisanship, thus increasing the number of seats that Republican voters can win.  The net effect is to maximize the impact of Republican votes, and minimize the impact of Democratic votes.
  
-Shown in figure \ref{fig:SVAssembly} are twelve seats-votes curves drawn from these distributions (solid curve), along with their 2-axis reflection (dashed curve), and a popular vote percentage drawn from the statewide Beta distribution (vertical dotted gray line).  A large and consistent asymmetry in favor of Republicans is immediately evident.
+Shown in figures \ref{fig:SVAssembly2000} and \ref{fig:SVAssembly2010} are twelve seats-votes curves drawn from these distributions (solid curve), along with their 2-axis reflection (dashed curve), and a popular vote percentage drawn from the statewide Beta distribution (vertical dotted gray line). 
+While a small asymmetry in favor of Republicans is sometimes apparent in the 2000 curves, a large and consistent asymmetry in favor of Republicans is immediately evident in the 2010 curves.
 
 \begin{figure}[htb!]
     \begin{center}
-        \includegraphics[scale=0.5]{../Figures/WI2010/sv_curves_assembly.png}
-        \caption{Some election outcome seats-votes curves generated from the probability model for Wisconsin 2010 Assembly districts}\label{fig:SVAssembly}
+        \includegraphics[scale=0.25]{../Figures/WI2000/4x4.png}
+        \caption{Some election outcome seats-votes curves generated from the probability model for Wisconsin 2000 Assembly districts}\label{fig:SVAssembly2000}
+    \end{center}
+\end{figure}
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.25]{../Figures/WI2010/sv_curves_assembly.png}
+        \caption{Some election outcome seats-votes curves generated from the probability model for Wisconsin 2010 Assembly districts}\label{fig:SVAssembly2010}
     \end{center}
 \end{figure}
 
@@ -138,8 +154,8 @@ To get the likelihood function for partisan asymmetry, we use Monte-Carlo numeri
  
 \begin{figure}[htb!]
     \begin{center}
-        \includegraphics[scale=0.5]{../Figures/WI2010/asymmetry_alt.png}
-        \caption{Specific asymmetry likelihoods generated from the probability model for Wisconsin 2010 Assembly districts}\label{fig:LikelihoodsAsymmetry}
+        \includegraphics[scale=0.25]{../Figures/WI_compared/asymmetry_cropped.png}
+        \caption{Specific asymmetry likelihoods, Top: 2000 cycle districts, Bottom: 2010 cycle districts}\label{fig:LikelihoodsAsymmetry}
     \end{center}
 \end{figure}
  
@@ -157,8 +173,8 @@ The resulting curve shown in figure \ref{fig:LikelihoodsDistrictPartisanship} le
  
 \begin{figure}[htb!]
     \begin{center}
-        \includegraphics[scale=0.25]{../Figures/WI2010/district_partisanship_cropped.png}
-        \caption{District partisanship likelihoods generated from the probability model for Wisconsin 2010 Assembly districts}\label{fig:LikelihoodsDistrictPartisanship}
+        \includegraphics[scale=0.25]{../Figures/WI_compared/district_partisanship_cropped.png}
+        \caption{District partisanship likelihoods, Top: 2000 cycle districts, Bottom: 2010 cycle districtss}\label{fig:LikelihoodsDistrictPartisanship}
     \end{center}
 \end{figure}
 
@@ -170,12 +186,13 @@ Particularly striking about this result is that, while the popular vote likeliho
 
 \begin{figure}[htb!]
     \begin{center}
-        \includegraphics[scale=0.3]{../Figures/WI2010/seats_cropped.png}
-        \caption{Seat count likelihoods generated from the probability model for Wisconsin 2010 Assembly districts}\label{fig:LikelihoodsSeatCounts}
+        \includegraphics[scale=0.25]{../Figures/WI_compared/seats_cropped.png}
+        \caption{Seat count likelihoods, Top: 2000 cycle districts, Bottom: 2010 cycle districts}\label{fig:LikelihoodsSeatCounts}
     \end{center}
 \end{figure}
  
-\section{Comparison}
+
+
 
 \section{Conclusions}
 From these comparisons, it is painfully obvious that the specific partisan asymmetry present in the 2010 cycle districts is \emph{not} present in the 2000 cycle districts, even when using vote count data from the exact same elections.  Therefore:
@@ -184,6 +201,21 @@ From these comparisons, it is painfully obvious that the specific partisan asymm
 \item Natural political geography was \emph{not} a significant factor in the partisan asymmetry inherent in Wisconsin Assembly districts in the 2010 cycle.  Were this a significant factor, the exact same effects would be present in the 2000 districts, but they are not.  This finding is consistent with Professor Jowei Chen's findings in his paper "The Impact of Political Geography on Wisconsin Redistricting: An Analysis of Wisconsin's Act 43 Assembly Districting Plan".
 \item Simply reverting back to the 2000 census cycle districts would remedy most of the present injustice, as measured in seats affected or ballots affected.
 \end{itemize}
+
+\KB{end of sections i need to modify}
+
+Measured by partisan asymmetry, both expected and observed, there was substantial gerrymanding in favor of Repulbicans in the 2000 cycle maps, leading to about 4 extra Republican seats beyond what would be allocated if the seats-votes curve was symmetric.
+The current method does not distinguish what part of this gerrymandering was deliberate and what part unintentional, though regardless of the proportion, it is trivial to generate a map without this asymmetry by using one of the many well-known optimization algorithms.
+
+If we disregard data that was not available when the 2010 cycle districts were drawn, and use only data from the 2006, 2008, and 2010 elections, we see that with the new redistricting lines, Republicans are expected to gain an additional 5 assembly seats, beyond what the previous (2000 cycle) redistricting lines would have given them.
+Note that for every seat Republicans gain, Democrats lose a seat.  So in terms of seat \emph{difference} gained, it's 10.
+Furthermore, this is in addition to the partisan asymmetry already present in the 2000 cycle maps, bringing the expected total seat difference gained over Democrats through partisan asymmetry to 18.
+For comparison, the historical threshold for ruling in favor of plaintiffs on grounds of racial gerrymandering, is 1.
+
+The fact that the 2010 cycle maps have double the partisan asymmetry as the 2000 maps, both expected and observed, demonstrates that regardless of what part of the gerrymandering in the 2000 cycle maps was deliberate, \emph{at least} half of the gerrymandering in the 2010 cycle maps was deliberate.
+Regardless of what portion of the remainder is unintentional, a map optimized by a computer algorithm to maximize partisan symmettry could remove almost all of the deliberate gerrymandering, and at least some of the unintentional gerrymandering.
+
+
 
 
 

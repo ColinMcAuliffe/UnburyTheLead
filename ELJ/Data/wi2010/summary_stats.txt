@@ -1,8 +1,11 @@
 Seat expectation: 59.15025000000323
 
-asymmetry   low 5%: -0.25252525252525254
-asymmetry   median: -0.18181818181818182
-Expected_asymmetry: -0.18151999999999668
-asymmetry MAD     : 0.03622944882378452
-asymmetry SD      : 0.04663418435209069
-asymmetry high  5%: -0.10101010101010105
+asymmetry low   5%: -0.25252525252525254
+asymmetry low  25%: -0.21212121212121215
+asymmetry median  : -0.18181818181818182
+asymmetry high 25%: -0.1515151515151515
+asymmetry high  5%: -0.11111111111111105
+
+Expected_asymmetry: -0.1815279797979752
+asymmetry MAD     : 0.03630289922696986
+asymmetry SD      : 0.04671599873625311
