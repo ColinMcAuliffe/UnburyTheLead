@@ -12,6 +12,12 @@ from scipy import stats
 
 from ELJcommon import getDemVotesAndSeats,get_spasym,get_asymFromPct,getExpAsym,varWithShrinkage,betaMOM,list2df,colorBins,get_asymFromCenteredPct
 
+def setFontSize(ax,fs):
+    for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] +
+             ax.get_xticklabels() + ax.get_yticklabels()):
+        item.set_fontsize(fs)
+    plt.setp(ax.get_legend().get_texts(), fontsize=fs)
+    return ax
 states = us.states.STATES
 abbr2name = us.states.mapping('abbr', 'name')
 
@@ -30,6 +36,8 @@ cycles = [cyc70,cyc80,cyc90,cyc00,cyc10]
 cnames = [1970,1980,1990,2000,2010]
 bins6 = np.linspace(-6.25,6.25,26)
 bins7 = np.linspace(-7.25,7.25,30)
+
+oneByOne = (6.5,6.5)
 #Compute specific asymmetry and historic mean and stdv{{{1
 #Compute data{{{2
 data      = [['State','cycle','AreaNumber','Mean','Stdv','Var']]
@@ -83,6 +91,7 @@ stateDataLarge.to_csv(os.path.join(dataDir,"historicSAsymLarge.csv"))
 ax.grid()
 ax  = fig.add_subplot(212)
 fig2 = plt.figure()
+#fig2 = plt.figure(figsize=oneByOne)
 ax2  = fig2.add_subplot(111)
 needlab = True
 for cyc,cnm in zip(cycles,cnames):
@@ -132,9 +141,9 @@ for cyc,cnm in zip(cycles,cnames):
     ax.plot(cyc,mmR,marker='x',color='r',linewidth=4)
     ax.plot(cyc,mmD,marker='x',color='b',linewidth=4)
     if needlab:
-        ax2.plot(cyc,pop,color='b',label="Congressional pop vote %")
-        ax2.plot(cyc,sts,color='g',label="Congressional seat %")
-        ax2.plot(cyc,sas,color='r',label="Congressional seat %, asymmetry removed")
+        ax2.plot(cyc,pop,color='b',label="Pop vote share")
+        ax2.plot(cyc,sts,color='g',label="Seat share")
+        ax2.plot(cyc,sas,color='r',label="Seat share, asymmetry removed")
         needlab=False
     else:
         ax2.plot(cyc,pop,color='b')
@@ -144,7 +153,10 @@ for cyc,cnm in zip(cycles,cnames):
 ax.grid()
 fig.savefig(os.path.join(figDir,"historicSA"+figExt))
 ax2.grid()
+ax2.set_xlabel("Year")
+ax2.set_ylabel("Seat or Vote Share")
 ax2.legend()
+ax2 = setFontSize(ax2,12)
 fig2.savefig(os.path.join(figDir,"sv"+figExt))
 #2}}}
 #plot asymmetry vs mean median difference{{{2

@@ -39,7 +39,7 @@ bins7 = np.linspace(-7.25,7.25,30)
 #Compute and plot expected asymmetry{{{1
 dataExp = [['State','cycle','expectedAsym','expectedAsymPct','mode','p05','p95','ndist']]
 fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(18,10))
-fig2, ((axs1, axs2), (axs3, axs4)) = plt.subplots(2, 2, sharex="col", sharey=True,figsize=(18,10))
+fig2, ((axs1, axs2), (axs3, axs4)) = plt.subplots(2, 2, sharex="col", sharey=True)
 
 axhist  = [ax2,ax3,ax4,ax5,ax6]
 
@@ -47,10 +47,10 @@ allSims = []
 
 fig3, axh = plt.subplots(1,1)
 
-fig4, ((axh1, axh2,axh3), (axh4, axh5, axh6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(18,10))
+fig4, ((axh1, axh2,axh3), (axh4, axh5, axh6)) = plt.subplots(2, 3, sharex=True, sharey=True)
 axhist4  = [axh1,axh2,axh3,axh4,axh5]
 
-fig5, ((axn1, axn2,axn3), (axn4, axn5, axn6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(18,10))
+fig5, ((axn1, axn2,axn3), (axn4, axn5, axn6)) = plt.subplots(2, 3, sharex=True, sharey=True)
 axhist5  = [axn1,axn2,axn3,axn4,axn5]
 
 fig6, axn = plt.subplots(1,1)
@@ -129,9 +129,12 @@ for cnm,cyc,ax,axhs4,axhn5 in zip(cnames,cycles,axhist,axhist4,axhist5):
     axhs4.set_xlabel(str(cnm))
 
     netAsym = np.sum(simsByState,axis=0)
-    N, bins, patches = axhn5.hist(netAsym,bins=binsNet,normed=True)
+    N, bins, patches = axhn5.hist(netAsym,bins=binsNet,linewidth=0,normed=True)
     bins,patches = colorBins(bins,patches,0.)
     axhn5.grid()
+    axhn5.set_xlim((-40.,40.))
+    axhn5.xaxis.set_major_locator(MaxNLocator(6))
+    axhn5.yaxis.set_major_locator(MaxNLocator(6))
     axhn5.set_xlabel(str(cnm))
 
 
