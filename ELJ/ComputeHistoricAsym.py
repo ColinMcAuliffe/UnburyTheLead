@@ -17,7 +17,7 @@ abbr2name = us.states.mapping('abbr', 'name')
 
 figDir       = os.path.join("Figures","HistoricAsymmetry")
 dataDir      = "Data"
-figExt       = ".tiff"
+figExt       = ".png"
 
 congress = pd.read_csv(os.path.join(dataDir,"congressImputed.csv"))
 
