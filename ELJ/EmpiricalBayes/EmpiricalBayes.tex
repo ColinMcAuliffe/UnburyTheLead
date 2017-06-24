@@ -62,9 +62,7 @@ Development of a standard that fits with existing rulings, accurately measures p
 For example, a common sense standard might be to require that a party's share of seats is proportional to its share of votes, which is simple and applicable to swing states as well as more partisan states.
 However, even when redistricting is fair, single winner voting systems tend not to produce such proportional outcomes \cite{Kendall_1950_10.2307/588113}, and the supreme court has stated that proportionality is not acceptable CITE.\CM{Do you recall which ruling htis was?}
 A second example is the mean median difference test \cite{Wang__,Wang_2016_10.1089/elj.2016.0387,McDonald_2015_10.1089/elj.2015.0358}, which fits with existing rulings since it measures partisan bias without regard to proportionality and is simple enough to be calculated by a judge without an expert witness.
-However, it is only effective in measuring bias for states which are close to even in terms of partisanship \cite{Wang_2016_10.1089/elj.2016.0387}: 
-\KB{I'M NOT SURE THERE'S A CITATION FOR THIS - IT MIGHT BE A NOVEL STATEMENT.}
-\CM{it's mentioned in the cited article}
+However, it is only effective in measuring bias for states which are close to even in terms of partisanship. \cite{Wang_2016_10.1089/elj.2016.0387}
 
 Several standards have been proposed in literature, and for clarity we describe a standard as consisting of two parts.
 The first part is a metric, which is some quantity that can be calculated from a given election result and is a measure of the unfairness or bias.
@@ -80,15 +78,18 @@ These standards are attractive because they are based on statistics with propert
 However, these tests have some drawbacks.
 Namely, the models used for computing the significance level for those tests are valid asymptotically as the number of districts increases, meaning that the statistical power of these standards is diminished for states with just a few districts.
 Additionally, a null distribution must be specified for each of the test statistics in question. 
-This is a relatively minor point, since the null distributions used in the t-test and chi squared test are well established and the effect of the null distribution on the mean median difference test is small in many cases \cite{Cabilio_1996_10.2307/3315744,Zheng_2010_}
-lastly and most importantly, these models assume that samples are independent and identically distributed (IID), which is an assumption that is crucial for the tests to be analytic (and hence simple) but not necessarily realistic for elections.
+This is a relatively minor point, since the null distributions used in the t-test and chi squared test are well established and the effect of the null distribution on the mean median difference test is small in many cases. \cite{Cabilio_1996_10.2307/3315744,Zheng_2010_}
+\KB{I would argue its a major point.   And it's kind of subjective, anyways, whether its minor or major}
+Lastly and most importantly, these models assume that samples are independent and identically distributed (IID), which is an assumption that is crucial for the tests to be analytic (and hence simple) but not necessarily realistic for elections.
 For instance, the IID assumption would imply that the probability of a deeply partisan Republican district being won by a Republican is the same as the probability of a deeply partisan Democratic district in the same state being won by a Republican.
 Violation of the IID assumption can have a noticeable effect on statistical tests, for an example in securities law see \cite{Gel_2009_10.1093/lpr/mgp008}. 
 Use of this assumption may make this group of standards too restrictive or too permissive depending on the specific circumstances.
-Despite these objections, standards based on analytic models are potentially very powerful due to their relative simplicity, and we are currently investigating the effect the IID assumption has on the robustness of such standards.
+Despite these objections, standards based on analytic models are potentially very powerful due to their relative simplicity and their ability to be solved exactly, and we are currently investigating the effect the IID assumption has on the robustness of such standards.
 
 Another group of standards are those based on Monte Carlo simulation.
-The main advantages of Monte Carlo based standards are flexibility, since they can be used with a wide variety of metrics or even multiple metrics in combinations, and robustness.
+A major advantages of Monte Carlo based standards are flexibility, since they do not require the metrics to be analytically integrable \KB{I know, might be too mathy for the audience}, and thus can be used with a wide variety of metrics or even multiple metrics in combinations.
+Additionally, once implemented by a computer algorithm, it is quick and easy to look at the data in many different ways.
+
 An example is test III proposed by Wang \cite{Wang__,Wang_2016_10.1089/elj.2016.0387}, where the metric used was the proportion of seats won by a party, and the model was a Monte Carlo technique where 'fantasy' congressional delegations were sampled from national congressional voting results.
 This method can be used to establish whether or not a party's vote share wins them seats excessively relative to a national baseline.
 A second example of a Monte Carlo based standard is that of Chen et al \cite{Chen_2015_10.1089/elj.2015.0317,Chen_2016_10.1016/j.electstud.2016.06.014}, where electoral maps satisfying basic redistricting criteria are generated randomly and compared against the actual map.
@@ -96,7 +97,8 @@ The standard that we propose is also based on Monte Carlo simulation.
 The metric, which we refer to as the specific asymmetry (see section \ref{sec:MB}), is a measure of partisan bias that determines discrepancy in seats won by the losing party under a reversal in statewide partisanship.  
 The model, described in section \ref{sec:FB}, uses a Monte Carlo technique based simulations of an empirically estimated probability model for district and statewide partisanship.
 The drawback of Monte Carlo based standards is complexity relative to analytic standards which do not require a computer to implement.
-Nonetheless, Monte Carlo simulation techniques are highly conventional tools that is in widespread use across numerous disciplines \cite{Kroese_2014_10.1002/wics.1314}, and are useful for examination of bias in redistricting.
+Since Monte Carlo is a numerical integration method, as opposed to analytic, it take a lot more computer processing power, and thus aren't as well suited for use in optimization algorithms, relative to analytic methods.
+Nonetheless, Monte Carlo simulation techniques are highly conventional tools that are in widespread use across numerous disciplines \cite{Kroese_2014_10.1002/wics.1314}, and are useful for examining bias in redistricting.
 
 The empirical Bayesian framework that we propose is not only appropriate for assessing bias that has existed in past redistricting plans, but it is useful for understanding how bias could be introduced into future redistricting plans, even as strategies for gerrymandering change in response to the introduction of a hypothetical standard.
 In fact, the empirical Bayesian model that we propose is compatible with all of the metrics we have discussed thus far, and can be used as part of a standard itself, or can be used to test the robustness of standards that do not require Monte Carlo simulation. 
