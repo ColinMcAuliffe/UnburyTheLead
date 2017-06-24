@@ -34,24 +34,29 @@
 \title{Extracting the components of Specific Partisan Asymmetry for Wisconsin Assembly 2010 census cycle districts}
 \author{Kevin Baas and Colin McAuliffe}
 \maketitle
+\begin{abstract}
+The changes in partisan asymmetry in the Wisconsin state assembly legislative maps from the 2000 census cycle to the 2010 census cycle are analyzed using an empirical Bayesian method.
+The 2010 map is found to increase the number of seats won by Republicans compared to the 2000 map, and to increase the partisan asymmetry by almost exactly the same number of seats.
+The increased bias in the 2010 cycle election results is therefore primarily the result of redistricting, and there is no evidence that natural political geography or changes in voter preferences can explain the changes in bias.
+\end{abstract}
 
 \section{Method}
 
 \begin{figure}[htb!]
     \begin{center}
-        \includegraphics[scale=0.25]{../Figures/WI_compared/precincts_pop_combined.png}
+        \includegraphics[scale=0.35]{../Figures/WI_compared/precincts_pop_combined.png}
         \caption{2016 Assembly election results by precinct, projected onto Assembly districts before and after Act 43. Left: 2000 cycle districts, Right: 2010 cycle districts}\label{fig:Maps}
     \end{center}
 \end{figure}
 
-To compare how much of the observed partisan asymmetry in 2010-cycle Wisconsin State Assembly districsts was the result of changes in district designs versus changes in voter sentiment, we varied the first while holding the second constant.
+To compare how much of the observed partisan asymmetry in 2010-cycle Wisconsin State Assembly districts was the result of changes in district designs versus changes in voter sentiment, we varied the first while holding the second constant.
 In other words, we projected actual election results onto both the current Assembly districts, and Assembly districts from the previous redistricting cycle, as shown in figure \ref{fig:Maps}.
 
 For this analysis we used official districting plans for the 2000 and 2010 census cycles, and actual vote counts from the 2006, 2008, 2010, 2012, 2014, and 2016 assembly elections, at precinct-level resolution, imputing uncontested elections with partisan swing matched presidential election results when available, and partisan swing matched federal congress election results when not.
 By "partisan swing matched" we mean that the Republican vote counts in all districts are multiplied by a constant factor so that the total vote count matches that for the assembly elections, for the subset of districts in which both elections were contested, and the same is done for the Democratic vote counts.
 Then election data for 2006, 2008, and 2010 was cross-aggregated at census block resolution to the 2010-cycle districts, and election data for 2012, 2014, and 2016 was cross-aggregated at census block resolution to the 2000-cycle districts. 
  
-Since the same exact elections are used in both the 2000 districts analysis and 2010 districts analysis, \emph{all} differences in the results are the consequnece of the redistricting scheme used, and conversely, changes in voter sentiment have exactly \emph{zero} contribution to the difference.
+Since the same exact elections are used in both the 2000 districts analysis and 2010 districts analysis, \emph{all} differences in the results are the consequence of the redistricting scheme used, and conversely, changes in voter sentiment have exactly \emph{zero} contribution to the difference.
 
 Furthermore, if the 2000 census cycle districts show a partisan asymmetry much lower than the 2010 cycle, then we know that natural "political geography" -- the tendency of Democratic voters to be clustered in cities -- was \emph{not} a significant factor in the partisan asymmetry inherent in 2010 cycle Wisconsin Assembly districts, since any contributions from political geography would be present in \emph{both} districting schemes.
 However, if they are not substantially different, this would not demonstrate that political geography was a significant contribution, because they both could be artificially gerrymandered on top of any unintentional gerrymandering due to political geography.
@@ -90,14 +95,14 @@ This "new" relative score gives you the number of voters whose votes were effect
 
 \begin{figure}[htb!]
     \begin{center}
-        \includegraphics[scale=0.25]{../Figures/WI_compared/asymmetry.png}
-        \caption{Historical asymmetry in Assembly elections, using 2000 cycle districts vs 2010 cycle districts.}\label{fig:Betas}
+        \includegraphics[scale=0.9]{../Figures/WI2010/WI_2000_2010.png}
+        \caption{Historical asymmetry in Assembly elections, using 2000 cycle districts vs 2010 cycle districts. The X's indicate that a result has been cross aggregated, meaning results were computed on a different district map than the one that actually existed at the time of the election}\label{fig:Asym20002010}
     \end{center}
 \end{figure}
 
 After imputing uncontested elections and projecting onto the two different districting schemes, we counting up the wins for each election on each map.
 We also counting up the wins for the other party if the popular vote was reversed, and subtracted this from the first, to get the specific partisan asymmetry.
-The seat counts are shown in figure X, and the specific asymmetry is shown in figure X.  They are also tabulated in table X.
+The seat counts are shown in figure X, and the specific asymmetry is shown in figure \ref{fig:Asym20002010}.  They are also tabulated in table X.
 The horizontal lines and shaded regions represent the statistical expectation and 50\% confidence intervals, respectively.
 The next section describes how these are calculated.
 
@@ -230,7 +235,7 @@ Indeed, out of 100,000 samples, Democrats rarely even get 45 of the seats -- a t
 
 \section{Conclusions}
 
-Measured by partisan asymmetry, both expected and observed, there was substantial gerrymanding in favor of Repulbicans in the 2000 cycle maps, leading to about 4 extra Republican seats beyond what would be allocated if the seats-votes curve was symmetric.
+Measured by partisan asymmetry, both expected and observed, there was substantial gerrymandering in favor of Repulbicans in the 2000 cycle maps, leading to about 4 extra Republican seats beyond what would be allocated if the seats-votes curve was symmetric.
 The current method does not distinguish what part of this gerrymandering was deliberate and what part unintentional, though regardless of the proportion, it is trivial to generate a map without this asymmetry by using one of the many well-known optimization algorithms.
 
 If we disregard data that was not available when the 2010 cycle districts were drawn, and use only data from the 2006, 2008, and 2010 elections, we see that with the new redistricting lines, Republicans are expected to gain an additional 4 assembly seats, beyond what the previous (2000 cycle) redistricting lines would have given them.
@@ -257,7 +262,7 @@ nor how much of the gerrymandering present in the 2000 districts was deliberate,
 it does prove with absolute certainty that the 2010 districts, under the same elections, give Republicans more seats that the 2000 districts, and this difference will persist even in the most extreme swings of voter sentiment.
 
 Currently Assembly Republicans have 64 seats, and Democrats have 35.
-If the the district lines were not changed after the 2010 cycle, and eveyone voted the same, 
+If the district lines were not changed after the 2010 cycle, and everyone voted the same, 
 Republicans would currently have 4 less seats in Wisconsin Assembly, and Democrats would have 4 more, making the count 60-39.
 If the district lines were instead optimized to favor neither party -- to have an expected specific partisan asymmetry of zero -- 
 Republicans would currently have 9 less seats in Wisconsin Assembly, and Democrats would have 9 more, making the count 55-44.
