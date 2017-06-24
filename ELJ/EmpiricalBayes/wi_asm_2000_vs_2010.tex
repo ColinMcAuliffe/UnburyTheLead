@@ -101,10 +101,10 @@ This "new" relative score gives you the number of voters whose votes were effect
 \end{figure}
 
 After imputing uncontested elections and projecting onto the two different districting schemes, we counting up the wins for each election on each map.
-We also counting up the wins for the other party if the popular vote was reversed, and subtracted this from the first, to get the specific partisan asymmetry.
+We also counted up the wins for the other party if the popular vote was reversed, subtracted this from the first, and divided by 2, to get the specific partisan asymmetry.
 The seat counts are shown in figure X, and the specific asymmetry is shown in figure \ref{fig:Asym20002010}.  They are also tabulated in table X.
 The horizontal lines and shaded regions represent the statistical expectation and 50\% confidence intervals, respectively.
-The next section describes how these are calculated.
+The calculation is described in the next section.
 
 The charts show a clear and stable separation between both seat counts and partisan asymmetry between 2000 districts and 2010 districts.
 They both go up and down largely in parallel, responding about the same to changes in voter sentiment.
@@ -152,9 +152,10 @@ Before applying this model to a concrete examples, we'd like to highlight some o
 Shown in figure \ref{fig:Betas} is a graph of district partisanship, including dispersion.  On top is 2000 cycle districts, and on bottom is 2010 cycle districts.   To generate this graph, a Beta distribution for each district was calculated using the method of moments.  Additionally a Beta distribution for the total popular vote was calculated using the method of moments.  Then the probability density function was plotted out for each one of them.  (The black curve in the middle is the total popular vote.) Results that lead to a Democrat winning the seat are colored in blue, and results that lead to a Republican winning the seat are colored in red.
 Note, in addition to the the average of the past 6 elections, the graph also shows the statistical dispersion, from which the durability of this effect for future elections can be assessed.
 
- 
-Note that Democratic-leaning districts are both far to the right, showing high partisanship (and thus low voter impact), and low dispersion -- meaning the voters are unlikely to change their minds; they are "safe" Democratic voters.  Conversely, the Republican-leaning districts are closer to the middle, but still safely to the left, and all centered around about the same place.   These are characteristic signs of Betag.  Let me rephrase that: this is the very definition of "packing and cracking".  The Democratic voters were packed - hence far to the left.  By concentrating Democratic voters in few districts, this reduces the number of seats that Democratic voters can win.  The remaining population was "cracked" to get the Republican-leaning districts all to about the same level of moderately (but safely) Republican-leaning partisanship, thus increasing the number of seats that Republican voters can win.  The net effect is to maximize the impact of Republican votes, and minimize the impact of Democratic votes.
- 
+Both the 2000 and 2010 distributions show clear signs of pro-Republican gerrymandering: Republican-leaning districts are competitive, while Democrat-leaning districts are not.
+However, in the 2010 distributions Republicans-leaning districts are more concentrated around a single point slightly but safely short of competitive, while Democratic-leaning districts that were competitive in the 2000 distributions, have been shifted away from the center.
+Consequently, in the 2010 distributions, compared to the 2000 distributions, Republicans are expected to gain more seats by smaller margins, while Democrats are expected to gain fewer seats by larger margins.
+
 Shown in figures \ref{fig:SVAssembly2000} and \ref{fig:SVAssembly2010} are twelve seats-votes curves drawn from these distributions (solid curve), along with their 2-axis reflection (dashed curve), and a popular vote percentage drawn from the statewide Beta distribution (vertical dotted gray line). 
 While a small asymmetry in favor of Republicans is sometimes apparent in the 2000 curves, a large and consistent asymmetry in favor of Republicans is immediately evident in the 2010 curves.
 
@@ -259,13 +260,13 @@ Were this a significant factor, the exact same effects would be present in the 2
 
 While this comparison cannot estimate how much deliberate gerrymandering was present in both schemes, 
 nor how much of the gerrymandering present in the 2000 districts was deliberate, 
-it does prove with absolute certainty that the 2010 districts, under the same elections, give Republicans more seats that the 2000 districts, and this difference will persist even in the most extreme swings of voter sentiment.
+it does prove with absolute certainty that the 2010 districts, under the same elections, give Republicans more seats than the 2000 districts, and this difference will persist even in the most extreme swings of voter sentiment.
 
 Currently Assembly Republicans have 64 seats, and Democrats have 35.
 If the district lines were not changed after the 2010 cycle, and everyone voted the same, 
 Republicans would currently have 4 less seats in Wisconsin Assembly, and Democrats would have 4 more, making the count 60-39.
 If the district lines were instead optimized to favor neither party -- to have an expected specific partisan asymmetry of zero -- 
 Republicans would currently have 9 less seats in Wisconsin Assembly, and Democrats would have 9 more, making the count 55-44.
-For comparison, the historical threshold for ruling in favor of plaintiffs on grounds of racial gerrymandering, is 1.
+For comparison, the historical threshold for ruling in favor of plaintiffs on grounds of racial gerrymandering is 1 seat.
 
 \end{document}
