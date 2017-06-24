@@ -37,7 +37,15 @@
 
 \section{Method}
 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.25]{../Figures/WI_compared/precincts_pop_combined.png}
+        \caption{2016 Assembly election results by precinct, projected onto Assembly districts before and after Act 43. Left: 2000 cycle districts, Right: 2010 cycle districts}\label{fig:Maps}
+    \end{center}
+\end{figure}
+
 To compare how much of the observed partisan asymmetry in 2010-cycle Wisconsin State Assembly districsts was the result of changes in district designs versus changes in voter sentiment, we varied the first while holding the second constant.
+In other words, we projected actual election results onto both the current Assembly districts, and Assembly districts from the previous redistricting cycle, as shown in figure \ref{fig:Maps}.
 
 For this analysis we used official districting plans for the 2000 and 2010 census cycles, and actual vote counts from the 2006, 2008, 2010, 2012, 2014, and 2016 assembly elections, at precinct-level resolution, imputing uncontested elections with partisan swing matched presidential election results when available, and partisan swing matched federal congress election results when not.
 By "partisan swing matched" we mean that the Republican vote counts in all districts are multiplied by a constant factor so that the total vote count matches that for the assembly elections, for the subset of districts in which both elections were contested, and the same is done for the Democratic vote counts.
@@ -75,15 +83,29 @@ This "new" relative score gives you the number of voters whose votes were effect
 
 \item It gives a result in an empirically meaningful unit: number of seats, which can be directly converted into number of ballots/voters affected by multiplying by the number of ballots cast and dividing by the number of districts.
 
- 
- 
 \end{itemize}
 
 
 \section{Observed partisan asymmetries in past elections}
 
-\KB{once we have the graphics we can start writting this up}
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.25]{../Figures/WI_compared/asymmetry.png}
+        \caption{Historical asymmetry in Assembly elections, using 2000 cycle districts vs 2010 cycle districts.}\label{fig:Betas}
+    \end{center}
+\end{figure}
 
+After imputing uncontested elections and projecting onto the two different districting schemes, we counting up the wins for each election on each map.
+We also counting up the wins for the other party if the popular vote was reversed, and subtracted this from the first, to get the specific partisan asymmetry.
+The seat counts are shown in figure X, and the specific asymmetry is shown in figure X.  They are also tabulated in table X.
+The horizontal lines and shaded regions represent the statistical expectation and 50\% confidence intervals, respectively.
+The next section describes how these are calculated.
+
+The charts show a clear and stable separation between both seat counts and partisan asymmetry between 2000 districts and 2010 districts.
+They both go up and down largely in parallel, responding about the same to changes in voter sentiment.
+
+This tells us that in the 2012, 2014, and 2016 elections, the new districts led to an increase in Republican representation over what the old districts would have produced.
+Furthermore, were the new districts used in the 2000 redistricting cycle, that would have produced about the same increase in Republican representation for the 2006, 2008, and 2010 elections.
 
 \section{Expected  partisan asymmetries in future elections}
 
@@ -204,17 +226,16 @@ We then accumulate these outcomes on a chart, with the seat count on one axis, a
 In 2000 districts, the average outcome -- also known as the "expected" outcome -- is Republicans winning a 54-45 majority of seats, though Democrats still have a decent chance of winning the majority of seats. 
 
 In 2010 districts, Republican's expceted lead grows by an additional 10 seats to 59-40, and despite being favored by roughly half the voters, Democrats have no chance at all to win a majority of seatss,  even in the most eccentric swings of voter sentiment.
-Indeed, out of 100,000 samples, Democrats never even get 45 of the seats -- a threshold that, under the 2000 districting scheme, would be their average.
+Indeed, out of 100,000 samples, Democrats rarely even get 45 of the seats -- a threshold that, under the 2000 districting scheme, would be their average.
 
 \section{Conclusions}
 
 Measured by partisan asymmetry, both expected and observed, there was substantial gerrymanding in favor of Repulbicans in the 2000 cycle maps, leading to about 4 extra Republican seats beyond what would be allocated if the seats-votes curve was symmetric.
 The current method does not distinguish what part of this gerrymandering was deliberate and what part unintentional, though regardless of the proportion, it is trivial to generate a map without this asymmetry by using one of the many well-known optimization algorithms.
 
-If we disregard data that was not available when the 2010 cycle districts were drawn, and use only data from the 2006, 2008, and 2010 elections, we see that with the new redistricting lines, Republicans are expected to gain an additional 5 assembly seats, beyond what the previous (2000 cycle) redistricting lines would have given them.
-Note that for every seat Republicans gain, Democrats lose a seat.  So in terms of seat \emph{difference} gained, it's 10.
+If we disregard data that was not available when the 2010 cycle districts were drawn, and use only data from the 2006, 2008, and 2010 elections, we see that with the new redistricting lines, Republicans are expected to gain an additional 4 assembly seats, beyond what the previous (2000 cycle) redistricting lines would have given them.
+Note that for every seat Republicans gain, Democrats lose a seat.  So in terms of seat \emph{difference} gained, it's 8.
 Furthermore, this is in addition to the partisan asymmetry already present in the 2000 cycle maps, bringing the expected total seat difference gained over Democrats through partisan asymmetry to 18.
-For comparison, the historical threshold for ruling in favor of plaintiffs on grounds of racial gerrymandering, is 1.
 
 The fact that the 2010 cycle maps have double the partisan asymmetry as the 2000 maps, both expected and observed, demonstrates that regardless of what part of the gerrymandering in the 2000 cycle maps was deliberate, \emph{at least} half of the gerrymandering in the 2010 cycle maps was deliberate.
 Regardless of what portion of the remainder is unintentional, a map optimized by a computer algorithm to maximize partisan symmettry could remove almost all of the deliberate gerrymandering, and at least some of the unintentional gerrymandering.
@@ -231,6 +252,15 @@ Were this a significant factor, the exact same effects would be present in the 2
 \item Simply reverting back to the 2000 census cycle districts would remedy most of the present injustice, as measured in seats affected or ballots affected.
 \end{itemize}
 
+While this comparison cannot estimate how much deliberate gerrymandering was present in both schemes, 
+nor how much of the gerrymandering present in the 2000 districts was deliberate, 
+it does prove with absolute certainty that the 2010 districts, under the same elections, give Republicans more seats that the 2000 districts, and this difference will persist even in the most extreme swings of voter sentiment.
 
+Currently Assembly Republicans have 64 seats, and Democrats have 35.
+If the the district lines were not changed after the 2010 cycle, and eveyone voted the same, 
+Republicans would currently have 4 less seats in Wisconsin Assembly, and Democrats would have 4 more, making the count 60-39.
+If the district lines were instead optimized to favor neither party -- to have an expected specific partisan asymmetry of zero -- 
+Republicans would currently have 9 less seats in Wisconsin Assembly, and Democrats would have 9 more, making the count 55-44.
+For comparison, the historical threshold for ruling in favor of plaintiffs on grounds of racial gerrymandering, is 1.
 
 \end{document}
