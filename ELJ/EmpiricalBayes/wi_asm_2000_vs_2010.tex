@@ -124,11 +124,21 @@ But the 2010 lines packed Democratic voters surrounding Madison into a few safe 
 Democratic voters in Eau Claire once participated in two competitive districts, which would have given Democrats 2 seats with 2000 district lines, but the 2010 district lines wrapped them up in a single safe district, capping the number of elections those voters can swing at 1.
 In Milwaukee, the lines were redrawn to more tightly outline Democratic voters, thus creating a few more districts that Republicans can win in.
 
+Indeed, figure \ref{fig:DistrictMapDelta} shows that by comparing the districting schemes using 2016 votes, it is easy to identify where Republicans picked up 4 seats due to partisan vote packing.
+
 Meanwhile, deeper red districts throughout the state were redrawn to give away some of their Republican voters to nearby competitive districts,
 thus reducing the likelihood that a Democratic representative was elected in the once-competitive districts,
 while still maintaining a safe edge in the originally deeper red district.  
 You can see this by noticing the much "flatter" red color in the bottom maps versus the top maps.
 It will also be made clear in the next section when we examine the statistical properties of the maps more rigorously.
+
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.25]{../Figures/WI_compared/districts_compared_deltas.png}
+        \caption{Partisan vote packing in Wisconsin Assembly elections, using 2016 election data.  Outlined in green are areas where Republicans packed democratic votes.}\label{fig:DistrictMapDelta}
+    \end{center}
+\end{figure}
+
 
 In sum, the changes in the district lines from 2000 districts to 2010 districts consist of packing Democratic voters, thus decreasing the number of Democratic districts, and cracking Republican districts, thus increasing their number.
 Instances of the reverse -- of packing Republican voters and cracking Democratic districts -- are simply not present.
@@ -252,7 +262,7 @@ We then accumulate these outcomes on a chart, with the seat count on one axis, a
 
 In 2000 districts, the average outcome -- also known as the "expected" outcome -- is Republicans winning a 54-45 majority of seats, though Democrats still have a decent chance of winning the majority of seats. 
 
-In 2010 districts, Republican's expceted lead grows by an additional 10 seats to 59-40, and despite being favored by roughly half the voters, Democrats have no chance at all to win a majority of seatss,  even in the most eccentric swings of voter sentiment.
+In 2010 districts, Republican's expected lead grows by an additional 10 seats to 59-40, and despite being favored by roughly half the voters, Democrats have no chance at all to win a majority of seatss,  even in the most eccentric swings of voter sentiment.
 Indeed, out of 100,000 samples, Democrats rarely even get 45 of the seats -- a threshold that, under the 2000 districting scheme, would be their average.
 
 \section{Conclusions}
