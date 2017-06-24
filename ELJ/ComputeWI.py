@@ -23,7 +23,10 @@ figExt       = ".png"
 wiData = [['District','DemVotes','RepVotes','Year']]
 for txt in glob.glob(os.path.join(dataDir,"wi2000","*.txt")):
     year = os.path.basename(txt)
-    year = int(year.replace(".txt",""))
+    try:
+        year = int(year.replace(".txt",""))
+    except:
+        continue
     with open(txt,'r') as f:
         for line in f:
             line = line.split()
@@ -35,7 +38,7 @@ for txt in glob.glob(os.path.join(dataDir,"wi2000","*.txt")):
 list2df(wiData,os.path.join(dataDir,"wi2000_vote_counts"))
 wiAssembly2 = pd.read_csv(os.path.join(dataDir,"wi2000_vote_counts.csv"))
 
-wiAssembly = pd.read_csv(os.path.join(dataDir,"wi2010_vote_counts.csv"))
+wiAssembly = pd.read_csv(os.path.join(dataDir,"wi2010","wi2010_vote_counts.csv"))
 wiAssembly['DemVotes'] = wiAssembly['DemVotes'].astype(float) 
 wiAssembly['RepVotes'] = wiAssembly['RepVotes'].astype(float) 
 
@@ -152,10 +155,12 @@ fig.savefig(os.path.join(figDir,"WI_2000_2010"+figExt))
 fig = plt.figure()
 ax1 = fig.add_subplot(111)
 diff = stateData2["demSeats"]-stateData["demSeats"]
+diffm = [np.mean(diff)]*6
 ax1.add_patch(Rectangle((2006,p5_2010-m2000[0]),10,p95_2010-p5_2010,color='b',alpha=0.2))
 ax1.add_patch(Rectangle((2006,p25_2010-m2000[0]),10,p75_2010-p25_2010,color='b',alpha=0.4))
 ax1.plot(stateData2["year"].values,m2010-m2000,color='b',ls="--",linewidth=3,label="Difference in Exp. Asym.")
 ax1.plot(stateData2["year"].values,diff,color='r',linewidth=2,label="Difference in Seats")
+ax1.plot(stateData2["year"].values,diffm,color='r',ls="--",linewidth=3,label="Average Difference in Seats")
 ax1.legend(loc=4)
 fig.savefig(os.path.join(figDir,"WI_2000_2010diff"+figExt))
 
