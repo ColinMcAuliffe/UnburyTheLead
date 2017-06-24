@@ -10,6 +10,8 @@ import os
 import us
 from scipy import stats
 import glob
+from matplotlib.patches import Rectangle
+
 
 from ELJcommon import getDemVotesAndSeats,get_spasym,get_asymFromPct,getExpAsym,varWithShrinkage,betaMOM,list2df,colorBins,get_asymFromCenteredPct
 
@@ -74,7 +76,7 @@ print stateData[["specAsym (seats)","year"]]
 
 #2}}}
 #Compute data with 2000 districts{{{2
-stateData = [['year','demVotes','repVotes','demVoteFrac','repVoteFrac','demSeats','demSeatFrac','specAsym (seats)','specAsym (fraction)','mean-median','margin']]
+stateData2 = [['year','demVotes','repVotes','demVoteFrac','repVoteFrac','demSeats','demSeatFrac','specAsym (seats)','specAsym (fraction)','mean-median','margin']]
 fig = plt.figure(figsize=(10,8))
 ax  = fig.add_subplot(211)
 for cyc,cnm in zip(cycles,cnames):
@@ -92,13 +94,70 @@ for cyc,cnm in zip(cycles,cnames):
             meanMed = np.mean(pcts)-np.median(pcts)
         else:
             meanMed = 0.
-        stateData.append([year,dem_total,rep_total,popVote,1.-popVote,seats,seatFrac,sp,sp/float(len(dfYear)),meanMed,0.5-popVote])
+        stateData2.append([year,dem_total,rep_total,popVote,1.-popVote,seats,seatFrac,sp,sp/float(len(dfYear)),meanMed,0.5-popVote])
 
     ax.plot(cyc,mm,marker='x',color='0.5')
 
-list2df(stateData,os.path.join(dataDir,"historicSAsymWI2000"))
-stateData = pd.read_csv(os.path.join(dataDir,"historicSAsymWI2000.csv"),dtype={"STATEFP": object})
-print stateData[["specAsym (seats)","year"]]
+list2df(stateData2,os.path.join(dataDir,"historicSAsymWI2000"))
+stateData2 = pd.read_csv(os.path.join(dataDir,"historicSAsymWI2000.csv"),dtype={"STATEFP": object})
+print stateData2[["specAsym (seats)","year"]]
+fig = plt.figure()
+ax1 = fig.add_subplot(111)
+ax1.plot(stateData2["year"].values[0:3],99-stateData2["demSeats"].values[0:3],ms=8,mew=3,marker="x",color='k',label="Seat Count 2000 Map")
+ax1.plot(stateData2["year"].values[3:],99-stateData2["demSeats"].values[3:],ms=8,mew=3,marker=".",color='k',label="Seat Count Cross Aggregated to 2000 map")
+
+ax1.plot(stateData["year"].values[0:3],99-stateData["demSeats"].values[0:3],ms=8,mew=3,marker="+",color='k',label="Seat Count Cross Aggregated to 2010 Map")
+ax1.plot(stateData["year"].values[3:],99-stateData["demSeats"].values[3:],ms=8,mew=3,marker="d",color='k',label="Seat Count 2010 map")
+ax1.set_ylim(33,66)
+ax1.set_xlim((2005,2017))
+ax1.set_ylabel("Asymmetry, Seats")
+ax1.legend(loc=4)
+ax1.grid()
+fig.savefig(os.path.join(figDir,"WI_2000_2010_seats"+figExt))
+
+p5_2000  = 0.18181818181818177*99./2.
+p25_2000 = 0.13131313131313127*99./2.
+p75_2000 = 0.06060606060606061*99./2.
+p95_2000 = 0.010101010101010055*99./2.
+m2000    = np.array([0.09425757575754891*99/2.]*6)
+p5_2010  = 0.25252525252525254*99./2.
+p25_2010 = 0.21212121212121215*99./2.
+p75_2010 = 0.1515151515151515*99./2.
+p95_2010 = 0.11111111111111105*99./2.
+m2010    = np.array([0.1815279797979752*99/2.]*6)
+fig = plt.figure()
+ax2 = fig.add_subplot(111)
+ax2.plot(stateData2["year"].values,m2000,color='b',ls="--",linewidth=3,label="Exp. Asym. 2000 map")
+#ax2.add_patch(Rectangle((2006,p5_2000),10,p95_2000-p5_2000,color='b',alpha=0.2))
+ax2.add_patch(Rectangle((2006,p25_2000),10,p75_2000-p25_2000,color='b',alpha=0.2))
+
+ax2.plot(stateData2["year"].values,m2010,color='g',ls="--",linewidth=3,label="Exp. Asym. 2010 map")
+#ax2.add_patch(Rectangle((2006,p5_2010),10,p95_2010-p5_2010,color='g',alpha=0.2))
+ax2.add_patch(Rectangle((2006,p25_2010),10,p75_2010-p25_2010,color='g',alpha=0.2))
+
+ax2.plot(stateData2["year"].values[3:],stateData2["specAsym (seats)"].values[3:],ms=8,mew=3,marker="x",ls="None",color='m')
+ax2.plot(stateData2["year"].values,stateData2["specAsym (seats)"].values,color='m',label="Obs. Asym. 2000 Map")
+
+ax2.plot(stateData["year"].values,stateData["specAsym (seats)"].values,color='r',label="Obs. Asym. 2010 map")
+ax2.plot(stateData["year"].values[0:3],stateData["specAsym (seats)"].values[0:3],ms=8,mew=3,marker="x",color='r')
+ax2.grid()
+
+
+ax2.set_ylim(-14,14)
+ax2.set_xlim((2005,2017))
+ax2.set_ylabel("Asymmetry, Seats")
+ax2.legend(loc=4,ncol=2)
+fig.savefig(os.path.join(figDir,"WI_2000_2010"+figExt))
+
+fig = plt.figure()
+ax1 = fig.add_subplot(111)
+diff = stateData2["demSeats"]-stateData["demSeats"]
+ax1.add_patch(Rectangle((2006,p5_2010-m2000[0]),10,p95_2010-p5_2010,color='b',alpha=0.2))
+ax1.add_patch(Rectangle((2006,p25_2010-m2000[0]),10,p75_2010-p25_2010,color='b',alpha=0.4))
+ax1.plot(stateData2["year"].values,m2010-m2000,color='b',ls="--",linewidth=3,label="Difference in Exp. Asym.")
+ax1.plot(stateData2["year"].values,diff,color='r',linewidth=2,label="Difference in Seats")
+ax1.legend(loc=4)
+fig.savefig(os.path.join(figDir,"WI_2000_2010diff"+figExt))
 
 #2}}}
 ##Plot historic asymmetry and seats vs votes{{{2
