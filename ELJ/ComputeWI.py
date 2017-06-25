@@ -164,6 +164,7 @@ ax1.plot(stateData2["year"].values,m2010-m2000,color='b',ls="--",linewidth=3,lab
 ax1.plot(stateData2["year"].values,diff,color='r',linewidth=2,label="Difference in Seats")
 ax1.plot(stateData2["year"].values,diffm,color='r',ls="--",linewidth=3,label="Average Difference in Seats")
 ax1.legend(loc=4)
+ax1.set_ylabel("Seats")
 fig.savefig(os.path.join(figDir,"WI_2000_2010diff"+figExt))
 
 #2}}}
