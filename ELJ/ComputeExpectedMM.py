@@ -8,7 +8,7 @@ import os
 import us
 from scipy import stats
 
-from ELJcommon import getDemVotesAndSeats,get_spasym,get_asymFromPct,getExpAsym,varWithShrinkage,betaMOM,list2df,colorBins,getExpMMandT
+from ELJcommon import getDemVotesAndSeats,get_spasym,get_asymFromPct,getExpAsym,varWithShrinkage,betaMOM,list2df,colorBins,getExpMMandT,convolveBetas
 
 states = us.states.STATES
 abbr2name = us.states.mapping('abbr', 'name')
@@ -39,6 +39,7 @@ fig1, ((axt1, axt2), (axt3, axt4)) = plt.subplots(2, 2, sharex="col", sharey=Tru
 fig2, ((axs1, axs2), (axs3, axs4)) = plt.subplots(2, 2, sharex="col", sharey=True,figsize=(18,10))
 
 fig3, axh = plt.subplots(1,1)
+fig4, ((axl1, axl2), (axl3, axl4)) = plt.subplots(2, 2, sharex="col", sharey=True,figsize=(18,10))
 
 for cnm,cyc in zip(cnames,cycles):
     dfCycle      = dataAB[dataAB["cycle"]==cnm]
@@ -83,6 +84,13 @@ for cnm,cyc in zip(cnames,cycles):
                 axt1.legend()
                 axt1.set_xlabel("TX, 1980's")
                 axt1.grid()
+
+                x,l,mean,stdv,skew = convolveBetas(betaParams)
+                print "TX",mean,stdv,skew
+                axl1.plot(x,l,linewidth=4)
+                axl1.legend()
+                axl1.set_xlabel("TX, 1980's")
+                axl1.grid()
             if abbr == "CA" and cnm == 1980:
                 N, bins, patches = axs3.hist(expMM-mn,bins=binsMM,normed=1.)
                 axs3.plot(binsMM,stats.norm.pdf(binsMM,scale=st),linewidth=4)
@@ -95,6 +103,13 @@ for cnm,cyc in zip(cnames,cycles):
                 #axt3.plot(binsMM,stats.norm.pdf(binsMM,scale=stA))
                 axt3.set_xlabel("CA, 1980's")
                 axt3.grid()
+
+                x,l,mean,stdv,skew = convolveBetas(betaParams)
+                print "CA",mean,stdv,skew
+                axl3.plot(x,l,linewidth=4)
+                axl3.legend()
+                axl3.set_xlabel("CA, 1980's")
+                axl3.grid()
             if abbr == "PA" and cnm == 2010:
                 N, bins, patches = axs2.hist(expMM-mn,bins=binsMM,normed=1.)
                 axs2.plot(binsMM,stats.norm.pdf(binsMM,scale=st),linewidth=4)
@@ -108,6 +123,13 @@ for cnm,cyc in zip(cnames,cycles):
                 #axt2.plot(binsMM,stats.norm.pdf(binsMM,scale=stA))
                 axt2.set_xlabel("PA, 2010's")
                 axt2.grid()
+
+                x,l,mean,stdv,skew = convolveBetas(betaParams)
+                print "PA",mean,stdv,skew
+                axl2.plot(x,l,linewidth=4)
+                axl2.legend()
+                axl2.set_xlabel("PA, 2010's")
+                axl2.grid()
             if abbr == "NC" and cnm == 2010:
                 N, bins, patches = axs4.hist(expMM-mn,bins=binsMM,normed=1.)
                 axs4.plot(binsMM,stats.norm.pdf(binsMM,scale=st),linewidth=4)
@@ -120,6 +142,13 @@ for cnm,cyc in zip(cnames,cycles):
                 #axt4.plot(binsMM,stats.norm.pdf(binsMM,scale=stA))
                 axt4.set_xlabel("NC, 2010's")
                 axt4.grid()
+
+                x,l,mean,stdv,skew = convolveBetas(betaParams)
+                print "NC",mean,stdv,skew
+                axl4.plot(x,l,linewidth=4)
+                axl4.legend()
+                axl4.set_xlabel("NC, 2010's")
+                axl4.grid()
             dataMM.append([abbr,cnm,np.mean(expMM),st,stA,p5,p5A,p5d])
 
 
@@ -129,6 +158,7 @@ dataMM = pd.read_csv(os.path.join(dataDir,"expMM.csv"))
 
 fig1.savefig(os.path.join(figDir,"80vs10T.png"))
 fig2.savefig(os.path.join(figDir,"80vs10MM.png"))
+fig4.savefig(os.path.join(figDir,"80vs10DL.png"))
 
 fig = plt.figure()
 ax  = fig.add_subplot(111)

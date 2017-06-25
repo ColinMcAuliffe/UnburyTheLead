@@ -98,6 +98,19 @@ def getExpAsym(params,nsims=10000):
     asym    = np.apply_along_axis(get_asymFromCenteredPct,0,results)
     return asym
 
+def convolveBetas(params,npoints=1000):
+    x = np.linspace(0.,1.,npoints)
+    a,b = params[0]
+    likelihood = stats.beta.pdf(x,a,b)
+    for a,b in params[1:]:
+        #likelihood = np.convolve(likelihood,stats.beta.pdf(x,a,b),mode="same")
+        likelihood += stats.beta.pdf(x,a,b)
+    #normalize
+    likelihood = likelihood/float(len(params))
+    mean = np.trapz(x*likelihood,x=x)
+    stdv = np.sqrt(np.trapz((x-mean)**2*likelihood,x=x))
+    skew = np.trapz((x-mean)**3*likelihood,x=x)/stdv**3
+    return x,likelihood,mean,stdv,skew
 def meanWithShrinkage(x,shrinkMean):
     N = float(len(x))
     if N == 0.: return shrinkMean
