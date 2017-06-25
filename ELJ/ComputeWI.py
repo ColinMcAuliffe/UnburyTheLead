@@ -20,23 +20,23 @@ dataDir      = "Data"
 figExt       = ".png"
 
 
-wiData = [['District','DemVotes','RepVotes','Year']]
-for txt in glob.glob(os.path.join(dataDir,"wi2000","*.txt")):
-    year = os.path.basename(txt)
-    try:
-        year = int(year.replace(".txt",""))
-    except:
-        continue
-    with open(txt,'r') as f:
-        for line in f:
-            line = line.split()
-            district = line[0]
-            line = list(line[18:20])
-            votes = [float(x.replace(",","")) for x in line]
-            wiData.append([district]+votes+[year])
+#wiData = [['District','DemVotes','RepVotes','Year']]
+#for txt in glob.glob(os.path.join(dataDir,"wi2000","*.txt")):
+#    year = os.path.basename(txt)
+#    try:
+#        year = int(year.replace(".txt",""))
+#    except:
+#        continue
+#    with open(txt,'r') as f:
+#        for line in f:
+#            line = line.split()
+#            district = line[0]
+#            line = list(line[18:20])
+#            votes = [float(x.replace(",","")) for x in line]
+#            wiData.append([district]+votes+[year])
 
-list2df(wiData,os.path.join(dataDir,"wi2000_vote_counts"))
-wiAssembly2 = pd.read_csv(os.path.join(dataDir,"wi2000_vote_counts.csv"))
+#list2df(wiData,os.path.join(dataDir,"wi2000_vote_counts"))
+wiAssembly2 = pd.read_csv(os.path.join(dataDir,"wi2000","wi2000_vote_counts.csv"))
 
 wiAssembly = pd.read_csv(os.path.join(dataDir,"wi2010","wi2010_vote_counts.csv"))
 wiAssembly['DemVotes'] = wiAssembly['DemVotes'].astype(float) 
@@ -76,6 +76,7 @@ for cyc,cnm in zip(cycles,cnames):
 list2df(stateData,os.path.join(dataDir,"historicSAsymWI"))
 stateData = pd.read_csv(os.path.join(dataDir,"historicSAsymWI.csv"),dtype={"STATEFP": object})
 print stateData[["specAsym (seats)","year"]]
+print 99-stateData['demSeats']
 
 #2}}}
 #Compute data with 2000 districts{{{2
@@ -103,17 +104,18 @@ for cyc,cnm in zip(cycles,cnames):
 
 list2df(stateData2,os.path.join(dataDir,"historicSAsymWI2000"))
 stateData2 = pd.read_csv(os.path.join(dataDir,"historicSAsymWI2000.csv"),dtype={"STATEFP": object})
-print stateData2[["specAsym (seats)","year"]]
+print stateData2[["specAsym (seats)","year",'demSeats']]
+print 99-stateData2['demSeats']
 fig = plt.figure()
 ax1 = fig.add_subplot(111)
-ax1.plot(stateData2["year"].values[0:3],99-stateData2["demSeats"].values[0:3],ms=8,mew=3,marker="x",color='k',label="Seat Count 2000 Map")
-ax1.plot(stateData2["year"].values[3:],99-stateData2["demSeats"].values[3:],ms=8,mew=3,marker=".",color='k',label="Seat Count Cross Aggregated to 2000 map")
+ax1.plot(stateData2["year"].values,99-stateData2["demSeats"].values,color='b',label="Seat Count, 2000 Map")
+ax1.plot(stateData2["year"].values[3:],99-stateData2["demSeats"].values[3:],ms=8,mew=3,marker="x",ls="None",color='b')
 
-ax1.plot(stateData["year"].values[0:3],99-stateData["demSeats"].values[0:3],ms=8,mew=3,marker="+",color='k',label="Seat Count Cross Aggregated to 2010 Map")
-ax1.plot(stateData["year"].values[3:],99-stateData["demSeats"].values[3:],ms=8,mew=3,marker="d",color='k',label="Seat Count 2010 map")
+ax1.plot(stateData["year"].values,99-stateData["demSeats"].values,color='g',label="Seat Count, 2010 map")
+ax1.plot(stateData["year"].values[0:3],99-stateData["demSeats"].values[0:3],ms=8,mew=3,marker="x",color='g')
 ax1.set_ylim(33,66)
 ax1.set_xlim((2005,2017))
-ax1.set_ylabel("Asymmetry, Seats")
+ax1.set_ylabel("Republican Seats Won")
 ax1.legend(loc=4)
 ax1.grid()
 fig.savefig(os.path.join(figDir,"WI_2000_2010_seats"+figExt))
