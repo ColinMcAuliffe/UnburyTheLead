@@ -238,9 +238,21 @@ Note that if there are no contested elections then the variance is simply the sh
     \bar{v} = \frac{1}{N}\left[\frac{N-1}{N}\sum_{n=1}^{N}\left(x_{n}-\bar{x}\right)^{2}+\hat{v}\right]
 \end{equation}
 
+\KB{It's this:}
+\begin{equation}
+    \bar{v'} = \frac{1}{N}\left[N\bar{v}+\hat{v}\right]
+\end{equation}
+
+\KB{Which expands and simplifies to:}
+\begin{equation}
+    \bar{v} = \frac{1}{N}\left[\sum_{n=1}^{N}\left(x_{n}-\bar{x}\right)^{2}+\hat{v}\right]
+\end{equation}
+
 To obtain $\hat{v}$, we use the average sample variance of district partisanship in contested elections over all districts and cycles.
 This is show in figure \ref{fig:varHist}, where we obtain an average variance of .529\% (corresponding to a standard deviation of 7.26\%) over all cycles.
 The within cycle average could also be used as the shrinkage variance, to attempt to capture trends in political polarization.
+
+\KB{I noticed you changed this from average standard deviation to average variance, and that it changes the result slightly. (0.00529 instead of 0.0037)  not sure which way is better...}
 
 \begin{figure}[htb!]
     \begin{center}
@@ -565,9 +577,9 @@ Remedying this would give Democrats 10\% more seats.
 This means that roughly 10\% of the entire Democratic-voting population of the state of Wisconsin were effectively disenfranchised, in violation of the one person, one vote principle.  
 Conversely, 10\% of the Republican-voting population effectively got an extra vote.  That's approximately 306,000 felonies.
 
-To put this figure in context, in our above study of asymmetry in the US federal congress from 1972 to 2016, we found that asymmetries exceeding 10\% of the available seats were rare and appeared only in the most aggressively gerrymandered states.
+To put this figure in context, in our above study of asymmetry in the U.S. federal congress from 1972 to 2016, we found that asymmetries exceeding 10\% of the available seats were rare and appeared only in the most aggressively gerrymandered states.
 The two largest gerrymanders in federal congress in this time period were North Carolina and Pennsylvania in the 2010 cycle, where the asymmetry was about 19\% of the available seats for each of these states.
-However, since there are many more State Assembly districts than Federal Congress districts in Wisconsin, we caution that further investigation is needed to assess the result of district density/count on the seats-votes curve.
+However, since there are many more state assembly districts than federal congress districts in Wisconsin, we caution that further investigation is needed to assess the impact of district density and count on the shape of the seats-votes curve.
 For instance,  more districts per unit geographic area could lead to a stronger effect from political geography.
 
 Unlike the 2000 districts, out of 100,000 samples drawn, \emph{none} of them resulted in specific partisan asymmetry favoring Democrats.  
