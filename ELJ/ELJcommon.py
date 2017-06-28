@@ -86,8 +86,9 @@ def getExpMMandT(params,nsims=10000):
     results = np.array(results)
     mean    = np.mean(results,axis=0)
     median  = np.median(results,axis=0)
+    stdv    = np.std(results,axis=0,ddof=1)
     t       = np.apply_along_axis(getMeanMeanDiff,0,results)
-    return mean-median,t
+    return (mean-median)/stdv,t
 
 def getExpAsym(params,nsims=10000):
     #simulate

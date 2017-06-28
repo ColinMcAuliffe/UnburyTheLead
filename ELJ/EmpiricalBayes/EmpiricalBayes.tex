@@ -215,8 +215,42 @@ Full details of the particular model employed here are presented in the followin
 
 \section{Modeling the Likelihood of Bias in Future Elections\label{sec:FB}}
 
+\subsection{Parameter Estimation}
+The shape parameters for the beta distributions for district partisanship are estimated using the method of moments as follows
+\begin{equation}
+    \alpha = \bar{x} \left(\frac{\bar{x}\left(1-\bar{x}\right)}{\bar{v}}-1\right)
+\end{equation}
+\begin{equation}
+    \beta = \left(1-\bar{x}\right) \left(\frac{\bar{x}\left(1-\bar{x}\right)}{\bar{v}}-1\right)
+\end{equation}
+where $\bar{x}$ is the district mean vote percentage and $\bar{v}$ is the variance of the district vote percentage.
+A practical challenge to using these formulas is that at most five data points will be available for a given district in a redistricting cycle.
+Often, fewer data points may be available if a redistricting cycle is not yet complete or if a district had uncontested elections.
+To make use of the model when only one data point is available and to help reduce the effects of small sample sizes in the parameter estimation process, we use a shrinkage term when computing the district variance $\bar{v}$ for N observed elections as follows
+
+\begin{equation}
+    \bar{v} = \frac{1}{N+1}\left[\frac{N}{N+1}\sum_{n=1}^{N}\left(x_{n}-\bar{x}\right)^{2}+\hat{v}\right]
+\end{equation}
+where $\hat{v}$ is the shrinkage variance which can be set based on historical data.
+Note that if there are no contested elections then the variance is simply the shrinkage variance.
+\CM{I think this is not correct. The variance should equal the shrinkage variance in the case of one data point not zero since with zero data points the mean is not even defined. Something like this would give that}
+\begin{equation}
+    \bar{v} = \frac{1}{N}\left[\frac{N-1}{N}\sum_{n=1}^{N}\left(x_{n}-\bar{x}\right)^{2}+\hat{v}\right]
+\end{equation}
+
+To obtain $\hat{v}$, we use the average sample variance of district partisanship in contested elections over all districts and cycles.
+This is show in figure \ref{fig:varHist}, where we obtain an average variance of .529\% (corresponding to a standard deviation of 7.26\%) over all cycles.
+The within cycle average could also be used as the shrinkage variance, to attempt to capture trends in political polarization.
+
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.8]{../Figures/HistoricAsymmetry/VarHist.png}
+        \caption{Distribution of sample variance of district partisanship over contested elections in each cycle. The green lines are the result of fitting the variances to a beta distribution}\label{fig:varHist}
+    \end{center}
+\end{figure}
 \section{Partisan Bias in the U.S. Congress 1972-2016\label{sec:Hist}}
 We present an examination of partisan bias in the United States congress for elections from 1972 to 2016.
+The election data was collected by Brian Remlinger and Sam Wang, and sent to us in a personal communication.
 First, to illustrate how the effect of asymmetry on the composition of congress, we compute the specific asymmetry for each state and election, and compare the Democratic popular vote share to the actual Democratic seat share as well as the Democratic seat share that would have resulted if each election had zero asymmetry.
 This illustrates a few of the features of the specific asymmetry as a metric, but we note that this is not exactly representative of how the composition of congress would have been different had the proposed standard been implemented.
 The reason for this is that the proposed standard would enforce an expected asymmetry of zero, meaning on average no asymmetry would occur but in some elections asymmetry could occur by chance.
@@ -257,12 +291,21 @@ As we will show later in this section, there was significant gerrymandering by R
 \end{figure}
 
 The results for the 2010s showing significant Republican gerrymandering are consistent with the well known REDMAP program, where Republicans lead a highly successful effort to gain control of several state houses in advance of the 2010 redistricting.
-For earlier cycles, we observe qualitative agreement with similar studies CITE in terms of which party benefited on net from gerrymandering.
+For earlier cycles, we observe qualitative agreement with a recent study covering the same time period \cite{Wang_2017_} in terms of which party benefited on net from gerrymandering.
 Quantitatively, we observe some disagreement in terms of the magnitude of gerrymandering, with the present approach attributing more seats to redistricting bias.
 This can be explained by differences in the analysis methodology.
-The simulation technique employed in CITE draws a 'fantasy' delegation from national voting results in order to determine if a party is winning seats excessively relative to its vote share.
-National voting results are used as a baseline, but this baseline itself may contain substantial bias, which means only large gerrymanders will be successfully identified. 
-In contrast, the present approach does not use a national baseline, and instead detects asymmetry in each state on a case by case basis.
+The simulation technique employed in \cite{Wang_2017_} draws a 'fantasy' delegation from national voting results in order to determine if a party is winning seats excessively relative to its vote share\cite{Wang__}.
+National voting results are used as a baseline, but this baseline itself will tend to change over time and may contain substantial bias, in which case only large gerrymanders will be successfully identified. 
+Since the fantasy delegation technique draws a delegation from existing election results, the likelihood of a highly disproportionate outcome depends on the probability mass in the efficient win region for the party and cycle in question.
+To verify this explanation for the differences arising from methodology, consider figure \ref{fig:meanHist}, which shows histograms of the average partisanship in each district and cycle.
+There are differences from cycle to cycle in the probability mass in efficient win regions for each party, which arise from a number of causes including changes in redistricting bias.
+In contrast, the present approach does not use a national baseline, and instead uses partisan asymmetry as the baseline to judge the effects of gerrymandering.
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.8]{../Figures/HistoricAsymmetry/MeanHist.png}
+        \caption{Distribution of mean district partisanship for each cycle}\label{fig:meanHist}
+    \end{center}
+\end{figure}
 
 Differences in methodology aside, the result that the expected asymmetry favoring Democrats in the 80's is larger than that favoring Republicans in the 2010 cycle is surprising.
 In the 2010 cycle, Republicans had the advantages of sophisticated redistricting algorithms, a high degree of geographic polarization, and low variability in voter preferences.
@@ -287,8 +330,6 @@ Net zero gerrymandering is preferable to a distorted congress, but net zero gerr
 We would therefore also like to examine the total asymmetry, or the sum of asymmetries in all states without regard to which party the asymmetry favors.
 This tells us to what extent redistricting is being used to control election outcomes nationally.
 This is plotted for each election cycle in \ref{fig:totalAsym}, where we observe that the total asymmetry has held fairly constant over each cycle.
-\KB{GOOD PLACE TO MENTION THAT ELECTIONS ARE A ZERO-SUM GAME - THAT TO THE EXTENT THAT THE REDISTRICTERS DETERMINED THE OUTCOME - THE VOTERS DID NOT.}
-\CM{agree will add}
 Since there is a fixed number of seats available, every seat of partisan bias that redistrictors secure by gerrymandering is an equal amount of representation taken away from voters.
 In other words, the relationship between voter representation and partisan bias resulting from redistricting is that of a zero-sum game: what one side gains, the other side loses.
 Regardless of which party benefited from bias on balance, bias in redistricting appears to have affected the representation of millions of voters, for every congressional election since 1972.
