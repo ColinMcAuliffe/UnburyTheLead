@@ -171,15 +171,18 @@ ax.set_ylabel("Mean - Median")
 fig.savefig(os.path.join(figDir,"sctMM"+figExt))
 #2}}}
 #Plot histograms of the stdv for each cycle{{{2
-fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(10,8))
-x   = np.linspace(0.,.3,100)
+fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True)
+xu = 0.015
+x   = np.linspace(0.,xu,100)
 
-a,b,c,d = stats.beta.fit(data.Stdv.values[data.Stdv.values > 0.],floc=0.,fscale=1.)
+a,b,c,d = stats.beta.fit(data.Var.values[data.Var.values > 0.],floc=0.,fscale=1.)
 y   = stats.beta.pdf(x,a,b)
-ax1.hist(data.Stdv.values,50,normed=True)
+print np.mean(data.Var.values)
+ax1.hist(data.Var.values,50,normed=True)
 ax1.plot(x,y,linewidth=4,color='g')
 ax1.xaxis.set_major_locator(MaxNLocator(4))
 ax1.yaxis.set_major_locator(MaxNLocator(4))
+ax1.set_xlim((0.,xu))
 ax1.set_xlabel("All Cycles")
 ax1.grid()
 
@@ -189,25 +192,25 @@ med  = []
 p75  = []
 for cyc,ax in zip(cnames,axhist):
     dfCycle = data[data["cycle"]==cyc]
-    a,b,c,d = stats.beta.fit(dfCycle.Stdv.values[dfCycle.Stdv.values > 0.],floc=0.,fscale=1.)
+    a,b,c,d = stats.beta.fit(dfCycle.Var.values[dfCycle.Stdv.values > 0.],floc=0.,fscale=1.)
     y   = stats.beta.pdf(x,a,b)
-    ax.hist(dfCycle.Stdv.values,50,normed=True)
+    ax.hist(dfCycle.Var.values,50,normed=True)
     ax.plot(x,y,linewidth=4,color='g')
     ax.xaxis.set_major_locator(MaxNLocator(4))
     ax.yaxis.set_major_locator(MaxNLocator(4))
     ax.set_xlabel(str(cyc))
     ax.grid()
-    mean.append(np.mean(dfCycle.Stdv.values))
-    med.append(np.median(dfCycle.Stdv.values))
-    p75.append(np.percentile(dfCycle.Stdv.values,75))
-fig.savefig(os.path.join(figDir,"StdvHist"+figExt))
+    mean.append(np.mean(dfCycle.Var.values))
+    med.append(np.median(dfCycle.Var.values))
+    p75.append(np.percentile(dfCycle.Var.values,75))
+fig.savefig(os.path.join(figDir,"VarHist"+figExt))
 #2}}}
 #Plot histograms of the mean for each cycle{{{2
-fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(10,8))
+fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True)
 x   = np.linspace(0.,.3,100)
 
 binsm = np.linspace(0.,1.0,51)
-N, bins, patches = ax1.hist(data.Mean.values,bins=binsm,normed=True)
+N, bins, patches = ax1.hist(data.Mean.values,bins=binsm,normed=True,linewidth=0)
 bins,patches = colorBins(bins,patches,0.5,lt='r',gt='b',gray=False)
 ax1.xaxis.set_major_locator(MaxNLocator(4))
 ax1.yaxis.set_major_locator(MaxNLocator(4))
@@ -217,7 +220,7 @@ ax1.grid()
 axhist  = [ax2,ax3,ax4,ax5,ax6]
 for cyc,ax in zip(cnames,axhist):
     dfCycle = data[data["cycle"]==cyc]
-    N, bins, patches = ax.hist(dfCycle.Mean.values,bins=binsm,normed=True)
+    N, bins, patches = ax.hist(dfCycle.Mean.values,bins=binsm,normed=True,linewidth=0)
     bins,patches = colorBins(bins,patches,0.5,lt='r',gt='b',gray=False)
     ax.xaxis.set_major_locator(MaxNLocator(4))
     ax.yaxis.set_major_locator(MaxNLocator(4))
