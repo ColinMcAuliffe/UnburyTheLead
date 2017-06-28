@@ -51,16 +51,16 @@ We also examine the post 2010 census Wisconsin State Assembly, which is the subj
 In the United States, the process of drawing districts for a state's legislative bodies and federal congressional delegation is usually in the hands of that state's legislature.
 Partisan state legislatures have used the redistricting process in pursuit of various goals such as incumbent protection, maximizing their share of seats, and even diluting the voting power of citizens on the basis of race.
 Opportunities to manipulate the redistricting process for partisan advantage abound, particularly with the advent of sophisticated algorithms for redistricting as well as a high degree of partisan and geographic polarization in the current political climate.
-However, the supreme court has yet to rule definitively on the justicability of partisan gerrymandering, and recent rulings suggest that a manageable standard for measuring gerrymandering is a prerequisite for a ruling on justicability CITE.
+However, the supreme court has yet to rule definitively on the issue of partisan gerrymandering, and recent rulings suggest that a manageable standard for measuring gerrymandering is a prerequisite for a such a ruling (LULAC v. Perry 2004).
 
-A ruling on the justicability of partisan gerrymandering would have significant consequences for democracy in the United States.
+The establishment of some standards to reel in partisan gerrymandering would have significant consequences for democracy in the United States.
 Partisan gerrymandering not only distorts the composition of legislative bodies, it represents a dilution of the voter's ability to attempt to influence policy by electing representatives of their choosing.
 The ability of state legislatures to use redistricting to influence the outcome of elections comes at the direct expense of voter's ability to use their ballot to influence the outcome of elections.
 However, in order to properly asses the harm caused by partisan gerrymandering, courts require mathematical tools for analyzing partisan bias in a redistricting plan.
 
 Development of a standard that fits with existing rulings, accurately measures partisan bias under generic conditions, and is simple enough to be effectively communicated to a court is not an easy task.
 For example, a common sense standard might be to require that a party's share of seats is proportional to its share of votes, which is simple and applicable to swing states as well as more partisan states.
-However, even when redistricting is fair, single winner voting systems tend not to produce such proportional outcomes \cite{Kendall_1950_10.2307/588113}, and the supreme court has stated that proportionality is not acceptable CITE.\CM{Do you recall which ruling htis was?}
+However, even when redistricting is fair, single winner voting systems tend not to produce such proportional outcomes \cite{Kendall_1950_10.2307/588113}, and the supreme court has stated that proportionality is not acceptable (Thornburg v. Gingles 1986).
 A second example is the mean median difference test \cite{Wang__,Wang_2016_10.1089/elj.2016.0387,McDonald_2015_10.1089/elj.2015.0358}, which fits with existing rulings since it measures partisan bias without regard to proportionality and is simple enough to be calculated by a judge without an expert witness.
 However, it is only effective in measuring bias for states which are close to even in terms of partisanship. \cite{Wang_2016_10.1089/elj.2016.0387}
 
@@ -80,6 +80,7 @@ Namely, the models used for computing the significance level for those tests are
 Additionally, a null distribution must be specified for each of the test statistics in question. 
 This is a relatively minor point, since the null distributions used in the t-test and chi squared test are well established and the effect of the null distribution on the mean median difference test is small in many cases. \cite{Cabilio_1996_10.2307/3315744,Zheng_2010_}
 \KB{I would argue its a major point.   And it's kind of subjective, anyways, whether its minor or major}
+\CM{It's minor relative to the IID assumption. If IID is taken for granted then null distribution doesn't make much difference.}
 Lastly and most importantly, these models assume that samples are independent and identically distributed (IID), which is an assumption that is crucial for the tests to be analytic (and hence simple) but not necessarily realistic for elections.
 For instance, the IID assumption would imply that the probability of a deeply partisan Republican district being won by a Republican is the same as the probability of a deeply partisan Democratic district in the same state being won by a Republican.
 Violation of the IID assumption can have a noticeable effect on statistical tests, for an example in securities law see \cite{Gel_2009_10.1093/lpr/mgp008}. 
@@ -87,7 +88,7 @@ Use of this assumption may make this group of standards too restrictive or too p
 Despite these objections, standards based on analytic models are potentially very powerful due to their relative simplicity and their ability to be solved exactly, and we are currently investigating the effect the IID assumption has on the robustness of such standards.
 
 Another group of standards are those based on Monte Carlo simulation.
-A major advantages of Monte Carlo based standards are flexibility, since they do not require the metrics to be analytically integrable \KB{I know, might be too mathy for the audience}, and thus can be used with a wide variety of metrics or even multiple metrics in combinations.
+A major advantages of Monte Carlo based standards are flexibility, since they do not require the metrics to be analytically integrable \KB{I know, might be too mathy for the audience}\CM{I think it's fine}, and thus can be used with a wide variety of metrics or even multiple metrics in combinations.
 Additionally, once implemented by a computer algorithm, it is quick and easy to look at the data in many different ways.
 
 An example is test III proposed by Wang \cite{Wang__,Wang_2016_10.1089/elj.2016.0387}, where the metric used was the proportion of seats won by a party, and the model was a Monte Carlo technique where 'fantasy' congressional delegations were sampled from national congressional voting results.
@@ -157,20 +158,50 @@ Measuring partisan bias accurately presents several challenges from a mathematic
 Redistricting will always be an artificial process, and therefore we must establish what characteristics of a redistricting plan can be regarded as normative before attempting to measure deviations from the normative standard.
 We propose the following definition: \emph{a fair redistricting plan is one that, on average, will not be biased in favor of either of the two major parties}
 With this definition in mind, we turn our attention to several challenges in devising a metric for bias.
-First, single winner elections tend not to produce proportional outcomes CITE, and we therefore can not use proportionality or the lack thereof as a measure of bias.
+First, single winner elections tend not to produce proportional outcomes \cite{Kendall_1950_10.2307/588113}, and we therefore can not use proportionality or the lack thereof as a measure of bias.
 Bias should therefore be a measure of symmetry, which permits disproportionate outcomes but requires that any advantage that might arise from the disproportionate nature of the single winner election system be equally available to either party.
 In other words, we say that the result is unbiased if and only if any advantage gained by a party, above what is proportional, is a consequence of the disproportionate nature of the single winner election system, and not an additional advantage piled on top of that.
 
-A few measures of bias that follow this definition exist in the literature, such a Grofman and King, and the mean median difference CITE.
-However, these measures of bias tend to apply only to states which are close to 50-50 partisanship CITE.
+A few measures of bias that follow this definition exist in the literature, such a Grofman and King, and the mean median difference \cite{Grofman_2008_,Wang__,Wang_2016_10.1089/elj.2016.0387}.
+However, these measures of bias tend to apply only to states which are close to 50-50 partisanship.
 For more partisan states, these measures become more difficult to interpret except as the bias which could have occurred had the partisanship in the state in question been closer to even.
-Another approach is to consider the bias at levels of partisanship by using the geometric area between the seats votes curve and its reflection CITE.
+Another approach is to consider the bias at levels of partisanship by using the geometric area between the seats votes curve and its reflection \cite{Nagle_2015_10.1089/elj.2015.0311}.
 Useful information may be gleaned from these approaches, but Justice Kennedy expressed a dislike for measures based on a hypothetical state of affairs.
 Additionally, measurement of bias at different levels of hypothetical partisanship may lead to significantly different results depending on the partisanship level considered.
 For example, the seats votes curve for the Wisconsin state assembly shows substantial bias favoring Republicans at close to even partisanship, but the complete reverse at high levels of Democratic partisanship.
 This means that bias measures which do not consider the actual partisanship in a state could result in false positives and false negatives.
 In light of this, a measure of bias that is applicable to any level of partisanship and that directly considers the actual level of partisanship in a given state seems appropriate.
+
 To address these challenges, we propose a measure of bias which we call the specific asymmetry, which is the deviation of the seats votes curve from the symmetry line measured at the statewide popular vote.
+This amounts to counting the number of seats won by one party, then counting the how many seats the other party would win under a uniform partisan swing that reverses the statewide partisanship.
+The specific asymmetry is then the difference between these two seat counts divided by two.
+This definition of partisan asymmetry simply requires that the seat count to reverse along with a reversal in the popular vote in a state.
+This has a certain intuitive appeal and is consistent with existing law since disproportionate results are allowed, as long as both parties are treated the same.
+However, one may argue that a reversal of the popular vote is a unrealistic counterfactual scenario that is beyond the scope of any sensible analysis technique.
+This is true in the sense that we could not predict what the distribution of votes would be if such a partisan reversal would actually occur, but it is important to note that when we compute the discrepancy in seat counts under a uniform reversal in statewide partisan ship, we are computing the magnitude of structural disadvantage faced by the voters of one party.
+In other words, while the specific asymmetry may be phrased as a sort of hypothetical, it measures a \emph{real} electoral disadvantage endured by one party resulting from that party winning seats less efficiently than the opposite party due to voter packing and cracking.
+Further, as the magnitude of the structural disadvantage to one party increases due to a more aggressive gerrymander, the specific asymmetry increases as well.
+There are several other advantages to using this metric, which we summarize below
+
+\begin{itemize}
+
+\item It doesn't assume proportionality in results - The seats-votes curve for single-winner elections naturally take on a cumulative Beta-binomial distribution, as opposed to a diagonal line representing seats proportional to votes.  This metric doesn't assume a diagonal curve representing proportionality.  It tests a looser (less strict) criteria: asymmetry, which still retains the essential feature of measuring disenfranchisement based on political belief.  SCOTUS has ruled that seats proportional to votes can not be a legal standard (Thornburg v. Gingles 1986).   But they remain open to a legal standard based on the idea of partisan symmetry (LULAC v. Perry 2004).
+ 
+\item It distinguishes between artificial partisan bias and the natural multiplying effect of single-winner elections -  Single-winner aka "Majoritarian" elections naturally over-favor the majority party, giving them a larger fraction of the seats than they get of the popular vote.  
+While some measures might mistakenly identify this as gerrymandering, specific asymmetry explicitly takes this into account by calculating and then subtracting this natural multiplying effect.
+In other words, it does not mistake disproportionality due to the sigmoidal shape of majoritarian election seats-votes curves with gerrymandering.
+
+\item It works for states with partisanship far from 50/50 - By sampling the asymmetry at the actual vote counts rather than e.g. 50/50, this metric maintains full relevance even for the most extremely partisan states.
+
+\item It represents deviation from what is practically achievable - It is trivial for a computer algorithm to design districts that make the seats-votes curve perfectly symmetric, while satisfying all constitutional requirements.  
+Thus, to convert this absolute score to one relative to what can be accomplished by a redesign that meets all traditional redistricting principles, one simply subtracts zero.  
+This "new" relative score gives you the number of voters whose votes were effectively stolen by the map drawers with the current map, and whose right to representation can be returned by a remedy map that can be trivially designed by a computer employing a multi-objective heuristic optimization algorithm.
+
+\item The only possible improvements to it are shift, scale, and shape - Since it is well ordered and monotonic with respect to actual partisan advantage, any "better" measure can only be better in the sense of having a more appropriate "center" point, a more appropriate scale, or a more appropriate "shape" (change of slope as you go up and down the scale).  The scale varies from -1 to 1, or alternatively from negative the number of seats available to the positive of that.  The "center",  zero, is a non-arbitrary and very reasonable choice, representing a perfectly symmetric situation.   The "shape" is the number (or percentage) of congressional seats affected.
+
+\item It gives a result in an empirically meaningful unit: number of seats, which can be directly converted into number of ballots/voters affected by multiplying by the number of ballots cast and dividing by the number of districts.
+
+\end{itemize}
 
 Bias by any measure may occur by chance in an otherwise fair redistricting plan, it is even possible for an antimajoritarian outcome to result from chance.
 It is also important not only to consider the harm a plan has caused to voters, but to also seek to assess the likelihood that a plan will cause harm to voters in future elections.
@@ -579,7 +610,9 @@ For comparison, the historical threshold for ruling in favor of plaintiffs on gr
 
 \section{* Cut Text *}
 
+
 \subsection{Measurement}
+\CM{This is covered in section }\ref{sec:MB}\CM{, I copied and pasted the list into the bits I had already written}
 To measure partisan bias, we measured the asymmetry in the seats-votes curve at the actual vote count that occurred in the election.  
 In other words, we take the number of seats that Republicans won, and subtract from that the number of seats that Democrats would have won if the popular vote percentage was reversed (1-x), and divide by 2.  
 This represent the number of seats Republicans won in excess of what they would have won if the seats-votes curve was symmetric.  
@@ -588,25 +621,6 @@ We call this "specific partisan asymmetry".
 
 Before applying this metric to concrete examples, we'd like to highlight some of the advantages of it.
 
-\begin{itemize}
-
-\item It doesn't assume proportionality in results - The seats-votes curve for single-winner elections naturally take on a cumulative Beta-binomial distribution, as opposed to a diagonal line representing seats proportional to votes.  This metric doesn't assume a diagonal curve representing proportionality.  It tests a looser (less strict) criteria: asymmetry, which still retains the essential feature of measuring disenfranchisement based on political belief.  SCOTUS has ruled that seats proportional to votes can not be a legal standard (Thornburg v. Gingles 1986).   But they remain open to a legal standard based on the idea of partisan symmetry (LULAC v. Perry 2004).
- 
-\item It distinguishes between artificial partisan bias and the natural multiplying effect of single-winner elections -  Single-winner aka "Majoritarian" elections naturally over-favor the majority party, giving them a larger fraction of the seats than they get of the popular vote.  
-While some measures might mistakenly identify this as gerrymandering, specific asymmetry explicitly takes this into account by calculating and then subtracting this natural multiplying effect.
-In other words, it does not mistake disproportionality due to the sigmoidal shape of majoritarian election seats-votes curves with gerrymandering.
-
-\item It works for states with partisanship far from 50/50 - By sampling the asymmetry at the actual vote counts rather than e.g. 50/50, this metric maintains full relevance even for the most extremely partisan states.
-
-\item It represents deviation from what is practically achievable - It is trivial for a computer algorithm to design districts that make the seats-votes curve perfectly symmetric, while satisfying all constitutional requirements.  
-Thus, to convert this absolute score to one relative to what can be accomplished by a redesign that meets all traditional redistricting principles, one simply subtracts zero.  
-This "new" relative score gives you the number of voters whose votes were effectively stolen by the map drawers with the current map, and whose right to representation can be returned by a remedy map that can be trivially designed by a computer employing a multi-objective heuristic optimization algorithm.
-
-\item The only possible improvements to it are shift, scale, and shape - Since it is well ordered and monotonic with respect to actual partisan advantage, any "better" measure can only be better in the sense of having a more appropriate "center" point, a more appropriate scale, or a more appropriate "shape" (change of slope as you go up and down the scale).  The scale varies from -1 to 1, or alternatively from negative the number of seats available to the positive of that.  The "center",  zero, is a non-arbitrary and very reasonable choice, representing a perfectly symmetric situation.   The "shape" is the number (or percentage) of congressional seats affected.
-
-\item It gives a result in an empirically meaningful unit: number of seats, which can be directly converted into number of ballots/voters affected by multiplying by the number of ballots cast and dividing by the number of districts.
-
-\end{itemize}
 
 
 \subsubsection{Probability model}
