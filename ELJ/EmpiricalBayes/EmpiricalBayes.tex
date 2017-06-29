@@ -42,6 +42,7 @@ Given at least one observation of the election results in a state, we estimate a
 The expected value of the specific asymmetry is then computed by sampling from the model using the Monte Carlo method.
 Redistricting plans which have an expected asymmetry of zero may be considered fair, since on average neither of the two major parties will be given an advantage.
 Conversely, redistricting plans which have a nonzero expected asymmetry may be considered to be unfair, since partisan bias is a persistent feature of the plan.
+Since this standard is symmetry-based it is consistent with previous supreme court opinions on partisan gerrymandering.
 This analysis technique is applied to the United States congressional elections from 1972-2016 to examine the total and net effects of partisan bias in recent history.
 We also examine the post 2010 census Wisconsin State Assembly, which is the subject of \emph{Whitford v. Gil}.
 
@@ -85,7 +86,8 @@ Lastly and most importantly, these models assume that samples are independent an
 For instance, the IID assumption would imply that the probability of a deeply partisan Republican district being won by a Republican is the same as the probability of a deeply partisan Democratic district in the same state being won by a Republican.
 Violation of the IID assumption can have a noticeable effect on statistical tests, for an example in securities law see \cite{Gel_2009_10.1093/lpr/mgp008}. 
 Use of this assumption may make this group of standards too restrictive or too permissive depending on the specific circumstances.
-Despite these objections, standards based on analytic models are potentially very powerful due to their relative simplicity and their ability to be solved exactly, and we are currently investigating the effect the IID assumption has on the robustness of such standards.
+Despite these objections, standards based on analytic models are potentially very powerful due to their relative simplicity and their ability to be solved without sophisticated analysis.
+We are currently investigating the effect the IID assumption has on the robustness of such standards.
 
 Another group of standards are those based on Monte Carlo simulation.
 A major advantages of Monte Carlo based standards are flexibility, since they do not require the metrics to be analytically integrable \KB{I know, might be too mathy for the audience}\CM{I think it's fine}, and thus can be used with a wide variety of metrics or even multiple metrics in combinations.
@@ -126,7 +128,7 @@ Stephanopolous and McGhee & Efficiency gap & None proposed,\\
                           &                & in \emph{Whitford v. Gil}\\
 \hline
 Gelman et al & Deficit in Seats at 50\% of the vote, & Bayesian simulation\\
-             & various others & Bayesian simulation\\
+             & various others & \\
 \hline
 Mean Median Difference & Mean median difference & asymptotic distribution \\
  &                                              & (unit normal) \\
@@ -156,7 +158,7 @@ Present study & Specific Asymmetry & MC sampling of the \\
 
 Measuring partisan bias accurately presents several challenges from a mathematical and legal perspective.
 Redistricting will always be an artificial process, and therefore we must establish what characteristics of a redistricting plan can be regarded as normative before attempting to measure deviations from the normative standard.
-We propose the following definition: \emph{a fair redistricting plan is one that, on average, will not be biased in favor of either of the two major parties}
+We propose the following definition: \emph{a fair redistricting plan is one that, on average, will not be biased in favor of either of the two major parties}.
 With this definition in mind, we turn our attention to several challenges in devising a metric for bias.
 First, single winner elections tend not to produce proportional outcomes \cite{Kendall_1950_10.2307/588113}, and we therefore can not use proportionality or the lack thereof as a measure of bias.
 Bias should therefore be a measure of symmetry, which permits disproportionate outcomes but requires that any advantage that might arise from the disproportionate nature of the single winner election system be equally available to either party.
@@ -185,11 +187,10 @@ There are several other advantages to using this metric, which we summarize belo
 
 \begin{itemize}
 
-\item It doesn't assume proportionality in results - The seats-votes curve for single-winner elections naturally take on a cumulative Beta-binomial distribution, as opposed to a diagonal line representing seats proportional to votes.  This metric doesn't assume a diagonal curve representing proportionality.  It tests a looser (less strict) criteria: asymmetry, which still retains the essential feature of measuring disenfranchisement based on political belief.  SCOTUS has ruled that seats proportional to votes can not be a legal standard (Thornburg v. Gingles 1986).   But they remain open to a legal standard based on the idea of partisan symmetry (LULAC v. Perry 2004).
+\item It doesn't assume proportionality in results - The seats-votes curve for single-winner elections naturally takes on a cumulative Beta-binomial distribution, as opposed to a diagonal line representing seats proportional to votes.  This metric doesn't assume a diagonal curve representing proportionality.  It tests a looser (less strict) criteria: asymmetry, which still retains the essential feature of measuring disenfranchisement based on political belief.  SCOTUS has ruled that seats proportional to votes can not be a legal standard (Thornburg v. Gingles 1986).   However they remain open to a legal standard based on the idea of partisan symmetry (LULAC v. Perry 2004).
  
-\item It distinguishes between artificial partisan bias and the natural multiplying effect of single-winner elections -  Single-winner aka "Majoritarian" elections naturally over-favor the majority party, giving them a larger fraction of the seats than they get of the popular vote.  
+\item It distinguishes between artificial partisan bias and the natural multiplying effect of single-winner elections -  Single-winner aka "Majoritarian" elections naturally over-favor the majority party, giving them a larger fraction of the seats than their fraction of the popular vote.  
 While some measures might mistakenly identify this as gerrymandering, specific asymmetry explicitly takes this into account by calculating and then subtracting this natural multiplying effect.
-In other words, it does not mistake disproportionality due to the sigmoidal shape of majoritarian election seats-votes curves with gerrymandering.
 
 \item It works for states with partisanship far from 50/50 - By sampling the asymmetry at the actual vote counts rather than e.g. 50/50, this metric maintains full relevance even for the most extremely partisan states.
 
@@ -208,8 +209,7 @@ It is also important not only to consider the harm a plan has caused to voters, 
 For example, the plaintiffs in \emph{Whitford v. Gil} argued that based on an examination of a large body of election data, an observed efficiency gap of greater than 7\% in a given election was strongly suggestive that bias in favor of the redistricting party would persist.
 In other words, the observation of a large bias was not only indicative of harm to voters that had already occurred, but it was also a strong predictor of likely future harm to voters.
 Analysis of historical data is not the only way to assess likely future harm due to bias, and we would like to use a method that takes advantage of as much specific information about the redistricting plan in question as possible.
-Therefore we employ an empirical statistical model to determine whether a particular redistricting plan will be unbiased \emph{on average}, or if bias is a persistent feature of the plan.
-This allows us to distinguish between chance occurrences of bias on an otherwise fair map, and to asses the magnitude of likely future harm a map can be expected to cause. 
+Therefore we employ an empirical statistical model to determine whether a particular redistricting plan will be biased or unbiased \emph{on average}.
 Full details of the particular model employed here are presented in the following section.
 
 
@@ -235,18 +235,22 @@ Some academic papers have extended this model to take into account third parties
 
 The choice of the Beta distribution follows directly from first principles. 
 In fact, two different points of view of the underlying stochastic process of election results both lead us to the Beta distribution. 
-Depending on our point of view, the underlying stochastic process is either a Bernoulli process (a number of trials that can each have one of two outcomes: votes that can be for either one party or another) or a pair of Poisson processes, which are series of events occurring at a certain rate i.e. voters for a party turning out to cast a vote.  
-
-In the first perspective (Bernoulli process), we are interested in the number of votes for a given party out of all the votes - the number of successes in a sequence of trials.  
+In the first point of view, we can consider the underlying stochastic process is a Bernoulli process, which a number of trials that can each have one of two outcomes, i.e. a Republican vote or a Democratic vote.
+We are interested in the number of votes for a given party out of all the votes, which is the number of successes in a sequence of trials.  
 This leads us to the Binomial distribution. 
-However, we do not know the rate of successes - that is what we are trying to estimate.  
+However, we do not know the rate of 'successes' (or the votes for an arbitrarily selected party), that is what we are trying to estimate.  
 To estimate the rate parameter of a Binomial distribution, we use its conjugate prior distribution, which is the Beta distribution.
 
-In the second perspective (Poisson process), we are interested in the number of times a voter for a party turns out to vote in a given amount of time (Election day) - the number of events in a fixed interval. This leads us to the Poisson distribution.  
+Depending on our point of view, the or   
+
+In the second perspective voting is considered a pair of Poisson processes, which are series of events occurring at a certain rate i.e. voters for a party turning out to cast a vote. 
+Here we are interested in the number of times a voter for a party turns out to vote in a given amount of time (Election day) - the number of events in a fixed interval. 
+This leads us to the Poisson distribution.  
 However, we do not know the rate of events - that is what we are trying to estimate.  
 To estimate the rate parameter of a Poisson distribution, we use its conjugate prior distribution, which is the Gamma distribution. 
-However, we are not done yet - we are interested in what fraction of events between the two Poisson processes are from the first.  
-Where $\Gamma\left(X\right)$ is the (unknown) rate of voter turnout for one party, and $\Gamma\left(Y\right)$ the (unknown) rate for the other, we are interested in the proportion of votes won by one party which is $\frac{\Gamma\left(X\right)}{\Gamma\left(X\right)+\Gamma\left(Y\right)} $. 
+To represent partisanship as a fraction, we take the fraction of events between the two Poisson processes.  
+Let $\Gamma\left(X\right)$ be the unknown rate of voter turnout for one party, and $\Gamma\left(Y\right)$ the unknown rate for the other.
+The proportion of votes won by party X is $\frac{\Gamma\left(X\right)}{\Gamma\left(X\right)+\Gamma\left(Y\right)} $. 
 This leads us to the Beta distribution.
 Thus, deduction from first principles leads us to select the Beta distribution as our probability model for the outcome of an election, regardless of which perspective we initially take.
 With the choice of model parameterization in hand, we now turn our attention to estimation of the parameters for the beta distributions representing district and state partisanship.
@@ -268,7 +272,7 @@ To make use of the model when only one data point is available and to help reduc
     \bar{v} = \frac{1}{N}\left[\sum_{n=1}^{N}\left(x_{n}-\bar{x}\right)^{2}+\hat{v}\right]
 \end{equation}
 where $\hat{v}$ is the shrinkage variance which can be set based on historical data.
-Note that if there are no contested elections then the variance is simply the shrinkage variance.
+Note that if there is only one data point available the variance is simply the shrinkage variance, without which the variance would be undefined.
 
 To obtain $\hat{v}$, we use the average sample variance of district partisanship in contested elections over all districts and cycles.
 This is show in figure \ref{fig:varHist}, where we obtain an average variance of .529\% (corresponding to a standard deviation of 7.26\%) over all cycles.
@@ -290,11 +294,11 @@ This approach has several advantages
 
 \begin{itemize}
 
-\item It takes into account non-uniform swings - By looking at not only the average partisanship of each district, but how much the partisanship of each individual district changes from election to election, this metric is able to take into account the changes in voter sentiment that are not uniform throughout the state; that are perhaps concentrated in only certain districts.
+\item Non-uniform swings are accounted for. Accounting for the average partisanship of each district as well as the variance in partisanship from election captures the changes in voter sentiment that are not uniform throughout the state.
 
 \item It takes into account all possibilities, weighted by likelihood - Every possible seats-votes curve and every possible popular vote ratio is taken into consideration, weighted by the combined likelihood of the two.
 
-\item It shows durability - By computing an entire likelihood function for specific partisan asymmetry, rather than a single point estimate, this approach enables quick and accurate assessment of how durable a gerrymander is; how much more harm it will cause in the future, including what the likelihood is that it will not cause harm.
+\item It shows durability - By computing an entire likelihood function for specific partisan asymmetry, rather than a single point estimate, this approach enables quick and accurate assessment of how durable a gerrymander is. This gives us insight into how much more harm it will cause in the future, including what the likelihood is that it will not cause harm.
 
 \end{itemize}
 
@@ -312,9 +316,9 @@ The vertical line is the statewide partisanship sampled from the state beta dist
 
 \section{Partisan Bias in the U.S. Congress 1972-2016\label{sec:Hist}}
 We present an examination of partisan bias in the United States congress for elections from 1972 to 2016.
-The election data was collected by Brian Remlinger and Sam Wang, and sent to us in a personal communication.
-First, to illustrate how the effect of asymmetry on the composition of congress, we compute the specific asymmetry for each state and election, and compare the Democratic popular vote share to the actual Democratic seat share as well as the Democratic seat share that would have resulted if each election had zero asymmetry.
-This illustrates a few of the features of the specific asymmetry as a metric, but we note that this is not exactly representative of how the composition of congress would have been different had the proposed standard been implemented.
+The election data were collected by Brian Remlinger and Sam Wang, and sent to us in a personal communication.
+First, to illustrate the effect of asymmetry on the composition of congress, we compute the specific asymmetry for each state and election, and compare the Democratic popular vote share to the actual Democratic seat share as well as the Democratic seat share that would have resulted if each election had zero asymmetry.
+This illustrates a few of the features of the specific asymmetry as a metric, but we note that this is not exactly representative of how the composition of congress would have been different had the proposed standard been enforced in each of these redistricting cycles.
 The reason for this is that the proposed standard would enforce an expected asymmetry of zero, meaning on average no asymmetry would occur but in some elections asymmetry could occur by chance.
 This result is shown in figure \ref{fig:AsymRemoved}, where it is evident that despite the natural multiplying effect of majoritarian elections, removing specific partisan asymmetry produces congressional representation closer to proportional with the popular vote, regardless of which party the net partisan asymmetry favors.  
 Thus while proportionality of seats and votes is not enforced, gerrymandering tends to exacerbate and amplify the natural tendency of single winner elections to lead to disproportionate representation in favor of the majority party, and therefore removal of asymmetry caused by redistricting tends to lead to results that are closer to proportional.
