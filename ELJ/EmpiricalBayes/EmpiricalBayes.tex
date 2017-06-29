@@ -90,7 +90,7 @@ Despite these objections, standards based on analytic models are potentially ver
 We are currently investigating the effect the IID assumption has on the robustness of such standards.
 
 Another group of standards are those based on Monte Carlo simulation.
-A major advantages of Monte Carlo based standards are flexibility, since they do not require the metrics to be analytically integrable \KB{I know, might be too mathy for the audience}\CM{I think it's fine}, and thus can be used with a wide variety of metrics or even multiple metrics in combinations.
+A major advantages of Monte Carlo based standards are flexibility, since they do not require the metrics to be analytically integrable, and thus can be used with a wide variety of metrics or even multiple metrics in combinations.
 Additionally, once implemented by a computer algorithm, it is quick and easy to look at the data in many different ways.
 
 An example is test III proposed by Wang \cite{Wang__,Wang_2016_10.1089/elj.2016.0387}, where the metric used was the proportion of seats won by a party, and the model was a Monte Carlo technique where 'fantasy' congressional delegations were sampled from national congressional voting results.
@@ -278,7 +278,7 @@ To obtain $\hat{v}$, we use the average sample variance of district partisanship
 This is show in figure \ref{fig:varHist}, where we obtain an average variance of .529\% (corresponding to a standard deviation of 7.26\%) over all cycles.
 The within cycle average could also be used as the shrinkage variance, to attempt to capture trends in political polarization.
 
-\KB{I noticed you changed this from average standard deviation to average variance, and that it changes the result slightly. (0.00529 instead of 0.0037)  not sure which way is better...}\CM{Yes I used variance because that's what used in the method of moments formula}
+\KB{I noticed you changed this from average standard deviation to average variance, and that it changes the result slightly. (0.00529 instead of 0.0037)  not sure which way is better...}\CM{Yes I used variance because that's what used in the method of moments formula}\KB{I think it makes sense.}
 \begin{figure}[htb!]
     \begin{center}
         \includegraphics[scale=0.8]{../Figures/HistoricAsymmetry/VarHist.png}
@@ -323,7 +323,7 @@ The reason for this is that the proposed standard would enforce an expected asym
 This result is shown in figure \ref{fig:AsymRemoved}, where it is evident that despite the natural multiplying effect of majoritarian elections, removing specific partisan asymmetry produces congressional representation closer to proportional with the popular vote, regardless of which party the net partisan asymmetry favors.  
 Thus while proportionality of seats and votes is not enforced, gerrymandering tends to exacerbate and amplify the natural tendency of single winner elections to lead to disproportionate representation in favor of the majority party, and therefore removal of asymmetry caused by redistricting tends to lead to results that are closer to proportional.
 If one were to use a metric that assumes votes should be proportional to seats, such as the efficiency gap, the 1970s would still be counted as gerrymandered, despite all partisan asymmetry being removed.  
-That is, efficiency gap would mistake the unavoidable multiplying effect of the sigmoidal seats-votes curve for gerrymandering.\CM{I'm not sure about this, the eg does assume proportionality but it does not assume that the constant of proportionality between seats and votes is 1}
+That is, efficiency gap would mistake the unavoidable multiplying effect of the sigmoidal seats-votes curve for gerrymandering.\CM{I'm not sure about this, the eg does assume proportionality but it does not assume that the constant of proportionality between seats and votes is 1} \KB{not assuming a proportion of 1 doesn't make it sigmoidal}
 Specific partisan asymmetry, however, never makes this error, while still leading to a substantial increase in the representativeness of congress as a whole.
 
 \begin{figure}[htb!]
@@ -438,6 +438,12 @@ Previous cycles may have had moderate asymmetries in a larger number of states, 
 
 \section{Partisan Bias in the Wisconsin State Assembly, post 2010 census\label{sec:Wis}}
 
+\KB{reminder to cite http://www-personal.umich.edu/~jowei/Political_Geography_Wisconsin_Redistricting.pdf , http://www.scotusblog.com/wp-content/uploads/2017/04/16-1161-cert-amicus-rnc.pdf ,  and the paper cited in that: Jowei Chen and David Cottrell, Evaluating
+Partisan Gains from Congressional
+Gerrymandering: Using Computer
+Simulations to Estimate the Effect of
+Gerrymandering in the U.S. House}
+
 \begin{figure}[htb!]
     \begin{center}
         \includegraphics[scale=0.35]{../Figures/WI_compared/precincts_pop_combined.png}
@@ -447,7 +453,7 @@ Previous cycles may have had moderate asymmetries in a larger number of states, 
 
 The Wisconsin state assembly districts are the subject of \emph{Whitford v. Gil}, where a federal court has ruled that the redistricting plan is an unconstitutional gerrymander.
 The plaintiffs in \emph{Whitford} relied on the efficiency gap to demonstrate bias, while here we apply the expected specific asymmetry.
-Since some have alleged that the bias in the Wisconsin map is merely the product of changes in voter sentiment and/or political geography \CM{do you have a citation for these statements?}, we have analyzed the asymmetry using
+Since some have alleged that the bias in the Wisconsin map is merely the product of changes in voter sentiment and/or political geography \CM{do you have a citation for these statements?} \KB{ http://www.scotusblog.com/case-files/cases/gill-v-whitford/ }, we have analyzed the asymmetry using
 To compare how much of the observed partisan asymmetry in 2010-cycle Wisconsin State Assembly districts was the result of changes in district designs versus changes in voter sentiment, we projected actual election results onto both the current Assembly districts, and Assembly districts from the previous redistricting cycle, as shown in figure \ref{fig:MapsWI}.
 This allows us to analyze the effects of changes in voter sentiments and redistricting separately.
 
@@ -666,13 +672,14 @@ From these comparisons, it is clear that the specific partisan asymmetry present
 \item The difference between the two schemes is a stable 10\% gain in the Republican seat margin over Democrats.
 Since the same exact voter sentiments were used in both analyses, this difference in partisan asymmetry simply cannot be a consequence of changes in voter sentiment.  
 Since the only thing that we changed was the districting scheme, all observed differences in partisan asymmetry are purely the result of changing the districting scheme and reflect the choices made by the redistricters and do not reflect changes in political geography.
+\item Claims that the election results it produced are similiar to those under the previous districts are categorically false.
 \item In order to claim that natural political geography was a significant factor in the 2010 cycle district, we would expect to see the exact same asymmetries in the 2000 districts.
 To the contrary, partisan asymmetry in 2010 districts is double that of 2000 districts, even after compensating for observed and potential changes in voter sentiment.
 \item Claims that the observed partisan bias in 2010 districts is simply a consequence of political geography and/or changes in voter sentiment are contradicted by this analysis.
 \item Simply reverting back to the 2000 census cycle districts would remedy most of the present injustice, as measured in seats affected or ballots affected.
 \end{itemize}
 
-This comparison cannot estimate how much deliberate gerrymandering was present in both schemes, nor can it estimate how much of the gerrymandering present in the 2000 districts was deliberate.
+This comparison cannot estimate how much of the gerrymandering present in the 2000 districts was deliberate.
 However it does prove with absolute certainty that the 2010 districts, under the same elections, give Republicans more seats than the 2000 districts, and that this difference will persist even in the most extreme swings of voter sentiment.
 
 \section{Conclusions}
