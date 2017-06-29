@@ -122,8 +122,7 @@ def varWithShrinkage(x,shrinkVar):
     N = float(len(x))
     if N == 0.: return shrinkVar
     mean = np.mean(x)
-    var = (N*np.sum((x - mean)**2)/(N+1.)+shrinkVar)/(N+1.)
-    #var = (np.sum((x - mean)**2)+shrinkVar)/N
+    var = (np.sum((x - mean)**2)+shrinkVar)/N
     return var
 
 def betaMOM(x,shrinkage=None,mean=None,useLocScale=False):

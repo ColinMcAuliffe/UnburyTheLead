@@ -41,7 +41,7 @@ oneByOne = (6.5,6.5)
 #Compute specific asymmetry and historic mean and stdv{{{1
 #Compute data{{{2
 data      = [['State','cycle','AreaNumber','Mean','Stdv','Var']]
-stateData = [['State','STATEFP','year','demVotes','repVotes','demVoteFrac','repVoteFrac','demSeats','demSeatFrac','specAsym (seats)','specAsym (fraction)','mean-median','margin']]
+stateData = [['State','STATEFP','year','demVotes','repVotes','demVoteFrac','repVoteFrac','demSeats','demSeatFrac','specAsym (seats)','specAsym (fraction)','mean-median','margin','ndist']]
 fig = plt.figure(figsize=(10,8))
 ax  = fig.add_subplot(211)
 for state in states:
@@ -63,7 +63,7 @@ for state in states:
                 meanMed = np.mean(pcts)-np.median(pcts)
             else:
                 meanMed = 0.
-            stateData.append([abbr,state.fips,year,dem_total,rep_total,popVote,1.-popVote,seats,seatFrac,sp,sp/float(len(dfYear)),meanMed,0.5-popVote])
+            stateData.append([abbr,state.fips,year,dem_total,rep_total,popVote,1.-popVote,seats,seatFrac,sp,sp/float(len(dfYear)),meanMed,0.5-popVote,len(dfYear)])
 
         ax.plot(cyc,mm,marker='x',color='0.5')
 
@@ -276,9 +276,11 @@ for state in states:
         for i in range(numDistricts):
             dfDistrict = dfCycle[dfCycle["AreaNumber"] == i+1]
             votePct = dfDistrict["centeredDem"].values/(dfDistrict["centeredDem"].values+dfDistrict["centeredRep"].values)
-            alphaCen,betaCen,locCen,scaleCen = betaMOM(votePct,shrinkage=expVarGlob,useLocScale=False)
+            #alphaCen,betaCen,locCen,scaleCen = betaMOM(votePct,shrinkage=expVarGlob,useLocScale=False)
+            alphaCen,betaCen,locCen,scaleCen = betaMOM(votePct,shrinkage=expVar[cnm],useLocScale=False)
             votePct = dfDistrict["imputedDem"].values/(dfDistrict["imputedDem"].values+dfDistrict["imputedRep"].values)
-            alpha,beta,loc,scale = betaMOM(votePct,shrinkage=expVarGlob,useLocScale=False)
+            #alpha,beta,loc,scale = betaMOM(votePct,shrinkage=expVarGlob,useLocScale=False)
+            alpha,beta,loc,scale = betaMOM(votePct,shrinkage=expVar[cnm],useLocScale=False)
             dataAB.append([abbr,cnm,i+1,alpha,beta,alphaCen,betaCen])
 
 list2df(dataAB,os.path.join(dataDir,"betaParams"))
@@ -303,6 +305,34 @@ fig = plt.figure()
 ax  = fig.add_subplot(111)
 ax.scatter(stateData["demVoteFrac"].values,stateData["demSeatFrac"].values)
 fig.savefig(os.path.join(figDir,"sct2"+figExt))
+
+fig = plt.figure()
+ax  = fig.add_subplot(111)
+
+def ecdf(a):
+    sorted=np.sort(a)
+    x2 = []
+    y2 = []
+    y = 0
+    for x in sorted: 
+        x2.extend([x,x])
+        y2.append(y)
+        y += 1.0 / len(a)
+        y2.append(y)
+    return x2,y2
+
+for cyc,cnm in zip(cycles,cnames):
+    dfYear = stateData[stateData["year"].isin(cyc)]
+    dfYear = dfYear[dfYear["ndist"] > 1]
+    #dfYear = dfYear[dfYear["specAsym (seats)"].abs() > 0]
+    x,y = ecdf(dfYear["specAsym (seats)"].values)
+    ax.plot(x,y,label=str(cnm))
+
+ax.grid()
+ax.set_xlim((-6,6))
+ax.set_ylim((0,1))
+ax.legend(loc=2)
+fig.savefig(os.path.join(figDir,"asymEdf"+figExt))
 
 fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(18,10))
 

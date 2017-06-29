@@ -215,6 +215,42 @@ Full details of the particular model employed here are presented in the followin
 
 \section{Modeling the Likelihood of Bias in Future Elections\label{sec:FB}}
 
+We can measure bias in a single election with the specific asymmetry, but we would also like to know the chances that a given redistricting plan will lead to bias in future elections.
+This allows us to distinguish between chance occurrences of asymmetry on an otherwise fair map and maps for which asymmetry is a persistent feature.
+A particular election result represents one possible outcome among many outcomes that could have occurred, or in other words each election represents a sample from a population representing all possible election outcomes.
+We can use the observation of one or more elections along with prior knowledge of election data to make inferences about the population.
+To this end we estimate parameters for a statistical model representing partisanship in each district as well as statewide partisanship given at least one election result in a state.
+Each sample drawn from this model represents a plausible election result that could have occurred if we were able to rerun elections as many times as we wanted.
+For each sample, we compute the specific asymmetry and the mean asymmetry of all samples giving the expected specific asymmetry, as well as other descriptive statistics representing the likelihood of different levels of asymmetry.
+Thus, the proposed definition that \emph{a fair redistricting plan is one that, on average, will not be biased in favor of either of the two major parties} corresponds to a map with an expected asymmetry of zero.
+The details of the empirical Bayesian model are outlined in what follows.
+
+\subsection{Model Parameterization}
+To chose a model appropriately, we must carefully consider the underlying process. 
+The Beta distribution is a natural choice for many processes that involve percentages, and is appropriate for modeling election outcomes. 
+This choice of probability model for modeling an election is not new. 
+It has been used in numerous academic papers, and continues to be used in literature published quite recently \cite{Paolino_2001_,Kaplan_2003_10.1287/opre.51.1.32.12794,Murr_2015_10.1177/2053168015583346}.
+Indeed, teaching materials about the Beta distribution often use elections as an example.  
+Some academic papers have extended this model to take into account third parties by using the Dirichlet distribution \cite{Rigdon_2009_10.1177/1532673X08330670} (The Dirichlet distribution is the multivariate extension of the Beta distribution.) 
+
+The choice of the Beta distribution follows directly from first principles. 
+In fact, two different points of view of the underlying stochastic process of election results both lead us to the Beta distribution. 
+Depending on our point of view, the underlying stochastic process is either a Bernoulli process (a number of trials that can each have one of two outcomes: votes that can be for either one party or another) or a pair of Poisson processes, which are series of events occurring at a certain rate i.e. voters for a party turning out to cast a vote.  
+
+In the first perspective (Bernoulli process), we are interested in the number of votes for a given party out of all the votes - the number of successes in a sequence of trials.  
+This leads us to the Binomial distribution. 
+However, we do not know the rate of successes - that is what we are trying to estimate.  
+To estimate the rate parameter of a Binomial distribution, we use its conjugate prior distribution, which is the Beta distribution.
+
+In the second perspective (Poisson process), we are interested in the number of times a voter for a party turns out to vote in a given amount of time (Election day) - the number of events in a fixed interval. This leads us to the Poisson distribution.  
+However, we do not know the rate of events - that is what we are trying to estimate.  
+To estimate the rate parameter of a Poisson distribution, we use its conjugate prior distribution, which is the Gamma distribution. 
+However, we are not done yet - we are interested in what fraction of events between the two Poisson processes are from the first.  
+Where $\Gamma\left(X\right)$ is the (unknown) rate of voter turnout for one party, and $\Gamma\left(Y\right)$ the (unknown) rate for the other, we are interested in the proportion of votes won by one party which is $\frac{\Gamma\left(X\right)}{\Gamma\left(X\right)+\Gamma\left(Y\right)} $. 
+This leads us to the Beta distribution.
+Thus, deduction from first principles leads us to select the Beta distribution as our probability model for the outcome of an election, regardless of which perspective we initially take.
+With the choice of model parameterization in hand, we now turn our attention to estimation of the parameters for the beta distributions representing district and state partisanship.
+
 \subsection{Parameter Estimation}
 The shape parameters for the beta distributions for district partisanship are estimated using the method of moments as follows
 \begin{equation}
@@ -229,37 +265,51 @@ Often, fewer data points may be available if a redistricting cycle is not yet co
 To make use of the model when only one data point is available and to help reduce the effects of small sample sizes in the parameter estimation process, we use a shrinkage term when computing the district variance $\bar{v}$ for N observed elections as follows
 
 \begin{equation}
-    \bar{v} = \frac{1}{N+1}\left[\frac{N}{N+1}\sum_{n=1}^{N}\left(x_{n}-\bar{x}\right)^{2}+\hat{v}\right]
+    \bar{v} = \frac{1}{N}\left[\sum_{n=1}^{N}\left(x_{n}-\bar{x}\right)^{2}+\hat{v}\right]
 \end{equation}
 where $\hat{v}$ is the shrinkage variance which can be set based on historical data.
 Note that if there are no contested elections then the variance is simply the shrinkage variance.
-\CM{I think this is not correct. The variance should equal the shrinkage variance in the case of one data point not zero since with zero data points the mean is not even defined. Something like this would give that}
-\begin{equation}
-    \bar{v} = \frac{1}{N}\left[\frac{N-1}{N}\sum_{n=1}^{N}\left(x_{n}-\bar{x}\right)^{2}+\hat{v}\right]
-\end{equation}
-
-\KB{It's this:}
-\begin{equation}
-    \bar{v'} = \frac{1}{N}\left[N\bar{v}+\hat{v}\right]
-\end{equation}
-
-\KB{Which expands and simplifies to:}
-\begin{equation}
-    \bar{v} = \frac{1}{N}\left[\sum_{n=1}^{N}\left(x_{n}-\bar{x}\right)^{2}+\hat{v}\right]
-\end{equation}
 
 To obtain $\hat{v}$, we use the average sample variance of district partisanship in contested elections over all districts and cycles.
 This is show in figure \ref{fig:varHist}, where we obtain an average variance of .529\% (corresponding to a standard deviation of 7.26\%) over all cycles.
 The within cycle average could also be used as the shrinkage variance, to attempt to capture trends in political polarization.
 
-\KB{I noticed you changed this from average standard deviation to average variance, and that it changes the result slightly. (0.00529 instead of 0.0037)  not sure which way is better...}
-
+\KB{I noticed you changed this from average standard deviation to average variance, and that it changes the result slightly. (0.00529 instead of 0.0037)  not sure which way is better...}\CM{Yes I used variance because that's what used in the method of moments formula}
 \begin{figure}[htb!]
     \begin{center}
         \includegraphics[scale=0.8]{../Figures/HistoricAsymmetry/VarHist.png}
         \caption{Distribution of sample variance of district partisanship over contested elections in each cycle. The green lines are the result of fitting the variances to a beta distribution}\label{fig:varHist}
     \end{center}
 \end{figure}
+\subsection{Model Integration}
+To compute the expected specific asymmetry, we use Monte Carlo sampling.
+One sample from the model involves taking one sample from each district and one sample for the popular vote.
+Seat counts can then be tallied along with various measures of bias and competitiveness.
+We then compute the average specific asymmetry over all samples along with other descriptive statistics.
+This approach has several advantages
+
+\begin{itemize}
+
+\item It takes into account non-uniform swings - By looking at not only the average partisanship of each district, but how much the partisanship of each individual district changes from election to election, this metric is able to take into account the changes in voter sentiment that are not uniform throughout the state; that are perhaps concentrated in only certain districts.
+
+\item It takes into account all possibilities, weighted by likelihood - Every possible seats-votes curve and every possible popular vote ratio is taken into consideration, weighted by the combined likelihood of the two.
+
+\item It shows durability - By computing an entire likelihood function for specific partisan asymmetry, rather than a single point estimate, this approach enables quick and accurate assessment of how durable a gerrymander is; how much more harm it will cause in the future, including what the likelihood is that it will not cause harm.
+
+\end{itemize}
+
+To illustrate the process we show a few samples from this model for the Wisconsin state assembly districts figure \ref{fig:SVAssembly2010} (a full analysis of this districting plan can be found in section \ref{sec:Wis}).
+The dark line is the seats votes curve generated from sampling the partisanship in each district, while the dashed line in the reflection of this curve.
+Discrepancies between these two lines represent asymmetries, which vary depending on the level of partisanship considered.
+The vertical line is the statewide partisanship sampled from the state beta distribution, which determines the partisanship level that we measure the asymmetry at.
+
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.45]{../Figures/WI2010/sv_curves_assembly.png}
+        \caption{Some election outcome seats-votes curves generated from the probability model for Wisconsin 2010 Assembly districts}\label{fig:SVAssembly2010}
+    \end{center}
+\end{figure}
+
 \section{Partisan Bias in the U.S. Congress 1972-2016\label{sec:Hist}}
 We present an examination of partisan bias in the United States congress for elections from 1972 to 2016.
 The election data was collected by Brian Remlinger and Sam Wang, and sent to us in a personal communication.
@@ -358,8 +408,8 @@ Simultaneously, asymmetry has reduced in some states (at least in part due to re
 States known to have been targeted by the REDMAP program are gerrymandered very aggressively in terms of the number of seats available and the level of partisanship in those states.
 We can visualize how extreme the most aggressive gerrymanders are in each cycle are by sorting the expected asymmetry (as a percentage of available seats) in descending order for each state.
 States with fewer than five seats are excluded since small asymmetries result as very large percentages.
-This is shown in figure \ref{fig:asymRank}, where the 2010 cycle stands out as having three states with expected asymmetries that exceeded anything seen previously: Pennsylvania (19.7\%), North Carolina (19.5\%), and Georgia (16.7\%)
-Following these are Virginia (13.3\%), Michigan (12.4\%), Ohio (11.6\%), and Wisconsin (10.8\%), which each have large asymmetries by historical standards.
+This is shown in figure \ref{fig:asymRank}, where the 2010 cycle stands out as having three states with expected asymmetries that exceeded anything seen previously: Pennsylvania (18.7\%), North Carolina (17.9\%), and Georgia (16.2\%)
+Following these are Virginia (12.1\%), Michigan (11.2\%), Ohio (11.0\%), and Wisconsin (9.83\%), which each have large asymmetries by historical standards.
 All of these states showed a sudden increase in asymmetry in favor of Republicans after the 2010 redistricting, see table \ref{tab:Asym2000to2010} and figure \ref{fig:Asym2000to2010}. 
 In contrast, California and New York had substantial asymmetries favoring Democrats in the 2000 cycle, and while they still show asymmetries favoring Democrats in the 2010 cycle, the magnitude of the asymmetry has decreased.
 \CM{I believe CA implemented an independent commission starting in 2010}
@@ -539,21 +589,6 @@ Both the 2000 and 2010 distributions show clear signs of pro-Republican gerryman
 However, in the 2010 distributions Republicans-leaning districts are more concentrated around a single point slightly but safely short of competitive, while Democratic-leaning districts that were competitive in the 2000 distributions have been shifted away from the center.
 Consequently, in the 2010 distributions, compared to the 2000 distributions, Republicans are expected to gain more seats by smaller margins, while Democrats are expected to gain fewer seats by larger margins.
 
-Shown in figures \ref{fig:SVAssembly2000} and \ref{fig:SVAssembly2010} are twelve seats-votes curves drawn from these distributions (solid curve), along with their 2-axis reflection (dashed curve), and a popular vote percentage drawn from the statewide Beta distribution (vertical dotted gray line). 
-While a small asymmetry in favor of Republicans is sometimes apparent in the 2000 curves, a large and consistent asymmetry in favor of Republicans is immediately evident in the 2010 curves.
-
-\begin{figure}[htb!]
-    \begin{center}
-        \includegraphics[scale=0.45]{../Figures/WI2000/4x4.png}
-        \caption{Some election outcome seats-votes curves generated from the probability model for Wisconsin 2000 Assembly districts}\label{fig:SVAssembly2000}
-    \end{center}
-\end{figure}
-\begin{figure}[htb!]
-    \begin{center}
-        \includegraphics[scale=0.45]{../Figures/WI2010/sv_curves_assembly.png}
-        \caption{Some election outcome seats-votes curves generated from the probability model for Wisconsin 2010 Assembly districts}\label{fig:SVAssembly2010}
-    \end{center}
-\end{figure}
 
 \subsubsection{Specific partisan asymmetry likelihoods}
  
@@ -661,57 +696,11 @@ If the district lines were instead optimized to favor neither party -- to have a
 Republicans would currently have 9 less seats in Wisconsin Assembly, and Democrats would have 9 more, making the count 55-44.
 For comparison, the historical threshold for ruling in favor of plaintiffs on grounds of racial gerrymandering is 1 seat.
 
-\section{* Cut Text *}
-
-
-\subsection{Measurement}
-\CM{This is covered in section }\ref{sec:MB}\CM{, I copied and pasted the list into the bits I had already written}
-To measure partisan bias, we measured the asymmetry in the seats-votes curve at the actual vote count that occurred in the election.  
-In other words, we take the number of seats that Republicans won, and subtract from that the number of seats that Democrats would have won if the popular vote percentage was reversed (1-x), and divide by 2.  
-This represent the number of seats Republicans won in excess of what they would have won if the seats-votes curve was symmetric.  
-If the number is negative, that represents an asymmetry in favor of Democrats.
-We call this "specific partisan asymmetry".
-
-Before applying this metric to concrete examples, we'd like to highlight some of the advantages of it.
-
-
-
-\subsubsection{Probability model}
-
-To calculate the expected partisan asymmetries for future elections, we need to construct a probability model and compute the most likely parameters for it based on past observations.
-We choose our probability model by deduction from first principles.
-
-An election between two parties is a number of repeated trials, each resulting in one of two outcomes.  This is known in mathematical literature as a Bernoulli process.
-In our case, the rate of "success" (of getting the first of the two options) in the Bernoulli process -- known as the "rate parameter" -- is unknown.
-For reasons which we won't go into here, the standard accepted distribution for modeling an unknown rate parameter of a Bernoulli process, is a Beta distribution.
-Using a Beta distribution here amounts to making the fewest possible assumptions about the value of the rate parameter.
-
-For our probability model we model at the resolution of districts vote percentages.
-We use a Beta distribution for the vote counts in each district, and one for the total popular vote.
-Thus we empirically estimate a probability model that represents the entire range of plausible outcomes for the election results under a particular redistricting plan.
-Sampling the model allows us to calculate a likelihood for every possible outcome, without relying on any prior assumptions.
-We can therefore not only determine the presence of partisan asymmetry in the outcome of one or more election results, but we can determine whether or not and to what degree partisan asymmetry is a persistent feature of a given plan.
-
-Before applying this model to a concrete examples, we'd like to highlight some of the advantages of this approach.
-
-\begin{itemize}
-
-\item It takes into account non-uniform swings - By looking at not only the average partisanship of each district, but how much the partisanship of each individual district changes from election to election, this metric is able to take into account the changes in voter sentiment that are not uniform throughout the state; that are perhaps concentrated in only certain districts.
-
-\item It takes into account all possibilities, weighted by likelihood - Every possible seats-votes curve and every possible popular vote ratio is taken into consideration, weighted by the combined likelihood of the two.
-
-\item It shows durability - By computing an entire likelihood function for specific partisan asymmetry, rather than a single point estimate, this approach enables quick and accurate assessment of how durable a gerrymander is; how much more harm it will cause in the future, including what the likelihood is that it will not cause harm.
-
-\end{itemize}
-
-\KB{end copying from 2000v2010}
-
 \section{Conclusions}
 
 \clearpage
 \section*{Acknowledgment}
 \section*{}
-%\bibliographystyle{plainnat}
 \bibliographystyle{unsrt}
 \bibliography{gerrymandering}
 \clearpage

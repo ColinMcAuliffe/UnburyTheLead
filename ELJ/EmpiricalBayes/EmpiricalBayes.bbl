@@ -95,8 +95,32 @@ Dirk~P. Kroese, Tim Brereton, Thomas Taimre, and Zdravko~I. Botev.
 \newblock {\em Wiley Interdisciplinary Reviews: Computational Statistics},
   6(6):386--392, November 2014.
 
+\bibitem{Paolino_2001_}
+Philip Paolino.
+\newblock Maximum likelihood estimation of models with beta-distributed
+  dependent variables.
+\newblock {\em Political Analysis}, 9(4):325--346, 2001.
+
+\bibitem{Kaplan_2003_10.1287/opre.51.1.32.12794}
+Edward~H. Kaplan and Arnold Barnett.
+\newblock A new approach to estimating the probability of winning the
+  presidency.
+\newblock {\em Operations Research}, 51(1):32--40, February 2003.
+
+\bibitem{Murr_2015_10.1177/2053168015583346}
+Andreas~Erwin Murr.
+\newblock The party leadership model: An early forecast of the 2015 british
+  general election.
+\newblock {\em Research \& Politics}, 2(2):2053168015583346, June 2015.
+
+\bibitem{Rigdon_2009_10.1177/1532673X08330670}
+Steven~E. Rigdon, Sheldon~H. Jacobson, Wendy~K. Tam~Cho, Edward~C. Sewell, and
+  Christopher~J. Rigdon.
+\newblock A bayesian prediction model for the u.s. presidential election.
+\newblock {\em American Politics Research}, 37(4):700--724, July 2009.
+
 \bibitem{Wang_2017_}
-Samuel Wang and Brian Remliger.
+Samuel Wang and Brian Remlinger.
 \newblock Can math stop partisan gerrymandering?
 \newblock {\em Los Angeles Times}, May 2017.
 
