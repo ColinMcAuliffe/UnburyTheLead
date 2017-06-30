@@ -276,11 +276,11 @@ for state in states:
         for i in range(numDistricts):
             dfDistrict = dfCycle[dfCycle["AreaNumber"] == i+1]
             votePct = dfDistrict["centeredDem"].values/(dfDistrict["centeredDem"].values+dfDistrict["centeredRep"].values)
-            #alphaCen,betaCen,locCen,scaleCen = betaMOM(votePct,shrinkage=expVarGlob,useLocScale=False)
-            alphaCen,betaCen,locCen,scaleCen = betaMOM(votePct,shrinkage=expVar[cnm],useLocScale=False)
+            alphaCen,betaCen,locCen,scaleCen = betaMOM(votePct,shrinkage=expVarGlob,useLocScale=False)
+            #alphaCen,betaCen,locCen,scaleCen = betaMOM(votePct,shrinkage=expVar[cnm],useLocScale=False)
             votePct = dfDistrict["imputedDem"].values/(dfDistrict["imputedDem"].values+dfDistrict["imputedRep"].values)
-            #alpha,beta,loc,scale = betaMOM(votePct,shrinkage=expVarGlob,useLocScale=False)
-            alpha,beta,loc,scale = betaMOM(votePct,shrinkage=expVar[cnm],useLocScale=False)
+            alpha,beta,loc,scale = betaMOM(votePct,shrinkage=expVarGlob,useLocScale=False)
+            #alpha,beta,loc,scale = betaMOM(votePct,shrinkage=expVar[cnm],useLocScale=False)
             dataAB.append([abbr,cnm,i+1,alpha,beta,alphaCen,betaCen])
 
 list2df(dataAB,os.path.join(dataDir,"betaParams"))
