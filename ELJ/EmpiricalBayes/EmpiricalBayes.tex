@@ -79,9 +79,7 @@ These standards are attractive because they are based on statistics with propert
 However, these tests have some drawbacks.
 Namely, the models used for computing the significance level for those tests are valid asymptotically as the number of districts increases, meaning that the statistical power of these standards is diminished for states with just a few districts.
 Additionally, a null distribution must be specified for each of the test statistics in question. 
-This is a relatively minor point, since the null distributions used in the t-test and chi squared test are well established and the effect of the null distribution on the mean median difference test is small in many cases. \cite{Cabilio_1996_10.2307/3315744,Zheng_2010_}
-\KB{I would argue its a major point.   And it's kind of subjective, anyways, whether its minor or major}
-\CM{It's minor relative to the IID assumption. If IID is taken for granted then null distribution doesn't make much difference.}
+However, the null distributions used in the t-test and chi squared test are well established and the effect of the null distribution on the mean median difference test is small in many cases. \cite{Cabilio_1996_10.2307/3315744,Zheng_2010_}
 Lastly and most importantly, these models assume that samples are independent and identically distributed (IID), which is an assumption that is crucial for the tests to be analytic (and hence simple) but not necessarily realistic for elections.
 For instance, the IID assumption would imply that the probability of a deeply partisan Republican district being won by a Republican is the same as the probability of a deeply partisan Democratic district in the same state being won by a Republican.
 Violation of the IID assumption can have a noticeable effect on statistical tests, for an example in securities law see \cite{Gel_2009_10.1093/lpr/mgp008}. 
@@ -328,8 +326,7 @@ This illustrates a few of the features of the specific asymmetry as a metric, bu
 The reason for this is that the proposed standard would enforce an expected asymmetry of zero, meaning on average no asymmetry would occur but in some elections asymmetry could occur by chance.
 This result is shown in figure \ref{fig:AsymRemoved}, where it is evident that despite the natural multiplying effect of majoritarian elections, removing specific partisan asymmetry produces congressional representation closer to proportional with the popular vote, regardless of which party the net partisan asymmetry favors.  
 Thus while proportionality of seats and votes is not enforced, gerrymandering tends to exacerbate and amplify the natural tendency of single winner elections to lead to disproportionate representation in favor of the majority party, and therefore removal of asymmetry caused by redistricting tends to lead to results that are closer to proportional.
-If one were to use a metric that assumes votes should be proportional to seats, such as the efficiency gap, the 1970s would still be counted as gerrymandered, despite all partisan asymmetry being removed.  
-That is, efficiency gap would mistake the unavoidable multiplying effect of the sigmoidal seats-votes curve for gerrymandering.\CM{I'm not sure about this, the eg does assume proportionality but it does not assume that the constant of proportionality between seats and votes is 1} \KB{not assuming a proportion of 1 doesn't make it sigmoidal}\CM{That's true but I think the claim you make requires seats = votes and would not neccisarily hold up for the more general linear seats votes relationships}
+If one were to use a metric that assumes votes should be proportional to seats, the 1970s would still be counted as gerrymandered, despite all partisan asymmetry being removed.  
 Specific partisan asymmetry, however, never makes this error, while still leading to a substantial increase in the representativeness of congress as a whole.
 
 \begin{figure}[htb!]
