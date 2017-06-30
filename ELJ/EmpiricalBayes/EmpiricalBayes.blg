@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 This is BibTeX, Version 0.99d (TeX Live 2017)
 Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: EmpiricalBayes.aux
@@ -47,3 +48,11 @@ while$ -- 58
 width$ -- 24
 write$ -- 242
 (There was 1 warning)
+=======
+This is BibTeX, Version 0.99dThe top-level auxiliary file: EmpiricalBayes.aux
+A level-1 auxiliary file: largeStatesTab.aux
+The style file: unsrt.bst
+Database file #1: gerrymandering.bib
+Warning--empty year in Wang__
+(There was 1 warning)
+>>>>>>> 9c9dd47d51547c9a9d91233c48b4cd3213374d2a

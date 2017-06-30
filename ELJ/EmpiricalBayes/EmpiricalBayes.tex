@@ -278,7 +278,7 @@ To obtain $\hat{v}$, we use the average sample variance of district partisanship
 This is show in figure \ref{fig:varHist}, where we obtain an average variance of .529\% (corresponding to a standard deviation of 7.26\%) over all cycles.
 The within cycle average could also be used as the shrinkage variance, to attempt to capture trends in political polarization.
 
-\KB{I noticed you changed this from average standard deviation to average variance, and that it changes the result slightly. (0.00529 instead of 0.0037)  not sure which way is better...}\CM{Yes I used variance because that's what used in the method of moments formula}
+\KB{I noticed you changed this from average standard deviation to average variance, and that it changes the result slightly. (0.00529 instead of 0.0037)  not sure which way is better...}\CM{Yes I used variance because that's what used in the method of moments formula}\KB{I think it makes sense.}
 \begin{figure}[htb!]
     \begin{center}
         \includegraphics[scale=0.8]{../Figures/HistoricAsymmetry/VarHist.png}
@@ -323,7 +323,7 @@ The reason for this is that the proposed standard would enforce an expected asym
 This result is shown in figure \ref{fig:AsymRemoved}, where it is evident that despite the natural multiplying effect of majoritarian elections, removing specific partisan asymmetry produces congressional representation closer to proportional with the popular vote, regardless of which party the net partisan asymmetry favors.  
 Thus while proportionality of seats and votes is not enforced, gerrymandering tends to exacerbate and amplify the natural tendency of single winner elections to lead to disproportionate representation in favor of the majority party, and therefore removal of asymmetry caused by redistricting tends to lead to results that are closer to proportional.
 If one were to use a metric that assumes votes should be proportional to seats, such as the efficiency gap, the 1970s would still be counted as gerrymandered, despite all partisan asymmetry being removed.  
-That is, efficiency gap would mistake the unavoidable multiplying effect of the sigmoidal seats-votes curve for gerrymandering.\CM{I'm not sure about this, the eg does assume proportionality but it does not assume that the constant of proportionality between seats and votes is 1}
+That is, efficiency gap would mistake the unavoidable multiplying effect of the sigmoidal seats-votes curve for gerrymandering.\CM{I'm not sure about this, the eg does assume proportionality but it does not assume that the constant of proportionality between seats and votes is 1} \KB{not assuming a proportion of 1 doesn't make it sigmoidal}
 Specific partisan asymmetry, however, never makes this error, while still leading to a substantial increase in the representativeness of congress as a whole.
 
 \begin{figure}[htb!]
@@ -436,6 +436,12 @@ Previous cycles may have had moderate asymmetries in a larger number of states, 
 
 
 \section{Partisan Bias in the Wisconsin State Assembly, post 2010 census\label{sec:Wis}}
+
+\KB{reminder to cite http://www-personal.umich.edu/~jowei/Political_Geography_Wisconsin_Redistricting.pdf , http://www.scotusblog.com/wp-content/uploads/2017/04/16-1161-cert-amicus-rnc.pdf ,  and the paper cited in that: Jowei Chen and David Cottrell, Evaluating
+Partisan Gains from Congressional
+Gerrymandering: Using Computer
+Simulations to Estimate the Effect of
+Gerrymandering in the U.S. House}
 
 \begin{figure}[htb!]
     \begin{center}
@@ -555,7 +561,7 @@ We can better visualize how the 2010 districts give Republicans more seats than 
 Figure \ref{fig:DistrictMaps} shows such a comparison for 2012, 2014, and 2016 elections (left to right).
 The two Democratic districts above Lake Winnebago were combined into one, taking a seat away from Democrats.
 Democratic voters in Eau Claire once participated in two competitive districts, which would have given Democrats 2 seats with 2000 district lines, but the 2010 district lines wrapped them up in a single safe district, capping the number of elections those voters can swing at 1.
-In 2000 districts, Madison is surrounded by a several competitive Democratic-leaning districts.
+In 2000 districts, Madison is surrounded by several competitive Democratic-leaning districts.
 But the 2010 lines packed Democratic voters surrounding Madison into a few safe Democratic districts, flipping the districts those voters came from, which would have been competitive, to Republican.
 In Milwaukee, the lines were redrawn to more tightly outline Democratic voters, thus creating a few more districts that Republicans can win in.
 Indeed, figure \ref{fig:DistrictMapDelta} shows that by comparing the districting schemes using 2016 votes, it is easy to identify where Republicans picked up 4 seats due to partisan vote packing.
@@ -563,7 +569,7 @@ Indeed, figure \ref{fig:DistrictMapDelta} shows that by comparing the districtin
 Simultaneously, deeper red districts throughout the state were redrawn to give away some of their Republican voters to nearby competitive districts, reducing the likelihood that a Democratic representative would be elected in the once-competitive districts while still maintaining a safe edge in the originally deeper red district.  
 You can see this by noticing the much "flatter" red color in the bottom maps versus the top maps.
 It will also be made clear in the next subsection when we examine the statistical properties of the maps more rigorously.
-
+fs
 In sum, the changes in the district lines from 2000 districts to 2010 districts consist of decreasing the number of Democratic districts through vote packing, and increasing the number of Republican districts through vote cracking.
 Instances of the reverse (packing Republican voters and cracking Democratic districts) are simply not present.
 \begin{figure}[htb!]
@@ -587,7 +593,7 @@ Instances of the reverse (packing Republican voters and cracking Democratic dist
 Figure \ref{fig:BetasWI} shows the beta distributions estimated for each district and the popular vote under the 2000 and 2010 redistricting plans. 
 Before evaluating this model with Monte Carlo sampling, we can find some clear signs of pro-Republican gerrymandering just from inspection of these distributions. 
 Many Republican-leaning districts are tightly clustered at levels of partisanship that allow Republican candidates to win safely without wasting too many votes, while many Democrat-leaning districts are heavily packed and not competitive.
-In the 2010 distributions Republicans-leaning districts are more concentrated around a single point slightly but safely short of competitive, while Democratic-leaning districts that were competitive in the 2000 distributions have been shifted away from the center.
+In the 2010, distributions Republicans-leaning districts are more concentrated around a single point slightly but safely short of competitive, while Democratic-leaning districts that were competitive in the 2000 distributions have been shifted away from the center.
 Consequently, in the 2010 distributions, compared to the 2000 distributions, Republicans are expected to gain more seats by smaller margins, while Democrats are expected to gain fewer seats by larger margins.
 
 
@@ -672,13 +678,14 @@ From these comparisons, it is clear that the specific partisan asymmetry present
 \item The difference between the two schemes is a stable 10\% gain in the Republican seat margin over Democrats.
 Since the same exact voter sentiments were used in both analyses, this difference in partisan asymmetry simply cannot be a consequence of changes in voter sentiment.  
 Since the only thing that we changed was the districting scheme, all observed differences in partisan asymmetry are purely the result of changing the districting scheme and reflect the choices made by the redistricters and do not reflect changes in political geography.
+\item Claims that the election results it produced are similiar to those under the previous districts are categorically false.
 \item In order to claim that natural political geography was a significant factor in the 2010 cycle district, we would expect to see the exact same asymmetries in the 2000 districts.
 To the contrary, partisan asymmetry in 2010 districts is double that of 2000 districts, even after compensating for observed and potential changes in voter sentiment.
 \item Claims that the observed partisan bias in 2010 districts is simply a consequence of political geography and/or changes in voter sentiment are contradicted by this analysis.
 \item Simply reverting back to the 2000 census cycle districts would remedy most of the present injustice, as measured in seats affected or ballots affected.
 \end{itemize}
 
-This comparison cannot estimate how much deliberate gerrymandering was present in both schemes, nor can it estimate how much of the gerrymandering present in the 2000 districts was deliberate.
+This comparison cannot estimate how much of the gerrymandering present in the 2000 districts was deliberate.
 However it does prove with absolute certainty that the 2010 districts, under the same elections, give Republicans more seats than the 2000 districts, and that this difference will persist even in the most extreme swings of voter sentiment.
 
 \section{Conclusions}
