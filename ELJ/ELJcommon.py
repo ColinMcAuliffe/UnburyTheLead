@@ -45,6 +45,41 @@ def get_asymFromCenteredPct(demPct):
     else:
         return 0.
 
+def get_GFAsymFromCenteredPct(demPct):
+    popVoteDem   = 0.5
+    popVoteRep   = 0.5
+    #popular vote is last element in demPct, ignored
+    dem  = np.array(demPct[0:-1])
+    rep  = 1.-dem
+    nseats = float(len(dem))
+
+    if len(dem) > 1:
+        demSeats = float(len(rep[rep<=popVoteDem]))
+        repSeats = nseats - float(len(rep[rep<=popVoteRep]))
+        return (repSeats-demSeats)/2.
+    else:
+        return 0.
+
+def get_MMDFromCenteredPct(demPct):
+    #popular vote is last element in demPct, ignored
+    dem  = np.array(demPct[0:-1])
+    if len(dem) > 1:
+        return 0.5 - np.median(dem)
+    else:
+        return 0.
+
+def get_EGFromCenteredPct(demPct):
+    #popular vote is last element in demPct
+    popVoteDem   = demPct[-1]
+    dem  = np.array(demPct[0:-1])
+    rep  = 1.-dem
+    nseats = float(len(dem))
+    if nseats > 1.:
+        demSeats = float(len(rep[rep<=popVoteDem]))/nseats
+        return 2.*popVoteDem - demSeats - 0.5
+    else:
+        return 0.
+
 def get_asymFromPct(demPct,decenter=True):
     #popular vote is last element in demPct
     popVote   = demPct[-1]
@@ -98,6 +133,23 @@ def getExpAsym(params,nsims=10000):
     results = np.array(results)
     asym    = np.apply_along_axis(get_asymFromCenteredPct,0,results)
     return asym
+
+def getAllSVMetrics(params,nsims=10000):
+    #simulate
+    results = []
+    for a,b in params:
+        results.append(stats.beta.rvs(a,b,size=nsims))
+    results = np.array(results)
+    #Specific asymmetry
+    spAsym  = np.apply_along_axis(get_asymFromCenteredPct,0,results)
+    #Grofman asymmetry
+    gfAsym  = np.apply_along_axis(get_GFAsymFromCenteredPct,0,results)
+    #Mean - Median
+    mmd     = np.apply_along_axis(get_MMDFromCenteredPct,0,results)
+    #Efficiency Gap
+    eg      = np.apply_along_axis(get_EGFromCenteredPct,0,results)
+    return np.array([spAsym,gfAsym,mmd,eg])
+
 
 def convolveBetas(params,npoints=1000):
     x = np.linspace(0.,1.,npoints)
