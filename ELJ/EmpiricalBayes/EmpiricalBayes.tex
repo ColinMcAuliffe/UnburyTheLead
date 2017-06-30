@@ -90,7 +90,7 @@ Despite these objections, standards based on analytic models are potentially ver
 We are currently investigating the effect the IID assumption has on the robustness of such standards.
 
 Another group of standards are those based on Monte Carlo simulation.
-A major advantages of Monte Carlo based standards are flexibility, since they do not require the metrics to be analytically integrable \KB{I know, might be too mathy for the audience}\CM{I think it's fine}, and thus can be used with a wide variety of metrics or even multiple metrics in combinations.
+A major advantages of Monte Carlo based standards are flexibility, since they do not require the metrics to be analytically integrable, and thus can be used with a wide variety of metrics or even multiple metrics in combinations.
 Additionally, once implemented by a computer algorithm, it is quick and easy to look at the data in many different ways.
 
 An example is test III proposed by Wang \cite{Wang__,Wang_2016_10.1089/elj.2016.0387}, where the metric used was the proportion of seats won by a party, and the model was a Monte Carlo technique where 'fantasy' congressional delegations were sampled from national congressional voting results.
@@ -416,7 +416,6 @@ This is shown in figure \ref{fig:asymRank}, where the 2010 cycle stands out as h
 Following these are Virginia (12.1\%), Michigan (11.2\%), Ohio (11.0\%), and Wisconsin (9.83\%), which each have large asymmetries by historical standards.
 All of these states showed a sudden increase in asymmetry in favor of Republicans after the 2010 redistricting, see table \ref{tab:Asym2000to2010} and figure \ref{fig:Asym2000to2010}. 
 In contrast, California and New York had substantial asymmetries favoring Democrats in the 2000 cycle, and while they still show asymmetries favoring Democrats in the 2010 cycle, the magnitude of the asymmetry has decreased.
-\CM{I believe CA implemented an independent commission starting in 2010}
 Previous cycles may have had moderate asymmetries in a larger number of states, but in terms of extreme gerrymandering, there has been no time since the Supreme Court ruled in \emph{Reynold v. Sims} (1964) that congressional districts must have roughly equal population, that is comparable to the 2010 cycle.
 
 \begin{figure}[htb!]
@@ -447,7 +446,14 @@ Previous cycles may have had moderate asymmetries in a larger number of states, 
 
 The Wisconsin state assembly districts are the subject of \emph{Whitford v. Gil}, where a federal court has ruled that the redistricting plan is an unconstitutional gerrymander.
 The plaintiffs in \emph{Whitford} relied on the efficiency gap to demonstrate bias, while here we apply the expected specific asymmetry.
-Since some have alleged that the bias in the Wisconsin map is merely the product of changes in voter sentiment and/or political geography \CM{do you have a citation for these statements?}, we have analyzed the asymmetry using
+Some have alleged that the bias in the Wisconsin map is merely the product of changes in voter sentiment and/or political geography.
+The argument that there is a natural packing of Democratic voters in urban areas is stated in the Amicus Brief filed by the Republican National Committee and the National Republican Congressional Committee.
+The tendency of Democratic voters to cluster in urban areas is well known, but no proof was offered to suggest that the electoral advantage given to Republicans in the Act 43 map was merely the result of this effect an not of deliberate gerrymandering.
+The RNC and NRCC brief cited the studies of Chen and coworkers in support of the notion that gerrymandering can occur unintentionally due to population clustering \cite{Chen_2015_10.1089/elj.2015.0317,Chen_2016_10.1016/j.electstud.2016.06.014} among others, although interestingly a recent study of the Act 43 map by Chen \cite{Chen_2017_} using the same analysis technique from these previous studies concluded the following: \emph{Act 43 not only created an extremely biased Assembly plan with an efficiency gap far outside of any gap observed in 200 simulations, the enacted plan achieved this partisan outcome at the expense of traditional districting principles, splitting apart far more counties and municipalities than were necessary.}
+The fact that the Act 43 map does not attempt to preserve existing political boundaries directly undercuts the argument that the bias in the map arises from natural political geography.
+In what follows, we employ a different analysis methodology and find that the Act 43 map leads to an increase in seats won by Republican candidates by increasing the partisan asymmetry in their favor relative to the previous map.
+This is further evidence that the bias in the Act 43 map reflects the deliberate intentions of the redistricters, and simply can not be explained by political geography alone.
+
 To compare how much of the observed partisan asymmetry in 2010-cycle Wisconsin State Assembly districts was the result of changes in district designs versus changes in voter sentiment, we projected actual election results onto both the current Assembly districts, and Assembly districts from the previous redistricting cycle, as shown in figure \ref{fig:MapsWI}.
 This allows us to analyze the effects of changes in voter sentiments and redistricting separately.
 
@@ -676,6 +682,13 @@ This comparison cannot estimate how much deliberate gerrymandering was present i
 However it does prove with absolute certainty that the 2010 districts, under the same elections, give Republicans more seats than the 2000 districts, and that this difference will persist even in the most extreme swings of voter sentiment.
 
 \section{Conclusions}
+An empirical Bayesian framework for analyzing partisan bias in redistricting plans was presented, along with a new metric for gerrymandering called the specific asymmetry.
+The metric is an effective measure of redistricting bias, and is consistent with existing opinions by the supreme court since it does not rely on proportionality.
+The empirical Bayesian model allows one to asses the likelihood of a given redistricting plan causing partisan asymmetry and harm to voters in future elections, which permits an analyst to distinguish between observations of bias which occurred by chance on a fair map and maps for which bias is a persistent feature.
+This technique was applied to U.S. congress for election from 1972 to 2016, and substantial levels of asymmetry were found.
+The total amount of asymmetry favoring both parties combined in each cycle has held fairly constant, although the 2010 cycle is remarkable since many states appear to be moving toward more symmetric districting plans, while simultaneously several states (especially those known to have been targeted by the REDMAP project) have unprecedented levels of asymmetry.
+We also analyzed the Wisconsin state assembly map under act 43 and the map for the 2000 cycle, where we found that the act 43 map roughly doubled the level of asymmetry from the previous map, and that this increase in asymmetry can not be explained by political geography as supporters of the defendants of \emph{Whitford v. Gil} have alleged.
+
 
 \clearpage
 \section*{Acknowledgment}

@@ -5,45 +5,45 @@ A level-1 auxiliary file: largeStatesTab.aux
 The style file: unsrt.bst
 Database file #1: gerrymandering.bib
 Warning--empty year in Wang__
-You've used 21 entries,
+You've used 22 entries,
             1791 wiz_defined-function locations,
-            595 strings with 7572 characters,
-and the built_in function-call counts, 4840 in all, are:
-= -- 467
-> -- 166
+            599 strings with 7724 characters,
+and the built_in function-call counts, 4969 in all, are:
+= -- 478
+> -- 170
 < -- 1
-+ -- 64
-- -- 43
-* -- 395
-:= -- 769
-add.period$ -- 63
-call.type$ -- 21
-change.case$ -- 21
++ -- 66
+- -- 44
+* -- 398
+:= -- 793
+add.period$ -- 66
+call.type$ -- 22
+change.case$ -- 22
 chr.to.int$ -- 0
-cite$ -- 22
-duplicate$ -- 186
-empty$ -- 478
-format.name$ -- 43
-if$ -- 1034
+cite$ -- 23
+duplicate$ -- 194
+empty$ -- 492
+format.name$ -- 44
+if$ -- 1062
 int.to.chr$ -- 0
-int.to.str$ -- 21
-missing$ -- 20
-newline$ -- 108
-num.names$ -- 21
-pop$ -- 24
+int.to.str$ -- 22
+missing$ -- 21
+newline$ -- 113
+num.names$ -- 22
+pop$ -- 27
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 73
+skip$ -- 76
 stack$ -- 0
 substring$ -- 464
-swap$ -- 21
+swap$ -- 22
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 1
-while$ -- 57
-width$ -- 23
-write$ -- 232
+while$ -- 58
+width$ -- 24
+write$ -- 242
 (There was 1 warning)
