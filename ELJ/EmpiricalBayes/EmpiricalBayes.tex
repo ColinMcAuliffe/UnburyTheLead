@@ -27,7 +27,7 @@
 
 %\makeatother
 
-%\usepackage{babel}fs
+%\usepackage{babel}
 
 \begin{document}
 \title{An Empirical Bayesian Framework for Assessing Partisan Bias in Redistricting Plans}
@@ -80,7 +80,7 @@ However, these tests have some drawbacks.
 Namely, the models used for computing the significance level for those tests are valid asymptotically as the number of districts increases, meaning that the statistical power of these standards is diminished for states with just a few districts.
 Additionally, a null distribution must be specified for each of the test statistics in question. 
 However, the null distributions used in the t-test and chi squared test are well established and the effect of the null distribution on the mean median difference test is small in many cases. \cite{Cabilio_1996_10.2307/3315744,Zheng_2010_}
-Lastly and most importantly, these models assume that samples are independent and identically distributed (IID), which is an assumption that is crucial for the tests to be analytic (and hence simple) but not necessarily realistic for elections.
+Lastly, these models assume that samples are independent and identically distributed (IID), which is an assumption that is crucial for the tests to be analytic (and hence simple) but not necessarily realistic for elections.
 For instance, the IID assumption would imply that the probability of a deeply partisan Republican district being won by a Republican is the same as the probability of a deeply partisan Democratic district in the same state being won by a Republican.
 Violation of the IID assumption can have a noticeable effect on statistical tests, for an example in securities law see \cite{Gel_2009_10.1093/lpr/mgp008}. 
 Use of this assumption may make this group of standards too restrictive or too permissive depending on the specific circumstances.
@@ -573,7 +573,7 @@ Indeed, figure \ref{fig:DistrictMapDelta} shows that by comparing the districtin
 Simultaneously, deeper red districts throughout the state were redrawn to give away some of their Republican voters to nearby competitive districts, reducing the likelihood that a Democratic representative would be elected in the once-competitive districts while still maintaining a safe edge in the originally deeper red district.  
 You can see this by noticing the much "flatter" red color in the bottom maps versus the top maps.
 It will also be made clear in the next subsection when we examine the statistical properties of the maps more rigorously.
-fs
+
 In sum, the changes in the district lines from 2000 districts to 2010 districts consist of decreasing the number of Democratic districts through vote packing, and increasing the number of Republican districts through vote cracking.
 Instances of the reverse (packing Republican voters and cracking Democratic districts) are simply not present.
 \begin{figure}[htb!]
