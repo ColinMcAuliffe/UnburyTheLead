@@ -222,9 +222,16 @@ We can use the observation of one or more elections along with prior knowledge o
 To this end we estimate parameters for a statistical model representing partisanship in each district as well as statewide partisanship given at least one election result in a state.
 Each sample drawn from this model represents a plausible election result that could have occurred if we were able to rerun elections as many times as we wanted.
 For each sample, we compute the specific asymmetry and the mean asymmetry of all samples giving the expected specific asymmetry, as well as other descriptive statistics representing the likelihood of different levels of asymmetry.
+A schematic illustration of the process is shown in figure \ref{fig:ProbModel}
 Thus, the proposed definition that \emph{a fair redistricting plan is one that, on average, will not be biased in favor of either of the two major parties} corresponds to a map with an expected asymmetry of zero.
 The details of the empirical Bayesian model are outlined in what follows.
 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.6]{../Figures/Other/probability_model.png}
+        \caption{Schematic illustration of empirical Bayesian probability model}\label{fig:ProbModel}
+    \end{center}
+\end{figure}
 \subsection{Model Parameterization}
 To chose a model appropriately, we must carefully consider the underlying process. 
 The Beta distribution is a natural choice for many processes that involve percentages, and is appropriate for modeling election outcomes. 
@@ -323,7 +330,7 @@ The reason for this is that the proposed standard would enforce an expected asym
 This result is shown in figure \ref{fig:AsymRemoved}, where it is evident that despite the natural multiplying effect of majoritarian elections, removing specific partisan asymmetry produces congressional representation closer to proportional with the popular vote, regardless of which party the net partisan asymmetry favors.  
 Thus while proportionality of seats and votes is not enforced, gerrymandering tends to exacerbate and amplify the natural tendency of single winner elections to lead to disproportionate representation in favor of the majority party, and therefore removal of asymmetry caused by redistricting tends to lead to results that are closer to proportional.
 If one were to use a metric that assumes votes should be proportional to seats, such as the efficiency gap, the 1970s would still be counted as gerrymandered, despite all partisan asymmetry being removed.  
-That is, efficiency gap would mistake the unavoidable multiplying effect of the sigmoidal seats-votes curve for gerrymandering.\CM{I'm not sure about this, the eg does assume proportionality but it does not assume that the constant of proportionality between seats and votes is 1} \KB{not assuming a proportion of 1 doesn't make it sigmoidal}\CM{That's true but I think the claim you make requires seats = votes and would not neccisarily hold up for the more general seats ~ votes}
+That is, efficiency gap would mistake the unavoidable multiplying effect of the sigmoidal seats-votes curve for gerrymandering.\CM{I'm not sure about this, the eg does assume proportionality but it does not assume that the constant of proportionality between seats and votes is 1} \KB{not assuming a proportion of 1 doesn't make it sigmoidal}\CM{That's true but I think the claim you make requires seats = votes and would not neccisarily hold up for the more general linear seats votes relationships}
 Specific partisan asymmetry, however, never makes this error, while still leading to a substantial increase in the representativeness of congress as a whole.
 
 \begin{figure}[htb!]
