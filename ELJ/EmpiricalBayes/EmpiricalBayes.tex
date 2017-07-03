@@ -94,12 +94,12 @@ Additionally, once implemented by a computer algorithm, it is quick and easy to 
 An example is test III proposed by Wang \cite{Wang__,Wang_2016_10.1089/elj.2016.0387}, where the metric used was the proportion of seats won by a party, and the model was a Monte Carlo technique where 'fantasy' congressional delegations were sampled from national congressional voting results.
 This method can be used to establish whether or not a party's vote share wins them seats excessively relative to a national baseline.
 A second example of a Monte Carlo based standard is that of Chen et al \cite{Chen_2015_10.1089/elj.2015.0317,Chen_2016_10.1016/j.electstud.2016.06.014}, where electoral maps satisfying basic redistricting criteria are generated randomly and compared against the actual map.
-The standard that we propose is also based on Monte Carlo simulation.
+The standard that we propose is also based on Monte Carlo integration.
 The metric, which we refer to as the specific asymmetry (see section \ref{sec:MB}), is a measure of partisan bias that determines discrepancy in seats won by the losing party under a reversal in statewide partisanship.  
-The model, described in section \ref{sec:FB}, uses a Monte Carlo technique based simulations of an empirically estimated probability model for district and statewide partisanship.
+The model, described in section \ref{sec:FB}, uses a Monte Carlo technique based on draws from an empirically estimated probability model for district and statewide partisanship.
 The drawback of Monte Carlo based standards is complexity relative to analytic standards which do not require a computer to implement.
-Since Monte Carlo is a numerical integration method, as opposed to analytic, it take a lot more computer processing power, and thus aren't as well suited for use in optimization algorithms, relative to analytic methods.
-Nonetheless, Monte Carlo simulation techniques are highly conventional tools that are in widespread use across numerous disciplines \cite{Kroese_2014_10.1002/wics.1314}, and are useful for examining bias in redistricting.
+Since Monte Carlo is a numerical integration method, as opposed to analytic, it take a lot more computer processing power, and thus isn't as well suited for use in optimization algorithms, relative to analytic methods.
+Nonetheless, Monte Carlo techniques are highly conventional tools that are in widespread use across numerous disciplines \cite{Kroese_2014_10.1002/wics.1314}, and are useful for examining bias in redistricting.
 
 The empirical Bayesian framework that we propose is not only appropriate for assessing bias that has existed in past redistricting plans, but it is useful for understanding how bias could be introduced into future redistricting plans, even as strategies for gerrymandering change in response to the introduction of a hypothetical standard.
 In fact, the empirical Bayesian model that we propose is compatible with all of the metrics we have discussed thus far, and can be used as part of a standard itself, or can be used to test the robustness of standards that do not require Monte Carlo simulation. 
