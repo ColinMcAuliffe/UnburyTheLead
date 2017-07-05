@@ -42,7 +42,7 @@ Given at least one observation of the election results in a state, we estimate a
 The expected value of the specific asymmetry is then computed by sampling from the model using the Monte Carlo method.
 Redistricting plans which have an expected asymmetry of zero may be considered fair, since on average neither of the two major parties will be given an advantage.
 Conversely, redistricting plans which have a nonzero expected asymmetry may be considered to be unfair, since partisan bias is a persistent feature of the plan.
-Since this standard is symmetry-based it is consistent with previous supreme court opinions on partisan gerrymandering.
+Since this standard is symmetry-based it is consistent with previous Supreme Court opinions on partisan gerrymandering.
 This analysis technique is applied to the United States congressional elections from 1972-2016 to examine the total and net effects of partisan bias in recent history.
 We also examine the post 2010 census Wisconsin State Assembly, which is the subject of \emph{Whitford v. Gil}.
 
@@ -52,7 +52,7 @@ We also examine the post 2010 census Wisconsin State Assembly, which is the subj
 In the United States, the process of drawing districts for a state's legislative bodies and federal congressional delegation is usually in the hands of that state's legislature.
 Partisan state legislatures have used the redistricting process in pursuit of various goals such as incumbent protection, maximizing their share of seats, and even diluting the voting power of citizens on the basis of race.
 Opportunities to manipulate the redistricting process for partisan advantage abound, particularly with the advent of sophisticated algorithms for redistricting as well as a high degree of partisan and geographic polarization in the current political climate.
-However, the supreme court has yet to rule definitively on the issue of partisan gerrymandering, and recent rulings suggest that a manageable standard for measuring gerrymandering is a prerequisite for a such a ruling (LULAC v. Perry 2004).
+However, the Supreme Court has yet to rule definitively on the issue of partisan gerrymandering, and recent rulings suggest that a manageable standard for measuring gerrymandering is a prerequisite for a such a ruling (LULAC v. Perry 2004).
 
 The establishment of some standards to reel in partisan gerrymandering would have significant consequences for democracy in the United States.
 Partisan gerrymandering not only distorts the composition of legislative bodies, it represents a dilution of the voter's ability to attempt to influence policy by electing representatives of their choosing.
@@ -61,7 +61,7 @@ However, in order to properly asses the harm caused by partisan gerrymandering, 
 
 Development of a standard that fits with existing rulings, accurately measures partisan bias under generic conditions, and is simple enough to be effectively communicated to a court is not an easy task.
 For example, a common sense standard might be to require that a party's share of seats is proportional to its share of votes, which is simple and applicable to swing states as well as more partisan states.
-However, even when redistricting is fair, single winner voting systems tend not to produce such proportional outcomes \cite{Kendall_1950_10.2307/588113}, and the supreme court has stated that proportionality is not acceptable (Thornburg v. Gingles 1986).
+However, even when redistricting is fair, single winner voting systems tend not to produce such proportional outcomes \cite{Kendall_1950_10.2307/588113}, and the Supreme Court has stated that proportionality is not acceptable (Thornburg v. Gingles 1986).
 A second example is the mean median difference test \cite{Wang__,Wang_2016_10.1089/elj.2016.0387,McDonald_2015_10.1089/elj.2015.0358}, which fits with existing rulings since it measures partisan bias without regard to proportionality and is simple enough to be calculated by a judge without an expert witness.
 However, it is only effective in measuring bias for states which are close to even in terms of partisanship. \cite{Wang_2016_10.1089/elj.2016.0387}
 
@@ -238,7 +238,7 @@ It has been used in numerous academic papers, and continues to be used in litera
 Indeed, teaching materials about the Beta distribution often use elections as an example.  
 Some academic papers have extended this model to take into account third parties by using the Dirichlet distribution \cite{Rigdon_2009_10.1177/1532673X08330670} (The Dirichlet distribution is the multivariate extension of the Beta distribution.) 
 
-The choice of the Beta distribution follows directly from first principles. 
+The choice of the Beta distribution follows from first principles. 
 In fact, two different points of view of the underlying stochastic process of election results both lead us to the Beta distribution. 
 In the first point of view, we can consider the underlying stochastic process is a Bernoulli process, which a number of trials that can each have one of two outcomes, i.e. a Republican vote or a Democratic vote.
 We are interested in the number of votes for a given party out of all the votes, which is the number of successes in a sequence of trials.  
@@ -246,9 +246,7 @@ This leads us to the Binomial distribution.
 However, we do not know the rate of 'successes' (or the votes for an arbitrarily selected party), that is what we are trying to estimate.  
 To estimate the rate parameter of a Binomial distribution, we use its conjugate prior distribution, which is the Beta distribution.
 
-Depending on our point of view, the or   
-
-In the second perspective voting is considered a pair of Poisson processes, which are series of events occurring at a certain rate i.e. voters for a party turning out to cast a vote. 
+In the second perspective, voting is considered a pair of Poisson processes, which are series of events occurring at a certain rate i.e. voters for a party turning out to cast a vote. 
 Here we are interested in the number of times a voter for a party turns out to vote in a given amount of time (Election day) - the number of events in a fixed interval. 
 This leads us to the Poisson distribution.  
 However, we do not know the rate of events - that is what we are trying to estimate.  
@@ -257,8 +255,9 @@ To represent partisanship as a fraction, we take the fraction of events between 
 Let $\Gamma\left(X\right)$ be the unknown rate of voter turnout for one party, and $\Gamma\left(Y\right)$ the unknown rate for the other.
 The proportion of votes won by party X is $\frac{\Gamma\left(X\right)}{\Gamma\left(X\right)+\Gamma\left(Y\right)} $. 
 This leads us to the Beta distribution.
+
 Thus, deduction from first principles leads us to select the Beta distribution as our probability model for the outcome of an election, regardless of which perspective we initially take.
-With the choice of model parameterization in hand, we now turn our attention to estimation of the parameters for the beta distributions representing district and state partisanship.
+With the choice of model parameterization in hand, we now turn our attention to estimation of the parameters for the Beta distributions.
 
 \subsection{Parameter Estimation}
 The shape parameters for the beta distributions for district partisanship are estimated using the method of moments as follows
@@ -703,7 +702,7 @@ However it does demonstrate that the 2010 districts, under the same elections, g
 
 \section{Conclusions}
 An empirical Bayesian framework for analyzing partisan bias in redistricting plans was presented, along with a new metric for gerrymandering called the specific asymmetry.
-The metric is an effective measure of redistricting bias, and is consistent with existing opinions by the supreme court since it does not rely on proportionality or hypothetical results.
+The metric is an effective measure of redistricting bias, and is consistent with existing opinions by the Supreme Court since it does not rely on proportionality or hypothetical results.
 The empirical Bayesian model allows one to asses the likelihood of a given redistricting plan causing partisan asymmetry and harm to voters in future elections, which permits an analyst to distinguish between observations of bias which occurred by chance on a fair map and maps for which bias is a persistent feature.
 
 This technique was applied to U.S. congress for elections from 1972 to 2016, and substantial levels of asymmetry were found.
