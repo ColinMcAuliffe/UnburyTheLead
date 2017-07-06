@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 import os
@@ -42,6 +43,9 @@ def year2Cycle(year):
 dataDC     = [['State','cycle','AreaNumber','avgDemVote','avgRepVote']]
 #Data by state and cycle
 dataSC     = [['State','cycle','avgDemVoteInMostPartisanDem','avgRepVoteInMostPartisanDem','avgDemVoteInMostPartisanRep','avgRepVoteInMostPartisanRep']]
+#Data by state and year
+dataSY     = [['State','year','contestedFrac']]
+
 for state in states:
     abbr = state.abbr
     if abbr == "DC": continue
@@ -59,6 +63,7 @@ for state in states:
             #Filter uncontested
             dfYear = dfYear[dfYear["Dem Vote %"] != 0.0]
             dfYear = dfYear[dfYear["Dem Vote %"] != 1.0]
+            dataSY.append([abbr,year,float(len(dfYear))/float(numDistricts)])
 
             if len(dfYear) > 0:
                 mostPartisanDemIdx = dfYear["Dem Vote %"].argmax() 
@@ -99,6 +104,35 @@ for state in states:
             dataDC.append([abbr,cnm,i+1,dmean,rmean])
             
 
+yrs = []
+con = []
+for cyc,cnm in zip(cycles,cnames):
+    for year in cyc:
+        dfYear = congress[congress["raceYear"] == year]
+        #Filter uncontested
+        dfYear = dfYear[dfYear["Dem Vote %"] != 0.0]
+        dfYear = dfYear[dfYear["Dem Vote %"] != 1.0]
+        yrs.append(year)
+        con.append(len(dfYear))
+fig = plt.figure()
+ax = fig.add_subplot(111)
+ax.plot(yrs,con)
+fig.savefig("contestedByYear.png")
+
+data = pd.DataFrame(dataSY)
+new_header = data.iloc[0] #grab the first row for the header
+data = data[1:] #take the data less the header row
+data.columns = new_header #set the header row as the df header
+data.index = range(len(data))
+fig = plt.figure()
+ax = fig.add_subplot(111)
+for state in states:
+    abbr = state.abbr
+    if abbr == "DC": continue
+    dfState = data[data["State"] == abbr]
+    ax.plot(dfState['contestedFrac'])
+fig.savefig("contested.png")
+data.to_csv(os.path.join(dataDir,"contestedRate.csv"))
 
 data = pd.DataFrame(dataDC)
 new_header = data.iloc[0] #grab the first row for the header

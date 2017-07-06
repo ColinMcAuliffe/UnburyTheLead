@@ -125,11 +125,16 @@ def getExpMMandT(params,nsims=10000):
     t       = np.apply_along_axis(getMeanMeanDiff,0,results)
     return (mean-median)/stdv,mean-median,t
 
-def getExpAsym(params,nsims=10000):
+def getExpAsym(params,dist="Beta",nsims=10000):
     #simulate
     results = []
-    for a,b in params:
-        results.append(stats.beta.rvs(a,b,size=nsims))
+    if dist == "Beta":
+        for a,b in params:
+            results.append(stats.beta.rvs(a,b,size=nsims))
+    elif dist == "TN":
+        for m,s in params:
+            a, b = (0. - m) / s, (1. - m) / s
+            results.append(stats.truncnorm.rvs(a,b,loc=m,scale=s,size=nsims))
     results = np.array(results)
     asym    = np.apply_along_axis(get_asymFromCenteredPct,0,results)
     return asym
@@ -176,6 +181,14 @@ def varWithShrinkage(x,shrinkVar):
     mean = np.mean(x)
     var = (np.sum((x - mean)**2)+shrinkVar)/N
     return var
+
+def normalEst(x,shrinkage=None,mean=None):
+    if mean is None: mean = np.mean(x)
+    if shrinkage is None:
+        var  = np.var(x,ddof=1)
+    else:
+        var = varWithShrinkage(x,shrinkage)
+    return mean,np.sqrt(var)
 
 def betaMOM(x,shrinkage=None,mean=None,useLocScale=False):
     if mean is None: mean = np.mean(x)

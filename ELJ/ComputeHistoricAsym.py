@@ -10,7 +10,7 @@ import os
 import us
 from scipy import stats
 
-from ELJcommon import getDemVotesAndSeats,get_spasym,get_asymFromPct,getExpAsym,varWithShrinkage,betaMOM,list2df,colorBins,get_asymFromCenteredPct
+from ELJcommon import getDemVotesAndSeats,get_spasym,get_asymFromPct,getExpAsym,varWithShrinkage,betaMOM,list2df,colorBins,get_asymFromCenteredPct,normalEst
 
 def setFontSize(ax,fs):
     for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] +
@@ -247,8 +247,8 @@ for cyc in cnames:
     dfCycle = data[data["cycle"]==cyc]
     expVar[cyc] = np.mean(dfCycle["Var"].values)
 expVarGlob = np.mean(data["Var"].values)
-dataAB      = [['State','cycle','AreaNumber','alpha','beta','alphaCen','betaCen']]
-dataABState = [['State','cycle','mean','alpha','beta','stdv of votePct']]
+dataAB      = [['State','cycle','AreaNumber','alpha','beta','alphaCen','betaCen','alphaCenR','betaCenR','mean','std','meanCen','stdCen']]
+dataABState = [['State','cycle','mean','std','alpha','beta','stdv of votePct']]
 for state in states:
     abbr = state.abbr
     if abbr == "DC": continue
@@ -269,7 +269,7 @@ for state in states:
                 std.append(0.)
 
         alpha,beta,loc,scale = betaMOM(pop,useLocScale=False)
-        dataABState.append([abbr,cnm,np.mean(pop),alpha,beta,np.mean(std)])
+        dataABState.append([abbr,cnm,np.mean(pop),np.std(pop,ddof=1),alpha,beta,np.mean(std)])
 
         numDistricts = dfCycle["AreaNumber"].max()
         #Beta params for each district
@@ -277,11 +277,17 @@ for state in states:
             dfDistrict = dfCycle[dfCycle["AreaNumber"] == i+1]
             votePct = dfDistrict["centeredDem"].values/(dfDistrict["centeredDem"].values+dfDistrict["centeredRep"].values)
             alphaCen,betaCen,locCen,scaleCen = betaMOM(votePct,shrinkage=expVarGlob,useLocScale=False)
+            #Raw distribution without shrinkage
+            alphaCenR,betaCenR,locCen,scaleCen = betaMOM(votePct,shrinkage=expVarGlob,useLocScale=False)
+            meanCen,stdCen = normalEst(votePct,shrinkage=expVarGlob)
             #alphaCen,betaCen,locCen,scaleCen = betaMOM(votePct,shrinkage=expVar[cnm],useLocScale=False)
+
             votePct = dfDistrict["imputedDem"].values/(dfDistrict["imputedDem"].values+dfDistrict["imputedRep"].values)
             alpha,beta,loc,scale = betaMOM(votePct,shrinkage=expVarGlob,useLocScale=False)
+            mean,std = normalEst(votePct,shrinkage=expVarGlob)
             #alpha,beta,loc,scale = betaMOM(votePct,shrinkage=expVar[cnm],useLocScale=False)
-            dataAB.append([abbr,cnm,i+1,alpha,beta,alphaCen,betaCen])
+
+            dataAB.append([abbr,cnm,i+1,alpha,beta,alphaCen,betaCen,alphaCenR,betaCenR,mean,std,meanCen,stdCen])
 
 list2df(dataAB,os.path.join(dataDir,"betaParams"))
 dataAB = pd.read_csv(os.path.join(dataDir,"betaParams.csv"))
@@ -295,6 +301,50 @@ dataABState = pd.read_csv(os.path.join(dataDir,"betaParamsState.csv"))
 #dAB = dAB[dAB["cycle"]==2010]
 #print dAB
 #1}}}
+
+x = np.linspace(0.,1.,1000)
+idx = 0
+cenStr = "Cen"
+a = dataAB["alpha"+cenStr].values[idx]
+b = dataAB["beta"+cenStr].values[idx]
+beta = stats.beta.pdf(x,a,b)
+m = dataAB["mean"+cenStr].values[idx]
+s = dataAB["std"+cenStr].values[idx]
+a, b = (0. - m) / s, (1. - m) / s
+tn   = stats.truncnorm.pdf(x,a,b,loc=m,scale=s)
+fig = plt.figure()
+ax  = fig.add_subplot(111)
+ax.plot(x,beta)
+ax.plot(x,tn)
+fig.savefig(os.path.join(figDir,"tn"+figExt))
+
+fig = plt.figure()
+ax  = fig.add_subplot(111)
+ax.scatter(dataAB["mean"],dataAB["std"])
+fig.savefig(os.path.join(figDir,"sctMS"+figExt))
+
+pValid = (dataAB["alphaCenR"].notnull()) & (dataAB["betaCenR"].notnull())
+pValid = (dataAB["alphaCenR"] < 1000.) & (dataAB["betaCenR"] < 1000.)
+dataABV = dataAB[pValid]
+ab = np.concatenate((dataABV["alphaCenR"],dataABV["betaCenR"]))
+alpha,loc,scale = stats.gamma.fit(ab)
+x = np.linspace(0.,200.,1000)
+
+fig = plt.figure()
+ax  = fig.add_subplot(111)
+ax.hist(ab,50,normed=True)
+ax.plot(x,stats.gamma.pdf(x,alpha,loc=loc,scale=scale),linewidth=4)
+fig.savefig(os.path.join(figDir,"histMSCR"+figExt))
+
+fig = plt.figure()
+ax  = fig.add_subplot(111)
+ax.scatter(dataABV["alphaCenR"],dataABV["betaCenR"])
+fig.savefig(os.path.join(figDir,"sctMSCR"+figExt))
+
+fig = plt.figure()
+ax  = fig.add_subplot(111)
+ax.scatter(dataAB["meanCen"],dataAB["stdCen"])
+fig.savefig(os.path.join(figDir,"sctMSC"+figExt))
 
 fig = plt.figure()
 ax  = fig.add_subplot(111)
