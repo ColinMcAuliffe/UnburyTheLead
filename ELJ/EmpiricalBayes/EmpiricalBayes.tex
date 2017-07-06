@@ -27,7 +27,7 @@
 
 %\makeatother
 
-%\usepackage{babel}fs
+%\usepackage{babel}
 
 \begin{document}
 \title{An Empirical Bayesian Framework for Assessing Partisan Bias in Redistricting Plans}
@@ -42,7 +42,7 @@ Given at least one observation of the election results in a state, we estimate a
 The expected value of the specific asymmetry is then computed by sampling from the model using the Monte Carlo method.
 Redistricting plans which have an expected asymmetry of zero may be considered fair, since on average neither of the two major parties will be given an advantage.
 Conversely, redistricting plans which have a nonzero expected asymmetry may be considered to be unfair, since partisan bias is a persistent feature of the plan.
-Since this standard is symmetry-based it is consistent with previous supreme court opinions on partisan gerrymandering.
+Since this standard is symmetry-based it is consistent with previous Supreme Court opinions on partisan gerrymandering.
 This analysis technique is applied to the United States congressional elections from 1972-2016 to examine the total and net effects of partisan bias in recent history.
 We also examine the post 2010 census Wisconsin State Assembly, which is the subject of \emph{Whitford v. Gil}.
 
@@ -52,7 +52,7 @@ We also examine the post 2010 census Wisconsin State Assembly, which is the subj
 In the United States, the process of drawing districts for a state's legislative bodies and federal congressional delegation is usually in the hands of that state's legislature.
 Partisan state legislatures have used the redistricting process in pursuit of various goals such as incumbent protection, maximizing their share of seats, and even diluting the voting power of citizens on the basis of race.
 Opportunities to manipulate the redistricting process for partisan advantage abound, particularly with the advent of sophisticated algorithms for redistricting as well as a high degree of partisan and geographic polarization in the current political climate.
-However, the supreme court has yet to rule definitively on the issue of partisan gerrymandering, and recent rulings suggest that a manageable standard for measuring gerrymandering is a prerequisite for a such a ruling (LULAC v. Perry 2004).
+However, the Supreme Court has yet to rule definitively on the issue of partisan gerrymandering, and recent rulings suggest that a manageable standard for measuring gerrymandering is a prerequisite for a such a ruling (LULAC v. Perry 2004).
 
 The establishment of some standards to reel in partisan gerrymandering would have significant consequences for democracy in the United States.
 Partisan gerrymandering not only distorts the composition of legislative bodies, it represents a dilution of the voter's ability to attempt to influence policy by electing representatives of their choosing.
@@ -61,7 +61,7 @@ However, in order to properly asses the harm caused by partisan gerrymandering, 
 
 Development of a standard that fits with existing rulings, accurately measures partisan bias under generic conditions, and is simple enough to be effectively communicated to a court is not an easy task.
 For example, a common sense standard might be to require that a party's share of seats is proportional to its share of votes, which is simple and applicable to swing states as well as more partisan states.
-However, even when redistricting is fair, single winner voting systems tend not to produce such proportional outcomes \cite{Kendall_1950_10.2307/588113}, and the supreme court has stated that proportionality is not acceptable (Thornburg v. Gingles 1986).
+However, even when redistricting is fair, single winner voting systems tend not to produce such proportional outcomes \cite{Kendall_1950_10.2307/588113}, and the Supreme Court has stated that proportionality is not acceptable (Thornburg v. Gingles 1986).
 A second example is the mean median difference test \cite{Wang__,Wang_2016_10.1089/elj.2016.0387,McDonald_2015_10.1089/elj.2015.0358}, which fits with existing rulings since it measures partisan bias without regard to proportionality and is simple enough to be calculated by a judge without an expert witness.
 However, it is only effective in measuring bias for states which are close to even in terms of partisanship. \cite{Wang_2016_10.1089/elj.2016.0387}
 
@@ -79,10 +79,8 @@ These standards are attractive because they are based on statistics with propert
 However, these tests have some drawbacks.
 Namely, the models used for computing the significance level for those tests are valid asymptotically as the number of districts increases, meaning that the statistical power of these standards is diminished for states with just a few districts.
 Additionally, a null distribution must be specified for each of the test statistics in question. 
-This is a relatively minor point, since the null distributions used in the t-test and chi squared test are well established and the effect of the null distribution on the mean median difference test is small in many cases. \cite{Cabilio_1996_10.2307/3315744,Zheng_2010_}
-\KB{I would argue its a major point.   And it's kind of subjective, anyways, whether its minor or major}
-\CM{It's minor relative to the IID assumption. If IID is taken for granted then null distribution doesn't make much difference.}
-Lastly and most importantly, these models assume that samples are independent and identically distributed (IID), which is an assumption that is crucial for the tests to be analytic (and hence simple) but not necessarily realistic for elections.
+However, the null distributions used in the t-test and chi squared test are well established and the effect of the null distribution on the mean median difference test is small in many cases. \cite{Cabilio_1996_10.2307/3315744,Zheng_2010_}
+Lastly, these models assume that samples are independent and identically distributed (IID), which is an assumption that is crucial for the tests to be analytic (and hence simple) but not necessarily realistic for elections.
 For instance, the IID assumption would imply that the probability of a deeply partisan Republican district being won by a Republican is the same as the probability of a deeply partisan Democratic district in the same state being won by a Republican.
 Violation of the IID assumption can have a noticeable effect on statistical tests, for an example in securities law see \cite{Gel_2009_10.1093/lpr/mgp008}. 
 Use of this assumption may make this group of standards too restrictive or too permissive depending on the specific circumstances.
@@ -96,12 +94,12 @@ Additionally, once implemented by a computer algorithm, it is quick and easy to 
 An example is test III proposed by Wang \cite{Wang__,Wang_2016_10.1089/elj.2016.0387}, where the metric used was the proportion of seats won by a party, and the model was a Monte Carlo technique where 'fantasy' congressional delegations were sampled from national congressional voting results.
 This method can be used to establish whether or not a party's vote share wins them seats excessively relative to a national baseline.
 A second example of a Monte Carlo based standard is that of Chen et al \cite{Chen_2015_10.1089/elj.2015.0317,Chen_2016_10.1016/j.electstud.2016.06.014}, where electoral maps satisfying basic redistricting criteria are generated randomly and compared against the actual map.
-The standard that we propose is also based on Monte Carlo simulation.
+The standard that we propose is also based on Monte Carlo integration.
 The metric, which we refer to as the specific asymmetry (see section \ref{sec:MB}), is a measure of partisan bias that determines discrepancy in seats won by the losing party under a reversal in statewide partisanship.  
-The model, described in section \ref{sec:FB}, uses a Monte Carlo technique based simulations of an empirically estimated probability model for district and statewide partisanship.
+The model, described in section \ref{sec:FB}, uses a Monte Carlo technique based on draws from an empirically estimated probability model for district and statewide partisanship.
 The drawback of Monte Carlo based standards is complexity relative to analytic standards which do not require a computer to implement.
-Since Monte Carlo is a numerical integration method, as opposed to analytic, it take a lot more computer processing power, and thus aren't as well suited for use in optimization algorithms, relative to analytic methods.
-Nonetheless, Monte Carlo simulation techniques are highly conventional tools that are in widespread use across numerous disciplines \cite{Kroese_2014_10.1002/wics.1314}, and are useful for examining bias in redistricting.
+Since Monte Carlo is a numerical integration method, as opposed to analytic, it take a lot more computer processing power, and thus isn't as well suited for use in optimization algorithms, relative to analytic methods.
+Nonetheless, Monte Carlo techniques are highly conventional tools that are in widespread use across numerous disciplines \cite{Kroese_2014_10.1002/wics.1314}, and are useful for examining bias in redistricting.
 
 The empirical Bayesian framework that we propose is not only appropriate for assessing bias that has existed in past redistricting plans, but it is useful for understanding how bias could be introduced into future redistricting plans, even as strategies for gerrymandering change in response to the introduction of a hypothetical standard.
 In fact, the empirical Bayesian model that we propose is compatible with all of the metrics we have discussed thus far, and can be used as part of a standard itself, or can be used to test the robustness of standards that do not require Monte Carlo simulation. 
@@ -240,7 +238,7 @@ It has been used in numerous academic papers, and continues to be used in litera
 Indeed, teaching materials about the Beta distribution often use elections as an example.  
 Some academic papers have extended this model to take into account third parties by using the Dirichlet distribution \cite{Rigdon_2009_10.1177/1532673X08330670} (The Dirichlet distribution is the multivariate extension of the Beta distribution.) 
 
-The choice of the Beta distribution follows directly from first principles. 
+The choice of the Beta distribution follows from first principles. 
 In fact, two different points of view of the underlying stochastic process of election results both lead us to the Beta distribution. 
 In the first point of view, we can consider the underlying stochastic process is a Bernoulli process, which a number of trials that can each have one of two outcomes, i.e. a Republican vote or a Democratic vote.
 We are interested in the number of votes for a given party out of all the votes, which is the number of successes in a sequence of trials.  
@@ -248,9 +246,7 @@ This leads us to the Binomial distribution.
 However, we do not know the rate of 'successes' (or the votes for an arbitrarily selected party), that is what we are trying to estimate.  
 To estimate the rate parameter of a Binomial distribution, we use its conjugate prior distribution, which is the Beta distribution.
 
-Depending on our point of view, the or   
-
-In the second perspective voting is considered a pair of Poisson processes, which are series of events occurring at a certain rate i.e. voters for a party turning out to cast a vote. 
+In the second perspective, voting is considered a pair of Poisson processes, which are series of events occurring at a certain rate i.e. voters for a party turning out to cast a vote. 
 Here we are interested in the number of times a voter for a party turns out to vote in a given amount of time (Election day) - the number of events in a fixed interval. 
 This leads us to the Poisson distribution.  
 However, we do not know the rate of events - that is what we are trying to estimate.  
@@ -259,8 +255,9 @@ To represent partisanship as a fraction, we take the fraction of events between 
 Let $\Gamma\left(X\right)$ be the unknown rate of voter turnout for one party, and $\Gamma\left(Y\right)$ the unknown rate for the other.
 The proportion of votes won by party X is $\frac{\Gamma\left(X\right)}{\Gamma\left(X\right)+\Gamma\left(Y\right)} $. 
 This leads us to the Beta distribution.
+
 Thus, deduction from first principles leads us to select the Beta distribution as our probability model for the outcome of an election, regardless of which perspective we initially take.
-With the choice of model parameterization in hand, we now turn our attention to estimation of the parameters for the beta distributions representing district and state partisanship.
+With the choice of model parameterization in hand, we now turn our attention to estimation of the parameters for the Beta distributions.
 
 \subsection{Parameter Estimation}
 The shape parameters for the beta distributions for district partisanship are estimated using the method of moments as follows
@@ -285,7 +282,6 @@ To obtain $\hat{v}$, we use the average sample variance of district partisanship
 This is show in figure \ref{fig:varHist}, where we obtain an average variance of .529\% (corresponding to a standard deviation of 7.26\%) over all cycles.
 The within cycle average could also be used as the shrinkage variance, to attempt to capture trends in political polarization.
 
-\KB{I noticed you changed this from average standard deviation to average variance, and that it changes the result slightly. (0.00529 instead of 0.0037)  not sure which way is better...}\CM{Yes I used variance because that's what used in the method of moments formula}\KB{I think it makes sense.}
 \begin{figure}[htb!]
     \begin{center}
         \includegraphics[scale=0.8]{../Figures/HistoricAsymmetry/VarHist.png}
@@ -329,8 +325,7 @@ This illustrates a few of the features of the specific asymmetry as a metric, bu
 The reason for this is that the proposed standard would enforce an expected asymmetry of zero, meaning on average no asymmetry would occur but in some elections asymmetry could occur by chance.
 This result is shown in figure \ref{fig:AsymRemoved}, where it is evident that despite the natural multiplying effect of majoritarian elections, removing specific partisan asymmetry produces congressional representation closer to proportional with the popular vote, regardless of which party the net partisan asymmetry favors.  
 Thus while proportionality of seats and votes is not enforced, gerrymandering tends to exacerbate and amplify the natural tendency of single winner elections to lead to disproportionate representation in favor of the majority party, and therefore removal of asymmetry caused by redistricting tends to lead to results that are closer to proportional.
-If one were to use a metric that assumes votes should be proportional to seats, such as the efficiency gap, the 1970s would still be counted as gerrymandered, despite all partisan asymmetry being removed.  
-That is, efficiency gap would mistake the unavoidable multiplying effect of the sigmoidal seats-votes curve for gerrymandering.\CM{I'm not sure about this, the eg does assume proportionality but it does not assume that the constant of proportionality between seats and votes is 1} \KB{not assuming a proportion of 1 doesn't make it sigmoidal}\CM{That's true but I think the claim you make requires seats = votes and would not neccisarily hold up for the more general linear seats votes relationships}
+If one were to use a metric that assumes votes should be proportional to seats, the 1970s would still be counted as gerrymandered, despite all partisan asymmetry being removed.  
 Specific partisan asymmetry, however, never makes this error, while still leading to a substantial increase in the representativeness of congress as a whole.
 
 \begin{figure}[htb!]
@@ -456,14 +451,21 @@ The plaintiffs in \emph{Whitford} relied on the efficiency gap to demonstrate bi
 
 Some have alleged that the bias in the Wisconsin map is merely the product of changes in voter sentiment and/or political geography.
 The argument that there is a natural packing of Democratic voters in urban areas is stated in the Amicus Brief filed by the Republican National Committee and the National Republican Congressional Committee.
-The tendency of Democratic voters to cluster in urban areas is well known, but no proof was offered to suggest that the electoral advantage given to Republicans in the Act 43 map was merely the result of this effect and not of deliberate gerrymandering, nor was the claim explicitly made.
-Furthermore supporters of defendants never argued that partisan gerrymandering due to political geography should not be or cannot be neutralized.
+The tendency of Democratic voters to cluster in urban areas is well known, but no proof was offered to suggest that the electoral advantage given to Republicans in the Act 43 map was merely the result of this effect and not of deliberate gerrymandering, nor was this ever claimed.
+Furthermore, supporters of defendants never argued that partisan gerrymandering due to political geography should not be or cannot be neutralized.
+The RNC and NRCC brief, however, argues that doing so would result in "bizarrely shaped districts", though they provide no evidence to support this claim, and this claim is directly contradicted by maps supplied to the court in plaintiffs' initial filing.
 
-The RNC and NRCC brief cited the studies of Chen and coworkers in support of the notion that gerrymandering can occur unintentionally due to population clustering \cite{Chen_2015_10.1089/elj.2015.0317,Chen_2016_10.1016/j.electstud.2016.06.014} among others.
-Chen and coworkers say in that very paper that an additional partisan bias of roughly 4\% of the total available in Wisconsin districts is \emph{not} explainable by political geography.
+The RNC and NRCC brief cited the studies of Chen and coworkers, among others, in support of the notion that gerrymandering can occur unintentionally due to population clustering \cite{Chen_2015_10.1089/elj.2015.0317,Chen_2016_10.1016/j.electstud.2016.06.014}.
+In one of these papers \emph{cited in the Amicus Brief}, Chen and coworkers say that an additional partisan bias of roughly 4\% of the total available seats in Wisconsin districts is \emph{not} explainable by political geography.
 
-In a more recent study of the Act 43 map by Chen \cite{Chen_2017_} using the same analysis technique from these previous studies concluded the following: \emph{Act 43 not only created an extremely biased Assembly plan with an efficiency gap far outside of any gap observed in 200 simulations, the enacted plan achieved this partisan outcome at the expense of traditional districting principles, splitting apart far more counties and municipalities than were necessary.}
+A more recent study of the Act 43 map by Chen \cite{Chen_2017_} found that out of 200 computer-generated maps -- which made no effort to minimize partisan bias --  \emph{all of them} were significantly \emph{less} "bizarrely shaped" than the Act 43 districts \emph{and} had significantly less partisan bias.
+73\% of them had an efficiency gap within 3\% of zero, and 10\% of them had an efficiency gap favoring \emph{Democrats}.
+The study concluded:
+
+\emph{"Act 43 not only created an extremely biased Assembly plan with an efficiency gap far outside of any gap observed in 200 simulations, the enacted plan achieved this partisan outcome at the expense of traditional districting principles, splitting apart far more counties and municipalities than were necessary."}
+
 The fact that the Act 43 map does not attempt to preserve existing political boundaries directly undercuts the argument that the bias in the map arises from natural political geography.
+And the fact that it has a significantly higher efficiency gap than any of these computer-generated maps -- 10\% of which favor Democrats -- supports the opposite conclusion: \emph{Act 43} districts are more "bizarrely shaped" than district plans with a lower efficiency gap.
 
 In what follows, we employ a different analysis methodology and find that the Act 43 map leads to an increase in seats won by Republican candidates by increasing the partisan asymmetry in their favor relative to the previous map.
 This is further evidence that the bias in the Act 43 map reflects the deliberate intentions of the redistricters, and simply can not be explained by political geography alone.
@@ -577,7 +579,7 @@ Indeed, figure \ref{fig:DistrictMapDelta} shows that by comparing the districtin
 Simultaneously, deeper red districts throughout the state were redrawn to give away some of their Republican voters to nearby competitive districts, reducing the likelihood that a Democratic representative would be elected in the once-competitive districts while still maintaining a safe edge in the originally deeper red district.  
 You can see this by noticing the much "flatter" red color in the bottom maps versus the top maps.
 It will also be made clear in the next subsection when we examine the statistical properties of the maps more rigorously.
-fs
+
 In sum, the changes in the district lines from 2000 districts to 2010 districts consist of decreasing the number of Democratic districts through vote packing, and increasing the number of Republican districts through vote cracking.
 Instances of the reverse (packing Republican voters and cracking Democratic districts) are simply not present.
 \begin{figure}[htb!]
@@ -608,6 +610,7 @@ Consequently, in the 2010 distributions, compared to the 2000 distributions, Rep
 \subsubsection{Specific partisan asymmetry likelihoods}
  
 The results of Monte Carlo integration are shown in figure \ref{fig:LikelihoodsAsymmetry}, as a fraction of total available seats.  
+The graph shows the seat \emph{gap} -- the difference between the seats-votes curve and it's reflection at the statewide popular vote -- so dividing by 2 gives the asymmetry.
 These results were also used to compute the expectations and confidence intervals shown in figures \ref{fig:Asym20002010} and \ref{fig:Asym20002010diff}.
  
 \begin{figure}[htb!]
@@ -617,10 +620,10 @@ These results were also used to compute the expectations and confidence interval
     \end{center}
 \end{figure}
  
-For the 2000 districts, the partisan asymmetry favors Republicans, giving them an average seat boost of 10\% of the available seats beyond what a symmetric seats-votes curve would produce.  
+For the 2000 districts, the partisan asymmetry favors Republicans, giving them an average seat boost of 5\% of the available seats beyond what a symmetric seats-votes curve would produce.  
 However, there is still a decent likelihood that voter sentiments would change enough that Democrats would get a small boost from seats-votes curve asymmetry.
 
-For the 2010 districts, the partisan asymmetry favors Republicans by twice the amount of the 2000 districts, giving them an average seat boost of 20\% of the available seats beyond what a symmetric seats-votes curve would produce.  
+For the 2010 districts, the partisan asymmetry favors Republicans by twice the amount of the 2000 districts, giving them an average seat boost of 10\% of the available seats beyond what a symmetric seats-votes curve would produce.  
 The most likely result in the Wisconsin state assembly might be that Republicans get 6/10ths of the legislative seats, whereas if the popular vote count were reversed, Democrats would get only 4/10th of the legislative seats.  
 Remedying this would give Democrats 10\% more seats.  
 This means that roughly 10\% of the entire Democratic-voting population of the state of Wisconsin were effectively disenfranchised, in violation of the one person, one vote principle.  
@@ -672,7 +675,8 @@ Out of 100,000 samples, Democrats rarely even get 45 of the seats, which was the
 
 Measured by partisan asymmetry, both expected and observed, there was substantial gerrymandering in favor of Republicans in the 2000 cycle maps.
 This asymmetry leads to about 4 extra Republican seats beyond what would be allocated if the seats-votes curve was symmetric.
-The current method does not distinguish what part of this gerrymandering was deliberate and what part unintentional, though regardless of the proportion, it is trivial to generate a map without this asymmetry by using one of many well-known optimization algorithms.
+The current method does not distinguish what part of this gerrymandering was deliberate and what part unintentional, though regardless of the proportion, it is trivial to generate a map without this asymmetry by using one of many well-known optimization algorithms. 
+Indeed, recent simulations by Jowei Chen \cite{Chen_2017_} show that there is a good chance of generating a partisanly neutral map \emph{unintentionally}.
 
 If we disregard data that was not available when the 2010 cycle districts were drawn, and use only data from the 2006, 2008, and 2010 elections, we see that with the new redistricting lines, Republicans are expected to gain an additional 4 assembly seats (an 8 seat swing), beyond what the previous (2000 cycle) redistricting lines would have given them.
 Furthermore, this is in addition to the partisan asymmetry already present in the 2000 cycle maps, bringing the expected total seat difference gained over Democrats through partisan asymmetry to 18.
@@ -694,15 +698,16 @@ To the contrary, partisan asymmetry in 2010 districts is double that of 2000 dis
 \end{itemize}
 
 This comparison cannot estimate how much of the gerrymandering present in the 2000 districts was deliberate.
-However it does prove with absolute certainty that the 2010 districts, under the same elections, give Republicans more seats than the 2000 districts, and that this difference will persist even in the most extreme swings of voter sentiment.
+However it does demonstrate that the 2010 districts, under the same elections, give Republicans more seats than the 2000 districts, and that this difference will persist even in the most extreme swings of voter sentiment.
 
 \section{Conclusions}
 An empirical Bayesian framework for analyzing partisan bias in redistricting plans was presented, along with a new metric for gerrymandering called the specific asymmetry.
-The metric is an effective measure of redistricting bias, and is consistent with existing opinions by the supreme court since it does not rely on proportionality.
+The metric is an effective measure of redistricting bias, and is consistent with existing opinions by the Supreme Court since it does not rely on proportionality or hypothetical results.
 The empirical Bayesian model allows one to asses the likelihood of a given redistricting plan causing partisan asymmetry and harm to voters in future elections, which permits an analyst to distinguish between observations of bias which occurred by chance on a fair map and maps for which bias is a persistent feature.
-This technique was applied to U.S. congress for election from 1972 to 2016, and substantial levels of asymmetry were found.
+
+This technique was applied to U.S. congress for elections from 1972 to 2016, and substantial levels of asymmetry were found.
 The total amount of asymmetry favoring both parties combined in each cycle has held fairly constant, although the 2010 cycle is remarkable since many states appear to be moving toward more symmetric districting plans, while simultaneously several states (especially those known to have been targeted by the REDMAP project) have unprecedented levels of asymmetry.
-We also analyzed the Wisconsin state assembly map under act 43 and the map for the 2000 cycle, where we found that the act 43 map roughly doubled the level of asymmetry from the previous map, and that this increase in asymmetry can not be explained by political geography as supporters of the defendants of \emph{Whitford v. Gil} have alleged.
+We also analyzed the Wisconsin state assembly map under Act 43 and the map for the 2000 cycle, where we found that the Act 43 map roughly doubled the level of asymmetry from the previous map, and that this increase in asymmetry can not be explained by political geography as supporters of defendants in \emph{Whitford v. Gil} have alleged.
 
 
 \clearpage
