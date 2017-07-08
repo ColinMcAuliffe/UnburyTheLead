@@ -37,6 +37,21 @@
 \maketitle
 
 \begin{abstract}
+\CM{begin new abstract}
+There are several legal and technical challenges to the establishment of a standard for limiting partisan gerrymandering, and a few methods have been proposed thus far.
+All methods for examining gerrymandering use observations of the results of one or more elections to make inferences about the tendency of a given redistricting plan to lead to biased outcomes.  
+here we propose an empirical Bayesian framework which allows an analyst to make such inferences accurately by using all available election results for the redistricting plan in question in a robust and consistent statistical model.
+The framework can be used with any gerrymandering metric.
+
+Additionally, we propose a new measure of gerrymandering called the specific asymmetry which we believe will stand up better to judicial and technical tests than any other measure proposed thus far.
+The specific asymmetry does not rely on proportionality of seats and votes, is applicable to any level of statewide partisanship, does not require national results as a baseline, and measures bias at the popular vote that actually occurred as opposed to some other hypothetical popular vote. 
+All other available metrics fall short in at least one of these aspects, which leaves them vulnerable to criticism and manipulation by those seeking to gerrymander or to defend an existing gerrymander.
+
+We analyze the magnitude and persistence of partisan bias under a particular districting plan by using the empirical Bayesian model to compute the expected value of the specific asymmetry.
+This analysis technique is applied to the United States congressional elections from 1972-2016 to examine the total and net effects of partisan bias in recent history.
+We also examine the Act 43 map for the Wisconsin State Assembly, which is the subject of \emph{Whitford v. Gil}.
+
+\CM{end new abstract}
 We present a framework for assessing partisan bias in redistricting plans using an empirical Bayesian approach, as well as a new metric for measuring partisan bias called the specific asymmetry.
 Given at least one observation of the election results in a state, we estimate a probability model representing likely future election outcomes.
 The expected value of the specific asymmetry is then computed by sampling from the model using the Monte Carlo method.
@@ -318,8 +333,14 @@ The vertical line is the statewide partisanship sampled from the state beta dist
 \end{figure}
 
 \section{Partisan Bias in the U.S. Congress 1972-2016\label{sec:Hist}}
-We present an examination of partisan bias in the United States congress for elections from 1972 to 2016.
-The election data were collected by Brian Remlinger and Sam Wang, and sent to us in a personal communication.
+We present an examination of partisan bias in the United States congress for elections from 1972 to 2016, which was collected by Brian Remlinger and Sam Wang \cite{Remliger_2017_}.
+\CM{In order to obtain vote counts in uncontested races we use an imputation procedure.}
+\CM{The two party vote shares in an uncontested district are taken as the average of the vote shares for that district in the same cycle.}
+\CM{If a district is uncontested for an entire election cycle, then the vote share is taken to be equal to the average of the most partisan district for the winning party.}
+\CM{The voter turnout in the uncontested district is then taken as the average turnout in all contested elections in that state and election year.}
+\CM{Generally it is preferable to impute uncontested results using presidential results at the district level, but such data was not available for the entire time period under study.}
+\CM{Like all methods for examining gerrymandering, the specific asymmetry and the Bayesian simulation method are sensitive to the particular imputation technique employed, although a comprehensive study of this sensitivity is beyond the scope of our present work.}
+
 First, to illustrate the effect of asymmetry on the composition of congress, we compute the specific asymmetry for each state and election, and compare the Democratic popular vote share to the actual Democratic seat share as well as the Democratic seat share that would have resulted if each election had zero asymmetry.
 This illustrates a few of the features of the specific asymmetry as a metric, but we note that this is not exactly representative of how the composition of congress would have been different had the proposed standard been enforced in each of these redistricting cycles.
 The reason for this is that the proposed standard would enforce an expected asymmetry of zero, meaning on average no asymmetry would occur but in some elections asymmetry could occur by chance.
@@ -414,8 +435,8 @@ Simultaneously, asymmetry has reduced in some states (at least in part due to re
 States known to have been targeted by the REDMAP program are gerrymandered very aggressively in terms of the number of seats available and the level of partisanship in those states.
 We can visualize how extreme the most aggressive gerrymanders are in each cycle are by sorting the expected asymmetry (as a percentage of available seats) in descending order for each state.
 States with fewer than five seats are excluded since small asymmetries result as very large percentages.
-This is shown in figure \ref{fig:asymRank}, where the 2010 cycle stands out as having three states with expected asymmetries that exceeded anything seen previously: Pennsylvania (18.7\%), North Carolina (17.9\%), and Georgia (16.2\%)
-Following these are Virginia (12.1\%), Michigan (11.2\%), Ohio (11.0\%), and Wisconsin (9.83\%), which each have large asymmetries by historical standards.
+This is shown in figure \ref{fig:asymRank}, where the 2010 cycle stands out as having three states with expected asymmetries that exceeded anything seen previously: Pennsylvania (18.4\%), North Carolina (18.0\%), and Georgia (14.1\%)
+Following these are Virginia (11.9\%), Michigan (11.6\%), Ohio (11.1\%), and Wisconsin (10.2\%), which each have large asymmetries by historical standards.
 All of these states showed a sudden increase in asymmetry in favor of Republicans after the 2010 redistricting, see table \ref{tab:Asym2000to2010} and figure \ref{fig:Asym2000to2010}. 
 In contrast, California and New York had substantial asymmetries favoring Democrats in the 2000 cycle, and while they still show asymmetries favoring Democrats in the 2010 cycle, the magnitude of the asymmetry has decreased.
 Previous cycles may have had moderate asymmetries in a larger number of states, but in terms of extreme gerrymandering, there has been no time since the Supreme Court ruled in \emph{Reynold v. Sims} (1964) that congressional districts must have roughly equal population, that is comparable to the 2010 cycle.

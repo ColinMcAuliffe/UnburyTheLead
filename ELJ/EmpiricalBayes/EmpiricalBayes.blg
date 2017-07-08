@@ -5,36 +5,37 @@ A level-1 auxiliary file: largeStatesTab.aux
 The style file: unsrt.bst
 Database file #1: gerrymandering.bib
 Warning--empty year in Wang__
-You've used 22 entries,
+Warning--empty journal in Remliger_2017_
+You've used 23 entries,
             1791 wiz_defined-function locations,
-            599 strings with 7724 characters,
-and the built_in function-call counts, 4969 in all, are:
-= -- 478
-> -- 170
+            603 strings with 7806 characters,
+and the built_in function-call counts, 5117 in all, are:
+= -- 489
+> -- 178
 < -- 1
-+ -- 66
-- -- 44
-* -- 398
-:= -- 793
-add.period$ -- 66
-call.type$ -- 22
-change.case$ -- 22
++ -- 69
+- -- 46
+* -- 405
+:= -- 819
+add.period$ -- 69
+call.type$ -- 23
+change.case$ -- 23
 chr.to.int$ -- 0
-cite$ -- 23
-duplicate$ -- 194
-empty$ -- 492
-format.name$ -- 44
-if$ -- 1062
+cite$ -- 25
+duplicate$ -- 202
+empty$ -- 506
+format.name$ -- 46
+if$ -- 1093
 int.to.chr$ -- 0
-int.to.str$ -- 22
-missing$ -- 21
-newline$ -- 113
-num.names$ -- 22
-pop$ -- 27
+int.to.str$ -- 23
+missing$ -- 22
+newline$ -- 118
+num.names$ -- 23
+pop$ -- 32
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 76
+skip$ -- 80
 stack$ -- 0
 substring$ -- 464
 swap$ -- 22
@@ -42,8 +43,8 @@ text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 1
-while$ -- 58
-width$ -- 24
-write$ -- 242
-(There was 1 warning)
+warning$ -- 2
+while$ -- 59
+width$ -- 25
+write$ -- 251
+(There were 2 warnings)
