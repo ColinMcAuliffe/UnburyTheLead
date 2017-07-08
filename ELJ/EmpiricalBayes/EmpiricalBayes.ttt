@@ -1,0 +1,118 @@
+\begin{table}[htb!]
+\centering
+\caption{Summary of the metrics and models employed by various gerrymandering standards \label{tab:Stand}}
+\begin{tabular}{|l|l|l|}
+\hline
+Standard & Metric & Model\\
+\hline
+\hline
+Grofman and King & Deficit in Seats at 50\% of the vote & None proposed\\
+\hline
+Nagle & Various metrics of seats & None proposed\\
+      & votes curve asymmetry &  \\
+\hline
+Stephanopolous and McGhee & Efficiency gap & None proposed,\\
+                          &                & historical analysis used\\
+                          &                & in \emph{Whitford v. Gil}\\
+\hline
+Gelman et al & Deficit in Seats at 50\% of the vote, & Bayesian simulation\\
+             & various others & \\
+\hline
+Mean Median Difference & Mean median difference & asymptotic distribution \\
+ &                                              & (unit normal) \\
+ &                                              & assuming IID samples \\
+\hline
+Chi square test & Party in state and national  & asymptotic distribution  \\
+                & winning vote share variances  & (chi squared) \\
+                &   & assuming IID samples \\
+\hline
+Lopsided wins test & Difference in party  & asymptotic distribution  \\
+                   &  mean winning vote share & (student's t) \\
+                   &   & assuming IID samples \\
+\hline
+Test III \cite{Wang_2016_10.1089/elj.2016.0387} & Party seat share & MC sampling of national \\
+or 'excess seats test'         &                  & district voting results\\
+\hline
+Chen and Rodden & Party seat share & MC sampling of randomly \\
+         &                         & generated districting plans\\
+\hline
+Present study & Specific Asymmetry & MC sampling of the \\
+              &                    & empirical Bayesian model\\
+\hline
+\end{tabular}
+\end{table}
+\efloatseparator
+ 
+\begin{table}[htb!]
+\centering
+\caption{Change in Expected Specific Asymmetry from 2000 to 2010 for states with large asymmetries in 2010 \label{tab:Asym2000to2010}}
+\begin{tabular}{|l|l|l|l|}
+\hline
+State & Expected Specific     & Expected Specific & Net Change\\
+      & Asymmetry, 2000 Cycle & Asymmetry, 2010 Cycle & \\
+\hline
+\hline
+Pennsylvania & R 7.12\% & R 18.38\% & R 11.26\\
+\hline
+North Carolina & D 4.53\% & R 18.04\% & R 22.58\\
+\hline
+Georgia & R 4.21\% & R 14.08\% & R 9.87\\
+\hline
+Virginia & R 8.76\% & R 11.88\% & R 3.11\\
+\hline
+Michigan & R 6.60\% & R 11.57\% & R 4.97\\
+\hline
+Ohio & R 8.16\% & R 11.11\% & R 2.95\\
+\hline
+Wisconsin & D 1.90\% & R 10.29\% & R 12.19\\
+\hline
+California & D 8.00\% & D 2.46\% & R 5.54\\
+\hline
+New York & D 6.63\% & D 3.50\% & R 3.13\\
+\hline
+Illinois & R 0.89\% & D 2.68\% & D 3.57\\
+\hline
+\end{tabular}
+\end{table}
+\efloatseparator
+ 
+\begin{table}[htb!]
+\centering
+\caption{Summary of the differences in seat counts and asymmetries for elections on the two legislative maps \label{tab:seats}}
+\begin{tabular}{|l|l|l|l|}
+\hline
+Election Year & Rep. Seats, 2000 Map & Rep. Seats, 2010 Map & Net Change in Seats\\
+\hline
+\hline
+2006 & 52 & 54 & R + 2\\
+\hline
+2008 & 48 & 56 & R + 8\\
+\hline
+2010 & 61 & 63 & R + 2\\
+\hline
+2012 & 51 & 60 & R + 9\\
+\hline
+2014 & 60 & 63 & R + 3\\
+\hline
+2016 & 60 & 65 & R + 5\\
+\hline
+\hline
+Election Year & Asymmetry, 2000 Map & Asymmetry, 2010 Map & Net Change in Asymmetry\\
+\hline
+\hline
+2006 & 6.5 & 7.0 & R + 0.5\\
+\hline
+2008 & 2.5 & 9.0 & R + 6.5\\
+\hline
+2010 & 0.0 & 6.5 & R + 6.5\\
+\hline
+2012 & 3.5 & 12.0 & R + 8.5\\
+\hline
+2014 & 3.5 & 11.0 & R + 7.5\\
+\hline
+2016 & 7.0 & 12.0 & R + 5.0\\
+\hline
+\end{tabular}
+\end{table}
+\efloatseparator
+ 

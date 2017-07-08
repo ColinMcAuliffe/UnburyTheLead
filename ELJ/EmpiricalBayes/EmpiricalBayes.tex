@@ -24,7 +24,8 @@
 
 \newcommand{\CM}[2][green]{ {\sethlcolor{#1} \hl{#2}} }
 \newcommand{\KB}[2][cyan]{ {\sethlcolor{#1} \hl{#2}} }
-
+%THIS IS TO PUT ALL FLOATS AT THE END OF THE DOC SO THEY CAN BE SPLIT INTO A SEPARATE FILE
+%%\usepackage{endfloat}
 %\makeatother
 
 %\usepackage{babel}
@@ -37,7 +38,6 @@
 \maketitle
 
 \begin{abstract}
-\CM{begin new abstract}
 There are several legal and technical challenges to the establishment of a standard for limiting partisan gerrymandering, and a few methods have been proposed thus far.
 All methods for examining gerrymandering use observations of the results of one or more elections to make inferences about the tendency of a given redistricting plan to lead to biased outcomes.  
 here we propose an empirical Bayesian framework which allows an analyst to make such inferences accurately by using all available election results for the redistricting plan in question in a robust and consistent statistical model.
@@ -50,16 +50,6 @@ All other available metrics fall short in at least one of these aspects, which l
 We analyze the magnitude and persistence of partisan bias under a particular districting plan by using the empirical Bayesian model to compute the expected value of the specific asymmetry.
 This analysis technique is applied to the United States congressional elections from 1972-2016 to examine the total and net effects of partisan bias in recent history.
 We also examine the Act 43 map for the Wisconsin State Assembly, which is the subject of \emph{Whitford v. Gil}.
-
-\CM{end new abstract}
-We present a framework for assessing partisan bias in redistricting plans using an empirical Bayesian approach, as well as a new metric for measuring partisan bias called the specific asymmetry.
-Given at least one observation of the election results in a state, we estimate a probability model representing likely future election outcomes.
-The expected value of the specific asymmetry is then computed by sampling from the model using the Monte Carlo method.
-Redistricting plans which have an expected asymmetry of zero may be considered fair, since on average neither of the two major parties will be given an advantage.
-Conversely, redistricting plans which have a nonzero expected asymmetry may be considered to be unfair, since partisan bias is a persistent feature of the plan.
-Since this standard is symmetry-based it is consistent with previous Supreme Court opinions on partisan gerrymandering.
-This analysis technique is applied to the United States congressional elections from 1972-2016 to examine the total and net effects of partisan bias in recent history.
-We also examine the post 2010 census Wisconsin State Assembly, which is the subject of \emph{Whitford v. Gil}.
 
 \end{abstract}
 
@@ -334,12 +324,12 @@ The vertical line is the statewide partisanship sampled from the state beta dist
 
 \section{Partisan Bias in the U.S. Congress 1972-2016\label{sec:Hist}}
 We present an examination of partisan bias in the United States congress for elections from 1972 to 2016, which was collected by Brian Remlinger and Sam Wang \cite{Remliger_2017_}.
-\CM{In order to obtain vote counts in uncontested races we use an imputation procedure.}
-\CM{The two party vote shares in an uncontested district are taken as the average of the vote shares for that district in the same cycle.}
-\CM{If a district is uncontested for an entire election cycle, then the vote share is taken to be equal to the average of the most partisan district for the winning party.}
-\CM{The voter turnout in the uncontested district is then taken as the average turnout in all contested elections in that state and election year.}
-\CM{Generally it is preferable to impute uncontested results using presidential results at the district level, but such data was not available for the entire time period under study.}
-\CM{Like all methods for examining gerrymandering, the specific asymmetry and the Bayesian simulation method are sensitive to the particular imputation technique employed, although a comprehensive study of this sensitivity is beyond the scope of our present work.}
+In order to obtain vote counts in uncontested races we use an imputation procedure.
+The two party vote shares in an uncontested district are taken as the average of the vote shares for that district in the same cycle.
+If a district is uncontested for an entire election cycle, then the vote share is taken to be equal to the average of the most partisan district for the winning party.
+The voter turnout in the uncontested district is then taken as the average turnout in all contested elections in that state and election year.
+Generally it is preferable to impute uncontested results using presidential results at the district level, but such data was not available for the entire time period under study.
+Like all methods for examining gerrymandering, the specific asymmetry and the Bayesian simulation method are sensitive to the particular imputation technique employed, although a comprehensive study of this sensitivity is beyond the scope of our present work.
 
 First, to illustrate the effect of asymmetry on the composition of congress, we compute the specific asymmetry for each state and election, and compare the Democratic popular vote share to the actual Democratic seat share as well as the Democratic seat share that would have resulted if each election had zero asymmetry.
 This illustrates a few of the features of the specific asymmetry as a metric, but we note that this is not exactly representative of how the composition of congress would have been different had the proposed standard been enforced in each of these redistricting cycles.
