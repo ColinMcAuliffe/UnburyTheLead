@@ -20,12 +20,13 @@ for i in xrange(inputpdf.numPages):
     if i in pages.keys():
         output = PdfFileWriter()
         page = inputpdf.getPage(i)
-        page.trimBox.lowerLeft = (0, 425)
-        page.trimBox.upperRight = (675, 1225)
-        page.cropBox.lowerLeft = (0, 450)
-        page.cropBox.upperRight = (650, 1200)
+        if i != 0:
+            page.trimBox.lowerLeft = (0, 425)
+            page.trimBox.upperRight = (675, 1225)
+            page.cropBox.lowerLeft = (0, 450)
+            page.cropBox.upperRight = (650, 1200)
         output.addPage(page)
-        pdfName = os.path.join("ForUpload",pages[i]+".pdf")
+        pdfName = os.path.join("ForUpload","McAuliffe"+pages[i]+".pdf")
         with open(pdfName, "wb") as outputStream:
             output.write(outputStream)
         if i != 0:
