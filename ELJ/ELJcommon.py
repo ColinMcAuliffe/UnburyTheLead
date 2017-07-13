@@ -113,6 +113,17 @@ def getMeanMeanDiff(x):
     else:
         return 0.
 
+def getExpMMandStdv(params,nsims=10000):
+    #simulate
+    results = []
+    for a,b in params:
+        results.append(stats.beta.rvs(a,b,size=nsims))
+    results = np.array(results)
+    mean    = np.mean(results,axis=0)
+    median  = np.median(results,axis=0)
+    stdv    = np.std(results,axis=0,ddof=1)
+    return (mean-median)/stdv,mean-median,stdv
+
 def getExpMMandT(params,nsims=10000):
     #simulate
     results = []

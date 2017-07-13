@@ -37,7 +37,7 @@ cnames = [1970,1980,1990,2000,2010]
 bins6 = np.linspace(-6.25,6.25,26)
 bins7 = np.linspace(-7.25,7.25,30)
 #Compute and plot expected asymmetry{{{1
-dataExp = [['State','cycle','expectedAsym','expectedAsymPct','mode','p05','p95','ndist']]
+dataExp = [['State','STATEFP','cycle','expectedAsym','expectedAsymPct','mode','p05','p95','ndist']]
 fig, ((ax1, ax2,ax3), (ax4, ax5, ax6)) = plt.subplots(2, 3, sharex=True, sharey=True,figsize=(18,10))
 fig2, ((axs1, axs2), (axs3, axs4)) = plt.subplots(2, 2, sharex="col", sharey=True)
 
@@ -54,6 +54,8 @@ fig5, ((axn1, axn2,axn3), (axn4, axn5, axn6)) = plt.subplots(2, 3, sharex=True, 
 axhist5  = [axn1,axn2,axn3,axn4,axn5]
 
 fig6, axn = plt.subplots(1,1)
+
+fig7, ((ax71,ax72)) = plt.subplots(2, 1, sharex="col", sharey=True)
 
 binsTot = np.linspace(-0.5,60.5,42)
 binsNet = np.linspace(-40.5,40.5,82)
@@ -86,7 +88,7 @@ for cnm,cyc,ax,axhs4,axhn5 in zip(cnames,cycles,axhist,axhist4,axhist5):
             p95  = 0.
 
 
-        dataExp.append([abbr,cnm,mean,mean/float(len(dfState)),mode,p05,p95,len(dfState)])
+        dataExp.append([abbr,state.fips,cnm,mean,mean/float(len(dfState)),mode,p05,p95,len(dfState)])
         if abbr == "TX" and cnm == 1980:
             N, bins, patches = axs1.hist(expAsym,bins=bins6,normed=1.)
             bins,patches = colorBins(bins,patches,0.)
@@ -110,6 +112,19 @@ for cnm,cyc,ax,axhs4,axhn5 in zip(cnames,cycles,axhist,axhist4,axhist5):
             bins,patches = colorBins(bins,patches,0.)
             axs4.set_xlabel("NC, 2010's")
             axs4.grid()
+
+        if abbr == "CA" and cnm == 2000:
+            N, bins, patches = ax71.hist(expAsym,bins=bins7,normed=1.)
+            bins,patches = colorBins(bins,patches,0.)
+            ax71.set_xlabel("CA, 2000's")
+            ax71.grid()
+
+        if abbr == "CA" and cnm == 2010:
+            N, bins, patches = ax72.hist(expAsym,bins=bins7,normed=1.)
+            bins,patches = colorBins(bins,patches,0.)
+            ax72.set_xlabel("CA, 2010's")
+            ax72.grid()
+
 
         
 
@@ -157,6 +172,7 @@ for cnm,cyc,ax,axhs4,axhn5 in zip(cnames,cycles,axhist,axhist4,axhist5):
     axn.plot(cyc,[meanAsym]*len(cyc),color='0.75',linewidth=4)
 
 fig2.savefig(os.path.join(figDir,"80vs10"+figExt))
+fig7.savefig(os.path.join(figDir,"00vs10CA"+figExt))
 
 list2df(dataExp,os.path.join(dataDir,"expAsym"))
 dataExp = pd.read_csv(os.path.join(dataDir,"expAsym.csv"))
