@@ -180,16 +180,28 @@ For example, the seats votes curve for the Wisconsin state assembly shows substa
 This means that bias measures which do not consider the actual partisanship in a state could result in false positives and false negatives.
 In light of this, a measure of bias that is applicable to any level of partisanship and that directly considers the actual level of partisanship in a given state seems appropriate.
 
-To address these challenges, we propose a measure of bias which we call the specific asymmetry, which is the deviation of the seats votes curve from the symmetry line, measured at the statewide popular vote.
-This amounts to counting the number of seats won by one party, then counting the number of seats the other party would win under a uniform partisan swing that reverses the statewide partisanship.
-The specific asymmetry is then the difference between these two seat counts divided by two.
-This definition of partisan asymmetry simply requires the seat count to reverse when the state wide popular vote reverses.
+This could be accomplished with a modification to the approach proposed by Nagle where one computes the entire area between the seats votes curve and its reflection, but weights this by likelihood as follows
+\begin{equation}
+    \int_{0}^{1}\mathcal{L}(V)\left[S(V)-S(1-V)\right]dV\label{eq:intAsym}
+\end{equation}
+Where $\mathcal{L}(V)$ is a probability density function for statewide popular vote, which can be estimated empirically.
+The likelihood weighting means that asymmetries at vote levels that are unlikely to occur in a given state do not contribute much to the integral, while the vote levels that are most likely contribute the most.
+However, this integral form of the asymmetry requires data from multiple election years to estimate $\mathcal{L}(V)$, and we prefer to use a metric which can be calculated from a single election year in a completely self contained and deterministic fashion.
 
+
+To address these challenges, we propose a measure of bias which we call the specific asymmetry, which is the deviation of the seats votes curve from the symmetry line, measured at the statewide popular vote, i.e. $\left[S(V_{pop})-S(1-V_{pop})\right]/2$.
+This definition of partisan asymmetry simply requires the seat count to reverse when the state wide popular vote reverses.
 This has a certain intuitive appeal and is consistent with existing law since disproportionate results are allowed, as long as both parties are treated the same.
 However, one may argue that a reversal of the popular vote is an unrealistic counterfactual scenario that is beyond the scope of any sensible analysis technique.
 This is true in the sense that we could not predict what the distribution of votes would be if such a partisan reversal would actually occur, but it is important to note that when we compute the discrepancy in seat counts under a uniform reversal in statewide partisan ship, we are computing the magnitude of structural disadvantage faced by the voters of one party.
 In other words, while the specific asymmetry may be phrased as a sort of hypothetical, it measures a \emph{real} electoral disadvantage endured by one party resulting from that party winning seats less efficiently than the opposite party due to voter packing and cracking.
 Further, as the magnitude of the structural disadvantage to one party increases due to a more aggressive gerrymander, the specific asymmetry increases as well.
+
+The metric can be calculated deterministically from the results of a single election, and when combined with the sampling method in section \ref{sec:FB}, a quantity representing the distribution of likely asymmetries analogous to equation \ref{eq:intAsym} can be computed.
+Sampling the specific asymmetry to compute likely asymmetries is preferable to using the integral in equation \ref{eq:intAsym}, since the specific asymmetry has units of seats.
+This is an intuitive unit of measure which makes it easier to communicate results with legal experts as well as the general public.
+Using seats as a unit of asymmetry also makes it easier to aggregate results across states to obtain the net effects of gerrymandering nationally.
+
 There are several other advantages to using this metric, which we summarize below.
 
 \begin{itemize}
