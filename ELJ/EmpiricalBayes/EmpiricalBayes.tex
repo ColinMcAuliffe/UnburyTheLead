@@ -192,6 +192,7 @@ However, this integral form of the asymmetry requires data from multiple electio
 To address these challenges, we propose a measure of bias which we call the specific asymmetry, which is the deviation of the seats votes curve from the symmetry line, measured at the statewide popular vote, i.e. $\left[S(V_{pop})-S(1-V_{pop})\right]/2$.
 This definition of partisan asymmetry simply requires the seat count to reverse when the state wide popular vote reverses.
 This has a certain intuitive appeal and is consistent with existing law since disproportionate results are allowed, as long as both parties are treated the same.
+
 However, one may argue that a reversal of the popular vote is an unrealistic counterfactual scenario that is beyond the scope of any sensible analysis technique.
 This is true in the sense that we could not predict what the distribution of votes would be if such a partisan reversal would actually occur, but it is important to note that when we compute the discrepancy in seat counts under a uniform reversal in statewide partisan ship, we are computing the magnitude of structural disadvantage faced by the voters of one party.
 In other words, while the specific asymmetry may be phrased as a sort of hypothetical, it measures a \emph{real} electoral disadvantage endured by one party resulting from that party winning seats less efficiently than the opposite party due to voter packing and cracking.
@@ -238,9 +239,11 @@ We can measure bias in a single election with the specific asymmetry, but we wou
 This allows us to distinguish between chance occurrences of asymmetry on an otherwise fair map and maps for which asymmetry is a persistent feature.
 A particular election result represents one possible outcome among many outcomes that could have occurred, or in other words each election represents a sample from a population representing all possible election outcomes.
 We can use the observation of one or more elections along with prior knowledge of election data to make inferences about the population.
-To this end we estimate parameters for a statistical model representing partisanship in each district as well as statewide partisanship given at least one election result in a state.
+To this end we estimate parameters for a statistical model representing partisanship in each district as well as statewide partisanship, given at least one election result in a state.
 Each sample drawn from this model represents a plausible election result that could have occurred if we were able to rerun elections as many times as we wanted.
-For each sample, we compute the specific asymmetry and the mean asymmetry of all samples giving the expected specific asymmetry, as well as other descriptive statistics representing the likelihood of different levels of asymmetry.
+Because we are using Monte Carlo integration, each sample is drawn with probability proportional to its empirical likelihood according to the model.
+Thus, to get the expected specific asymmetry we simply take the average specific asymmetry of all samples drawn.
+We also use these draws to calculate other descriptive statistics representing the likelihood of different levels of asymmetry.
 A schematic illustration of the process is shown in figure \ref{fig:ProbModel}
 Thus, the proposed definition that \emph{a fair redistricting plan is one that, on average, will not be biased in favor of either of the two major parties} corresponds to a map with an expected asymmetry of zero.
 The details of the empirical Bayesian model are outlined in what follows.
@@ -254,14 +257,13 @@ The details of the empirical Bayesian model are outlined in what follows.
 \subsection{Model Parameterization}
 To chose a model appropriately, we must carefully consider the underlying process. 
 The Beta distribution is a natural choice for many processes that involve percentages, and is appropriate for modeling election outcomes. 
-This choice of probability model for modeling an election is not new. 
-It has been used in numerous academic papers, and continues to be used in literature published quite recently \cite{Paolino_2001_,Kaplan_2003_10.1287/opre.51.1.32.12794,Murr_2015_10.1177/2053168015583346}.
+This choice of probability model for modeling an election has been used in numerous academic papers, and continues to be used in literature published quite recently \cite{Paolino_2001_,Kaplan_2003_10.1287/opre.51.1.32.12794,Murr_2015_10.1177/2053168015583346}.
 Indeed, teaching materials about the Beta distribution often use elections as an example.  
 Some academic papers have extended this model to take into account third parties by using the Dirichlet distribution \cite{Rigdon_2009_10.1177/1532673X08330670} (The Dirichlet distribution is the multivariate extension of the Beta distribution.) 
 
 The choice of the Beta distribution follows from first principles. 
 In fact, two different points of view of the underlying stochastic process of election results both lead us to the Beta distribution. 
-In the first point of view, we can consider the underlying stochastic process is a Bernoulli process, which a number of trials that can each have one of two outcomes, i.e. a Republican vote or a Democratic vote.
+In the first point of view, we can consider the underlying stochastic process is a Bernoulli process; a number of trials that can each have one of two outcomes, i.e. a Republican vote or a Democratic vote.
 We are interested in the number of votes for a given party out of all the votes, which is the number of successes in a sequence of trials.  
 This leads us to the Binomial distribution. 
 However, we do not know the rate of 'successes' (or the votes for an arbitrarily selected party), that is what we are trying to estimate.  
@@ -270,7 +272,7 @@ To estimate the rate parameter of a Binomial distribution, we use its conjugate 
 In the second perspective, voting is considered a pair of Poisson processes, which are series of events occurring at a certain rate i.e. voters for a party turning out to cast a vote. 
 Here we are interested in the number of times a voter for a party turns out to vote in a given amount of time (Election day) - the number of events in a fixed interval. 
 This leads us to the Poisson distribution.  
-However, we do not know the rate of events - that is what we are trying to estimate.  
+However, we do not know the \emph{rate} of events - that is what we are trying to estimate.  
 To estimate the rate parameter of a Poisson distribution, we use its conjugate prior distribution, which is the Gamma distribution. 
 To represent partisanship as a fraction, we take the fraction of events between the two Poisson processes.  
 Let $\Gamma\left(X\right)$ be the unknown rate of voter turnout for one party, and $\Gamma\left(Y\right)$ the unknown rate for the other.
@@ -318,7 +320,7 @@ This approach has several advantages
 
 \begin{itemize}
 
-\item Non-uniform swings are accounted for. Accounting for the average partisanship of each district as well as the variance in partisanship from election captures the changes in voter sentiment that are not uniform throughout the state.
+\item Non-uniform swings are accounted for. Accounting for the average partisanship of each district as well as the variance in partisanship from election to election captures the changes in voter sentiment that are not uniform throughout the state.
 
 \item It takes into account all possibilities, weighted by likelihood - Every possible seats-votes curve and every possible popular vote ratio is taken into consideration, weighted by the combined likelihood of the two.
 
@@ -326,7 +328,7 @@ This approach has several advantages
 
 \end{itemize}
 
-To illustrate the process we show a few samples from this model for the Wisconsin state assembly districts figure \ref{fig:SVAssembly2010} (a full analysis of this districting plan can be found in section \ref{sec:Wis}).
+To illustrate the process we show a few samples from this model for the Wisconsin state assembly districts in figure \ref{fig:SVAssembly2010} (a full analysis of this districting plan can be found in section \ref{sec:Wis}).
 The dark line is the seats votes curve generated from sampling the partisanship in each district, while the dashed line in the reflection of this curve.
 Discrepancies between these two lines represent asymmetries, which vary depending on the level of partisanship considered.
 The vertical line is the statewide partisanship sampled from the state beta distribution, which determines the partisanship level that we measure the asymmetry at.
