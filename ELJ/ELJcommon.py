@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import os
 from scipy import stats
+from sklearn.metrics import mutual_info_score
+import matplotlib.pyplot as plt
 
 def getDemVotesAndSeats(dem,rep):
     dem_total = float(np.sum(dem))
@@ -314,3 +316,9 @@ def year2Cycle(year):
     else:
         return 2010
 
+def getMI(x, y, bins):
+    fig, ax = plt.subplots()
+    c_xy = ax.hist2d(x, y,bins=bins)[0]
+    mi = mutual_info_score(None, None, contingency=c_xy)
+    plt.close()
+    return mi
