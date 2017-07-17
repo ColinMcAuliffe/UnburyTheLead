@@ -30,6 +30,56 @@ def get_spasym(dem,rep):
     else:
         return 0.
 
+def get_GrofAsym(dem,rep):
+    if len(dem) > 1:
+        dem = dem.astype(float)
+        rep = rep.astype(float)
+        dem_total = np.sum(dem)
+        rep_total = np.sum(rep)
+        totalAvg  = (dem_total+rep_total)/2.
+        multDem = totalAvg/dem_total
+	multRep = totalAvg/rep_total
+        dem = dem*multDem
+        rep = rep*multRep
+        
+        demVote = dem/(dem+rep)
+        actSeats = float(len(demVote[demVote<0.5]))
+        flpSeats = float(len(demVote[demVote>0.5]))
+
+        return (actSeats-flpSeats)/2.
+    else:
+        return 0.
+
+def get_EfficiencyGap(dem,rep):
+    nseats = float(len(dem))
+    if nseats > 1.:
+        popVote = np.sum(dem)/(np.sum(dem)+np.sum(rep))
+        demPct = dem/(dem+rep)
+        demSeats = float(len(demPct[demPct>=0.5]))/nseats
+        return 2.*popVote - demSeats - 0.5
+    else:
+        return 0.
+
+def get_MMDFromCenteredPct(demPct):
+    #popular vote is last element in demPct, ignored
+    dem  = np.array(demPct[0:-1])
+    if len(dem) > 1:
+        return 0.5 - np.median(dem)
+    else:
+        return 0.
+
+def get_EGFromCenteredPct(demPct):
+    #popular vote is last element in demPct
+    popVoteDem   = demPct[-1]
+    dem  = np.array(demPct[0:-1])
+    rep  = 1.-dem
+    nseats = float(len(dem))
+    if nseats > 1.:
+        demSeats = float(len(rep[rep<=popVoteDem]))/nseats
+        return 2.*popVoteDem - demSeats - 0.5
+    else:
+        return 0.
+
 def get_asymFromCenteredPct(demPct):
     #popular vote is last element in demPct
     popVoteDem   = demPct[-1]

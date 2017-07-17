@@ -10,7 +10,7 @@ import os
 import us
 from scipy import stats
 
-from ELJcommon import getDemVotesAndSeats,get_spasym,get_asymFromPct,getExpAsym,varWithShrinkage,betaMOM,list2df,colorBins,get_asymFromCenteredPct,normalEst
+from ELJcommon import getDemVotesAndSeats,get_spasym,get_GrofAsym,get_EfficiencyGap,get_asymFromPct,getExpAsym,varWithShrinkage,betaMOM,list2df,colorBins,get_asymFromCenteredPct,normalEst
 
 def setFontSize(ax,fs):
     for item in ([ax.title, ax.xaxis.label, ax.yaxis.label] +
@@ -41,7 +41,7 @@ oneByOne = (6.5,6.5)
 #Compute specific asymmetry and historic mean and stdv{{{1
 #Compute data{{{2
 data      = [['State','cycle','AreaNumber','Mean','Stdv','Var']]
-stateData = [['State','STATEFP','year','demVotes','repVotes','demVoteFrac','repVoteFrac','demSeats','demSeatFrac','specAsym (seats)','specAsym (fraction)','mean-median','margin','ndist']]
+stateData = [['State','STATEFP','year','demVotes','repVotes','demVoteFrac','repVoteFrac','demSeats','demSeatFrac','specAsym (seats)','specAsym (fraction)','mean-median','Grofman Asym','efficiency gap','Cs','margin','ndist']]
 fig = plt.figure(figsize=(10,8))
 ax  = fig.add_subplot(211)
 for state in states:
@@ -61,9 +61,13 @@ for state in states:
             pcts = dfYear["imputedDem"].values/(dfYear["imputedDem"].values+dfYear["imputedRep"].values)
             if len(dfYear) > 1:
                 meanMed = np.mean(pcts)-np.median(pcts)
+                Cs = meanMed/np.std(pcts,ddof=1)
             else:
                 meanMed = 0.
-            stateData.append([abbr,state.fips,year,dem_total,rep_total,popVote,1.-popVote,seats,seatFrac,sp,sp/float(len(dfYear)),meanMed,0.5-popVote,len(dfYear)])
+                Cs = 0.
+            ga = get_GrofAsym(dfYear["imputedDem"].values,dfYear["imputedRep"].values)
+            eg = get_EfficiencyGap(dfYear["imputedDem"].values,dfYear["imputedRep"].values)
+            stateData.append([abbr,state.fips,year,dem_total,rep_total,popVote,1.-popVote,seats,seatFrac,sp,sp/float(len(dfYear)),meanMed,ga,eg,Cs,0.5-popVote,len(dfYear)])
 
         ax.plot(cyc,mm,marker='x',color='0.5')
 

@@ -35,12 +35,14 @@ binsMM = np.linspace(-.10,.10,100)
 binsT = np.linspace(-6.,6.,100)
 limit = 0.03
 #Compute and plot expected mean median difference{{{1
-dataMM = [['State','cycle','expectedCs','stdvCs','expectedCu','stdvCu','expStdv','ndist']]
+dataMM = [['State','cycle','expectedCs','stdvCs','expectedCu','stdvCu','expStdv','stdvObs','stdvCsObs','ndist']]
 fig1, ((axs1, axs2), (axs3, axs4)) = plt.subplots(2, 2, sharex="col", sharey=True)
 
 for cnm,cyc in zip(cnames,cycles):
     dfCycle      = dataAB[dataAB["cycle"]==cnm]
     dfCyclePop   = dataABState[dataABState["cycle"]==cnm]
+    dfCycleObs    = stateData[stateData["year"].isin(cyc)]
+    
     for state in states:
         abbr = state.abbr
         if abbr == "DC": continue
@@ -48,6 +50,8 @@ for cnm,cyc in zip(cnames,cycles):
         dfState    = dfCycle[dfCycle["State"].str.contains(abbr)]
         betaParams = zip(dfState["alpha"].tolist(),dfState["beta"].tolist())
         ndist = len(dfState)
+        dfStateObs  = dfCycleObs[dfCycleObs["State"] == abbr]
+        
         if ndist > 2:
             expCs,expCu,stdvV = getExpMMandStdv(betaParams)
 
@@ -58,6 +62,9 @@ for cnm,cyc in zip(cnames,cycles):
             mng = np.mean(expCu)
             stg = np.std(expCu,ddof=1)
             estdv = np.mean(stdvV)
+
+            stdvObs = np.std(dfStateObs['mean-median'].values,ddof=1)
+            stdvCsObs = np.std(dfStateObs['Cs'].values,ddof=1)
 
             #plot some selected states and cycles
             if abbr == "TX" and cnm == 1980:
@@ -91,7 +98,7 @@ for cnm,cyc in zip(cnames,cycles):
                 axs4.set_xlabel("NC, 2010's")
                 axs4.grid()
 
-            dataMM.append([abbr,cnm,mn,st,mng,stg,estdv,ndist])
+            dataMM.append([abbr,cnm,mn,st,mng,stg,estdv,stdvObs,stdvCsObs,ndist])
 
 
 
@@ -140,18 +147,22 @@ fig.savefig(os.path.join(figDir,"Stdvs.png"))
 
 fig = plt.figure()
 ax  = fig.add_subplot(111)
-ax.scatter(dataMM['ndist'].values,dataMM['stdvCs'].values,label="Simulated with beta model")
 
 popt,pconv = curve_fit(lambda x, m: m*x, 1./np.sqrt(dataMM['ndist'].values),dataMM['stdvCs'].values)
+popt2,pconv = curve_fit(lambda x, m: m*x, 1./np.sqrt(dataMM['ndist'].values),dataMM['stdvCsObs'].values)
 ns = range(3,60)
 nst = [1./np.sqrt(n) for n in ns]
 stda = [np.sqrt(0.5708/float(n)) for n in ns]
 stdk = [np.sqrt(cbv/float(n)) for n in ns]
 stdf = [popt[0]/np.sqrt(float(n)) for n in ns]
-print "fitted variance for Cs = ",popt**2
-ax.plot(ns,stdf,label="Relationship Fit to Simulated Variances")
-ax.plot(ns,stdk,label="Asymptotic, Historical Data")
-ax.plot(ns,stda,label="Asymptotic, Unit Normal")
+stdf2 = [popt2[0]/np.sqrt(float(n)) for n in ns]
+print "fitted variance for Cs Simulated = ",popt**2
+print "fitted variance for Cs Observed = ",popt2**2
+ax.scatter(dataMM['ndist'].values,dataMM['stdvCs'].values,label="Simulated Stdvs")
+ax.scatter(dataMM['ndist'].values,dataMM['stdvCsObs'].values,color='g',label="Observed Sample Stdvs")
+ax.plot(ns,stda,color='r',label="Asymptotic, Unit Normal")
+ax.plot(ns,stdf,label="Fit to Simulated Stdvs")
+ax.plot(ns,stdf2,label="Fit to Observed Sample Stdvs")
 ax.set_xlabel("Number of Districts")
 ax.set_ylabel("Sampling Standard Deviation of Cs")
 ax.legend()
@@ -175,16 +186,19 @@ print getMiraVarUni(a=.15,b=.85)
 
 fig = plt.figure()
 ax  = fig.add_subplot(111)
-ax.scatter(dataMM['ndist'].values,dataMM['stdvCu'].values,label="Simulated with beta model")
 
 popt,pconv = curve_fit(lambda x, m: m*x, 1./np.sqrt(dataMM['ndist'].values),dataMM['stdvCu'].values)
+popt2,pconv = curve_fit(lambda x, m: m*x, 1./np.sqrt(dataMM['ndist'].values),dataMM['stdvObs'].values)
 ns = range(3,60)
 nst = [1./np.sqrt(n) for n in ns]
-stdk = [np.sqrt(cbv2/float(n)) for n in ns]
 stdf = [popt[0]/np.sqrt(float(n)) for n in ns]
-print "fitted variance for Cu = ",popt**2
-ax.plot(ns,stdf,label="Relationship Fit to Simulated Variances")
-ax.plot(ns,stdk,label="Asymptotic, Historical Data")
+stdf2 = [popt2[0]/np.sqrt(float(n)) for n in ns]
+print "fitted variance for Cu Simulated = ",popt**2
+print "fitted variance for Cu Observed = ",popt2**2
+ax.scatter(dataMM['ndist'].values,dataMM['stdvCu'].values,label="Simulated Stdvs")
+ax.scatter(dataMM['ndist'].values,dataMM['stdvObs'].values,label="Obsevred Sample Stdvs",color='g')
+ax.plot(ns,stdf,label="Fit to Simulated Stdvs")
+ax.plot(ns,stdf2,label="Fit to Observed Sample Stdvs")
 ax.set_xlabel("Number of Districts")
 ax.set_ylabel("Sampling Standard Deviation of Cu")
 ax.legend()
