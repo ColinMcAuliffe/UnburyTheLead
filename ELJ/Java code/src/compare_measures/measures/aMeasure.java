@@ -32,6 +32,23 @@ public abstract class aMeasure implements iMeasure, IntegrationFunction {
 		return upper-lower;
 	}
 	
+	public double getSeatFraction(Draw draw, double pct) {
+		double inverse_pct = 1.0-pct;
+		double seats = 0.0;
+		
+		for( int i = 0; i < draw.centered_district_pcts.length; i++) {
+			double rep = draw.centered_district_pcts[i];
+			double dem = 1.0-draw.centered_district_pcts[i];
+			if( rep*pct > dem*inverse_pct) {
+				seats++;
+			}
+
+		}
+		
+		return (seats)/(double)draw.centered_district_pcts.length;
+	}
+
+	
 	
 	@Override
 	public void scoreDraws(Vector<Draw> draws) {

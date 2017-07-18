@@ -11,12 +11,20 @@ public class MNagle extends aMeasure {
 
 	@Override
 	public String getAbbr() {
-		return "Vote";
+		return "Area";
 	}
 
 	@Override
 	public double getScore(Draw draw) {
-		return draw.popular_pct;
+		double area = 0;
+		double inc = 0.001;
+		for( double pct = 0; pct < 1.0; pct += inc) {
+			double seats = getSeatFraction(draw,pct);
+			double inverse_seats = 1.0-getSeatFraction(draw,1.0-pct);
+			area += Math.abs(seats-inverse_seats)*inc;
+		}
+
+		return area;
 	}
 
 	@Override
@@ -26,6 +34,6 @@ public class MNagle extends aMeasure {
 
 	@Override
 	public double getUpperBound() {
-		return 1;
+		return 0.5;
 	}
 }

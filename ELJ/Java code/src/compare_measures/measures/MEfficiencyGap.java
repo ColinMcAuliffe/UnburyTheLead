@@ -2,26 +2,26 @@ package compare_measures.measures;
 
 import compare_measures.Draw;
 
-public class MGrofman extends aMeasure {
+public class MEfficiencyGap extends aMeasure {
 
 	@Override
 	public String getName() {
-		return "Grofman King Asymmetry";
+		return "Efficiency gap";
 	}
 
 	@Override
 	public String getAbbr() {
-		return "GA";
+		return "EG";
 	}
 
 	@Override
 	public double getScore(Draw draw) {
-		return getSeatFraction(draw,0.5);
+		return (getSeatFraction(draw,draw.popular_pct) - 0.5) - 2*(draw.popular_pct-0.5);
 	}
 
 	@Override
 	public double getLowerBound() {
-		return 0;
+		return -1;
 	}
 
 	@Override

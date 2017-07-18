@@ -1,22 +1,24 @@
 package compare_measures.measures;
 
+import java.util.Vector;
+
 import compare_measures.Draw;
 
-public class MGrofman extends aMeasure {
+public class MSeats extends aMeasure {
 
 	@Override
 	public String getName() {
-		return "Grofman King Asymmetry";
+		return "Seat pct";
 	}
 
 	@Override
 	public String getAbbr() {
-		return "GA";
+		return "Seats";
 	}
 
 	@Override
 	public double getScore(Draw draw) {
-		return getSeatFraction(draw,0.5);
+		return getSeatFraction(draw,draw.popular_pct);
 	}
 
 	@Override

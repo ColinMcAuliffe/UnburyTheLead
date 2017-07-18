@@ -6,26 +6,37 @@ public class MMeanMinusMedian extends aMeasure {
 
 	@Override
 	public String getName() {
-		return "Nagle area";
+		return "Mean minus median";
 	}
 
 	@Override
 	public String getAbbr() {
-		return "Vote";
+		return "MMM";
 	}
 
 	@Override
 	public double getScore(Draw draw) {
-		return draw.popular_pct;
+		double middle = ((double)draw.district_pcts.length-1.0)/2.0;
+		double median = 0;
+
+		median = draw.district_pcts[(int)middle];
+		if( draw.district_pcts.length % 2 == 0) {
+			median += draw.district_pcts[1+(int)middle];
+			median /= 2;
+		} else {
+			
+		}
+		
+		return draw.popular_pct-median;
 	}
 
 	@Override
 	public double getLowerBound() {
-		return 0;
+		return -0.5;
 	}
 
 	@Override
 	public double getUpperBound() {
-		return 1;
+		return 0.5;
 	}
 }

@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.util.Collections;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -43,13 +44,15 @@ public class Master extends JFrame {
 
 	public void addAllMeasures() {
 		all_measures.add(new MPopularVote());
+		all_measures.add(new MSeats());
 		all_measures.add(new MNDistricts());
 		all_measures.add(new MVoteVariance());
 		//all_measures.add(new MYear());
 		all_measures.add(new MSpecAsym());
-		//all_measures.add(new MGrofman()); //not implemented yet
-		//all_measures.add(new MNagle()); //not implemented yet
-		//all_measures.add(new MMeanMinusMedian()); //not implemented yet
+		all_measures.add(new MGrofman());
+		all_measures.add(new MNagle());
+		all_measures.add(new MEfficiencyGap());
+		all_measures.add(new MMeanMinusMedian()); //not implemented yet
 	}
 	public void addAllDraws() {
 		Vector<String[]> lines = readCSV("congressImputed.csv");
@@ -71,6 +74,9 @@ public class Master extends JFrame {
 			String year = line[2];
 			if( !state.equals(last_state) || !year.equals(last_year)) {
 				if( dists.size() > 0) {
+					Collections.sort(dists);
+					Collections.sort(centered_dists);
+					
 					Draw d = new Draw();
 					d.year = Integer.parseInt(year);
 					d.popular_pct = total_rep/(total_dem+total_rep);

@@ -41,6 +41,6 @@ public class MVoteVariance extends aMeasure {
 
 	@Override
 	public double getUpperBound() {
-		return 1;
+		return 0.5;
 	}
 }

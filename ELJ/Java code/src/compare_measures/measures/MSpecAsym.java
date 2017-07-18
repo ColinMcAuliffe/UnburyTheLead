@@ -16,22 +16,9 @@ public class MSpecAsym extends aMeasure {
 
 	@Override
 	public double getScore(Draw draw) {
-		double inverse_pct = 1-draw.popular_pct;
-		double seats = 0;
-		double inverse_seats = 0;
-		
-		for( int i = 0; i < draw.centered_district_pcts.length; i++) {
-			double rep = draw.centered_district_pcts[i];
-			double dem = 1-draw.centered_district_pcts[i];
-			if( rep*draw.popular_pct > dem*inverse_pct) {
-				seats++;
-			}
-			if( rep*inverse_pct < dem*draw.popular_pct) {
-				inverse_seats++;
-			}
-		}
-		
-		return ((seats-inverse_seats))/(double)draw.centered_district_pcts.length;
+		double seats = getSeatFraction(draw,draw.popular_pct);
+		double inverse_seats = 1.0-getSeatFraction(draw,1.0-draw.popular_pct);
+		return (seats-inverse_seats);
 	}
 
 	@Override
