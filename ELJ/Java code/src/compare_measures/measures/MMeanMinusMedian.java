@@ -27,16 +27,17 @@ public class MMeanMinusMedian extends aMeasure {
 			
 		}
 		
-		return draw.popular_pct-median;
+		//flipping sign to match others
+		return -(draw.popular_pct-median);
 	}
 
 	@Override
 	public double getLowerBound() {
-		return -0.5;
+		return -0.25;
 	}
 
 	@Override
 	public double getUpperBound() {
-		return 0.5;
+		return 0.25;
 	}
 }

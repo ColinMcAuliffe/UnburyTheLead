@@ -34,6 +34,6 @@ public class MNagle extends aMeasure {
 
 	@Override
 	public double getUpperBound() {
-		return 0.5;
+		return 0.25;
 	}
 }
