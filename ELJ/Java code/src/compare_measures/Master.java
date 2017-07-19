@@ -23,13 +23,16 @@ import java.nio.file.*;
 public class Master extends JFrame {
 	int size = 1000;
 	
+	static int show = 1;
+	static int graph_mode = 2;
+	
 	public static double radius = 1.0;
 	
-	public static int min_districts = 4;
+	public static int min_districts = 1;
 
-	Vector<iMeasure> all_measures = new Vector<iMeasure>();
-	Vector<iMeasure> x_measures = new Vector<iMeasure>();
-	Vector<iMeasure> y_measures = new Vector<iMeasure>();
+	Vector<aMeasure> all_measures = new Vector<aMeasure>();
+	Vector<aMeasure> x_measures = new Vector<aMeasure>();
+	Vector<aMeasure> y_measures = new Vector<aMeasure>();
 	Vector<Draw> all_draws = new Vector<Draw>();
 	
 	public DrawPanel panel = null;
@@ -45,12 +48,28 @@ public class Master extends JFrame {
 		addAllDraws();
 		scoreAll();
 		initComponents();
+		
+		System.out.print("year,state");
+		for( int j = 0; j < all_measures.size(); j++) {
+			System.out.print(","+all_measures.get(j).getName());
+		}
+		System.out.println();
+		for( int i = 0; i < all_draws.size(); i++) {
+			Draw draw = all_draws.get(i);
+			System.out.print(((int)draw.year)+","+draw.state);
+			for( int j = 0; j < all_measures.size(); j++) {
+				System.out.print(","+draw.scores.get(all_measures.get(j).getAbbr()));
+			}
+			
+			System.out.println();
+		}
+
+		//System.exit(0);
 	}
 
 
 	public void addAllMeasures() {
 		
-		int show = 1;
 		
 		all_measures.add(new MPopularVote());
 		all_measures.add(new MSeats());
@@ -100,6 +119,7 @@ public class Master extends JFrame {
 			y_measures.add(new MLopsidedMargins());
 			break;
 		}
+		
 
 	}
 	public void addAllDraws() {
@@ -127,6 +147,7 @@ public class Master extends JFrame {
 					
 					Draw d = new Draw();
 					d.year = Integer.parseInt(last_year);
+					d.state = last_state;
 					d.popular_pct = total_rep/(total_dem+total_rep);
 					d.district_pcts = new double[dists.size()];
 					for( int i = 0; i < d.district_pcts.length; i++) { d.district_pcts[i] = dists.get(i); } 
@@ -176,7 +197,7 @@ public class Master extends JFrame {
 		g.setColor(Color.black);
 		for( int i = 0; i < x_measures.size(); i++) {
 			double x = xs+padding+for_each*(double)i;
-			iMeasure m1 = x_measures.get(i);
+			aMeasure m1 = x_measures.get(i);
 
 			//draw label
 			String s = m1.getAbbr();
@@ -188,7 +209,7 @@ public class Master extends JFrame {
 			
 			for( int j = 0; j < y_measures.size(); j++) {
 				double y = ys+padding+for_each*(double)j;
-				iMeasure m2 = y_measures.get(j);
+				aMeasure m2 = y_measures.get(j);
 				
 				if( i == 0) {
 					//draw label
@@ -207,14 +228,62 @@ public class Master extends JFrame {
 		}
 	}
 	
-	public void scatterPlot(iMeasure m1, iMeasure m2, DrawScaled g, double x0, double x1, double y0, double y1, double r) {
+	public void scatterPlot(aMeasure m1, aMeasure m2, DrawScaled g, double x0, double x1, double y0, double y1, double r) {
 		//System.out.println("scatter plot "+x0+" "+x1+" "+y0+" "+y1);
+		double xmin = 999999;
+		double xmax = -999999;
+		double ymin = 999999;
+		double ymax = -999999;
 		for( Draw d : all_draws) {
-			double rx = d.scores.get(m1.getAbbr());
-			double ry = d.scores.get(m2.getAbbr());
-			
-			rx = (x1-x0)*(rx-m1.getLowerBound())/(m1.getUpperBound()-m1.getLowerBound())+x0;
-			ry = y1-(y1-y0)*(ry-m2.getLowerBound())/(m2.getUpperBound()-m2.getLowerBound());
+			double rx = 0;
+			double ry = 0;
+			switch(graph_mode) {
+			case 0:
+				rx = d.scores.get(m1.getAbbr());
+				ry = d.scores.get(m2.getAbbr());
+				break;
+			case 1:
+				rx = d.scores.get(m1.getAbbr()+" percentile");
+				ry = d.scores.get(m2.getAbbr()+" percentile");
+				break;
+			case 2:
+				double ry0 = (d.scores.get(m1.getAbbr())-m1.mean)/m1.sd;
+				double ry1 = (d.scores.get(m2.getAbbr())-m2.mean)/m2.sd;
+				rx = d.scores.get("Vote");
+				ry = ry0-ry1;
+				break;
+			}
+			xmin = rx < xmin ? rx : xmin;
+			xmax = rx > xmax ? rx : xmax;
+			ymin = ry < ymin ? ry : ymin;
+			ymax = ry > ymax ? ry : ymax;
+		}
+		if( xmin == xmax || ymin == ymax) {
+			return;
+		}
+		for( Draw d : all_draws) {
+			double rx = 0;
+			double ry = 0;
+			switch(graph_mode) {
+			case 0:
+				rx = d.scores.get(m1.getAbbr());
+				ry = d.scores.get(m2.getAbbr());
+				break;
+			case 1:
+				rx = d.scores.get(m1.getAbbr()+" percentile");
+				ry = d.scores.get(m2.getAbbr()+" percentile");
+				break;
+			case 2:
+				double ry0 = (d.scores.get(m1.getAbbr())-m1.mean)/m1.sd;
+				double ry1 = (d.scores.get(m2.getAbbr())-m2.mean)/m2.sd;
+				rx = d.scores.get("Vote");
+				ry = ry0-ry1;
+				break;
+			}
+			rx = (x1-x0)*(rx-xmin)/(xmax-xmin)+x0;
+			ry = y1-(y1-y0)*(ry-ymin)/(ymax-ymin);
+			//rx = (x1-x0)*(rx-m1.getLowerBound())/(m1.getUpperBound()-m1.getLowerBound())+x0;
+			//ry = y1-(y1-y0)*(ry-m2.getLowerBound())/(m2.getUpperBound()-m2.getLowerBound());
 			g.fillOval((int)(rx-r), (int)(ry-r), (int)(r*2.0), (int)(r*2.0));
 			
 		}

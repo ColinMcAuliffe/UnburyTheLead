@@ -10,8 +10,14 @@ import compare_measures.IntegrationFunction;
 
 public abstract class aMeasure implements iMeasure, IntegrationFunction {
 	
-	PiecewiseLinearMonotonicCurve score_curve = new PiecewiseLinearMonotonicCurve();
 	
+	public double mean = 0;
+	public double sd = 1;
+	public double mad = 1;
+	
+	
+	PiecewiseLinearMonotonicCurve score_curve = new PiecewiseLinearMonotonicCurve();
+
 	public double f(double y, double dx) {
 		return Math.log(y)*dx;
 	}
@@ -58,19 +64,36 @@ public abstract class aMeasure implements iMeasure, IntegrationFunction {
 		}
 		Collections.sort(scores);
 		
+		double sum = 0;
+		mean = 0;
+		
 		double inc = 1.0/(double)scores.size();
 		double cur = inc/2.0;
 		score_curve.samples.add(new double[]{0,getLowerBound()});
 		for( int i = 0; i < scores.size(); i++) {
 			Pair<Double,Draw> score = scores.get(i);
+			sum += score.a;
 			score.b.scores.put(getAbbr(), score.a);
 			score.b.scores.put(getAbbr()+" percentile", cur);
 			score_curve.samples.add(new double[]{cur,score.a});
 			cur += inc;
 		}
+		
+		mean = sum/(double)scores.size();
+		sd = 0;
+		for( int i = 0; i < scores.size(); i++) {
+			double d = scores.get(i).a;
+			sd += d*d;
+			mad += Math.abs(d);
+		}
+		sd /= ((double)scores.size()-1.0);
+		mad /= ((double)scores.size()-1.0);
+		sd = Math.sqrt(sd);
+		
 		score_curve.samples.add(new double[]{1,getUpperBound()});
 		score_curve.smooth();
 	}
 	
+
 
 }

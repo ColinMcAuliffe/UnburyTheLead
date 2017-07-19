@@ -13,5 +13,4 @@ public interface iMeasure {
 	public void scoreDraws(Vector<Draw> draws);
 	public double getLowerBound();
 	public double getUpperBound();
-
 }
