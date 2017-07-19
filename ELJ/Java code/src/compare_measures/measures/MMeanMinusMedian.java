@@ -11,7 +11,7 @@ public class MMeanMinusMedian extends aMeasure {
 
 	@Override
 	public String getAbbr() {
-		return "MMM";
+		return "MM";
 	}
 
 	@Override
@@ -33,11 +33,11 @@ public class MMeanMinusMedian extends aMeasure {
 
 	@Override
 	public double getLowerBound() {
-		return -0.25;
+		return -0.15;
 	}
 
 	@Override
 	public double getUpperBound() {
-		return 0.25;
+		return 0.15;
 	}
 }

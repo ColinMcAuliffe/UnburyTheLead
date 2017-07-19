@@ -2,30 +2,30 @@ package compare_measures.measures;
 
 import compare_measures.Draw;
 
-public class MEfficiencyGap extends aMeasure {
+public class MLopsidedMargins extends aMeasure {
 
 	@Override
 	public String getName() {
-		return "Efficiency gap";
+		return "Lopsided Margins";
 	}
 
 	@Override
 	public String getAbbr() {
-		return "EG";
+		return "LM";
 	}
 
 	@Override
 	public double getScore(Draw draw) {
-		return (getSeatFraction(draw,draw.popular_pct) - 0.5) - 2*(draw.popular_pct-0.5);
+		return 0;
 	}
 
 	@Override
 	public double getLowerBound() {
-		return -0.5;
+		return -1;
 	}
 
 	@Override
 	public double getUpperBound() {
-		return 0.5;
+		return 1;
 	}
 }

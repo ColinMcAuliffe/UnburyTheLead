@@ -23,11 +23,11 @@ public class MSpecAsym extends aMeasure {
 
 	@Override
 	public double getLowerBound() {
-		return -1;
+		return -0.5;
 	}
 
 	@Override
 	public double getUpperBound() {
-		return 1;
+		return 0.5;
 	}
 }

@@ -13,7 +13,7 @@ public class MVoteVariance extends aMeasure {
 
 	@Override
 	public String getAbbr() {
-		return "SDVotes";
+		return "Spread";
 	}
 
 	@Override

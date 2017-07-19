@@ -11,7 +11,7 @@ public class MNagle extends aMeasure {
 
 	@Override
 	public String getAbbr() {
-		return "Area";
+		return "TotAsym";
 	}
 
 	@Override

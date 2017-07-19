@@ -22,8 +22,14 @@ import java.nio.file.*;
 
 public class Master extends JFrame {
 	int size = 1000;
+	
+	public static double radius = 1.0;
+	
+	public static int min_districts = 4;
 
 	Vector<iMeasure> all_measures = new Vector<iMeasure>();
+	Vector<iMeasure> x_measures = new Vector<iMeasure>();
+	Vector<iMeasure> y_measures = new Vector<iMeasure>();
 	Vector<Draw> all_draws = new Vector<Draw>();
 	
 	public DrawPanel panel = null;
@@ -43,16 +49,58 @@ public class Master extends JFrame {
 
 
 	public void addAllMeasures() {
+		
+		int show = 1;
+		
 		all_measures.add(new MPopularVote());
 		all_measures.add(new MSeats());
 		all_measures.add(new MNDistricts());
 		all_measures.add(new MVoteVariance());
-		//all_measures.add(new MYear());
+		all_measures.add(new MNagle());
 		all_measures.add(new MSpecAsym());
 		all_measures.add(new MGrofman());
-		all_measures.add(new MNagle());
+		all_measures.add(new MMeanMinusMedian());
 		all_measures.add(new MEfficiencyGap());
-		all_measures.add(new MMeanMinusMedian()); //not implemented yet
+		all_measures.add(new MLopsidedMargins());
+		
+		switch(show) {
+		case 0:
+			x_measures.add(new MPopularVote());
+			x_measures.add(new MSeats());
+			x_measures.add(new MVoteVariance());
+			x_measures.add(new MNagle());
+			y_measures.add(new MPopularVote());
+			y_measures.add(new MSeats());
+			y_measures.add(new MVoteVariance());
+			y_measures.add(new MNagle());
+			break;
+		case 1:
+			x_measures.add(new MPopularVote());
+			x_measures.add(new MSeats());
+			x_measures.add(new MVoteVariance());
+			x_measures.add(new MNagle());
+			y_measures.add(new MSpecAsym());
+			y_measures.add(new MGrofman());
+			y_measures.add(new MMeanMinusMedian());
+			y_measures.add(new MEfficiencyGap());
+			y_measures.add(new MLopsidedMargins());
+			break;
+		case 2:
+			x_measures.add(new MNagle());
+			x_measures.add(new MSpecAsym());
+			x_measures.add(new MGrofman());
+			x_measures.add(new MMeanMinusMedian());
+			x_measures.add(new MEfficiencyGap());
+			x_measures.add(new MLopsidedMargins());
+			y_measures.add(new MNagle());
+			y_measures.add(new MSpecAsym());
+			y_measures.add(new MGrofman());
+			y_measures.add(new MMeanMinusMedian());
+			y_measures.add(new MEfficiencyGap());
+			y_measures.add(new MLopsidedMargins());
+			break;
+		}
+
 	}
 	public void addAllDraws() {
 		Vector<String[]> lines = readCSV("congressImputed.csv");
@@ -73,19 +121,21 @@ public class Master extends JFrame {
 			String state = line[1];
 			String year = line[2];
 			if( !state.equals(last_state) || !year.equals(last_year)) {
-				if( dists.size() > 0) {
+				if( dists.size() >= min_districts) {
 					Collections.sort(dists);
 					Collections.sort(centered_dists);
 					
 					Draw d = new Draw();
-					d.year = Integer.parseInt(year);
+					d.year = Integer.parseInt(last_year);
 					d.popular_pct = total_rep/(total_dem+total_rep);
 					d.district_pcts = new double[dists.size()];
 					for( int i = 0; i < d.district_pcts.length; i++) { d.district_pcts[i] = dists.get(i); } 
 					d.centered_district_pcts = new double[centered_dists.size()];
 					for( int i = 0; i < d.centered_district_pcts.length; i++) { d.centered_district_pcts[i] = centered_dists.get(i); } 
 					all_draws.add(d);
-					System.out.println("added draw "+state+" "+year+" "+d.district_pcts.length+" "+d.popular_pct);
+					System.out.println("added draw "+last_state+" "+last_year+" "+d.district_pcts.length+" "+d.popular_pct);
+				} else {
+					System.out.println("too few districts "+last_state+" "+last_year+" "+dists.size());
 				}
 				last_state = state;
 				last_year = year;
@@ -114,18 +164,43 @@ public class Master extends JFrame {
 	
 	public void plotAll(DrawScaled g, double x0, double y0, double x1, double y1, double pct_padding, double r) {
 		//System.out.println("all_measures.size(): "+all_measures.size());
-		double for_each = (x1-x0)/(double)(all_measures.size());
+		double for_labels = 80;
+		double xs = x0+for_labels;
+		double ys = y0+for_labels;
+		
+		int count = x_measures.size() > y_measures.size() ? x_measures.size() : y_measures.size();
+		double for_each = (x1-xs)/(double)(count);
 		double padding = for_each*pct_padding;
 		double for_draw = for_each-(padding*2.0);
 		//System.out.println("for each: "+for_each);
-		for( int i = 0; i < all_measures.size(); i++) {
-			//System.out.println("drawing row "+i);
-			double x = x0+padding+for_each*(double)i;
-			iMeasure m1 = all_measures.get(i);
-			for( int j = 0; j < all_measures.size(); j++) {
-				double y = y0+padding+for_each*(double)j;
-				iMeasure m2 = all_measures.get(j);
-				g.setColor(Color.black);
+		g.setColor(Color.black);
+		for( int i = 0; i < x_measures.size(); i++) {
+			double x = xs+padding+for_each*(double)i;
+			iMeasure m1 = x_measures.get(i);
+
+			//draw label
+			String s = m1.getAbbr();
+			double d = g.stringWidth(s)/2.0;
+			double xc = x + (for_each)/2.0 - d;
+			System.out.println("label "+s+" "+xc+" "+(y0+for_labels-10));
+			g.drawString(s, xc, y0+for_labels-10);
+			
+			
+			for( int j = 0; j < y_measures.size(); j++) {
+				double y = ys+padding+for_each*(double)j;
+				iMeasure m2 = y_measures.get(j);
+				
+				if( i == 0) {
+					//draw label
+					String s2 = m2.getAbbr();
+					double d0 = g.stringWidth(s2);
+					double xc0 = xs - d0;
+					double yc = y + (for_each)/2.0;
+					System.out.println("label "+s2+" "+xc0+" "+(yc));
+					g.drawString(s2, xc0, yc);
+				}
+				
+				
 				g.drawRect((int)x, (int)y, (int)for_draw, (int)for_draw);
 				scatterPlot(m1,m2,g,x,x+for_draw,y,y+for_draw,r);
 			}
@@ -217,7 +292,7 @@ public class Master extends JFrame {
 	        graphics.fillRect(0, 0, (int)_width, (int)_height);
 
 	        
-	        plotAll(graphics, 0, 0, (int)_width, (int)_height, 0.05, 1); 
+	        plotAll(graphics, 0, 0, (int)_width, (int)_height, 0.03, radius); 
 	        
 	        return off_Image;
 		} catch (Exception ex) {
