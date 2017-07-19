@@ -23,12 +23,17 @@ import java.nio.file.*;
 public class Master extends JFrame {
 	int size = 1000;
 	
-	static int show = 1;
+	static int show = 2;
 	static int graph_mode = 2;
+	//static String mode2_xaxis = "Vote";
+	static String mode2_xaxis = "Seats";
+	//static String mode2_xaxis = "Spread";
+	//static String mode2_xaxis = "TotAsym";
 	
 	public static double radius = 1.0;
 	
-	public static int min_districts = 1;
+	public static int min_districts = 5;
+	
 
 	Vector<aMeasure> all_measures = new Vector<aMeasure>();
 	Vector<aMeasure> x_measures = new Vector<aMeasure>();
@@ -98,6 +103,7 @@ public class Master extends JFrame {
 			x_measures.add(new MSeats());
 			x_measures.add(new MVoteVariance());
 			x_measures.add(new MNagle());
+			y_measures.add(new MNagle());
 			y_measures.add(new MSpecAsym());
 			y_measures.add(new MGrofman());
 			y_measures.add(new MMeanMinusMedian());
@@ -249,7 +255,7 @@ public class Master extends JFrame {
 			case 2:
 				double ry0 = (d.scores.get(m1.getAbbr())-m1.mean)/m1.sd;
 				double ry1 = (d.scores.get(m2.getAbbr())-m2.mean)/m2.sd;
-				rx = d.scores.get("Vote");
+				rx = d.scores.get(mode2_xaxis);
 				ry = ry0-ry1;
 				break;
 			}
@@ -276,7 +282,7 @@ public class Master extends JFrame {
 			case 2:
 				double ry0 = (d.scores.get(m1.getAbbr())-m1.mean)/m1.sd;
 				double ry1 = (d.scores.get(m2.getAbbr())-m2.mean)/m2.sd;
-				rx = d.scores.get("Vote");
+				rx = d.scores.get(mode2_xaxis);
 				ry = ry0-ry1;
 				break;
 			}
