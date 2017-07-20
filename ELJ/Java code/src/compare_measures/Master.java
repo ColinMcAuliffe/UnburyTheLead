@@ -23,14 +23,18 @@ import java.nio.file.*;
 public class Master extends JFrame {
 	int size = 1000;
 	
-	static int show = 2;
+	static int show = 3;
 	static int graph_mode = 2;
-	//static String mode2_xaxis = "Vote";
-	static String mode2_xaxis = "Seats";
+	boolean use_percentile = false;
+	boolean x_axis_use_percentile = false;
+	
+	static String mode2_xaxis = "Vote";
+	//static String mode2_xaxis = "Seats";
 	//static String mode2_xaxis = "Spread";
 	//static String mode2_xaxis = "TotAsym";
+	//static String mode2_xaxis = "SA";
 	
-	public static double radius = 1.0;
+	public static double radius = 1.0;//0.75;
 	
 	public static int min_districts = 5;
 	
@@ -86,6 +90,8 @@ public class Master extends JFrame {
 		all_measures.add(new MMeanMinusMedian());
 		all_measures.add(new MEfficiencyGap());
 		all_measures.add(new MLopsidedMargins());
+		all_measures.add(new MLopsidedMarginsCentered());
+		all_measures.add(new MBlurred());
 		
 		switch(show) {
 		case 0:
@@ -104,9 +110,11 @@ public class Master extends JFrame {
 			x_measures.add(new MVoteVariance());
 			x_measures.add(new MNagle());
 			y_measures.add(new MNagle());
+			y_measures.add(new MBlurred());
 			y_measures.add(new MSpecAsym());
 			y_measures.add(new MGrofman());
 			y_measures.add(new MMeanMinusMedian());
+			y_measures.add(new MLopsidedMarginsCentered());
 			y_measures.add(new MEfficiencyGap());
 			y_measures.add(new MLopsidedMargins());
 			break;
@@ -117,10 +125,34 @@ public class Master extends JFrame {
 			x_measures.add(new MMeanMinusMedian());
 			x_measures.add(new MEfficiencyGap());
 			x_measures.add(new MLopsidedMargins());
+			x_measures.add(new MLopsidedMarginsCentered());
 			y_measures.add(new MNagle());
+			y_measures.add(new MBlurred());
 			y_measures.add(new MSpecAsym());
 			y_measures.add(new MGrofman());
 			y_measures.add(new MMeanMinusMedian());
+			y_measures.add(new MLopsidedMarginsCentered());
+			y_measures.add(new MEfficiencyGap());
+			y_measures.add(new MLopsidedMargins());
+			break;
+		case 3:
+			x_measures.add(new MPopularVote());
+			x_measures.add(new MSeats());
+			x_measures.add(new MVoteVariance());
+			x_measures.add(new MNagle());
+			x_measures.add(new MBlurred());
+			x_measures.add(new MSpecAsym());
+			x_measures.add(new MGrofman());
+			x_measures.add(new MMeanMinusMedian());
+			x_measures.add(new MLopsidedMarginsCentered());
+			x_measures.add(new MEfficiencyGap());
+			x_measures.add(new MLopsidedMargins());
+			y_measures.add(new MNagle());
+			y_measures.add(new MBlurred());
+			y_measures.add(new MSpecAsym());
+			y_measures.add(new MGrofman());
+			y_measures.add(new MMeanMinusMedian());
+			y_measures.add(new MLopsidedMarginsCentered());
 			y_measures.add(new MEfficiencyGap());
 			y_measures.add(new MLopsidedMargins());
 			break;
@@ -201,6 +233,17 @@ public class Master extends JFrame {
 		double for_draw = for_each-(padding*2.0);
 		//System.out.println("for each: "+for_each);
 		g.setColor(Color.black);
+		if( graph_mode == 2) {
+			{
+				String s = "x-axis = "+mode2_xaxis;
+				double d = g.stringWidth(s)/2.0;
+				double xc = xs + (x1-xs)/2.0 - d;
+				//System.out.println("label "+s+" "+xc+" "+(y0+for_labels-10));
+				g.drawString(s, xc, y0+for_labels-50);
+			}
+			
+		}
+		
 		for( int i = 0; i < x_measures.size(); i++) {
 			double x = xs+padding+for_each*(double)i;
 			aMeasure m1 = x_measures.get(i);
@@ -211,7 +254,6 @@ public class Master extends JFrame {
 			double xc = x + (for_each)/2.0 - d;
 			System.out.println("label "+s+" "+xc+" "+(y0+for_labels-10));
 			g.drawString(s, xc, y0+for_labels-10);
-			
 			
 			for( int j = 0; j < y_measures.size(); j++) {
 				double y = ys+padding+for_each*(double)j;
@@ -236,26 +278,22 @@ public class Master extends JFrame {
 	
 	public void scatterPlot(aMeasure m1, aMeasure m2, DrawScaled g, double x0, double x1, double y0, double y1, double r) {
 		//System.out.println("scatter plot "+x0+" "+x1+" "+y0+" "+y1);
-		double xmin = 999999;
-		double xmax = -999999;
-		double ymin = 999999;
-		double ymax = -999999;
+		double xmin = 999999999;
+		double xmax = -999999999;
+		double ymin = 999999999;
+		double ymax = -999999999;
 		for( Draw d : all_draws) {
 			double rx = 0;
 			double ry = 0;
 			switch(graph_mode) {
 			case 0:
-				rx = d.scores.get(m1.getAbbr());
-				ry = d.scores.get(m2.getAbbr());
-				break;
-			case 1:
-				rx = d.scores.get(m1.getAbbr()+" percentile");
-				ry = d.scores.get(m2.getAbbr()+" percentile");
+				rx = d.scores.get(m1.getAbbr()+(use_percentile ? " percentile" : ""));
+				ry = d.scores.get(m2.getAbbr()+(use_percentile ? " percentile" : ""));
 				break;
 			case 2:
-				double ry0 = (d.scores.get(m1.getAbbr())-m1.mean)/m1.sd;
-				double ry1 = (d.scores.get(m2.getAbbr())-m2.mean)/m2.sd;
-				rx = d.scores.get(mode2_xaxis);
+				double ry0 = (d.scores.get(m1.getAbbr()+(use_percentile ? " percentile" : "")));//-(m1.mean)/m1.sd;
+				double ry1 = (d.scores.get(m2.getAbbr()+(use_percentile ? " percentile" : "")));//-m2.mean)/m2.sd;
+				rx = d.scores.get(mode2_xaxis+(x_axis_use_percentile ? " percentile" : ""));
 				ry = ry0-ry1;
 				break;
 			}
@@ -272,17 +310,13 @@ public class Master extends JFrame {
 			double ry = 0;
 			switch(graph_mode) {
 			case 0:
-				rx = d.scores.get(m1.getAbbr());
-				ry = d.scores.get(m2.getAbbr());
-				break;
-			case 1:
-				rx = d.scores.get(m1.getAbbr()+" percentile");
-				ry = d.scores.get(m2.getAbbr()+" percentile");
+				rx = d.scores.get(m1.getAbbr()+(use_percentile ? " percentile" : ""));
+				ry = d.scores.get(m2.getAbbr()+(use_percentile ? " percentile" : ""));
 				break;
 			case 2:
-				double ry0 = (d.scores.get(m1.getAbbr())-m1.mean)/m1.sd;
-				double ry1 = (d.scores.get(m2.getAbbr())-m2.mean)/m2.sd;
-				rx = d.scores.get(mode2_xaxis);
+				double ry0 = (d.scores.get(m1.getAbbr()+(use_percentile ? " percentile" : "")));//-(m1.mean)/m1.sd;
+				double ry1 = (d.scores.get(m2.getAbbr()+(use_percentile ? " percentile" : "")));//-m2.mean)/m2.sd;
+				rx = d.scores.get(mode2_xaxis+(x_axis_use_percentile ? " percentile" : ""));
 				ry = ry0-ry1;
 				break;
 			}
@@ -362,7 +396,7 @@ public class Master extends JFrame {
 	        graphics2.setStroke(new BasicStroke((int)fsaa));
 	        graphics2.setFont(new Font("Arial",0,20));
 	        
-	        DrawScaled graphics = new DrawScaled(graphics2,_width/1000.0,_height/1000.0,fsaa);
+	        DrawScaled graphics = new DrawScaled(graphics2,_width/(double)size,_height/(double)size,fsaa);
 	        graphics.setColor(Color.white);
 	        graphics.fillRect(0, 0, (int)_width, (int)_height);
 
