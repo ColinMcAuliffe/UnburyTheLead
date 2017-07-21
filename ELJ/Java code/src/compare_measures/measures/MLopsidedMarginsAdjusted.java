@@ -2,16 +2,16 @@ package compare_measures.measures;
 
 import compare_measures.Draw;
 
-public class MLopsidedMarginsCentered extends aMeasure {
+public class MLopsidedMarginsAdjusted extends aMeasure {
 
 	@Override
 	public String getName() {
-		return "Lopsided Margins Centered (Multiplicatively)";
+		return "Lopsided Margins Adjusted";
 	}
 
 	@Override
 	public String getAbbr() {
-		return "LMGC";
+		return "LMCA";
 	}
 
 	@Override
@@ -20,13 +20,14 @@ public class MLopsidedMarginsCentered extends aMeasure {
 		double sum_rep = 0;
 		double count_dem = 0;
 		double count_rep = 0;
-		for( double d : draw.centered_district_pcts) {
+		for( double e : draw.district_pcts) {
+			double d = e;// - draw.popular_pct+0.5;
 			if( d > 0.5) {
-				sum_rep += d-0.5;
+				sum_rep += d;//-0.5;
 				count_rep++;
 			}
 			if( d < 0.5) {
-				sum_dem += 0.5-d;
+				sum_dem += 1.0-d;
 				count_dem++;
 			}
 		}
@@ -36,7 +37,8 @@ public class MLopsidedMarginsCentered extends aMeasure {
 		double avg_dem = sum_dem/count_dem;
 		double avg_rep = sum_rep/count_rep;
 		
-		return avg_dem-avg_rep;
+		return (avg_dem-avg_rep)/(draw.popular_pct);
+		//return avg_dem/(1.0-draw.popular_pct)-avg_rep/(draw.popular_pct);
 	}
 
 	@Override

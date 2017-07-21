@@ -25,10 +25,17 @@ public class Master extends JFrame {
 	
 	static int show = 3;
 	static int graph_mode = 2;
-	boolean use_percentile = false;
-	boolean x_axis_use_percentile = false;
+	boolean use_percentile = true;
+	boolean x_axis_use_percentile = true;
 	
-	static String mode2_xaxis = "Vote";
+	static String[] mode2_xaxises = 
+			new String[]{
+					"Vote",
+					"Seats",
+					"Spread",
+					"TotAsym",
+			};
+	String mode2_xaxis = "Vote";
 	//static String mode2_xaxis = "Seats";
 	//static String mode2_xaxis = "Spread";
 	//static String mode2_xaxis = "TotAsym";
@@ -47,7 +54,16 @@ public class Master extends JFrame {
 	public DrawPanel panel = null;
 	
 	public static void main(String[] ss) {
-		new Master().show();
+		if( graph_mode == 2) {
+			for( String s : mode2_xaxises) {
+				Master m = new Master();
+				m.mode2_xaxis = s;
+				m.show();
+				
+			}
+		} else {
+			new Master().show();
+		}
 	}
 
 	
@@ -91,6 +107,8 @@ public class Master extends JFrame {
 		all_measures.add(new MEfficiencyGap());
 		all_measures.add(new MLopsidedMargins());
 		all_measures.add(new MLopsidedMarginsCentered());
+		all_measures.add(new MLopsidedMarginsCentered2());
+		all_measures.add(new MLopsidedMarginsAdjusted());
 		all_measures.add(new MBlurred());
 		
 		switch(show) {
@@ -109,52 +127,67 @@ public class Master extends JFrame {
 			x_measures.add(new MSeats());
 			x_measures.add(new MVoteVariance());
 			x_measures.add(new MNagle());
+			
 			y_measures.add(new MNagle());
 			y_measures.add(new MBlurred());
 			y_measures.add(new MSpecAsym());
 			y_measures.add(new MGrofman());
 			y_measures.add(new MMeanMinusMedian());
 			y_measures.add(new MLopsidedMarginsCentered());
+			y_measures.add(new MLopsidedMarginsCentered2());
 			y_measures.add(new MEfficiencyGap());
 			y_measures.add(new MLopsidedMargins());
+			//y_measures.add(new MLopsidedMarginsAdjusted());
 			break;
 		case 2:
 			x_measures.add(new MNagle());
 			x_measures.add(new MSpecAsym());
 			x_measures.add(new MGrofman());
 			x_measures.add(new MMeanMinusMedian());
+			x_measures.add(new MLopsidedMarginsCentered());
+			x_measures.add(new MLopsidedMarginsCentered2());
 			x_measures.add(new MEfficiencyGap());
 			x_measures.add(new MLopsidedMargins());
-			x_measures.add(new MLopsidedMarginsCentered());
+			//x_measures.add(new MLopsidedMarginsAdjusted());
+			
 			y_measures.add(new MNagle());
 			y_measures.add(new MBlurred());
 			y_measures.add(new MSpecAsym());
 			y_measures.add(new MGrofman());
 			y_measures.add(new MMeanMinusMedian());
 			y_measures.add(new MLopsidedMarginsCentered());
+			y_measures.add(new MLopsidedMarginsCentered2());
 			y_measures.add(new MEfficiencyGap());
 			y_measures.add(new MLopsidedMargins());
+			//y_measures.add(new MLopsidedMarginsAdjusted());
 			break;
 		case 3:
 			x_measures.add(new MPopularVote());
 			x_measures.add(new MSeats());
 			x_measures.add(new MVoteVariance());
+			
 			x_measures.add(new MNagle());
-			x_measures.add(new MBlurred());
+			
+			//x_measures.add(new MBlurred());
 			x_measures.add(new MSpecAsym());
 			x_measures.add(new MGrofman());
 			x_measures.add(new MMeanMinusMedian());
 			x_measures.add(new MLopsidedMarginsCentered());
+			x_measures.add(new MLopsidedMarginsCentered2());
 			x_measures.add(new MEfficiencyGap());
 			x_measures.add(new MLopsidedMargins());
+			//x_measures.add(new MLopsidedMarginsAdjusted());
+			
 			y_measures.add(new MNagle());
-			y_measures.add(new MBlurred());
+			//y_measures.add(new MBlurred());
 			y_measures.add(new MSpecAsym());
 			y_measures.add(new MGrofman());
 			y_measures.add(new MMeanMinusMedian());
 			y_measures.add(new MLopsidedMarginsCentered());
+			y_measures.add(new MLopsidedMarginsCentered2());
 			y_measures.add(new MEfficiencyGap());
 			y_measures.add(new MLopsidedMargins());
+			//y_measures.add(new MLopsidedMarginsAdjusted());
 			break;
 		}
 		
