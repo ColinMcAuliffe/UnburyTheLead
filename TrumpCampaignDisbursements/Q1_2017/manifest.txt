@@ -1,0 +1,39 @@
+Time: 2017-07-17 14:44:47.325319 (UTC)
+Resource: /v1/schedules/schedule_b/
+*Count: 574
+Filters:
+
+*Note: The record count displayed on the website is an estimate. The record count in this manifest is accurate and will equal the rows in the accompanying CSV file.
+
+last_disbursement_date: None
+When sorting by `disbursement_date`, this is populated with the `disbursement_date` of the last result. However, you will need to pass the index of that last result to `last_index` to get the next page.
+
+min_date: 2017-01-01
+Minimum date
+
+sort_null_only: False
+Toggle that filters out all rows having sort column that is non-null
+
+max_date: 2018-12-31
+Maximum date
+
+two_year_transaction_period: 2018
+This is a two-year period that is derived from the year a transaction took place in the
+Itemized Schedule A and Schedule B tables. In cases where we have the date of the transaction
+(contribution_receipt_date in schedules/schedule_a, disbursement_date in schedules/schedule_b)
+the two_year_transaction_period is named after the ending, even-numbered year. If we do not
+have the date  of the transation, we fall back to using the report year (report_year in both
+tables) instead,  making the same cycle adjustment as necessary. If no transaction year is
+specified, the results default to the most current cycle.
+
+api_key: DEMO_KEY
+API key for https://api.data.gov. Get one at https://api.data.gov/signup.
+
+committee_id: C00580100
+A unique identifier assigned to each committee or filer registered with the FEC. In general committee id's begin with the letter C which is followed by eight digits.
+
+last_disbursement_amount: None
+When sorting by `disbursement_amount`, this is populated with the `disbursement_amount` of the last result.  However, you will need to pass the index of that last result to `last_index` to get the next page.
+
+last_index: None
+Index of last result from previous page
