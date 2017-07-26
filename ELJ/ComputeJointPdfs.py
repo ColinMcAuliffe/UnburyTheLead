@@ -40,8 +40,17 @@ allBins = [binsSA,binsGA,binsMM,binsEG]
 binsT = np.linspace(-6.,6.,100)
 limit = 0.03
 perm = [(a, b) for a in range(4) for b in range(4) if (a < b)]
+perm6= [(a, b) for a in range(6) for b in range(6) if (a < b)]
+metricNames = ["SA","GA","MM","EG","TA","WA"]
+metricTypes = ["d","d","c","c","c","c"]
+expV = ['exp'+n for n in metricNames]
+stdV = ['std'+n for n in metricNames]
+prOpName = ['prOp_'+metricNames[i]+"_"+metricNames[j] for i,j in perm6]
+corrName = ['corr_'+metricNames[i]+"_"+metricNames[j] for i,j in perm6]
+MIName   = ['MI_'+metricNames[i]+"_"+metricNames[j] for i,j in perm6]
+combName = [metricNames[i]+"_"+metricNames[j] for i,j in perm6]
 #Compute and plot seats votes measures{{{1
-#data = [['State','cycle','meanPopVote','expAsym','expGA','expMM','expEG','covAsym','covGA','covMM','covEG','prOp_SA-GA','prOp_SA-MM','prOp_SA-EG','prOp_GA-MM','prOp_GA-EG','prOp_MM-EG','corr_SA-GA','corr_SA-MM','corr_SA-EG','corr_GA-MM','corr_GA-EG','corr_MM-EG','MI_SA-GA','MI_SA-MM','MI_SA-EG','MI_GA-MM','MI_GA-EG','MI_MM-EG','ndist']]
+#data = [['State','cycle','meanPopVote']+expV+stdV+prOpName+corrName+MIName+['ndist']]
 #
 ## gfAsym vs spAsym | mmd vs spAsym | EG vs spAsym
 ##                  | mmd vs gfAsym | EG vs gfAsym
@@ -97,98 +106,64 @@ perm = [(a, b) for a in range(4) for b in range(4) if (a < b)]
 #            fig.savefig(os.path.join(figDir,abbr+str(cnm)+"sct.png"))
 #            plt.close()
 #
-#            expAsym = np.mean(results[0,:])/float(ndist)
-#            expGA   = np.mean(results[1,:])/float(ndist)
-#            expMM   = np.mean(results[2,:])
-#            expEG   = np.mean(results[3,:])
-#            #covAsym = np.std(results[0,:]*100./float(ndist),ddof=1)/np.abs(expAsym*100.)
-#            #covGA   = np.std(results[1,:]*100./float(ndist),ddof=1)/np.abs(expGA*100.)
-#            #covMM   = np.std(results[2,:]*100.,ddof=1)/np.abs(expMM*100.)
-#            #covEG   = np.std(results[3,:]*100.,ddof=1)/np.abs(expEG*100.)
-#            covAsym = np.std(results[0,:]/float(ndist),ddof=1)
-#            covGA   = np.std(results[1,:]/float(ndist),ddof=1)
-#            covMM   = np.std(results[2,:],ddof=1)
-#            covEG   = np.std(results[3,:],ddof=1)
+#            expVals  = [np.mean(results[i,:]) for i in range(6)]
+#            stdVals  = [np.std(results[i,:],ddof=1) for i in range(6)]
+#            prOpVals = [getPrOp(results[i,:],results[j,:]) for i,j in perm6]
+#            corrVals = [stats.pearsonr(results[i,:],results[j,:])[0] for i,j in perm6]
 #
-#            prOp_SA_GA = getPrOp(results[0,:],results[1,:])
-#            prOp_SA_MM = getPrOp(results[0,:],results[2,:])
-#            prOp_SA_EG = getPrOp(results[0,:],results[3,:])
-#            prOp_GA_MM = getPrOp(results[1,:],results[2,:])
-#            prOp_GA_EG = getPrOp(results[1,:],results[3,:])
-#            prOp_MM_EG = getPrOp(results[2,:],results[3,:])
-#
-#            MI_SA_GA = getMI(results[0,:],results[1,:],[binsSA,binsGA])
-#            MI_SA_MM = getMI(results[0,:],results[2,:],[binsSA,binsMM])
-#            MI_SA_EG = getMI(results[0,:],results[3,:],[binsSA,binsEG])
-#            MI_GA_MM = getMI(results[1,:],results[2,:],[binsGA,binsMM])
-#            MI_GA_EG = getMI(results[1,:],results[3,:],[binsGA,binsEG])
-#            MI_MM_EG = getMI(results[2,:],results[3,:],[binsMM,binsEG])
+#            MIVals = []
+#            for i,j in perm6:
+#                ti = metricTypes[i]
+#                tj = metricTypes[j]
+#                if ti == 'd' and tj == 'd':
+#                    MI = getMI(results[i,:],results[j,:],'dd',bins=[binsSA,binsGA])
+#                elif ti == 'c' and tj == 'd':
+#                    MI = getMI(results[i,:],results[j,:],'cd')
+#                elif ti == 'd' and tj == 'c':
+#                    MI = getMI(results[j,:],results[i,:],'cd')
+#                elif ti == 'c' and tj == 'c':
+#                    MI = getMI(results[i,:],results[j,:],'cc')
+#                MIVals.append(MI)
 #
 #
-#            corr_SA_GA = stats.pearsonr(results[0,:],results[1,:])[0]
-#            corr_SA_MM = stats.pearsonr(results[0,:],results[2,:])[0]
-#            corr_SA_EG = stats.pearsonr(results[0,:],results[3,:])[0]
-#            corr_GA_MM = stats.pearsonr(results[1,:],results[2,:])[0]
-#            corr_GA_EG = stats.pearsonr(results[1,:],results[3,:])[0]
-#            corr_MM_EG = stats.pearsonr(results[2,:],results[3,:])[0]
-#            data.append([abbr,cnm,meanPopVote,expAsym,expGA,expMM,expEG,covAsym,covGA,covMM,covEG,prOp_SA_GA,prOp_SA_MM,prOp_SA_EG,prOp_GA_MM,prOp_GA_EG,prOp_MM_EG,corr_SA_GA,corr_SA_MM,corr_SA_EG,corr_GA_MM,corr_GA_EG,corr_MM_EG,MI_SA_GA,MI_SA_MM,MI_SA_EG,MI_GA_MM,MI_GA_EG,MI_MM_EG,float(ndist)])
+#            data.append([abbr,cnm,meanPopVote]+expVals+stdVals+prOpVals+corrVals+MIVals+[float(ndist)])
 #            
 #list2df(data,os.path.join(dataDir,"jointPdfs"))
 data = pd.read_csv(os.path.join(dataDir,"jointPdfs.csv"))
 dataClose = data[np.abs(0.5-data['meanPopVote']) <= 0.03]
 
-fig = plt.figure()
-ax = fig.add_subplot(111)
-ax.scatter(np.abs(0.5-data['meanPopVote']),data['prOp_MM-EG'])
-fig.savefig(os.path.join(figDir,"prOp_SA-EG.png"))
+fig, axes = plt.subplots(4, 4, sharey=True,sharex=True,figsize=(12,12))
+idx = 0
+for i in range(4):
+    for j in range(4):
+        if idx < 14:
+            axes[i][j].scatter(np.abs(0.5-data['meanPopVote']),data[MIName[idx]],color='b',label=combName[idx])
+            axes[i][j].legend()
+            axes[i][j].grid()
+        idx+=1
 
-fig = plt.figure()
-ax = fig.add_subplot(111)
-ax.scatter(np.abs(data['expAsym']),data['prOp_MM-EG'])
-fig.savefig(os.path.join(figDir,"prOp_SA-EG.png"))
-
-fig = plt.figure()
-ax = fig.add_subplot(111)
-ax.scatter(data['ndist'],data['prOp_MM-EG'])
-fig.savefig(os.path.join(figDir,"prOp_SA-EG.png"))
-
-fig = plt.figure()
-ax = fig.add_subplot(111)
-ax.scatter(data['expMM'],data['expEG'])
-ax.scatter(dataClose['expMM'],dataClose['expEG'],color='g')
-fig.savefig(os.path.join(figDir,"prOp_SA-EG.png"))
-
-fig = plt.figure()
-ax = fig.add_subplot(111)
-ax.scatter(data['ndist'],data['covMM'])
-ax.scatter(data['ndist'],data['covEG'],color='g')
-ax.scatter(data['ndist'],data['covAsym'],color='r')
-fig.savefig(os.path.join(figDir,"prOp_SA-EG.png"))
-
-fig, axes = plt.subplots(2, 3, sharey=True,sharex=True)
-axes[0][0].scatter(np.abs(0.5-data['meanPopVote']),data['MI_SA-GA'],color='b',label='SA-GA')
-axes[0][0].legend()
-axes[0][0].grid()
-
-axes[0][1].scatter(np.abs(0.5-data['meanPopVote']),data['MI_SA-MM'],color='g',label='SA-MM')
-axes[0][1].legend()
-axes[0][1].grid()
-
-axes[0][2].scatter(np.abs(0.5-data['meanPopVote']),data['MI_SA-EG'],color='r',label='SA-EG')
-axes[0][2].legend()
-axes[0][2].grid()
-
-axes[1][0].scatter(np.abs(0.5-data['meanPopVote']),data['MI_GA-MM'],color='c',label='GA-MM')
-axes[1][0].legend()
-axes[1][0].grid()
-
-axes[1][1].scatter(np.abs(0.5-data['meanPopVote']),data['MI_GA-EG'],color='k',label='GA-EG')
-axes[1][1].legend()
-axes[1][1].grid()
-
-axes[1][2].scatter(np.abs(0.5-data['meanPopVote']),data['MI_MM-EG'],color='m',label='MM-EG')
-axes[1][2].legend()
-axes[1][2].grid()
 fig.savefig(os.path.join(figDir,"MI.png"))
 
+fig, axes = plt.subplots(4, 4, sharey=True,sharex=True,figsize=(12,12))
+idx = 0
+for i in range(4):
+    for j in range(4):
+        if idx < 14:
+            axes[i][j].scatter(np.abs(0.5-data['meanPopVote']),data[prOpName[idx]],color='b',label=combName[idx])
+            axes[i][j].legend()
+            axes[i][j].grid()
+        idx+=1
 
+fig.savefig(os.path.join(figDir,"prOp.png"))
+
+fig, axes = plt.subplots(4, 4, sharey=True,sharex=True,figsize=(12,12))
+idx = 0
+for i in range(4):
+    for j in range(4):
+        if idx < 14:
+            axes[i][j].scatter(np.abs(0.5-data['meanPopVote']),data[corrName[idx]],color='b',label=combName[idx])
+            axes[i][j].legend()
+            axes[i][j].grid()
+        idx+=1
+
+fig.savefig(os.path.join(figDir,"corr.png"))

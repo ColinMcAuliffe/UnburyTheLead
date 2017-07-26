@@ -4,6 +4,7 @@ import os
 from scipy import stats
 from sklearn.metrics import mutual_info_score
 import matplotlib.pyplot as plt
+import entropy_estimators as ee
 
 def getDemVotesAndSeats(dem,rep):
     dem_total = float(np.sum(dem))
@@ -59,6 +60,39 @@ def get_EfficiencyGap(dem,rep):
         demPct = dem/(dem+rep)
         demSeats = float(len(demPct[demPct>=0.5]))/nseats
         return 2.*popVote - demSeats - 0.5
+    else:
+        return 0.
+    
+def get_TotalAsymFromCenteredPct(demPct):
+    #Sort
+    nseats = float(len(demPct))
+
+    if nseats > 1:
+        dem = np.sort(demPct)
+        rep = 1.-dem[::-1]
+        return np.mean(np.abs(dem-rep))
+    else:
+        return 0.
+
+def get_WeightedAsymFromCenteredPct(demPct,stateBeta):
+    #Sort
+    nseats = float(len(demPct))
+
+    if nseats > 1:
+        dem = np.sort(demPct)
+        rep = 1.-dem[::-1]
+	both = np.sort(np.concatenate((dem,rep)))
+	#get weights
+	a = stateBeta[0]
+	b = stateBeta[1]
+	beta = stats.beta(a,b)
+
+	demPad1 = both[0:-1].tolist()
+	demPad2 = both[1:].tolist()
+	w  = np.array([beta.cdf(x2)-beta.cdf(x1) for x1,x2 in zip(demPad1,demPad2)])
+	dx = np.array([x2-x1 for x1,x2 in zip(demPad1,demPad2)])
+	dy = np.array([len(rep[rep>=x])-len(dem[dem>=x]) for x in both[1:]])
+        return np.sum(w*dx*dy)
     else:
         return 0.
 
@@ -216,7 +250,11 @@ def getAllSVMetrics(params,nsims=10000):
     mmd     = np.apply_along_axis(get_MMDFromCenteredPct,0,results)
     #Efficiency Gap
     eg      = np.apply_along_axis(get_EGFromCenteredPct,0,results)
-    return np.array([spAsym,gfAsym,mmd,eg])
+    #Total asymmetry
+    ttAsym  = np.apply_along_axis(get_TotalAsymFromCenteredPct,0,results[0:-1])
+    #Weighted Asymmetry
+    wtAsym  = np.apply_along_axis(get_WeightedAsymFromCenteredPct,0,results[0:-1],params[-1])
+    return np.array([spAsym,gfAsym,mmd,eg,ttAsym,wtAsym])
 
 
 def convolveBetas(params,npoints=1000):
@@ -316,9 +354,20 @@ def year2Cycle(year):
     else:
         return 2010
 
-def getMI(x, y, bins):
-    fig, ax = plt.subplots()
-    c_xy = ax.hist2d(x, y,bins=bins)[0]
-    mi = mutual_info_score(None, None, contingency=c_xy)
-    plt.close()
+def getMI(x, y, dType,bins=None):
+    if dType == 'cc':
+        x = [[i] for i in x]
+        y = [[i] for i in y]
+        mi = ee.mi(x,y)
+    elif dType == 'cd':
+        x = [[i] for i in x]
+        y = [[i] for i in y]
+        mi = ee.micd(x,y)
+    elif dType == 'dd':
+        #mi = ee.midd(x,y)
+        fig, ax = plt.subplots()
+        c_xy = ax.hist2d(x, y,bins=bins)[0]
+        mi = mutual_info_score(None, None, contingency=c_xy)
+        plt.close()
+        
     return mi
