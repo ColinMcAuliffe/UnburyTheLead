@@ -45,12 +45,24 @@ def isTrumpBusiness(row,key="recipient_nm"):
     #exclude reimbusements for trump surrogates named trump, and for transfers to trump committees
     exclude = ['TRUMP, ERIC','TRUMP, DONALD JR.','TRUMP, DONALD J.','TRUMP, LARA','TRUMP, ERIC','TRUMP, DONALD JR','TRUMP MAKE AMERICA GREAT AGAIN COMMITTEE','TRUMP VICTORY']
     
-    if "TRUMP" in recipientName and recipientName not in exclude:
+    #if "DJT" in recipientName or "DT" in recipientName:
+    #if "HUDSON" in recipientName or "MIDLAND" in recipientName:
+    #if "TIGL" in recipientName or "THC" in recipientName:
+    #if "ACE ENTERTAINMENT" in recipientName or "ULTIMATE" in recipientName:
+    #if "HELICOPTER" in recipientName or "WALL STREET" in recipientName:
+    #if "TRAVEL ENTERPRISES" in recipientName or "TIHT" in recipientName:
+    #if "RESTAURANT 40" in recipientName or "SUSSEX" in recipientName:
+    #if "DSN" in recipientName or "GOLF" in recipientName:
+    if "WALL" in recipientName or "CHELSEA" in recipientName:
         return True
-    if recipientName == "TAG AIR, INC.":
-        return True
-    if "MAR-A-LAGO" in recipientName:
-        return True
+    #if "TRUMP" in recipientName and recipientName not in exclude:
+    #    return True
+    #if recipientName == "TAG AIR, INC.":
+    #    return True
+    #if "MAR-A-LAGO" in recipientName:
+    #    return True
+    #if "DORAL GOLF RESORT" in recipientName:
+    #    return True
 
     return False
 
@@ -91,51 +103,57 @@ for column in dfTrump16:
 
 #Concatenate
 dfTrump = pd.concat([dfTrumpQ1_17,dfTrumpQ2_17,dfTrump16])
-disbTotals = getDisbTotalsByRecipient(dfTrump)
+disbTotals = getDisbTotalsByRecipient(dfTrumpQ2_17)
 for i,j in disbTotals[0:10]:
     print i,j
 print "----"
 
 dfTrumpLC = dfTrump[dfTrump["disb_desc"]=="LEGAL CONSULTING"]
-dfTrumpLC = dfTrumpLC[dfTrumpLC.apply(isTrumpBusiness,axis=1)]
-print dfTrumpLC
+dfTrumpLC.to_csv("TrumpCampaignLegalConsulting.csv")
+disbTotals = getDisbTotalsByRecipient(dfTrumpLC)
+tabData = [["Recipient","Total Disbursements for Legal Consulting"]]
+utl.html_table(tabData+disbTotals,"legalConsulting.html")
 
-#Get disbursements to trump businesses only
+
 dfTrump16 = dfTrump16[dfTrump16.apply(isTrumpBusiness,axis=1)]
-dfTrumpQ1_17 = dfTrumpQ1_17[dfTrumpQ1_17.apply(isTrumpBusiness,axis=1)]
-dfTrumpQ2_17 = dfTrumpQ2_17[dfTrumpQ2_17.apply(isTrumpBusiness,axis=1)]
-print "Total disbursements to trump companies through 2016 ",dfTrump16["disb_amt"].sum()
-print "Total disbursements to trump companies in Q1 2017 "  ,dfTrumpQ1_17["disb_amt"].sum()
-print "Total disbursements to trump companies in Q2 2017 "  ,dfTrumpQ2_17["disb_amt"].sum()
-#tabulate results by recipient
-tabData = [["Recipient","Total Disbursements"]]
+print dfTrump16
 
-disbTotals = getDisbTotalsByRecipient(dfTrump16)
-utl.html_table(tabData+disbTotals,"disbursements16.html")
-
-disbTotals = getDisbTotalsByRecipient(dfTrumpQ1_17)
-utl.html_table(tabData+disbTotals,"disbursementsQ1_17.html")
-
-disbTotals = getDisbTotalsByRecipient(dfTrumpQ2_17)
-utl.html_table(tabData+disbTotals,"disbursementsQ2_17.html")
-
-#Concatenate
-dfTrump = pd.concat([dfTrumpQ1_17,dfTrumpQ2_17,dfTrump16])
-print "Total disbursements to trump companies ",dfTrump["disb_amt"].sum()
-disbTotals = getDisbTotalsByRecipient(dfTrump)
-utl.html_table(tabData+disbTotals,"disbursementsAll.html")
-
-#tabulate results by recipient
-uniqueRecipients = set(dfTrump["recipient_nm"].tolist())
-tabData = [["Recipient","Total Disbursements"]]
-    
-fig = plt.figure(figsize=(12,6))
-ax  = fig.add_subplot(111)
-disbDates,cumDisbs         = getCumulativeDisbursements(dfTrump)
-ax.plot(disbDates,cumDisbs,label="Cumulative Disbursements to Trump Companies",color='r',linewidth=3)
-ax.set_ylabel("Millions of Dollars")
-ax.grid()
-ax.set_xlim((disbDates[0],datetime(2017, 7, 1, 0, 0)))
-ax.legend(loc=2)
-fig.savefig(os.path.join(figDir,"disbursements.png"))
-
+##Get disbursements to trump businesses only
+#dfTrump16 = dfTrump16[dfTrump16.apply(isTrumpBusiness,axis=1)]
+#dfTrumpQ1_17 = dfTrumpQ1_17[dfTrumpQ1_17.apply(isTrumpBusiness,axis=1)]
+#dfTrumpQ2_17 = dfTrumpQ2_17[dfTrumpQ2_17.apply(isTrumpBusiness,axis=1)]
+#print "Total disbursements to trump companies through 2016 ",dfTrump16["disb_amt"].sum()
+#print "Total disbursements to trump companies in Q1 2017 "  ,dfTrumpQ1_17["disb_amt"].sum()
+#print "Total disbursements to trump companies in Q2 2017 "  ,dfTrumpQ2_17["disb_amt"].sum()
+##tabulate results by recipient
+#tabData = [["Recipient","Total Disbursements"]]
+#
+#disbTotals = getDisbTotalsByRecipient(dfTrump16)
+#utl.html_table(tabData+disbTotals,"disbursements16.html")
+#
+#disbTotals = getDisbTotalsByRecipient(dfTrumpQ1_17)
+#utl.html_table(tabData+disbTotals,"disbursementsQ1_17.html")
+#
+#disbTotals = getDisbTotalsByRecipient(dfTrumpQ2_17)
+#utl.html_table(tabData+disbTotals,"disbursementsQ2_17.html")
+#
+##Concatenate
+#dfTrump = pd.concat([dfTrumpQ1_17,dfTrumpQ2_17,dfTrump16])
+#print "Total disbursements to trump companies ",dfTrump["disb_amt"].sum()
+#disbTotals = getDisbTotalsByRecipient(dfTrump)
+#utl.html_table(tabData+disbTotals,"disbursementsAll.html")
+#
+##tabulate results by recipient
+#uniqueRecipients = set(dfTrump["recipient_nm"].tolist())
+#tabData = [["Recipient","Total Disbursements"]]
+#    
+#fig = plt.figure(figsize=(12,6))
+#ax  = fig.add_subplot(111)
+#disbDates,cumDisbs         = getCumulativeDisbursements(dfTrump)
+#ax.plot(disbDates,cumDisbs,label="Cumulative Disbursements to Trump Companies",color='r',linewidth=3)
+#ax.set_ylabel("Millions of Dollars")
+#ax.grid()
+#ax.set_xlim((disbDates[0],datetime(2017, 7, 1, 0, 0)))
+#ax.legend(loc=2)
+#fig.savefig(os.path.join(figDir,"disbursements.png"))
+#
