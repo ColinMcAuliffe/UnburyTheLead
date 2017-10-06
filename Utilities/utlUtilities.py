@@ -67,7 +67,7 @@ def plotPolygon(geom,ax,proj=None,scale=None,shift=None,color='k',facecolor=None
         ax.add_patch(Polygon(zip(x,y),facecolor=facecolor,edgecolor=color,linewidth=linewidth))
     return ax
    
-def plotShapely(geom,ax,proj=None,scale=None,shift=None,bbox=None,color='k',facecolor=None,linewidth=0.5):
+def plotShapely(geom,ax,proj=None,scale=None,shift=None,bbox=None,color='k',facecolor=None,linewidth=0.5,dotSize=None,dotColor=None,dotShift=None):
     if geom.geom_type == "Polygon":
         ax = plotPolygon(geom,ax,proj=proj,scale=scale,shift=shift,color=color,facecolor=facecolor,linewidth=linewidth)
     elif geom.geom_type == "MultiPolygon":
@@ -77,10 +77,17 @@ def plotShapely(geom,ax,proj=None,scale=None,shift=None,bbox=None,color='k',face
             else:
                 if part.intersects(bbox):
                     ax = plotPolygon(part,ax,proj=proj,scale=scale,shift=shift,color=color,facecolor=facecolor,linewidth=linewidth)
+    if dotSize is not None:
+        centroid = geom.centroid
+        centroid = proj(centroid.x,centroid.y)
+        if dotShift is not None:
+            centroid = [centroid[i]+dotShift[i] for i in range(2)]
+        circle = plt.Circle(centroid, dotSize, color=dotColor)
+        ax.add_artist(circle)
     
     return ax
 
-def plotGDF(fname,gdf,projection,colorby=None,boolDict=None,colorCol=None,cmap=None,cbar=True,cmapScale=1.,title=None,linewidth=0.5,climits=None,cfmt="%3.1f"):
+def plotGDF(fname,gdf,projection,colorby=None,boolDict=None,colorCol=None,cmap=None,cbar=True,cmapScale=1.,title=None,linewidth=0.5,climits=None,cfmt="%3.2f",dotby=None,dotCol=None,dotColor=None,dotShift=None,fig=None,ax=None,save=True,linecolor='k',lims=None,Annotate=None,AnnCoords=None):
     if projection == "USALL":
         #use Albers equal area projection for contiguous 48, local state plane projections for HI and AK
         proj   = pyproj.Proj("+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=37.5 +lon_0=-96 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs")
@@ -89,6 +96,8 @@ def plotGDF(fname,gdf,projection,colorby=None,boolDict=None,colorCol=None,cmap=N
     elif projection == "LOWER48":
         #use Albers equal area projection for contiguous 48
         proj   = pyproj.Proj("+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=37.5 +lon_0=-96 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs")
+    elif projection is None:
+        proj = None
 
     # data range
     if colorby == "data":
@@ -97,49 +106,90 @@ def plotGDF(fname,gdf,projection,colorby=None,boolDict=None,colorCol=None,cmap=N
         if climits is None:
             climits = (dmin,dmax)
 
-    fig = plt.figure()
-    ax  = fig.add_subplot(111)
+    if fig is None:
+        fig = plt.figure()
+        ax  = fig.add_subplot(111)
     for index,row in gdf.iterrows():
         geom = row.geometry
         if projection == "USALL":
-            if row.STATEFP == u"02":
+            if row.STATEFP == u"02": #Alaske
                 scale = .35
                 shift = (-1700000.,-1300000.)
                 cProj = projAK
                 bbox = None
-            elif row.STATEFP == u"15":
+                dotShift = None
+            elif row.STATEFP == u"15": #Hawaii
                 scale = None
                 shift = (-1100000.,-1200000.)
                 cProj = projHI
                 bbox  = shapely.geometry.box(-161.,-151.,18.,22.)
+                dotShift = None
+            elif row.STATEFP == u"09": #CT
+                scale = None
+                shift = None
+                cProj = proj
+                bbox  = None
+                dotShift = (0.,-1000000.)
             else:
                 scale = None
                 shift = None
                 cProj = proj
                 bbox = None
+                dotShift = None
         elif projection == "LOWER48":
             scale = None
             shift = None
             cProj = proj
             bbox = None
+        elif projection is None:
+            scale = None
+            shift = None
+            cProj = None
+            bbox = None
+
+        if dotCol is not None:
+            dotSize = 400.*np.sqrt(row[dotCol]/np.pi)
+        else:
+            dotSize = None
 
         if colorby is None:
-            ax = plotShapely(geom,ax,proj=cProj,scale=scale,shift=shift,onlyIdx=onlyIdx,color='k',linewidth=linewidth)
+            ax = plotShapely(geom,ax,proj=cProj,scale=scale,shift=shift,color=linecolor,linewidth=linewidth,dotSize=dotSize,dotColor=dotColor,dotShift=dotShift)
         elif colorby == "data":
             color = rgb2hex(cmap((row[colorCol]-climits[0])/(climits[1]-climits[0]))[:3])
-            ax = plotShapely(geom,ax,proj=cProj,scale=scale,shift=shift,bbox=bbox,color='k',facecolor=color,linewidth=linewidth)
+            ax = plotShapely(geom,ax,proj=cProj,scale=scale,shift=shift,bbox=bbox,color=linecolor,facecolor=color,linewidth=linewidth,dotSize=dotSize,dotColor=dotColor,dotShift=dotShift)
         elif colorby == "boolDict":
             color = boolDict["default"]
             for column,trueColor in boolDict["conditions"].iteritems():
                 if row[column]:
                     color = trueColor
-            ax = plotShapely(geom,ax,proj=cProj,scale=scale,shift=shift,bbox=bbox,color='k',facecolor=color,linewidth=linewidth)
+            ax = plotShapely(geom,ax,proj=cProj,scale=scale,shift=shift,bbox=bbox,color=linecolor,facecolor=color,linewidth=linewidth,dotSize=dotSize,dotColor=dotColor,dotShift=dotShift)
 
             
 
     ax.set_aspect("equal")
     ax.axis("off")
-    ax.autoscale_view()
+    if lims is None:
+        ax.autoscale_view()
+    else:
+        ax.set_xlim(lims[0])
+        ax.set_ylim(lims[1])
+
+    if Annotate is not None:
+        x1,x2 = ax.get_xlim()
+        y1,y2 = ax.get_ylim()
+        yd = y2-y1
+        xd = x2-x1
+        trans = ax.get_yaxis_transform()
+        for index,row in gdf.iterrows():
+            if (row[colorCol]-climits[0])/(climits[1]-climits[0]) < 0.25:
+                color = rgb2hex(cmap(0.9)[:3])
+            else:
+                color = 'w'
+            ax.annotate(s=str(index+1), xy=row[AnnCoords],horizontalalignment='center',color=color)
+            ax.annotate(s=str(index+1)+" - "+row[Annotate], xy=(0.98,y2),xycoords=trans,horizontalalignment='left',color='k', annotation_clip=False)
+            y2 = y2 - yd/float(len(gdf))
+
+
     
     if cmap is not None and cbar:
         ncolors = 10.
@@ -161,9 +211,10 @@ def plotGDF(fname,gdf,projection,colorby=None,boolDict=None,colorCol=None,cmap=N
     #Set title
     if title is not None:ax.set_title(title)
     
-    fig.savefig(fname)
-    plt.close()
-    return
+    if save:
+        fig.savefig(fname)
+        plt.close()
+    return fig,ax
 #Compute efficiency gap
 def getEfficiencyGap(df):
     demWinnersIdx = df[df['dem_votes'] > df['rep_votes']].index.tolist()
@@ -310,6 +361,16 @@ def IQRSkewTest(x):
     C = (X-M)/iqr
 
     return C
+
+def unstdSkewTest(x,var):
+    n = float(len(x))
+    if n < 3.: return 0.,1.
+    X = np.mean(x)
+    M = np.median(x)
+    C = X-M
+    p = 2.*(1.-stats.norm.cdf(np.abs(C)*np.sqrt(n/var)))
+
+    return C,p
 
 def cabilioSkewTest(x):
     n = float(len(x))
