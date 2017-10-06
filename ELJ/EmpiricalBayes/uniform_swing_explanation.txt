@@ -1,0 +1,49 @@
+
+Also a while back I think you mentioned that simulating mean centered districts helps account for some of the correlation between districts. Is this the case? if so how does that work I'm not quite seeing it.
+
+well it's a nice compromise between a matrix of correlations - which is an overfit - and no correlations at all.  it's one correlation.
+
+maybe it's clearer in reverse; in sampling a draw from the distributions.
+when you draw, you first draw from all of the beta distributions, then you draw from the statewide distribution.
+
+then you multiplicatively shift all of the beta distributions by your draw from the statewide distribution.
+this is where you're adding the correlation back in. you're shifting them all in the same direction - multiplicatively rather than additively.
+it may not be immediately obvious but that's what we're doing when we sample the seats votes curve at the actual vote percent.  we're multiplying all of our draws by the same amount, and then using THAT result as the actual district votes.
+
+if you look at it forward (making the distributions), any shared variation among the districts is going to shfit them all one direction in one election, and the other direction in another.  By removing the net shift, we're subtacting this shared variation.  So picture the shared variation is a normal curve with a variance of 1, that exists as a component of all of the district votes.  We're removing that component and repacing it with a normal curve with a variance of 0.
+
+
+Kevin Baas <happyjack27@gmail.com>
+Aug 11
+
+to Colin 
+let's pretend we're doing an arithmetic shift instead of multiplicative for a moment.
+let's hypothesis that the % of the ith district, Di, is the some of some intrinsic variation Vi plus some variation shared among all the districts, W.
+
+D1 = V1+W
+D2 = V2+W
+...
+
+so the statewide average is then:
+(sum(V)+N*W)/N = W +avg(V)
+
+We set that equal to a constant, say, 0.5, and solve for W:
+W = 0.5 - avg(V)
+
+Then substitute back in:
+D1' = V1+(0.5 - avg(V))
+D2' = V2+(0.5 - avg(V))
+...
+
+We've now removed the W component from D'.
+
+Furthermore as N increases, due to the law of large numbers, any variation not shared among the original D's - in other words, any variation not part of W, will approach 0.5,  thus making the D's approach simply V.
+
+Likewise, as N increases, W + avg(V) approaches W+0.5, meaning the statewide average encapsulates all universally shared correlation, as N grows large.
+
+
+Colin McAuliffe <therealcolinmcauliffe@gmail.com>
+Aug 11
+
+to me 
+Ok got it, thanks for the explanation. I think this is worth describing in the paper since it might not be clear at a first pass that this is how the 'uniform swing' mode is handled. Also would be interesting to do a scatter plot of the results of two sample draws to show that we are indeed capturing the uniform swing.
