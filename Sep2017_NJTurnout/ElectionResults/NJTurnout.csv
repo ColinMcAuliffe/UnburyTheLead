@@ -1,0 +1,566 @@
+,County Name,Municipality Name,Registered Voters,Ballots Cast
+0,atlantic,Absecon City,6066,4343
+1,atlantic,Atlantic City,20902,11797
+2,atlantic,Brigantine City,7071,4787
+3,atlantic,Buena Boro,2827,1821
+4,atlantic,Buena Vista Twp.,5152,3492
+5,atlantic,Corbin City,332,262
+6,atlantic,Egg Harbor City ,2787,1796
+7,atlantic,Egg Harbor Twp,29466,20569
+8,atlantic,Estell Manor City,1310,976
+9,atlantic,Folsom Boro,1237,915
+10,atlantic,Galloway Twp.,23868,17059
+11,atlantic,Hamilton Twp.,16899,11782
+12,atlantic,Hammonton ,9125,6577
+13,atlantic,Linwood City,5527,4037
+14,atlantic,Longport Boro,679,507
+15,atlantic,Margate City,4558,3476
+16,atlantic,Mullica Twp.,3923,2973
+17,atlantic,Northfield Twp.,6011,4451
+18,atlantic,Pleasantville City,10805,6131
+19,atlantic,Port Republic,929,704
+20,atlantic,Somers Point City,7252,4972
+21,atlantic,Ventnor City,6815,4511
+22,atlantic,Weymouth Twp.,1951,1478
+23,bergen,Allendale Boro,5162,3773
+24,bergen,Alpine Boro,1480,921
+25,bergen,Bergenfield Boro,16298,11653
+26,bergen,Bogota Boro,5244,3890
+27,bergen,Carlstadt  Boro,3860,2924
+28,bergen,Cliffside Park Boro,12979,8953
+29,bergen,ClosterBoro,5557,3952
+30,bergen,Cresskill Boro,5467,3953
+31,bergen,Demarest Boro,3491,2528
+32,bergen,Dumont Boro,11712,8787
+33,bergen,East Rutherford Boro,5380,3871
+34,bergen,Edgewater Boro,6456,4221
+35,bergen,Elmwood Park Boro,12582,8690
+36,bergen,Emerson Boro,5155,4019
+37,bergen,Englewood City,17699,12103
+38,bergen,Englewood Cliffs Boro,3773,2729
+39,bergen,Fair Lawn Boro,22745,16875
+40,bergen,Fairview Boro,5748,3800
+41,bergen,Fort Lee Boro,21308,14444
+42,bergen,Franklin Lakes Boro,8367,6131
+43,bergen,Garfield City,14816,9690
+44,bergen,Glen Rock Boro,8855,6787
+45,bergen,Hackensack City,22926,15913
+46,bergen,Harrington Park Boro,3510,2673
+47,bergen,Hasbrouck Heights Boro,8119,6195
+48,bergen,Haworth Boro,2565,1963
+49,bergen,Hillsdale Boro,7768,5935
+50,bergen,Ho-Ho-Kus Boro,3234,2462
+51,bergen,Leonia Boro,5370,3926
+52,bergen,Little Ferry  Boro,5688,3859
+53,bergen,Lodi Boro,13318,9003
+54,bergen,Lyndhurst Twp.,13215,9501
+55,bergen,Mahwah Twp.,17408,13108
+56,bergen,MaywoodBoro,6309,4660
+57,bergen,Midland Park Boro,5178,4100
+58,bergen,Montvale Boro,5780,4402
+59,bergen,Moonachie  Boro,1664,1161
+60,bergen,New Milford Boro,10556,7812
+61,bergen,North Arlington Boro,9594,7097
+62,bergen,Northvale Boro,3060,2250
+63,bergen,Norwood Boro,3824,2801
+64,bergen,Oakland Boro,9233,7013
+65,bergen,Old Tappan Boro,4318,3150
+66,bergen,Oradell Boro,6130,4796
+67,bergen,Palisades Park Boro,7735,4617
+68,bergen,Paramus Boro,18526,13434
+69,bergen,Park Ridge  Boro,6395,4977
+70,bergen,Ramsey Boro,11000,8426
+71,bergen,Ridgefield  Boro,6172,4333
+72,bergen,Ridgefield Park Village ,7433,5453
+73,bergen,Ridgewood Village ,17892,13308
+74,bergen,River Edge Boro,7477,5690
+75,bergen,River Vale Twp,7704,5781
+76,bergen,Rochelle Park Twp,3842,2852
+77,bergen,Rockleigh Boro,256,167
+78,bergen,Rutherford Boro,11661,8978
+79,bergen,Saddle Brook Twp,9360,6926
+80,bergen,Saddle River Boro,2803,1965
+81,bergen,South Hackensack Twp,1484,1094
+82,bergen,Teaneck Twp,28631,20152
+83,bergen,Tenafly Boro,9813,6759
+84,bergen,Teterboro ,41,26
+85,bergen,Upper Saddle River Boro,6330,4510
+86,bergen,Waldwick Boro,6880,5357
+87,bergen,Wallington Boro,5869,4039
+88,bergen,Washington Twp,7010,5484
+89,bergen,Westwood Boro,7517,5742
+90,bergen,Woodcliff Lake Boro,4741,3503
+91,bergen,Wood-Ridge Boro,5952,4632
+92,bergen,Wyckoff Twp,12937,9888
+93,burlington,Bass River Twp,1010,737
+94,burlington,Beverly City,1612,1051
+95,burlington,Bordentown City,2829,2074
+96,burlington,Bordentown Twp,7695,5711
+97,burlington,Burlington City ,6428,4205
+98,burlington,Burlington Twp,15641,11331
+99,burlington,Chesterfield Twp,3611,2763
+100,burlington,Cinnnaminson Twp,12407,9351
+101,burlington,Delanco Twp.,3435,2485
+102,burlington,Delran Twp.,11403,8312
+103,burlington,Eastampton Twp,4114,2913
+104,burlington,Edgewater Park Twp.,5383,3697
+105,burlington,Evesham Twp,34922,25055
+106,burlington,Fieldsboro Boro,384,275
+107,burlington,Florence Twp,8523,6265
+108,burlington,Hainesport Twp,4574,3444
+109,burlington,Lumberton Twp,8731,6346
+110,burlington,Mansfield Twp,6928,5415
+111,burlington,Maple Shade Twp.,12302,7907
+112,burlington,Medford Lakes Boro,3325,2498
+113,burlington,Medford Twp.,19136,14085
+114,burlington,Moorestown Twp.,16030,11994
+115,burlington,Mount Holly Twp.,5987,3901
+116,burlington,Mount Laurel Twp.,32210,23383
+117,burlington,New Hanover Twp.,827,474
+118,burlington,North Hanover Twp.,3762,2469
+119,burlington,Palmyra Boro,5167,3672
+120,burlington,Pemberton Boro,949,657
+121,burlington,Pemberton Township,15744,9676
+122,burlington,RiversideTwp.,4385,2783
+123,burlington,Riverton Boro,2069,1573
+124,burlington,Shamong Twp.,4985,3607
+125,burlington,Southampton Twp.,8181,5990
+126,burlington,Springfield Twp.,2525,1952
+127,burlington,Tabernacle Twp.,5442,3905
+128,burlington,Washington Twp.,534,380
+129,burlington,Westampton Twp.,6341,4634
+130,burlington,Willingboro Twp.,23163,16709
+131,burlington,Woodland Twp.,1018,727
+132,burlington,Wrightstown Boro,339,208
+133,camden,Audubon Boro,6532,4778
+134,camden,Audubon Park Boro,773,552
+135,camden,Barrington Boro,5279,3430
+136,camden,Bellmawr Boro,7365,5160
+137,camden,Berlin Boro,5324,3818
+138,camden,Berlin Township,3718,2507
+139,camden,Brooklawn Boro,1255,811
+140,camden,Camden City,41855,21089
+141,camden,Cherry Hill Twp.,54146,37930
+142,camden,Chesilhurst Boro,1120,719
+143,camden,Clementon Boro,3143,1989
+144,camden,Collingswood Boro,10535,7519
+145,camden,Gibbsboro Boro,1752,1271
+146,camden,Gloucester City ,6627,4123
+147,camden,Gloucester Twp.,44077,29982
+148,camden,Haddon Heights Boro,5866,4518
+149,camden,Haddon Twp.,11474,8600
+150,camden,Haddonfield Boro,9778,7280
+151,camden,Hi-Nella Boro,587,388
+152,camden,Laurel Springs Boro,1379,986
+153,camden,Lawnside Boro,2277,1540
+154,camden,Lindenwood Boro,10211,6070
+155,camden,Magnolia Boro,2958,2012
+156,camden,Merchantville Boro,2706,1872
+157,camden,Mount Ephriam Boro,3260,2240
+158,camden,Oaklyn Boro,2955,2074
+159,camden,Pennsauken  Twp.,23522,15304
+160,camden,Pine Hill Boro,6604,4233
+161,camden,Pine Valley Boro,12,11
+162,camden,Runnemede Boro,5677,3782
+163,camden,Somerdale Boro,3684,2504
+164,camden,Stratford Boro,4697,3336
+165,camden,Travistock Boro,9,8
+166,camden,Voorhees Twp.,21393,14862
+167,camden,Waterford Twp.,7665,5270
+168,camden,WinslowTwp.,25943,17868
+169,camden,Woodlynne Boro,1602,932
+170,may,Avalon Boro,1264,892
+171,may,Cape May City,2037,1498
+172,may,Cape May Point Boro,199,152
+173,may,Dennis Twp.,4840,3557
+174,may,Lower Twp.,15722,10997
+175,may,Middle Twp.,13702,9382
+176,may,North Wildwood City,3081,2123
+177,may,Ocean City,9249,6775
+178,may,Sea Isle City,1987,1439
+179,may,Stone Harbor Boro,714,514
+180,may,Upper Twp.,9781,7296
+181,may,West Cape May Boro,817,629
+182,may,West Wildwood Boro,422,306
+183,may,Wildwood City,3089,1702
+184,may,Wildwood Crest Boro,2483,1778
+185,may,Woodbine Boro,1414,837
+186,cumberland,Bridgeton City of,8457,4555
+187,cumberland,Commercial Twp,3111,1754
+188,cumberland,Deerfield Twp,2097,1356
+189,cumberland,Downe Twp,1066,723
+190,cumberland,Fairfield Twp,3568,2160
+191,cumberland,Greenwich Twp,596,438
+192,cumberland,Hopewell Twp,3147,2070
+193,cumberland,Lawrence Twp,1973,1250
+194,cumberland,Maurice River Twp,2234,1494
+195,cumberland,Millville City ,18877,10860
+196,cumberland,Shiloh Boro,342,256
+197,cumberland,Stow Creek Twp,994,722
+198,cumberland,Upper Deerfield Twp,5339,3585
+199,cumberland,Vineland City ,39838,23841
+200,essex,BellevilleTwp.,22632,13737
+201,essex,Bloomfield Twp.,33805,21713
+202,essex,Caldwell Boro,5702,3596
+203,essex,Cedar Grove Twp.,9568,6818
+204,essex,East Orange  City,44445,23731
+205,essex,Essex Fells City,1910,1317
+206,essex,Fairfield Twp.,5798,4003
+207,essex,Glen Ridge Boro,5872,4252
+208,essex,Irvington Twp.,33406,17714
+209,essex,Livingston Twp.,22664,15235
+210,essex,Maplewood Twp.,19357,13207
+211,essex,Millburn Twp.,15744,10116
+212,essex,Montclair Twp.,31610,21382
+213,essex,Newark City,163976,80348
+214,essex,North Caldwell Boro,5332,3699
+215,essex,Nutley   Twp.,20990,14397
+216,essex,Orange City ,17653,10008
+217,essex,Roseland Boro,5440,3846
+218,essex,South Orange Village Twp.,13621,8718
+219,essex,Verona Twp.,11163,8146
+220,essex,West Caldwell Twp.,8756,6222
+221,essex,West Orange Twp.,35003,22867
+222,gloucester,Clayton Boro,5628,3838
+223,gloucester,Deptford Twp.,21561,14526
+224,gloucester,East Greenwich Twp.,7726,5622
+225,gloucester,Elk Twp.,3177,2186
+226,gloucester,Franklin Twp.,11705,8025
+227,gloucester,Glassboro Boro,11512,7347
+228,gloucester,Greenwich Twp.,3689,2679
+229,gloucester,Harrison Twp.,9238,6912
+230,gloucester,Logan Twp.,4328,3016
+231,gloucester,Mantua Twp.,11313,8163
+232,gloucester,Monroe Twp.,25210,16910
+233,gloucester,National Park Boro,2006,1270
+234,gloucester,Newfield Boro,1175,802
+235,gloucester,Paulsboro Boro,3715,2231
+236,gloucester,Pitman Boro,6507,4762
+237,gloucester,South Harrison Twp.,2361,1762
+238,gloucester,Swedesboro Boro,1671,1044
+239,gloucester,Washington Twp.,36415,25510
+240,gloucester,Wenonah Boro,1812,1399
+241,gloucester,West Deptford Twp.,16031,11012
+242,gloucester,Westville Boro,2758,1748
+243,gloucester,Woodbury City,6678,4358
+244,gloucester,Woodbury Heights Boro,2310,1731
+245,gloucester,Woolwich Twp.,7977,5705
+246,hudson,Bayonne City,35585,23406
+247,hudson,East Newark Boro,973,613
+248,hudson,Guttenberg Town,5352,3486
+249,hudson,Harrison Town,6412,4030
+250,hudson,Hoboken City,38272,25652
+251,hudson,Jersey City,136227,84192
+252,hudson,Kearny Town,18622,12353
+253,hudson,North Bergen Town,33321,22063
+254,hudson,Secaucus Town,11232,7703
+255,hudson,Union City,30228,19474
+256,hudson,Weehawken Twp.,8773,6023
+257,hudson,West New York Town,22280,14227
+258,hunterdon,Alexandria Twp ,3815,2873
+259,hunterdon,Bethlehem Twp,3086,2339
+260,hunterdon,Bloomsbury Boro,593,443
+261,hunterdon,Califon Boro,797,610
+262,hunterdon,Clinton Town,1942,1431
+263,hunterdon,Clinton Township,9988,7542
+264,hunterdon,Delaware Twp,3829,2974
+265,hunterdon,East Amwell Twp,3221,2485
+266,hunterdon,Flemington Boro,2265,1614
+267,hunterdon,Franklin Twp,2489,1872
+268,hunterdon,Frenchtown Boro,1042,751
+269,hunterdon,Glen Gardner Boro,1221,872
+270,hunterdon,Hampton Boro,957,680
+271,hunterdon,High Bridge Boro,2609,1926
+272,hunterdon,Holland Twp,4107,3078
+273,hunterdon,Kingwood Twp,2910,2226
+274,hunterdon,Lambertville City,3378,2564
+275,hunterdon,Lebanon Boro,1214,900
+276,hunterdon,Lebanon Twp,4788,3546
+277,hunterdon,Milford Boro,897,676
+278,hunterdon,Raritan Twp,17363,12961
+279,hunterdon,Readington Twp,12649,9803
+280,hunterdon,Stockton Boro,445,344
+281,hunterdon,Tewksbury Twp,4880,3766
+282,hunterdon,Union Twp,3583,2681
+283,hunterdon,West Amwell Twp,2288,1752
+284,mercer,East Windsor Twp.,17240,12046
+285,mercer,Ewing Twp.,23968,16666
+286,mercer,Hamilton Twp.,61304,43503
+287,mercer,Hightstown Boro,3174,2311
+288,mercer,Hopewell Boro,1611,1243
+289,mercer,Hopewell Twp.,14022,10186
+290,mercer,Lawrence Twp.,22163,15680
+291,mercer,Pennington  Boro,2207,1579
+292,mercer,Princeton ,20216,13240
+293,mercer,Robbinsville Twp,10025,7504
+294,mercer,Trenton City,40063,22451
+295,mercer,West Windsor Twp.,19454,13329
+296,middlesex,Carteret Boro,14811,8840
+297,middlesex,Cranbury Twp.,3057,2158
+298,middlesex,Dunellen Boro,4284,2884
+299,middlesex,East Brunswick Twp.,34424,23109
+300,middlesex,Edison Twp.,59504,37929
+301,middlesex,Helmetta Boro,1511,1089
+302,middlesex,Highland Park Boro,10385,6508
+303,middlesex,Jamesburg Boro,3234,2040
+304,middlesex,Metuchen Boro,10654,7554
+305,middlesex,Middlesex Boro,9215,6346
+306,middlesex,Milltown Boro,5359,3923
+307,middlesex,Monroe Twp.,35600,26137
+308,middlesex,New Brunswick Twp.,24767,10923
+309,middlesex,North Brunswick Twp.,25910,16472
+310,middlesex,Old Bridge Twp.,44244,29218
+311,middlesex,Perth Amboy City,27724,14741
+312,middlesex,Piscataway Twp.,36676,22443
+313,middlesex,Plainsboro Twp.,13762,8178
+314,middlesex,Sayerville Boro,27608,18359
+315,middlesex,South Amboy City,5814,3626
+316,middlesex,South Brunswick Twp.,29447,20021
+317,middlesex,South Plainfield Boro,15731,10818
+318,middlesex,South River Boro,8795,5648
+319,middlesex,Spotswood Boro,5703,4049
+320,middlesex,Woodbridge Twp.,60521,39502
+321,monmouth,Aberdeen Twp,12458,8976
+322,monmouth,Allenhurst Boro,384,291
+323,monmouth,Allentown Boro,1453,1109
+324,monmouth,Asbury Park City,9218,5360
+325,monmouth,Atlantic Highlands Boro,3494,2610
+326,monmouth,Avon-by-the-Sea Boro,1522,1184
+327,monmouth,Belmar Boro,4327,3103
+328,monmouth,Bradley Beach Boro,2781,1994
+329,monmouth,Brielle Boro,4046,3183
+330,monmouth,Colts Neck Twp,7955,5851
+331,monmouth,Deal Boro,539,329
+332,monmouth,Eatontown Boro,8435,5841
+333,monmouth,Englishtown Boro,1361,918
+334,monmouth,Fair Haven Boro,4589,3544
+335,monmouth,Farmingdale Boro,982,721
+336,monmouth,Freehold Boro,5468,3740
+337,monmouth,Freehold Twp,25280,18427
+338,monmouth,Hazlet Twp,14403,10478
+339,monmouth,Highlands Boro,3302,2319
+340,monmouth,Holmdel Twp,12902,9071
+341,monmouth,Howell Twp,37349,27079
+342,monmouth,Interlaken Boro,765,617
+343,monmouth,Keansburg Boro,5282,3285
+344,monmouth,Keyport Boro,4574,3244
+345,monmouth,Lake Como,1141,838
+346,monmouth,Little Silver Boro,4979,3842
+347,monmouth,Loch Arbour Village,143,111
+348,monmouth,Long Branch City ,14767,9802
+349,monmouth,Manalapan Twp,29846,21489
+350,monmouth,Manasquan Boro,4659,3622
+351,monmouth,Marlboro Twp,29661,21160
+352,monmouth,Matawan Boro,5906,4435
+353,monmouth,Middletown Twp,49510,36485
+354,monmouth,Millstone Twp,7865,5924
+355,monmouth,Monmouth Beach Boro,2733,2022
+356,monmouth,Neptune Twp,19667,13989
+357,monmouth,Neptune City,3517,2515
+358,monmouth,Ocean Twp,19980,14453
+359,monmouth,Oceanport Boro,4459,3444
+360,monmouth,Red Bank Boro,6948,4946
+361,monmouth,Roosevelt Boro,668,512
+362,monmouth,Rumson Boro,5635,4020
+363,monmouth,Sea Bright Boro,1197,863
+364,monmouth,Sea Girt Boro,1665,1256
+365,monmouth,Shrewsbury Boro,3271,2473
+366,monmouth,Shrewsbury Twp,692,486
+367,monmouth,Spring Lake Boro,2607,1940
+368,monmouth,Spring Lake Heights Boro,4027,2996
+369,monmouth,Tinton Falls Boro,13856,10542
+370,monmouth,Union Beach Boro,3777,2660
+371,monmouth,Upper Freehold Twp,5231,4040
+372,monmouth,Wall Twp,20386,15494
+373,monmouth,West Long Branch Boro,5169,3827
+374,morris,Boonton Town,5670,4143
+375,morris,Boonton Township,3483,2560
+376,morris,Butler Boro,5127,3656
+377,morris,Chatham Boro,6466,4914
+378,morris,Chatham Twp,8282,6169
+379,morris,Chester Boro,1216,857
+380,morris,Chester Township,6167,4473
+381,morris,Denville Twp,12991,9787
+382,morris,Dover Town,7881,5111
+383,morris,East Hanover Twp,8703,6635
+384,morris,Florham Park Boro,8183,6043
+385,morris,Hanover Twp,10798,8115
+386,morris,Harding Twp,3433,2480
+387,morris,Jefferson Twp,14791,10676
+388,morris,Kinnelon Boro,8011,6034
+389,morris,Lincoln Park Boro,7188,5222
+390,morris,Long Hill Twp,6592,4966
+391,morris,Madison Boro,11073,8032
+392,morris,Mendham Boro,4126,2988
+393,morris,Mendham Twp,5002,3640
+394,morris,Mine Hill Twp,2566,1878
+395,morris,Montville Twp,16154,11934
+396,morris,Morris Plains Boro,4336,3305
+397,morris,Morris Twp,17619,13018
+398,morris,Morristown Town,11060,7470
+399,morris,Mount Arlington Boro,4213,3028
+400,morris,Mount Olive Twp,18316,12827
+401,morris,Mountain Lakes Boro,3438,2508
+402,morris,Netcong Boro,2005,1429
+403,morris,Parsippany-Troy Hills Twp,34302,23946
+404,morris,Pequannock Twp.,11879,9128
+405,morris,Randolph Twp,18760,13553
+406,morris,Riverdale Boro,3066,2254
+407,morris,Rockaway Boro,4406,3151
+408,morris,Rockaway Twp,18080,13447
+409,morris,Roxbury Twp,17158,12618
+410,morris,Victory Gardens Boro,612,388
+411,morris,Washington Twp,14356,10645
+412,morris,Wharton Boro,4032,2865
+413,ocean,Barnegat Twp.,16639,11765
+414,ocean,Barnegat Light Boro,648,486
+415,ocean,Bay Head Boro,867,641
+416,ocean,Beach Haven Boro,1029,710
+417,ocean,Beachwood Boro,7131,4964
+418,ocean,Berkeley Twp.,32635,23500
+419,ocean,Brick Twp.,52377,37967
+420,ocean,Eagleswood Twp.,1200,861
+421,ocean,Harvey Cedars Boro,415,302
+422,ocean,Island Heights Boro,1341,1026
+423,ocean,Jackson  Twp.,38335,27432
+424,ocean,Lacey Twp.,19946,14302
+425,ocean,Lakehurst  Boro,1555,960
+426,ocean,Lakewood Twp.,45725,25731
+427,ocean,Lavallette Boro,1652,1257
+428,ocean,Little Egg Harbor Twp.,14633,10417
+429,ocean,Long Beach  Twp,3114,2257
+430,ocean,Manchester Twp.,34336,25199
+431,ocean,Mantoloking Boro,321,236
+432,ocean,Ocean Twp,7089,5305
+433,ocean,Ocean Gate  Boro,1329,963
+434,ocean,Pine Beach Boro,1695,1274
+435,ocean,Plumsted Twp.,5568,4072
+436,ocean,Point Pleasant Boro,13847,10432
+437,ocean,Point Pleasant Beach Boro,3669,2608
+438,ocean,Seaside Heights Boro,1421,696
+439,ocean,Seaside Park Boro,1354,950
+440,ocean,Ship Bottom Boro,1060,750
+441,ocean,South Toms River Boro,2213,1313
+442,ocean,Stratford Twp.,20004,14200
+443,ocean,Surf City Boro,1121,811
+444,ocean,Toms River Twp.,64617,45445
+445,ocean,Tuckerton  Boro,2323,1577
+446,passaic,Bloomingdale Boro,5397,3904
+447,passaic,Clifton City,51152,34735
+448,passaic,Haledon Boro,4835,3214
+449,passaic,Hawthorne Boro,12987,9383
+450,passaic,Little FallsTwp.,9870,6565
+451,passaic,North Haledon Boro,6518,4911
+452,passaic,Passaic City ,28690,16787
+453,passaic,Paterson City,81282,45930
+454,passaic,Pompton Lakes Boro,7671,5387
+455,passaic,Prospect Park Boro,3664,2349
+456,passaic,Ringwood Boro,9138,6780
+457,passaic,Totowa Boro,7616,5567
+458,passaic,Wanaque Boro,7835,5661
+459,passaic,Wayne Twp.,38390,27753
+460,passaic,West Milford Twp.,18451,13275
+461,passaic,Woodland Park,9025,6276
+462,salem,Alloway Twp.,2451,1738
+463,salem,Carneys Point Twp.,5409,3420
+464,salem,Elmer Boro,892,634
+465,salem,Elsinboro Twp.,858,653
+466,salem,Lower Alloways Creek Twp.,1325,1022
+467,salem,Mannington Twp.,1022,712
+468,salem,Oldmans Twp.,1397,1010
+469,salem,Penns Grove Boro,2815,1364
+470,salem,Pennsville Twp.,9182,6268
+471,salem,Pilesgrove Twp.,3090,2305
+472,salem,Pittsgrove Twp.,6342,4406
+473,salem,Quinton Twp.,1777,1232
+474,salem,Salem City,3155,1698
+475,salem,Upper Pittsgrove Twp.,2449,1796
+476,salem,Woodstown Boro,2584,1790
+477,somerset,Bedminster Twp.,6766,4787
+478,somerset,Bernards Twp.,20283,14640
+479,somerset,Bernardsville Boro,5802,4260
+480,somerset,Bound Brook Boro,4882,3285
+481,somerset,Branchburg Twp.,10927,8243
+482,somerset,Bridgewater Twp.,31193,23152
+483,somerset,Far Hills Boro,792,562
+484,somerset,Franklin Twp.,43296,30533
+485,somerset,Green Brook Twp.,4957,3570
+486,somerset,Hillsborough Twp.,28344,20941
+487,somerset,Manville Boro,5541,3785
+488,somerset,Millstone Boro,348,255
+489,somerset,Montgomery Twp.,16433,11432
+490,somerset,North Plainfield Boro,10719,7267
+491,somerset,Peapack & Gladstone Boro,1970,1445
+492,somerset,Raritan Boro,4637,3242
+493,somerset,Rocky Hill Boro,565,426
+494,somerset,Somerville Boro,6924,4952
+495,somerset,South Bound Brook Boro,2704,1859
+496,somerset,Warren Twp.,12183,8651
+497,somerset,Watchung Boro,4584,3258
+498,sussex,Andover Boro,397,286
+499,sussex,Andover Township,4233,3061
+500,sussex,Branchville Boro,593,436
+501,sussex,Byram Twp.,6088,4605
+502,sussex,Frankford Twp.,4165,3139
+503,sussex,Franklin Boro,3186,2188
+504,sussex,Fredon Twp.,2537,1970
+505,sussex,Green Twp.,2695,2009
+506,sussex,Hamburg Boro,2189,1532
+507,sussex,Hampton Twp.,3751,2771
+508,sussex,Hardyston Twp.,6002,4362
+509,sussex,Hopatcong Boro,9948,7159
+510,sussex,Lafayette Twp.,1875,1408
+511,sussex,Montague Twp.,2514,1704
+512,sussex,Newton Town,4846,3253
+513,sussex,Ogdensburg Boro,1597,1168
+514,sussex,Sandyston Twp.,1477,1113
+515,sussex,Sparta Twp.,14996,11021
+516,sussex,Stanhope Boro,2529,1884
+517,sussex,Stillwater Twp.,3109,2315
+518,sussex,Sussex Boro,1175,772
+519,sussex,Vernon Twp.,16179,11611
+520,sussex,Walpack Twp.,18,12
+521,sussex,Wantage Twp.,7740,5659
+522,union,Berkeley Heights Twp.,9775,7325
+523,union,Clark Twp.,11457,8591
+524,union,Cranford Twp.,17374,13458
+525,union,Elizabeth City,56665,33139
+526,union,Fanwood Boro,5590,4297
+527,union,Garwood Boro,3044,2304
+528,union,Hillside Twp.,13600,9238
+529,union,Kenilworth Boro,5398,3827
+530,union,Linden City,24623,16386
+531,union,Mountainside Boro,5197,3939
+532,union,New Providence Boro,8998,6700
+533,union,Plainfield City,23321,15075
+534,union,Rahway City,17679,11956
+535,union,Roselle Boro,13208,8845
+536,union,Roselle Park Boro,8370,5750
+537,union,Scotch Plains Twp.,17840,13409
+538,union,Springfield Twp.,11737,8532
+539,union,Summit City,15408,11112
+540,union,Union Twp.,36289,25421
+541,union,Westfield Town,22690,16736
+542,union,Winfield  Twp.,1061,753
+543,warren,Allamuchy Twp.,4003,2621
+544,warren,Alpha Boro,1642,1079
+545,warren,Belvidere Town,1889,1313
+546,warren,Blairstown Twp.,4661,3133
+547,warren,Franklin Twp.,2320,1585
+548,warren,Frelinghuysen Twp.,1700,1234
+549,warren,Greenwich Twp.,4134,2691
+550,warren,Hacketstown Town,6191,4118
+551,warren,Hardwick Twp.,1265,880
+552,warren,Harmony Twp.,1987,1332
+553,warren,Hope Twp.,1456,1080
+554,warren,Independence Twp.,4218,2811
+555,warren,Knowlton Twp.,2254,1416
+556,warren,Liberty Twp.,2053,1423
+557,warren,Lopatcong Twp.,6247,4101
+558,warren,Mansfield Twp.,5200,3346
+559,warren,Oxford Twp.,1653,1175
+560,warren,Phillpsburg Town,8882,4845
+561,warren,Pohatcong Twp.,2384,1598
+562,warren,Washington Boro,4582,2498
+563,warren,Washington Twp.,5110,3450
+564,warren,White Twp.,3691,2627
