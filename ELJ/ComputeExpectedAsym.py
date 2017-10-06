@@ -184,12 +184,14 @@ for state in states:
     dfState2   = stateData[stateData["State"] == abbr]
     fig2 = plt.figure()
     axst = fig2.add_subplot(111)
+    needLab = True
     for cyc,cnm in zip(cycles,cnames):
         dfCycle = dfState[dfState["cycle"] == cnm]
         meanAsym = dfCycle['expectedAsym'].values[0]
         mode     = dfCycle['mode'].values[0]
         asymp95  = dfCycle['p95'].values[0]
         asymp05  = dfCycle['p05'].values[0]
+        lim = np.max(np.abs([asymp95,asymp05]))+0.5
         axst.add_patch(Rectangle((cyc[0],asymp05),8,asymp95-asymp05,color='0.75',alpha=0.2))
         axst.plot(cyc,[meanAsym]*len(cyc),color='0.75',linewidth=4)
         axst.plot(cyc,[mode]*len(cyc),color='b',linewidth=4)
@@ -199,7 +201,7 @@ for state in states:
             mm.append(dfYear["specAsym (seats)"].values[0])
         axst.plot(cyc,mm,marker='x',color='k',linewidth=4)
     axst.grid()
-    axst = setLimits(axst)
+    axst.set_ylim((-lim,lim))
 
 
     fig2.savefig(os.path.join(figDirLBS,"expAsym"+abbr+figExt))
