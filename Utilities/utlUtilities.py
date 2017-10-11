@@ -185,6 +185,7 @@ def plotGDF(fname,gdf,projection,colorby=None,boolDict=None,colorCol=None,cmap=N
                 color = rgb2hex(cmap(0.9)[:3])
             else:
                 color = 'w'
+            color = 'k'
             ax.annotate(s=str(index+1), xy=row[AnnCoords],horizontalalignment='center',color=color)
             ax.annotate(s=str(index+1)+" - "+row[Annotate], xy=(0.98,y2),xycoords=trans,horizontalalignment='left',color='k', annotation_clip=False)
             y2 = y2 - yd/float(len(gdf))
