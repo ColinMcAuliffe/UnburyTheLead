@@ -13,7 +13,7 @@ import scipy as sp
 import cPickle as pickle # python 2
 import seaborn as sns
 import networkx as nx
-from matplotlib.ticker import MaxNLocator
+from matplotlib.ticker import MaxNLocator,FuncFormatter
 from scipy.special import logit,expit
 import utlUtilities as utl
 sns.set(color_codes=True)
@@ -154,6 +154,7 @@ countyStdv = trace["County"].std(axis=0)
 ax.errorbar(np.exp(mhiCou),countyMean,yerr=countyStdv,fmt="o",label="County Intercepts +- 1 stdv")
 ax.set_ylabel("County Intercept")
 ax.set_xlabel("County Median Household Income")
+ax.get_xaxis().set_major_formatter(FuncFormatter(lambda x, p: format(int(x), ',')))
 ax.legend(loc=2)
 fig.savefig(os.path.join("Figures","CountyIncome.png"))
 plt.close()
@@ -175,6 +176,7 @@ ax.plot(np.exp(evl), result,color='r',linewidth=4,label="Regression Line for Cou
 ax.errorbar(np.exp(regCou),countyMean,yerr=countyStdv,fmt="o",label="County Intercepts +- 1 stdv")
 ax.set_ylabel("County Intercept")
 ax.set_xlabel("County Total Registered")
+ax.get_xaxis().set_major_formatter(FuncFormatter(lambda x, p: format(int(x), ',')))
 ax.legend(loc=1)
 fig.savefig(os.path.join("Figures","CountyReg.png"))
 plt.close()
@@ -209,9 +211,10 @@ for co,idx in zip(colors,cidx):
     cn   = df.ix[df["County"]==idx,"CountyName"].values[0]
     ax1  = plot_pp_glm(trace,ax1,idx ,xdata=xdat,ydata=ydat, eval=evl, lm=lmR, samples=nppdraws, label = cn, color=co  , alpha=.15)
 ax1.legend(loc=4,ncol=5)
-ax1.set_xlabel("Median Household Income")
+ax1.set_xlabel("Median Household Income (Dollars)")
 ax1.set_ylabel("Turnout Rate")
 ax1.set_title("Presidential Turnout")
+ax1.get_xaxis().set_major_formatter(FuncFormatter(lambda x, p: format(int(x), ',')))
 fig.savefig(os.path.join("Figures","MHI_Turnout.png"))
     
 fig,(ax1)  = plt.subplots(1,1,figsize=(10,6))
@@ -228,8 +231,9 @@ for idx in cidx:
     ax1  = plot_pp_glm(trace,ax1,idx ,xdata=xdat,ydata=ydat, eval=evl, lm=lmR, samples=nppdraws, label = cn, color=colors[i]  , alpha=.15)
     i +=1
 ax1.legend(loc=4,ncol=5)
-ax1.set_xlabel("Median Household Income")
+ax1.set_xlabel("Median Household Income (Dollars)")
 ax1.set_ylabel("Turnout Rate")
 ax1.set_title("Presidential Turnout")
+ax1.get_xaxis().set_major_formatter(FuncFormatter(lambda x, p: format(int(x), ',')))
 #ax1.set_ylim((0.4,0.85))
 fig.savefig(os.path.join("Figures","MHI_TurnoutME.png"))

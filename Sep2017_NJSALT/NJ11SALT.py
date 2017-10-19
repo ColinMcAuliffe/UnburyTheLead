@@ -153,6 +153,8 @@ df["totalSALT2"] = (df["(63)"] + df["(65)"] + df["(67)"])/df["(1)"]
 df["SLFrac"] = df["(62)"]/df["(1)"]
 df["REFrac"] = df["(66)"]/df["(1)"]
 
+df.to_csv("SALT.csv")
+
 #Now we read in a csv file with the voting data. We need to eventually merge this
 #with tax data, but first we need to make sure that merge municipalities into groups 
 #that match the zip code groups. Note that all of this business is not usually needed

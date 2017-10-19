@@ -1,0 +1,582 @@
+,District,County Name,Municipality Name,Dem,Rep,Ind,Total
+0,district1,Burlington,Maple Shade Twp,4025,2752,226,7003
+1,district1,Burlington,Palmyra Boro,1975,1257,67,3299
+2,district1,Camden,Audubon Boro,2409,1797,173,4379
+3,district1,Camden,Audubon Park Boro,288,204,14,506
+4,district1,Camden,Barrington Boro,1733,1343,109,3185
+5,district1,Camden,Bellmawr Boro,2649,1831,132,4612
+6,district1,Camden,Berlin Boro,1591,1774,125,3490
+7,district1,Camden,Berlin Twp.,1293,941,61,2295
+8,district1,Camden,Brooklawn Boro,455,265,23,743
+9,district1,Camden,Camden City,16424,1016,635,18075
+10,district1,Camden,Cherry Hill Twp.,20655,13318,911,34884
+11,district1,Camden,Chesilhurst Boro,476,163,15,654
+12,district1,Camden,Clementon Boro,1126,640,59,1825
+13,district1,Camden,Collingswood Boro,4581,1994,338,6913
+14,district1,Camden,Gibbsboro Boro,592,515,47,1154
+15,district1,Camden,Gloucester City,2259,1369,113,3741
+16,district1,Camden,Gloucester Twp.,15554,11003,705,27262
+17,district1,Camden,Haddon Heights Boro,2251,1918,122,4291
+18,district1,Camden,Haddon Twp.,4408,3133,310,7851
+19,district1,Camden,Haddonfield Boro,3557,3093,169,6819
+20,district1,Camden,Hi-Nella Boro,204,136,18,358
+21,district1,Camden,Laurel Springs Boro,488,394,30,912
+22,district1,Camden,Lawnside Boro,1329,60,27,1416
+23,district1,Camden,Lindenwold Boro,4163,1277,146,5586
+24,district1,Camden,Magnolia Boro,1172,643,59,1874
+25,district1,Camden,Merchantville Boro,1052,583,69,1704
+26,district1,Camden,Mt. Ephraim Boro,1173,802,58,2033
+27,district1,Camden,Oaklyn Boro,1076,703,112,1891
+28,district1,Camden,Pennsauken Twp,10181,3103,446,13730
+29,district1,Camden,Pine Hill Boro,2513,1207,140,3860
+30,district1,Camden,Pine Valley Boro,1,9,1,11
+31,district1,Camden,Runnemede Boro,1914,1369,126,3409
+32,district1,Camden,Somerdale Boro,1533,686,65,2284
+33,district1,Camden,Stratford Boro,1669,1292,87,3048
+34,district1,Camden,Tavistok Boro,2,4,1,7
+35,district1,Camden,Voorhees Twp.,7914,5530,289,13733
+36,district1,Camden,Winslow Twp.,10743,5256,393,16392
+37,district1,Camden,Woodlynne Boro,665,118,37,820
+38,district1,Gloucester,Deptford,7378,4782,534,12694
+39,district1,Gloucester,East Greenwich,1877,2250,132,4259
+40,district1,Gloucester,Glassboro,3851,2498,290,6639
+41,district1,Gloucester,Greenwich,1260,1060,98,2418
+42,district1,Gloucester,Logan,1504,1151,118,2773
+43,district1,Gloucester,Monroe,8049,6838,546,15433
+44,district1,Gloucester,National Park,631,463,54,1148
+45,district1,Gloucester,Paulsboro,1473,425,78,1976
+46,district1,Gloucester,Washington,10833,11750,758,23341
+47,district1,Gloucester,Wenoah,636,582,66,1284
+48,district1,Gloucester,West Deptford,5440,4334,392,10166
+49,district1,Gloucester,Westville,798,688,104,1590
+50,district1,Gloucester,Woodbury,2484,1350,153,3987
+51,district1,Gloucester,Woodbury Heights,827,704,62,1593
+52,district2,Atlantic,Absecon,2410,1565,125,4100
+53,district2,Atlantic,Atlantic City,2437,7477,276,10190
+54,district2,Atlantic,Brigantine,2977,1425,118,4520
+55,district2,Atlantic,Buena Boro,1066,560,38,1664
+56,district2,Atlantic,Buena Vista,1967,1181,102,3250
+57,district2,Atlantic,Corbin City,170,60,16,246
+58,district2,Atlantic,Egg Harbor City,832,730,71,1633
+59,district2,Atlantic,Egg Harbor Twp,10700,7502,782,18984
+60,district2,Atlantic,Estelle Manor,709,166,45,920
+61,district2,Atlantic,Folsom,573,213,46,832
+62,district2,Atlantic,Galloway Twp.,9056,6242,526,15824
+63,district2,Atlantic,Hamilton Twp.,6142,4493,422,11057
+64,district2,Atlantic,Hammonton,4090,1636,261,5987
+65,district2,Atlantic,Linwood,2487,1115,152,3754
+66,district2,Atlantic,Longport,339,127,18,484
+67,district2,Atlantic,Margate,1983,1146,94,3223
+68,district2,Atlantic,Mullica,1808,868,95,2771
+69,district2,Atlantic,Northfield,2572,1381,204,4157
+70,district2,Atlantic,Pleasantville,1126,4042,140,5308
+71,district2,Atlantic,Port Republic,473,177,20,670
+72,district2,Atlantic,Somerspoint,2697,1749,164,4610
+73,district2,Atlantic,Ventnor,2314,1623,163,4100
+74,district2,Atlantic,Weymouth,930,420,40,1390
+75,district2,Burlington,Bass River,479,144,20,643
+76,district2,Burlington,Washington Twp,241,89,7,337
+77,district2,Camden,Waterford Twp,2990,1723,124,4837
+78,district2,Cape May,Avalon,617,194,16,827
+79,district2,Cape May,Cape May,793,463,32,1288
+80,district2,Cape May,Cape May Point,81,60,2,143
+81,district2,Cape May,Dennis Twp,2235,855,96,3186
+82,district2,Cape May,Lower Twp,6667,2804,277,9748
+83,district2,Cape May,Middle Twp,5406,2664,277,8347
+84,district2,Cape May,North Wildwood,1288,495,58,1841
+85,district2,Cape May,Ocean City,3930,1791,246,5967
+86,district2,Cape May,Sea Isle City,971,301,25,1297
+87,district2,Cape May,Stone Harbor,359,103,13,475
+88,district2,Cape May,Upper Township,4695,1649,214,6558
+89,district2,Cape May,West Cape May,294,256,8,558
+90,district2,Cape May,West Wildwood,166,79,5,250
+91,district2,Cape May,Wildwood,802,562,43,1407
+92,district2,Cape May,Wildwood Crest,1117,392,46,1555
+93,district2,Cape May,Woodbine,365,239,24,628
+94,district2,Cumberland,Bridgeton,1246,2479,190,3915
+95,district2,Cumberland,Commercial,1030,499,66,1595
+96,district2,Cumberland,Deerfield,804,422,33,1259
+97,district2,Cumberland,Downe,512,118,21,651
+98,district2,Cumberland,Fairfield,749,1088,72,1909
+99,district2,Cumberland,Greenwich ,255,142,13,410
+100,district2,Cumberland,Hopewell,1380,505,66,1951
+101,district2,Cumberland,Lawrence,791,312,34,1137
+102,district2,Cumberland,Maurice River,987,307,69,1363
+103,district2,Cumberland,Millville,5451,3651,395,9497
+104,district2,Cumberland,Shiloh,186,39,8,233
+105,district2,Cumberland,Stow Creek,526,142,11,679
+106,district2,Cumberland,Upper Deerfield,2192,1013,146,3351
+107,district2,Cumberland,Vineland,10728,8765,811,20304
+108,district2,Gloucester,Clayton,1734,1668,96,3498
+109,district2,Gloucester,East Greenwich,574,312,17,903
+110,district2,Gloucester,Elk,1253,729,59,2041
+111,district2,Gloucester,Franklin,4786,2414,218,7418
+112,district2,Gloucester,Harrison,4164,2104,150,6418
+113,district2,Gloucester,Mantua,4193,3089,198,7480
+114,district2,Gloucester,Newfield,528,197,19,744
+115,district2,Gloucester,Pitman,2544,1785,121,4450
+116,district2,Gloucester,South Harrison,1097,477,66,1640
+117,district2,Gloucester,Swedesboro,485,452,35,972
+118,district2,Gloucester,Woolwich,2958,2195,134,5287
+119,district2,Ocean,Barnegat Light,264,157,15,436
+120,district2,Ocean,Beach Haven,421,167,29,617
+121,district2,Ocean,Eagleswood Twp,516,198,36,750
+122,district2,Ocean,Harvey Cedars Boro,159,114,6,279
+123,district2,Ocean,Little Egg Harbor Twp,6107,2765,384,9256
+124,district2,Ocean,Long Beach Twp,1347,574,47,1968
+125,district2,Ocean,Ship Bottom Boro,415,229,25,669
+126,district2,Ocean,Stafford Twp,2629,1060,147,3836
+127,district2,Ocean,Surf City Boro,514,206,16,736
+128,district2,Ocean,Tuckerton Boro,896,412,79,1387
+129,district2,Salem,Alloway,1189,438,80,1707
+130,district2,Salem,Carneys Point,1817,1352,123,3292
+131,district2,Salem,Elmer,462,121,28,611
+132,district2,Salem,Elsinboro,460,138,34,632
+133,district2,Salem,Lower Alloways Creek,774,169,41,984
+134,district2,Salem,Mannington,495,172,30,697
+135,district2,Salem,Oldmans,654,280,51,985
+136,district2,Salem,Penns Grove,402,797,79,1278
+137,district2,Salem,Pennsville,4288,1494,316,6098
+138,district2,Salem,Pilesgrove,1545,604,109,2258
+139,district2,Salem,Pittsgrove,2788,1301,183,4272
+140,district2,Salem,Quinton,811,328,67,1206
+141,district2,Salem,Salem Eastward,233,596,34,863
+142,district2,Salem,Salem Westward,248,479,24,751
+143,district2,Salem,Upper Pittsgrove,1367,310,67,1744
+144,district2,Salem,Woodstown,1018,651,65,1734
+145,district3,Burlington,Beverly City,414,487,13,914
+146,district3,Burlington,Bordentown City,783,1011,46,1840
+147,district3,Burlington,Bordentown Twp,2658,2352,64,5074
+148,district3,Burlington,Burlington City,1421,2141,85,3647
+149,district3,Burlington,Burlington Twp,4187,5833,103,10123
+150,district3,Burlington,Chesterfield Twp,1396,987,43,2426
+151,district3,Burlington,Cinnaminson Twp,4999,3263,98,8360
+152,district3,Burlington,Delanco Twp,1237,947,30,2214
+153,district3,Burlington,Delran Twp,4238,3121,70,7429
+154,district3,Burlington,Easthampton Twp,1413,1155,38,2606
+155,district3,Burlington,Edgewater Park Twp.,1340,1866,54,3260
+156,district3,Burlington,Evesham Twp,12638,8976,246,21860
+157,district3,Burlington,Fieldsboro Boro,107,122,7,236
+158,district3,Burlington,Florence Twp,3075,2357,82,5514
+159,district3,Burlington,Hainespirt Twp,1984,1125,31,3140
+160,district3,Burlington,Lumberton Twp,3023,2619,78,5720
+161,district3,Burlington,Mansfield Twp,3000,1770,45,4815
+162,district3,Burlington,Medford Lakes Boro,1406,785,32,2223
+163,district3,Burlington,Medford Twp,8304,4138,143,12585
+164,district3,Burlington,Moorestown Twp,6391,4520,72,10983
+165,district3,Burlington,Mount Holly Twp,1501,1875,67,3443
+166,district3,Burlington,Mount Laurel Twp,11327,9416,198,20941
+167,district3,Burlington,New Hanover Twp,290,122,9,421
+168,district3,Burlington,North Hanover Twp,1505,653,43,2201
+169,district3,Burlington,Pemberton Boro,334,230,9,573
+170,district3,Burlington,Pemberton Twp,4247,4131,188,8566
+171,district3,Burlington,Riverside,1332,1026,55,2413
+172,district3,Burlington,Riverton Boro,776,621,17,1414
+173,district3,Burlington,Shamong Twp,2326,839,38,3203
+174,district3,Burlington,Southampton Twp,3800,1432,75,5307
+175,district3,Burlington,Springfield Twp,1254,425,23,1702
+176,district3,Burlington,Tabernacle Twp,2592,879,40,3511
+177,district3,Burlington,Westampton Twp,1854,2286,48,4188
+178,district3,Burlington,Willingboro Twp,1767,12019,185,13971
+179,district3,Burlington,Woodland Twp,445,154,17,616
+180,district3,Burlington,Wrightstown Boro,85,77,7,169
+181,district3,Ocean,Barnegat Twp,6680,3313,310,10303
+182,district3,Ocean,Beachwood Boro,2950,1270,140,4360
+183,district3,Ocean,Berkeley Twp,13607,5889,456,19952
+184,district3,Ocean,Brick Twp,22008,10052,867,32927
+185,district3,Ocean,Island Heights Boro,531,352,14,897
+186,district3,Ocean,Lacey Twp,9019,3076,351,12446
+187,district3,Ocean,Lavallette Boro,840,274,11,1125
+188,district3,Ocean,Mantoloking Boro,179,37,0,216
+189,district3,Ocean,Ocean Twp,3469,1204,98,4771
+190,district3,Ocean,Ocean Gate Boro,544,319,24,887
+191,district3,Ocean,Pine Beach Boro,756,369,28,1153
+192,district3,Ocean,Point Pleasant Boro,548,279,24,851
+193,district3,Ocean,Seaside Heights Boro,429,163,9,601
+194,district3,Ocean,Seaside ParkBoro ,611,215,19,845
+195,district3,Ocean,South Toms River Boro,593,525,29,1147
+196,district3,Ocean,Stafford Twp,5876,2459,231,8566
+197,district3,Ocean,Toms River Twp,26507,11970,928,39405
+198,district4,Mercer,Hamilton Twp,23896,15720,536,40152
+199,district4,Mercer,Robbinsville Twp,4092,2662,96,6850
+200,district4,Monmouth,Allentown Boro,545,414,44,1003
+201,district4,Monmouth,Avon Boro,732,304,31,1067
+202,district4,Monmouth,Belmar Boro,1662,997,148,2807
+203,district4,Monmouth,Bradley Beach Boro,897,764,63,1724
+204,district4,Monmouth,Brielle Boro,2047,630,283,2960
+205,district4,Monmouth,Colts Neck Twp,4142,1175,96,5413
+206,district4,Monmouth,Eatontown Boro,2799,2290,128,5217
+207,district4,Monmouth,Englishtown Boro,522,256,17,795
+208,district4,Monmouth,Fair Haven Boro,1920,1313,76,3309
+209,district4,Monmouth,Farmingdale Boro,465,180,22,667
+210,district4,Monmouth,Freehold Boro,1592,1662,110,3364
+211,district4,Monmouth,Freehold Twp,10605,5866,330,16801
+212,district4,Monmouth,Holmdel Twp,5472,2689,165,8326
+213,district4,Monmouth,Howell Twp,16110,7495,866,24471
+214,district4,Monmouth,Lake Como Boro,383,301,73,757
+215,district4,Monmouth,Little Silver Boro,2271,1261,61,3593
+216,district4,Monmouth,Manalapan Twp,11620,7096,351,19067
+217,district4,Monmouth,Manasquan Boro,2188,844,298,3330
+218,district4,Monmouth,Middletown Twp,11129,5095,338,16562
+219,district4,Monmouth,Millstone Twp.,3910,1344,126,5380
+220,district4,Monmouth,Neptune Twp,4516,7777,294,12587
+221,district4,Monmouth,Neptune City Boro,1224,895,81,2200
+222,district4,Monmouth,Ocean Twp,7061,5434,305,12800
+223,district4,Monmouth,Red Bank Boro,1924,2427,114,4465
+224,district4,Monmouth,Roosevelt Boro,170,280,11,461
+225,district4,Monmouth,Rumson Boro,2585,1072,74,3731
+226,district4,Monmouth,Seagirt Boro,924,221,43,1188
+227,district4,Monmouth,Shrewsbury Boro,1387,812,37,2236
+228,district4,Monmouth,Shrewsbury Twp,167,243,19,429
+229,district4,Monmouth,Spring Lake Boro,1393,388,46,1827
+230,district4,Monmouth,Spring Lake Hgts Boro,1799,836,134,2769
+231,district4,Monmouth,Tinton Falls Boro,5176,4104,201,9481
+232,district4,Monmouth,Upper Freehold Twp,2679,1010,70,3759
+233,district4,Monmouth,Wall Twp,9797,3408,1027,14232
+234,district4,Ocean,Bay Head Boro,441,147,15,603
+235,district4,Ocean,Jackson Twp,16519,7195,832,24546
+236,district4,Ocean,Lakehurst Boro,555,248,49,852
+237,district4,Ocean,Lakewood Twp,18900,4473,277,23650
+238,district4,Ocean,Manchester Twp,15274,6456,484,22214
+239,district4,Ocean,Plumsted Twp,2884,705,131,3720
+240,district4,Ocean,Point Pleasant Boro,5927,2191,531,8649
+241,district4,Ocean,PointPleasant Beach Boro,1648,630,120,2398
+242,district5,Bergen,Allendale,1612,1842,64,3518
+243,district5,Bergen,Alpine,422,392,12,826
+244,district5,Bergen,Bergenfield,6807,3211,167,10185
+245,district5,Bergen,Bogota,2184,1017,67,3268
+246,district5,Bergen,Closter,2174,1379,47,3600
+247,district5,Bergen,Demarest,1460,874,25,2359
+248,district5,Bergen,Dumont,4554,3142,167,7863
+249,district5,Bergen,Emerson,1787,1762,49,3598
+250,district5,Bergen,Fairlawn,8934,5818,277,15029
+251,district5,Bergen,Franklin Lakes,2045,3572,61,5678
+252,district5,Bergen,Glen Rock,3943,2353,91,6387
+253,district5,Bergen,Hackensack,10570,2692,269,13531
+254,district5,Bergen,Harrington Park,1388,1060,32,2480
+255,district5,Bergen,Haworth,1133,673,27,1833
+256,district5,Bergen,Hillside,2873,2511,95,5479
+257,district5,Bergen,Ho-Ho-Kus,1020,1210,48,2278
+258,district5,Bergen,Lodi,4686,2210,150,7046
+259,district5,Bergen,Mahwah,5446,5931,224,11601
+260,district5,Bergen,Maywood,2480,1566,87,4133
+261,district5,Bergen,Midland Park,1740,1961,55,3756
+262,district5,Bergen,Montvale,1927,2056,70,4053
+263,district5,Bergen,New Milford,3927,2964,114,7005
+264,district5,Bergen,Northvale,1103,854,38,1995
+265,district5,Bergen,Norwood,1413,1138,31,2582
+266,district5,Bergen,Oakland,3028,3263,119,6410
+267,district5,Bergen,Old Tappan,1281,1514,55,2850
+268,district5,Bergen,Oradell,2374,2028,56,4458
+269,district5,Bergen,Paramus,6387,5392,185,11964
+270,district5,Bergen,Park Ridge,2147,2355,76,4578
+271,district5,Bergen,Ramsey,3742,3913,138,7793
+272,district5,Bergen,Ridgewood,7397,4811,182,12390
+273,district5,Bergen,River Edge,3035,2047,93,5175
+274,district5,Bergen,River Vale,2608,2561,86,5255
+275,district5,Bergen,Rochelle Park,1276,1054,52,2382
+276,district5,Bergen,Rockleigh,55,89,3,147
+277,district5,Bergen,Saddle River,556,1235,23,1814
+278,district5,Bergen,Teaneck,10821,3445,174,14440
+279,district5,Bergen,Upper Saddle River,1807,2308,61,4176
+280,district5,Bergen,Waldwick,2454,2364,81,4899
+281,district5,Bergen,Washington,2258,2583,76,4917
+282,district5,Bergen,Westwood,2913,2214,94,5221
+283,district5,Bergen,Woodcliff Lake,1812,1453,34,3299
+284,district5,Bergen,Wycoff,4102,5042,130,9274
+285,district5,Passaic,Ringwood,2881,3101,95,6077
+286,district5,Passaic,West Milford,4568,6861,292,11721
+287,district5,Sussex,Andover Boro,120,145,14,279
+288,district5,Sussex,Andover Twp,1164,1658,134,2956
+289,district5,Sussex,Branchville,164,246,16,426
+290,district5,Sussex,Frankford,981,1947,126,3054
+291,district5,Sussex,Franklin,759,1213,138,2110
+292,district5,Sussex,Fredon,638,1191,75,1904
+293,district5,Sussex,Green,632,1238,78,1948
+294,district5,Sussex,Hamburg,610,805,65,1480
+295,district5,Sussex,Hampton,1044,1539,106,2689
+296,district5,Sussex,Hardyston,1657,2392,174,4223
+297,district5,Sussex,Lafayette,405,910,54,1369
+298,district5,Sussex,Montague,534,1050,72,1656
+299,district5,Sussex,Newton,1513,1508,147,3168
+300,district5,Sussex,Sandyston,350,692,43,1085
+301,district5,Sussex,Stillwater,835,1324,104,2263
+302,district5,Sussex,Sussex,250,446,52,748
+303,district5,Sussex,Vernon,4424,6251,563,11238
+304,district5,Sussex,Walpack,4,7,1,12
+305,district5,Sussex,Wantage,1757,3543,209,5509
+306,district5,Warren,Allamuchy,925,1382,46,2353
+307,district5,Warren,Belvidere,494,651,54,1199
+308,district5,Warren,Blairstown,997,1790,76,2863
+309,district5,Warren,Frelinghuysen,368,740,24,1132
+310,district5,Warren,Hackettstown,1725,1917,87,3729
+311,district5,Warren,Hardwick,307,487,25,819
+312,district5,Warren,Hope,340,620,29,989
+313,district5,Warren,Independence,1046,1432,87,2565
+314,district5,Warren,Knowlton,426,858,22,1306
+315,district5,Warren,Liberty,416,840,47,1303
+316,district5,Warren,Mansfield,1168,1764,100,3032
+317,district5,Warren,Oxford,385,647,30,1062
+318,district5,Warren,Washington Boro,1062,1132,85,2279
+319,district5,Warren,Washington Twp,1122,1920,103,3145
+320,district5,Warren,White,776,1561,63,2400
+321,district6,Middlesex,Carteret,5858,1757,64,7679
+322,district6,Middlesex,Edison,23062,10584,429,34075
+323,district6,Middlesex,Highland Park,4783,1170,130,6083
+324,district6,Middlesex,Metuchen,4607,2341,118,7066
+325,district6,Middlesex,New Brunswick,8200,1303,199,9702
+326,district6,Middlesex,Old Bridge,5311,4442,120,9873
+327,district6,Middlesex,Perth Amboy,9523,1460,138,11121
+328,district6,Middlesex,Piscataway,15444,4683,250,20377
+329,district6,Middlesex,Sayreville,9972,6422,191,16585
+330,district6,Middlesex,South Amboy,1868,1224,46,3138
+331,district6,Middlesex,South Plainfield,5676,3890,105,9671
+332,district6,Middlesex,Woodbridge,22296,11573,471,34340
+333,district6,Monmouth,Aberdeen Twp,4645,3365,134,8144
+334,district6,Monmouth,Allenhurst Boro,131,130,4,265
+335,district6,Monmouth,Asbury Park,3867,637,80,4584
+336,district6,Monmouth,Atlantic Highlands Boro,1344,1029,37,2410
+337,district6,Monmouth,Deal Boro,118,163,3,284
+338,district6,Monmouth,Hazlet Twp,4681,4523,137,9341
+339,district6,Monmouth,Highlands Boro,1148,879,44,2071
+340,district6,Monmouth,Interlaken Boro,281,284,4,569
+341,district6,Monmouth,Keansburg Boro,1653,1056,60,2769
+342,district6,Monmouth,Keyport Boro,1664,1186,40,2890
+343,district6,Monmouth,Loch Arbour Village,60,45,2,107
+344,district6,Monmouth,Long Branch,6023,2614,136,8773
+345,district6,Monmouth,Marlboro Twp,9958,9067,248,19273
+346,district6,Monmouth,Matawan Boro,2147,1808,61,4016
+347,district6,Monmouth,Middletown Twp,7865,8347,244,16456
+348,district6,Monmouth,Monmouth Beach Boro,835,1009,12,1856
+349,district6,Monmouth,Oceanport Boro,1464,1638,28,3130
+350,district6,Monmouth,Seabright Boro,368,406,12,786
+351,district6,Monmouth,Union Beach Boro,1243,1128,34,2405
+352,district6,Monmouth,West Long Branch Boro,1698,1733,43,3474
+353,district7,Essex,Millburn,3757,4945,147,8849
+354,district7,Hunterdon,Alexandria,1724,830,147,2701
+355,district7,Hunterdon,Bethlehem,1383,698,124,2205
+356,district7,Hunterdon,Bloomsbury,244,132,25,401
+357,district7,Hunterdon,Califon,306,231,33,570
+358,district7,Hunterdon,Clinton ,738,553,66,1357
+359,district7,Hunterdon,Clinton Twp,4404,2304,357,7065
+360,district7,Hunterdon,Delaware,1589,1088,117,2794
+361,district7,Hunterdon,East Amwell,1425,780,94,2299
+362,district7,Hunterdon,Flemington,761,640,99,1500
+363,district7,Hunterdon,Franklin,1161,498,91,1750
+364,district7,Hunterdon,Frenchtown,277,391,28,696
+365,district7,Hunterdon,Glen Gardner,478,267,58,803
+366,district7,Hunterdon,Hampton,378,208,35,621
+367,district7,Hunterdon,Highbridge,932,723,131,1786
+368,district7,Hunterdon,Holland,1814,871,170,2855
+369,district7,Hunterdon,Kingwood,1330,600,125,2055
+370,district7,Hunterdon,Lambertville,677,1650,75,2402
+371,district7,Hunterdon,Lebanon Boro,490,281,42,813
+372,district7,Hunterdon,Lebanon Twp.,2078,991,244,3313
+373,district7,Hunterdon,Milford,328,276,31,635
+374,district7,Hunterdon,Raritan,7264,4282,548,12094
+375,district7,Hunterdon,Readington,5809,2667,483,8959
+376,district7,Hunterdon,Stockton,145,176,11,332
+377,district7,Hunterdon,Tewksbury,2302,1077,144,3523
+378,district7,Hunterdon,Union Twp,1554,779,150,2483
+379,district7,Hunterdon,West Amwell,938,621,65,1624
+380,district7,Morris,Chester Boro,508,280,13,801
+381,district7,Morris,Chester Twp,2652,1320,85,4057
+382,district7,Morris,Dover,1132,2759,80,3971
+383,district7,Morris,Long Hill Twp,2607,1744,90,4441
+384,district7,Morris,Mine Hill Twp,856,700,39,1595
+385,district7,Morris,Mount Arlington,1583,923,52,2558
+386,district7,Morris,Mount Olive Twp,6131,4779,268,11178
+387,district7,Morris,Netcong,687,432,28,1147
+388,district7,Morris,Roxbury Twp,6635,3860,220,10715
+389,district7,Morris,Washington Twp,6171,3180,191,9542
+390,district7,Morris,Wharton Boro,1146,1249,55,2450
+391,district7,Somerset,Bedminster,2536,1871,91,4498
+392,district7,Somerset,Bernards,8075,5301,305,13681
+393,district7,Somerset,Bernardsville,2384,1528,93,4005
+394,district7,Somerset,Branchburg,4829,2706,209,7744
+395,district7,Somerset,Bridgewater,11514,9367,548,21429
+396,district7,Somerset,Far Hills,357,161,10,528
+397,district7,Somerset,Greenbrook,1791,1425,87,3303
+398,district7,Somerset,Hillsborough,10236,8832,497,19565
+399,district7,Somerset,Millstone,131,99,15,245
+400,district7,Somerset,Montgomery,4799,5637,280,10716
+401,district7,Somerset,North Plainfield,1879,4531,139,6549
+402,district7,Somerset,Peapack-Gladstone,806,457,38,1301
+403,district7,Somerset,Raritan,1464,1362,92,2918
+404,district7,Somerset,Rocky Hill,138,259,9,406
+405,district7,Somerset,Somerville,1758,2688,115,4561
+406,district7,Somerset,Warren,4934,2826,177,7937
+407,district7,Somerset,Watchung,1675,1266,67,3008
+408,district7,Union,Berkeley Heights,3651,2704,163,6518
+409,district7,Union,Clark,4827,2521,109,7457
+410,district7,Union,Cranford,6110,5909,206,12225
+411,district7,Union,Garwood,1024,925,28,1977
+412,district7,Union,Kenilworth,1779,1376,53,3208
+413,district7,Union,Mountainside,2221,1294,43,3558
+414,district7,Union,New Providence,3212,2619,122,5953
+415,district7,Union,Scotch Plains,211,304,6,521
+416,district7,Union,Springfield,3319,4049,109,7477
+417,district7,Union,Summit,4819,5159,166,10144
+418,district7,Union,Union   ,4188,7782,220,12190
+419,district7,Union,Westfield,7406,7500,212,15118
+420,district7,Union,Winfield,289,275,12,576
+421,district7,Warren,     Alpha,572,331,48,951
+422,district7,Warren,     Franklin,982,384,54,1420
+423,district7,Warren,     Greenwich,1506,850,75,2431
+424,district7,Warren,     Harmony,822,315,55,1192
+425,district7,Warren,     Lopatcong,2196,1322,130,3648
+426,district7,Warren,     Phillipsburg,2041,1877,197,4115
+427,district7,Warren,     Pohatcong,953,438,53,1444
+428,district8,Bergen,Fairview,2156,748,102,3006
+429,district8,Essex,Belleville,5320,2754,557,8631
+430,district8,Essex,Newark,19091,2302,986,22379
+431,district8,Hudson,Bayonne,5552,2504,533,8589
+432,district8,Hudson,East Newark,332,60,28,420
+433,district8,Hudson,Guttenberg,2158,472,108,2738
+434,district8,Hudson,Harrison,2226,616,171,3013
+435,district8,Hudson,Hoboken,13230,5316,1137,19683
+436,district8,Hudson,Jersey City,23572,4417,1600,29589
+437,district8,Hudson,Kearny,2527,835,275,3637
+438,district8,Hudson,North Bergen,14101,3401,525,18027
+439,district8,Hudson,Union City,12901,2388,482,15771
+440,district8,Hudson,Weehawken,3614,985,224,4823
+441,district8,Hudson,West New York,8693,2039,318,11050
+442,district8,Union,Elizabeth,18807,3463,756,23026
+443,district9,Bergen,Carlstadt,1306,1028,81,2415
+444,district9,Bergen,Cliffside Park,5096,2247,170,7513
+445,district9,Bergen,Cresskill,1773,1526,77,3376
+446,district9,Bergen,East Rutherford,1891,1179,96,3166
+447,district9,Bergen,Edgewater,2546,996,92,3634
+448,district9,Bergen,Elmwood Park,4686,2374,192,7252
+449,district9,Bergen,Englewood  ,7990,2004,227,10221
+450,district9,Bergen,Englewood Cliffs,1235,1113,30,2378
+451,district9,Bergen,Fort Lee,8026,4078,256,12360
+452,district9,Bergen,Garfield,4610,1998,255,6863
+453,district9,Bergen,Hasbrouck Heights,2725,2381,80,5186
+454,district9,Bergen,Leonia,2475,911,83,3469
+455,district9,Bergen,Little Ferry,2065,1059,89,3213
+456,district9,Bergen,Lyndhurst,4141,3054,209,7404
+457,district9,Bergen,Moonachie,575,304,26,905
+458,district9,Bergen,North Arlington,3323,2391,167,5881
+459,district9,Bergen,Palisades Park,2542,1180,83,3805
+460,district9,Bergen,Ridgefield,2155,1341,88,3584
+461,district9,Bergen,Ridgefield Park,2954,1336,140,4430
+462,district9,Bergen,Rutherford,4694,2957,159,7810
+463,district9,Bergen,Saddle Brook,3335,2083,92,5510
+464,district9,Bergen,South Hackensack,537,307,26,870
+465,district9,Bergen,Teaneck,2784,594,76,3454
+466,district9,Bergen,Tenafly,3867,1967,94,5928
+467,district9,Bergen,Teterboro,13,8,0,21
+468,district9,Bergen,Wallington,1791,1372,83,3246
+469,district9,Bergen,Woodridge,2298,1520,76,3894
+470,district9,Hudson,Kearny,3331,1786,199,5316
+471,district9,Hudson,Secaucus,3666,1858,172,5696
+472,district9,Passaic,Clifton,20137,8164,723,29024
+473,district9,Passaic,Haledon,2217,576,60,2853
+474,district9,Passaic,Hawthorne,4561,3334,182,8077
+475,district9,Passaic,Passaic,10629,2742,284,13655
+476,district9,Passaic,Patterson,34918,3259,531,38708
+477,district9,Passaic,Prospect Park,1728,349,26,2103
+478,district10,Essex ,Bloomfield,6355,1563,265,8183
+479,district10,Essex ,East Orange,18619,437,371,19427
+480,district10,Essex ,Glen Ridge,2424,1080,90,3594
+481,district10,Essex ,Irvington,14319,397,172,14888
+482,district10,Essex ,Maplewood,9724,1385,238,11347
+483,district10,Essex ,Montclair,10481,1433,263,12177
+484,district10,Essex ,Newark,39074,964,924,40962
+485,district10,Essex ,Orange,7637,322,123,8082
+486,district10,Essex ,South Orange,6133,955,140,7228
+487,district10,Essex ,West Orange,4280,891,162,5333
+488,district10,Hudson,Bayonne,5150,2652,386,8188
+489,district10,Hudson,Jersey City,27373,3905,1273,32551
+490,district10,Union,Hillside,6437,997,97,7531
+491,district10,Union,Linden,9140,3015,332,12487
+492,district10,Union,Rahway,7102,2473,206,9781
+493,district10,Union,Roselle,6436,733,121,7290
+494,district10,Union,Roselle Park,2614,1727,113,4454
+495,district10,Union,Union,7093,1479,168,8740
+496,district11,Essex,Bloomfield,3443,5718,347,9508
+497,district11,Essex,Caldwell,1674,1309,108,3091
+498,district11,Essex,Cedar Grove,3018,1755,188,4961
+499,district11,Essex,Essex Fells,799,306,30,1135
+500,district11,Essex,Fairfield,2357,671,149,3177
+501,district11,Essex,Livingston,6104,5970,376,12450
+502,district11,Essex,Montclair,1284,4437,146,5867
+503,district11,Essex,North Caldwell,1935,1106,73,3114
+504,district11,Essex,Nutley,4998,4369,571,9938
+505,district11,Essex,Roseland,1968,1127,98,3193
+506,district11,Essex,Verona,3192,2837,278,6307
+507,district11,Essex,West Caldwell,3185,1886,162,5233
+508,district11,Essex,West Orange,3595,7578,395,11568
+509,district11,Morris,Boonton Town of,2039,1503,76,3618
+510,district11,Morris,Boonton Twp,1654,656,48,2358
+511,district11,Morris,Butler,2058,1056,75,3189
+512,district11,Morris,Chatham Boro ,2670,1820,60,4550
+513,district11,Morris,Chatham Twp,3716,1935,70,5721
+514,district11,Morris,Denville,5664,2995,171,8830
+515,district11,Morris,East Hanover Twp,4193,1404,68,5665
+516,district11,Morris,Florham Park Boro,3619,1780,72,5471
+517,district11,Morris,Hanover Twp,5034,2009,100,7143
+518,district11,Morris,Harding Twp,1769,513,37,2319
+519,district11,Morris,Jefferson Twp,6502,2832,200,9534
+520,district11,Morris,Kinnelon Boro,3820,1480,88,5388
+521,district11,Morris,Lincoln Park Boro,2758,1628,81,4467
+522,district11,Morris,Madison Boro,4175,3106,114,7395
+523,district11,Morris,Mendham Boro,1888,821,46,2755
+524,district11,Morris,Mendham Twp,2293,1050,42,3385
+525,district11,Morris,Montville Twp,7100,3400,173,10673
+526,district11,Morris,Morris Plains Boro ,1885,1090,59,3034
+527,district11,Morris,Morris Twp,7029,4880,219,12128
+528,district11,Morris,Morristown,2795,3561,132,6488
+529,district11,Morris,Mountain Lakes,1436,855,37,2328
+530,district11,Morris,Parsippany-Troy Hills,11753,8907,394,21054
+531,district11,Morris,Pequannock Twp,5292,2528,141,7961
+532,district11,Morris,Randolph Twp,7433,4631,200,12264
+533,district11,Morris,Riverdale Boro,1303,626,40,1969
+534,district11,Morris,Rockaway Boro,1750,937,65,2752
+535,district11,Morris,Rockaway Twp,7437,4248,242,11927
+536,district11,Morris,Victory Gardens Boro,77,178,13,268
+537,district11,Passaic,Bloomingdale,1964,1277,193,3434
+538,district11,Passaic,Little Falls,2696,2544,258,5498
+539,district11,Passaic,North Haledon,2773,1236,163,4172
+540,district11,Passaic,Pompton Lakes,2593,1683,271,4547
+541,district11,Passaic,Totowa,2975,1387,229,4591
+542,district11,Passaic,Wanaque,2657,1802,281,4740
+543,district11,Passaic,Wayne,13281,8582,1228,23091
+544,district11,Passaic,Woodland Park,2361,2408,319,5088
+545,district11,Sussex,Byram Twp,3021,1176,272,4469
+546,district11,Sussex,Hopatcong,4300,2019,548,6867
+547,district11,Sussex,Ogdensburg,744,293,83,1120
+548,district11,Sussex,Sparta,7009,3021,564,10594
+549,district11,Sussex,Stanhope,1072,604,127,1803
+550,district12,Mercer,East Windsor Twp,6727,3404,770,10901
+551,district12,Mercer,Ewing Twp,10837,3901,837,15575
+552,district12,Mercer,Hightstown Boro,1254,678,199,2131
+553,district12,Mercer,Hopewell Boro,825,278,66,1169
+554,district12,Mercer,Hopewell Twp,5351,3804,455,9610
+555,district12,Mercer,Lawrence Twp,9369,4138,818,14325
+556,district12,Mercer,Pennington Boro,1024,391,68,1483
+557,district12,Mercer,Princeton,9433,2565,515,12513
+558,district12,Mercer,City of Trenton,17931,1287,878,20096
+559,district12,Mercer,West Windsor Twp,8006,3719,581,12306
+560,district12,Middlesex,Cranbury,1031,894,87,2012
+561,district12,Middlesex,Dunellen,1293,1044,167,2504
+562,district12,Middlesex,E. Brunswick,11284,8637,929,20850
+563,district12,Middlesex,Helmetta,364,480,69,913
+564,district12,Middlesex,Jamesburg,847,821,126,1794
+565,district12,Middlesex,Middlesex,2533,2719,303,5555
+566,district12,Middlesex,Milltown,1552,1807,208,3567
+567,district12,Middlesex,Monroe,11815,10497,824,23136
+568,district12,Middlesex,North Brunswick,9650,4169,819,14638
+569,district12,Middlesex,Old Bridge,7400,7448,1039,15887
+570,district12,Middlesex,Plainsboro,5167,1935,380,7482
+571,district12,Middlesex,South Brunswick,11468,5766,862,18096
+572,district12,Middlesex,South River,2484,2182,270,4936
+573,district12,Middlesex,Spotswood,1283,1793,285,3361
+574,district12,Somerset,Bound Brook,1560,1133,240,2933
+575,district12,Somerset,Franklin,19004,7293,1710,28007
+576,district12,Somerset,Manville,1387,1631,316,3334
+577,district12,Somerset,South Bound Brook,873,673,136,1682
+578,district12,Union,Fanwood,2175,1539,110,3824
+579,district12,Union,Plainfield,11372,952,348,12672
+580,district12,Union,Scotch Plains,6131,4829,382,11342
