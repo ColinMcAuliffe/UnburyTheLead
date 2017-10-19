@@ -79,29 +79,29 @@ def hierarchical_normal(name, shape, mu=0.,cs=5.):
     return pm.Deterministic(name, mu + delta * sigma)
 
 
-with pm.Model() as model:
-    b0       = pm.Normal("b0",mu=0.,sd=5.)
-    bMHI     = pm.Normal("MHI",mu=0.,sd=5.)
-
-    bMargDist = pm.Normal("MargDist",mu=0.,sd=5.)
-    muDist    = bMargDist*distMarginMc
-    bDistrict = hierarchical_studentT("District",mu=muDist,shape=n_dist)
-
-    turnout = b0 + bDistrict[district] + bMHI*mhiMc
-    alpha   = pm.Beta("Oops",alpha=1.,beta=9.)
-    p       = alpha*0.5 + (1.-alpha)*pm.math.sigmoid(turnout)
-
-    obs     = pm.Binomial('obs', df["Ballots Ca"].values, p, observed=df["Total"].values)
-    
-    trace = pm.sample(draws=ndraws,tune=ntune,init="advi+adapt_diag",njobs=3, random_seed=SEED,nuts_kwargs=NUTS_KWARGS)
-    
-plt.figure()
-axs = pm.traceplot(trace)
-plt.savefig(os.path.join("Figures","Trace.png"))
-plt.close()
-
-with open('my_model.pkl', 'wb') as buff:
-    pickle.dump(trace, buff)
+#with pm.Model() as model:
+#    b0       = pm.Normal("b0",mu=0.,sd=5.)
+#    bMHI     = pm.Normal("MHI",mu=0.,sd=5.)
+#
+#    bMargDist = pm.Normal("MargDist",mu=0.,sd=5.)
+#    muDist    = bMargDist*distMarginMc
+#    bDistrict = hierarchical_studentT("District",mu=muDist,shape=n_dist)
+#
+#    turnout = b0 + bDistrict[district] + bMHI*mhiMc
+#    alpha   = pm.Beta("Oops",alpha=1.,beta=9.)
+#    p       = alpha*0.5 + (1.-alpha)*pm.math.sigmoid(turnout)
+#
+#    obs     = pm.Binomial('obs', df["Ballots Ca"].values, p, observed=df["Total"].values)
+#    
+#    trace = pm.sample(draws=ndraws,tune=ntune,init="advi+adapt_diag",njobs=3, random_seed=SEED,nuts_kwargs=NUTS_KWARGS)
+#    
+#plt.figure()
+#axs = pm.traceplot(trace)
+#plt.savefig(os.path.join("Figures","Trace.png"))
+#plt.close()
+#
+#with open('my_model.pkl', 'wb') as buff:
+#    pickle.dump(trace, buff)
 
 
 
