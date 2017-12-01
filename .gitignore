@@ -15,5 +15,10 @@ CommonData/ShapeFiles/cb_2015_us_county_500k/
 CommonData/ShapeFiles/cb_2015_us_state_500k/
 CommonData/ShapeFiles/cb_2015_us_ua10_500k/
 CommonData/2010CensusSummaryFiles/
-Sep2017_NJTurnout/census_key.txt
+*census_key.txt
+MRP/TheHubTax/Poll/TheHub.csv
+MRP/TheHubTax/Poll/TheHub.txt
+*.pkl
+MRP/CommonData/PostStratData/acs5yr2015.csv
+MRP/CCES_Data/CCES16_Common_OUTPUT_Jul2017_VV.tab
 /.DS_Store
