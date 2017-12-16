@@ -42,7 +42,9 @@ def getInteractionLabel(l1,l2):
 stateData = pd.read_csv(os.path.join("..","CommonData","StateData","StateData.csv"))
 logitTrump = stateData["logitTrump"].values
 state_region = stateData["region"].values
-WhtDiff = stateData["PercentWhiteDiff"].values
+logitWhite = logit(stateData["PercentWhite2010"].values)
+logitEvang = logit(stateData["p_evang"].values/100.)
+
 regionLabel = ['North East','Mid West','South','West','DC']
 
 print stateData
@@ -67,11 +69,9 @@ HSCode           = [2]
 someCollegeCodes = [3,4]
 collegeGradCodes = [5,6]
 
-df["EduCat"] = 0 #No HS
-df.ix[df["educ"].isin(HSCode)          , 'EduCat'] = 1
-df.ix[df["educ"].isin(someCollegeCodes), 'EduCat'] = 2
-df.ix[df["educ"].isin(collegeGradCodes), 'EduCat'] = 3
-eduLabel = ["No HS Dipl","HS Grad","Some College","College Grad"]
+df["EduCat"] = 0 #No college degree
+df.ix[df["educ"].isin(collegeGradCodes), 'EduCat'] = 1
+eduLabel = ["College Grad"]
 
 #Race category
 df["RaceCat"] = 0 #Race other than BWH
@@ -114,7 +114,7 @@ df["WhtAdv"] = 0
 df.ix[df["CC16_422d"]==1, 'WhtAdv'] = 1 #Strong agree
 df.ix[df["CC16_422d"]==2, 'WhtAdv'] = 1 #Somewhat agree
 
-uniq_survey_df = (df.groupby(['RaceCat', 'gender','IncCat', 'EduCat', 'AgeCat', 'state_initnum']).WhtAdv.agg(['sum','size']).reset_index())
+uniq_survey_df = (df.groupby(['RaceCat', 'gender', 'EduCat', 'AgeCat', 'state_initnum']).WhtAdv.agg(['sum','size']).reset_index())
 print uniq_survey_df
 
 gender_race   = encodeInteraction(uniq_survey_df.gender.values,uniq_survey_df.RaceCat.values)
@@ -131,8 +131,8 @@ n_age = len(np.unique(age))
 edu   = uniq_survey_df.EduCat.values
 n_edu = len(np.unique(edu))
 
-inc   = uniq_survey_df.IncCat.values
-n_inc = len(np.unique(inc))
+#inc   = uniq_survey_df.IncCat.values
+#n_inc = len(np.unique(inc))
 
 age_edu   = encodeInteraction(uniq_survey_df.AgeCat.values,uniq_survey_df.EduCat.values)
 n_age_edu = len(np.unique(age_edu))
@@ -143,9 +143,9 @@ race_edu   = encodeInteraction(race,edu)
 n_race_edu = n_race*n_edu
 race_eduLabel = getInteractionLabel(raceLabel,eduLabel)
 
-race_inc   = encodeInteraction(race,inc)
-n_race_inc = n_race*n_inc
-race_incLabel = getInteractionLabel(raceLabel,incLabel)
+#race_inc   = encodeInteraction(race,inc)
+#n_race_inc = n_race*n_inc
+#race_incLabel = getInteractionLabel(raceLabel,incLabel)
 
 state = uniq_survey_df.state_initnum.values - 1
 n_state = 51
@@ -157,6 +157,7 @@ race_stateLabel = getInteractionLabel(raceLabel,stateLabel)
 
 N   = uniq_survey_df['size'].values
 yes = uniq_survey_df['sum'].values
+print "Yes: ",np.sum(yes)
 
 NUTS_KWARGS = {'target_accept': 0.99,'max_treedepth':30}
 SEED = 4260026 # from random.org, for reproducibility
@@ -171,25 +172,25 @@ with pm.Model() as model:
     a0   = pm.Normal('a0',mu=0.,sd=5.)
 
     #State level predictors
-    a_region  = hierarchical_normal('region',n_region)
+    #a_region  = hierarchical_normal('region',n_region)
     a_Trump   = pm.Normal('Trump',mu=0.,sd=5.)
-    a_WhtDiff = pm.Normal('WhtDiff',mu=0.,sd=5.)
-    mu_state  = a_region[state_region] + a_Trump*logitTrump + a_WhtDiff*WhtDiff
-    a_state   = hierarchical_studentT('state',n_state,mu=mu_state)
+    a_Evang   = pm.Normal('Evang',mu=0.,sd=5.)
+    mu_state  = a_Trump*logitTrump + a_Evang*logitEvang
+    a_state   = hierarchical_normal('state',n_state,mu=mu_state)
 
 
     #Individual predictors
     a_female = pm.Normal('female',mu=0.,sd=5.)
     a_race       = hierarchical_normal('race',n_race)
     a_age        = hierarchical_normal('age',n_age)
-    a_edu        = hierarchical_normal('edu',n_edu)
-    a_inc        = hierarchical_normal('inc',n_inc)
-    a_race_edu   = hierarchical_normal('race_edu',n_race_edu)
-    a_race_state = hierarchical_normal('race_state',n_race_state)
-    a_race_inc   = hierarchical_normal('race_inc',n_race_inc)
+    a_edu    = pm.Normal('edu',mu=0.,sd=5.)
+    #a_race_edu   = hierarchical_normal('race_edu',n_race_edu)
+    #a_race_state = hierarchical_studentT('race_state',n_race_state)
 
-    eta = a0 + a_female*female + a_race[race] + a_age[age] + a_edu[edu] + a_inc[inc] + a_state[state] + a_race_state[race_state] + a_race_edu[race_edu] + a_race_inc[race_inc]
-    p          = pm.math.sigmoid(eta)
+    eta = a0 + a_female*female + a_race[race] + a_age[age] + a_edu*edu  + a_state[state]# + a_race_edu[race_edu]
+    #Oops      = pm.Beta("Oops",alpha=1.,beta=9.)
+    #p         = Oops/2. + (1.-Oops)*pm.math.sigmoid(eta)
+    p         = pm.math.sigmoid(eta)
     likelihood = pm.Binomial("WhtAdv",N,p,observed=yes)
 
     trace = pm.sample(draws=ndraws,tune=ntune,njobs=3,init="advi+adapt_diag", random_seed=SEED,nuts_kwargs=NUTS_KWARGS)
@@ -200,6 +201,27 @@ with open(joinFig('my_model.pkl'), 'wb') as buff:
 with open(joinFig('my_model.pkl'), 'rb') as buff:
     trace = pickle.load(buff)  
 
+neff = pm.diagnostics.effective_n(trace)
+print neff
+
+#plt.figure()
+#ax = sns.jointplot(trace["region"][:,0],trace["sigma_region"])
+#plt.savefig(joinFig("joint.png"))
+#plt.close()
+
+#plt.figure()
+#ax = sns.jointplot(trace["region"][:,0],trace["region"][:,1])
+#plt.savefig(joinFig("joint3.png"))
+#plt.close()
+
+plt.figure()
+ax = sns.jointplot(neff["state"],trace["state"].mean(axis=0))
+plt.savefig(joinFig("joint4.png"))
+plt.close()
+
+
+
+
 
 plt.figure()
 axs = pm.traceplot(trace)
@@ -207,7 +229,7 @@ plt.savefig(joinFig("Trace.png"))
 plt.close()
 
 plt.figure()
-axs = pm.forestplot(trace,varnames=["female","race","age","edu","inc"],ylabels=genderLabel+raceLabel+ageLabel+eduLabel+incLabel)
+axs = pm.forestplot(trace,varnames=["female","race","age","edu"],ylabels=genderLabel+raceLabel+ageLabel+eduLabel)
 plt.savefig(joinFig("ForestIndividual.png"))
 plt.close()
 
@@ -216,23 +238,19 @@ axs = pm.forestplot(trace,varnames=["state"],ylabels=stateLabel)
 plt.savefig(joinFig("ForestState.png"))
 plt.close()
 
-plt.figure(figsize=(10,40))
-axs = pm.forestplot(trace,varnames=["race_state"],ylabels=race_stateLabel)
-plt.savefig(joinFig("ForestRaceState.png"))
-plt.close()
+#plt.figure(figsize=(10,40))
+#axs = pm.forestplot(trace,varnames=["race_state"],ylabels=race_stateLabel)
+#plt.savefig(joinFig("ForestRaceState.png"))
+#plt.close()
+
+#plt.figure()
+#axs = pm.forestplot(trace,varnames=["race_edu"],ylabels=race_eduLabel)
+#plt.savefig(joinFig("ForestRaceEdu.png"))
+#plt.close()
 
 plt.figure()
-axs = pm.forestplot(trace,varnames=["race_edu"],ylabels=race_eduLabel)
-plt.savefig(joinFig("ForestRaceEdu.png"))
-plt.close()
-
-plt.figure()
-axs = pm.forestplot(trace,varnames=["race_inc"],ylabels=race_incLabel)
-plt.savefig(joinFig("ForestRaceInc.png"))
-plt.close()
-
-plt.figure()
-axs = pm.forestplot(trace,varnames=["Trump","WhtDiff","region"],ylabels=["% Trump"]+regionLabel)
+#axs = pm.forestplot(trace,varnames=["Trump","Evang","region"],ylabels=["% Trump","% Evangelical"]+regionLabel)
+axs = pm.forestplot(trace,varnames=["Trump","Evang"],ylabels=["% Trump","% Evangelical"])
 plt.savefig(joinFig("ForestRegion.png"))
 plt.close()
 
@@ -246,3 +264,8 @@ plt.figure()
 axs = sns.jointplot(expit(logitTrump),trace["state"].mean(axis=0))
 plt.savefig(joinFig("stateVtrump.png"))
 plt.close()
+
+#plt.figure()
+#axs = sns.jointplot(WhtDiff,trace["state"].mean(axis=0))
+#plt.savefig(joinFig("whtdiffVtrump.png"))
+#plt.close()

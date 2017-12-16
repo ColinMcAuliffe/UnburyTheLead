@@ -104,8 +104,45 @@ stateData["PercentWhite2000"] = stateData["WhitePop2000"]/stateData["Pop2000"]
 stateData["PercentWhite2010"] = stateData["WhitePop2010"]/stateData["Pop2010"]
 stateData["PercentWhiteDiff"] = stateData["PercentWhite2010"]-stateData["PercentWhite2000"]
 
-print stateData
-sns.pairplot(stateData[["MedianHHIncome","Gini","Trump","MHIdiff","Ginidiff","PercentWhiteDiff"]])
+#Get some irs data on taxes
+import urllib2
+from bs4 import BeautifulSoup, SoupStrainer
+
+quote_page = "https://www.irs.gov/statistics/soi-tax-stats-historic-table-2"
+page = urllib2.urlopen(quote_page)
+soup = BeautifulSoup(page,'html.parser', parse_only=SoupStrainer('a'))
+i = 0
+salt = []
+tax  = []
+data = [["abbr","totalTaxPC","SALT_DeductionsPC"]]
+for link in soup:
+    if link.has_attr('href'):
+	href = link['href']
+	fname = href.split("/")[-1]
+	conds = "xlsx" in href and fname[0:2]=="15" and "cm" not in fname and "us" not in fname and "oa" not in fname
+	if conds:
+	    abbr = fname[6:8].upper()
+            df = pd.read_excel(href,skiprows=6,skipfooter=28)
+	    totReturnsIdx          = df[df[" "]=="Number of returns"].index.tolist()[0]
+	    deductionsOnTaxPaidIdx = df[df[" "]=="Total taxes paid:  Number"].index.tolist()[0]
+	    totTaxLiabilityIdx     = df[df[" "]=="Total tax liability:  [17] Number"].index.tolist()[0]
+
+	    numReturns     = df.ix[totReturnsIdx,1]
+	    numSALTReturns = df.ix[deductionsOnTaxPaidIdx,1]
+	    totalSALT      = df.ix[deductionsOnTaxPaidIdx+1,1]
+	    numReturnsWTax = df.ix[totTaxLiabilityIdx,1]
+	    totalTax       = df.ix[totTaxLiabilityIdx+1,1]
+            data.append([abbr,totalSALT/numSALTReturns,totalTax/numReturns])
+
+data = pd.DataFrame(data)
+new_header = data.iloc[0] #grab the first row for the header
+data = data[1:] #take the data less the header row
+data.columns = new_header #set the header row as the df header
+data.index = range(len(data))
+stateData = pd.merge(data,stateData,on="abbr").sort_values("state_initnum")
+
+print len(stateData)
+sns.pairplot(stateData[["MedianHHIncome","Gini","Trump","MHIdiff","Ginidiff","PercentWhiteDiff","totalTaxPC"]])
 plt.savefig("pair.png")
 
 stateData.to_csv("StateData.csv")
