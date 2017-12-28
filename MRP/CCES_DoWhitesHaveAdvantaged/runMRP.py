@@ -7,12 +7,13 @@ import scipy as sp
 import seaborn as sns
 from matplotlib.ticker import MaxNLocator
 from scipy.special import logit,expit
+from scipy.stats import expon,halfcauchy
 import pymc3 as pm
 import cPickle as pickle # python 2
+from matplotlib.ticker import MaxNLocator
 
 import itertools as itt
 
-#import utlUtilities as utl
 sns.set(color_codes=True)
 
 import us
@@ -27,8 +28,18 @@ def encodeInteraction(a1,a2):
 def hierarchical_studentT(name, shape, mu=0.,cs=5.):
     sigma = pm.HalfCauchy('sigma_{}'.format(name),cs)
     nu    = pm.Exponential('nu_minus_one_{}'.format(name), 1/29.) + 1
+    #nu    = pm.HalfCauchy('nu_minus_one_{}'.format(name), 10.) + 1
     
     return pm.StudentT(name, mu=mu,sd=sigma,nu=nu,shape=shape)
+
+def hierarchical_normalGV(name, shape, idx, mu=0.,cs=5.):
+    delta = pm.Normal('delta_{}'.format(name), 0., 1., shape=shape)
+
+
+    sigma_upp = pm.HalfCauchy('sigma_upp{}'.format(name), cs)
+    sigma     = pm.HalfCauchy('sigma_{}'.format(name), sigma_upp,shape=len(np.unique(idx)))
+    
+    return pm.Deterministic(name, mu + delta * sigma[idx])
 
 def hierarchical_normal(name, shape, mu=0.,cs=5.):
     delta = pm.Normal('delta_{}'.format(name), 0., 1., shape=shape)
@@ -39,32 +50,43 @@ def hierarchical_normal(name, shape, mu=0.,cs=5.):
 def getInteractionLabel(l1,l2):
     return [a+", "+b for a,b in itt.product(l1,l2)]
 
+def standardize(a):
+    return (a - np.mean(a))/np.std(a)
+
+
+#Load state data
 stateData = pd.read_csv(os.path.join("..","CommonData","StateData","StateData.csv"))
-logitTrump = stateData["logitTrump"].values
+print stateData[["abbr","state_initnum","region"]]
+#Make DC part of the northeast
+stateData.ix[stateData["region"]==4,'region'] = 0
+
 state_region = stateData["region"].values
-logitWhite = logit(stateData["PercentWhite2010"].values)
-logitEvang = logit(stateData["p_evang"].values/100.)
+logitTrump_St = stateData["logitTrump"].values
+logitWhite_St = logit(stateData["PercentWhite2010"].values)
+logitEvang_St = logit(stateData["p_evang"].values/100.)
+MHI_St        = standardize(stateData["MedianHHIncome"].values)
+WhtDiffSt    = ((stateData["PercentWhiteDiff"]-np.mean(stateData["PercentWhiteDiff"]))/np.std(stateData["PercentWhiteDiff"])).values
 
-regionLabel = ['North East','Mid West','South','West','DC']
+#Load CD data
+CDData = pd.read_csv(os.path.join("..","CommonData","CongDistrictData","CDData.csv"))
+logitTrump_CD = logit(CDData["Trump 2016"].values/100.)
+logitEvang_CD = logit(CDData["Evangel. Prot Congregation"].values/100.)
+MHI_CD        = standardize(CDData["MedianHHIncome"].values)
+TrumpSwing_CD = standardize(CDData["R16-R08"].values)
+logitCTV_CD   = logit(CDData["CTVpct"].values)
 
-print stateData
+district_state = CDData["state_initnum"].values
+
 
 df = pd.read_table(os.path.join("..","CCES_Data","CCES16_Common_OUTPUT_Jul2017_VV.tab"))
 
 #Age category
 df["AGE"] = 2016.-df["birthyr"]
 df["AgeCat"] = 0
-ageCats = [(18.,29.),
-           (30.,44.),
-           (45.,64.),
-           (65.,150.)]
-ageLabel = ["18-29","30-44","45-64","65+"]
-
-for i,bounds in enumerate(ageCats):
-    df.ix[(df["AGE"] >= bounds[0])&(df["AGE"] <= bounds[1]), 'AgeCat'] = i
+df.ix[df["AGE"]<35, 'AgeCat'] = 1 #Millenial
+ageLabel = ["Millenial"]
 
 #Education category
-#HS grad or GED
 HSCode           = [2]
 someCollegeCodes = [3,4]
 collegeGradCodes = [5,6]
@@ -74,36 +96,24 @@ df.ix[df["educ"].isin(collegeGradCodes), 'EduCat'] = 1
 eduLabel = ["College Grad"]
 
 #Race category
-df["RaceCat"] = 0 #Race other than BWH
-df.ix[df["race"]==1, 'RaceCat'] = 1 #W
-df.ix[df["race"]==2, 'RaceCat'] = 2 #B
-df.ix[df["race"]==3, 'RaceCat'] = 3 #H
-raceLabel = ["Other Race","White","Black","Hispanic"]
+df["RaceCat"] = 0
+df.ix[df["race"]==1, 'RaceCat'] = 1 #White
 
 #Income category
-_0_20           = [1,2]
-_20_40          = [3,4]
-_40_70          = [5,6,7]
-_70_150         = [8,9,10,11]
-_150Plus        = [31,12,13,14,15,16]
-
+under40k = [1,2,3,4]
 df["IncCat"] = 0 #Unknown
-df.ix[df["faminc"].isin(_0_20)   , 'IncCat'] = 1
-df.ix[df["faminc"].isin(_20_40)  , 'IncCat'] = 2
-df.ix[df["faminc"].isin(_40_70)  , 'IncCat'] = 3
-df.ix[df["faminc"].isin(_70_150) , 'IncCat'] = 4
-df.ix[df["faminc"].isin(_150Plus), 'IncCat'] = 5
-incLabel = ["Income Refused","Under 20k","20-40k","40-70k","70-150k","Over 150k"]
+df.ix[df["faminc"].isin(under40k)   , 'IncCat'] = 1
 
 #Gender
 df["gender"] = df["gender"] - 1
-genderLabel = ["Female"]
 
 #State
 df["STATEFP"] = df["inputstate"]
 df = pd.merge(df,stateData[["state_initnum","abbr","STATEFP"]],on="STATEFP")
 stateLabel = stateData["abbr"].tolist()
-print df
+
+print np.unique(df["state_initnum"])
+print len(np.unique(df["state_initnum"]))
 
 #CC16_422d, on if white people have advantages
 #Keep only those who answered, code less than 8
@@ -114,46 +124,18 @@ df["WhtAdv"] = 0
 df.ix[df["CC16_422d"]==1, 'WhtAdv'] = 1 #Strong agree
 df.ix[df["CC16_422d"]==2, 'WhtAdv'] = 1 #Somewhat agree
 
-uniq_survey_df = (df.groupby(['RaceCat', 'gender', 'EduCat', 'AgeCat', 'state_initnum']).WhtAdv.agg(['sum','size']).reset_index())
+#Condense survey responses by category
+uniq_survey_df = (df.groupby(['RaceCat', 'gender', 'EduCat', 'AgeCat','IncCat', 'state_initnum']).WhtAdv.agg(['sum','size']).reset_index())
 print uniq_survey_df
 
-gender_race   = encodeInteraction(uniq_survey_df.gender.values,uniq_survey_df.RaceCat.values)
-n_gender_race = len(np.unique(gender_race))
-
-female   = uniq_survey_df.gender.values
-
-race   = uniq_survey_df.RaceCat.values
-n_race = len(np.unique(race))
-
-age   = uniq_survey_df.AgeCat.values
-n_age = len(np.unique(age))
-
-edu   = uniq_survey_df.EduCat.values
-n_edu = len(np.unique(edu))
-
-#inc   = uniq_survey_df.IncCat.values
-#n_inc = len(np.unique(inc))
-
-age_edu   = encodeInteraction(uniq_survey_df.AgeCat.values,uniq_survey_df.EduCat.values)
-n_age_edu = len(np.unique(age_edu))
-age_eduLabel = getInteractionLabel(ageLabel,eduLabel)
-print age_eduLabel
-
-race_edu   = encodeInteraction(race,edu)
-n_race_edu = n_race*n_edu
-race_eduLabel = getInteractionLabel(raceLabel,eduLabel)
-
-#race_inc   = encodeInteraction(race,inc)
-#n_race_inc = n_race*n_inc
-#race_incLabel = getInteractionLabel(raceLabel,incLabel)
+female    = uniq_survey_df.gender.values
+white     = uniq_survey_df.RaceCat.values
+millenial = uniq_survey_df.AgeCat.values
+college   = uniq_survey_df.EduCat.values
+under40k  = uniq_survey_df.IncCat.values
 
 state = uniq_survey_df.state_initnum.values - 1
 n_state = 51
-n_region = 5
-
-race_state   = encodeInteraction(race,state)
-n_race_state = n_race*n_state
-race_stateLabel = getInteractionLabel(raceLabel,stateLabel)
 
 N   = uniq_survey_df['size'].values
 yes = uniq_survey_df['sum'].values
@@ -167,33 +149,43 @@ np.random.seed(SEED)
 ndraws = 1000
 ntune  = 500
 
+
 with pm.Model() as model:
     #Baseline intercept
-    a0   = pm.Normal('a0',mu=0.,sd=5.)
+    a0   = pm.Normal('baseline',mu=0.,sd=5.)
 
     #State level predictors
-    #a_region  = hierarchical_normal('region',n_region)
-    a_Trump   = pm.Normal('Trump',mu=0.,sd=5.)
-    a_Evang   = pm.Normal('Evang',mu=0.,sd=5.)
-    mu_state  = a_Trump*logitTrump + a_Evang*logitEvang
-    a_state   = hierarchical_normal('state',n_state,mu=mu_state)
-
+    a_region     = hierarchical_normal('region',4,cs=0.1)
+    a_Trump      = pm.Normal('Trump',mu=0.,sd=5.)
+    a_Evang      = pm.Normal('Evang',mu=0.,sd=5.)
+    a_MdInc      = pm.Normal('MdInc',mu=0.,sd=5.)
+    mu_state  = a_region[state_region] + a_Trump*logitTrump_St + a_Evang*logitEvang_St + a_MdInc*MHI_St
+    a_state   = hierarchical_normalGV('state',n_state,state_region,mu=mu_state,cs=0.1)
 
     #Individual predictors
-    a_female = pm.Normal('female',mu=0.,sd=5.)
-    a_race       = hierarchical_normal('race',n_race)
-    a_age        = hierarchical_normal('age',n_age)
-    a_edu    = pm.Normal('edu',mu=0.,sd=5.)
-    #a_race_edu   = hierarchical_normal('race_edu',n_race_edu)
-    #a_race_state = hierarchical_studentT('race_state',n_race_state)
+    a_female          = pm.Normal('female',mu=0.,sd=5.)
+    a_white           = pm.Normal('white',mu=0.,sd=5.)
+    a_millenial       = pm.Normal('millenial',mu=0.,sd=5.)
+    a_college         = pm.Normal('college',mu=0.,sd=5.)
+    a_under40k        = pm.Normal('under40k',mu=0.,sd=5.)
+    a_femaleMillenial = pm.Normal('femaleMillenial',mu=0.,sd=5.)
+    a_whiteFemale     = pm.Normal('whiteFemale',mu=0.,sd=5.)
+    a_whiteCollege    = pm.Normal('whiteCollege',mu=0.,sd=5.)
+    a_whiteMillenial  = pm.Normal('whiteMillenial',mu=0.,sd=5.)
+    a_whiteUnder40k   = pm.Normal('whiteUnder40k',mu=0.,sd=5.)
 
-    eta = a0 + a_female*female + a_race[race] + a_age[age] + a_edu*edu  + a_state[state]# + a_race_edu[race_edu]
-    #Oops      = pm.Beta("Oops",alpha=1.,beta=9.)
-    #p         = Oops/2. + (1.-Oops)*pm.math.sigmoid(eta)
+    eta = a0 + a_female*female + a_white*white + a_millenial*millenial + a_college*college + a_under40k*under40k + a_whiteFemale*white*female + a_femaleMillenial*female*millenial + a_whiteCollege*white*college + a_whiteMillenial*white*millenial + a_whiteUnder40k*white*under40k + a_state[state]
     p         = pm.math.sigmoid(eta)
     likelihood = pm.Binomial("WhtAdv",N,p,observed=yes)
 
     trace = pm.sample(draws=ndraws,tune=ntune,njobs=3,init="advi+adapt_diag", random_seed=SEED,nuts_kwargs=NUTS_KWARGS)
+
+    plt.figure()
+    hcp5  = pm.HalfCauchy.dist(.1)
+    hcpp5 = pm.HalfCauchy.dist(.1)
+    axs = pm.traceplot(trace,varnames=["sigma_region","sigma_uppstate"],priors=[hcp5,hcpp5])
+    plt.savefig(joinFig("TraceV.png"))
+    plt.close()
 
     
 with open(joinFig('my_model.pkl'), 'wb') as buff:
@@ -201,27 +193,21 @@ with open(joinFig('my_model.pkl'), 'wb') as buff:
 with open(joinFig('my_model.pkl'), 'rb') as buff:
     trace = pickle.load(buff)  
 
-neff = pm.diagnostics.effective_n(trace)
-print neff
-
-#plt.figure()
-#ax = sns.jointplot(trace["region"][:,0],trace["sigma_region"])
-#plt.savefig(joinFig("joint.png"))
-#plt.close()
-
-#plt.figure()
-#ax = sns.jointplot(trace["region"][:,0],trace["region"][:,1])
-#plt.savefig(joinFig("joint3.png"))
-#plt.close()
 
 plt.figure()
-ax = sns.jointplot(neff["state"],trace["state"].mean(axis=0))
-plt.savefig(joinFig("joint4.png"))
+g = sns.jointplot(logitTrump_St,trace["state"].mean(axis=0))
+plt.savefig(joinFig("distVtrump.png"))
 plt.close()
 
+plt.figure()
+g = sns.jointplot(logitEvang_St,trace["state"].mean(axis=0))
+plt.savefig(joinFig("distVevang.png"))
+plt.close()
 
-
-
+plt.figure()
+g = sns.jointplot(MHI_St,trace["state"].mean(axis=0))
+plt.savefig(joinFig("distVmhi.png"))
+plt.close()
 
 plt.figure()
 axs = pm.traceplot(trace)
@@ -229,43 +215,12 @@ plt.savefig(joinFig("Trace.png"))
 plt.close()
 
 plt.figure()
-axs = pm.forestplot(trace,varnames=["female","race","age","edu"],ylabels=genderLabel+raceLabel+ageLabel+eduLabel)
+axs = pm.forestplot(trace,varnames=['baseline',"female","white","millenial","college","under40k","femaleMillenial","whiteFemale","whiteMillenial","whiteCollege","whiteUnder40k"],rhat=False)
 plt.savefig(joinFig("ForestIndividual.png"))
 plt.close()
 
-plt.figure(figsize=(10,20))
-axs = pm.forestplot(trace,varnames=["state"],ylabels=stateLabel)
+plt.figure()
+axs = pm.forestplot(trace,varnames=["Trump","Evang","MdInc","region"],rhat=False)
 plt.savefig(joinFig("ForestState.png"))
 plt.close()
 
-#plt.figure(figsize=(10,40))
-#axs = pm.forestplot(trace,varnames=["race_state"],ylabels=race_stateLabel)
-#plt.savefig(joinFig("ForestRaceState.png"))
-#plt.close()
-
-#plt.figure()
-#axs = pm.forestplot(trace,varnames=["race_edu"],ylabels=race_eduLabel)
-#plt.savefig(joinFig("ForestRaceEdu.png"))
-#plt.close()
-
-plt.figure()
-#axs = pm.forestplot(trace,varnames=["Trump","Evang","region"],ylabels=["% Trump","% Evangelical"]+regionLabel)
-axs = pm.forestplot(trace,varnames=["Trump","Evang"],ylabels=["% Trump","% Evangelical"])
-plt.savefig(joinFig("ForestRegion.png"))
-plt.close()
-
-print max(np.max(score) for score in pm.gelman_rubin(trace).values())
-plt.figure()
-pm.energyplot(trace)
-plt.savefig(joinFig("Energy.png"))
-plt.close()
-
-plt.figure()
-axs = sns.jointplot(expit(logitTrump),trace["state"].mean(axis=0))
-plt.savefig(joinFig("stateVtrump.png"))
-plt.close()
-
-#plt.figure()
-#axs = sns.jointplot(WhtDiff,trace["state"].mean(axis=0))
-#plt.savefig(joinFig("whtdiffVtrump.png"))
-#plt.close()
