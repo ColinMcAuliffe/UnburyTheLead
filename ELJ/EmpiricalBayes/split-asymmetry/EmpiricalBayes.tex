@@ -40,17 +40,10 @@
 
 \begin{abstract}
 There are several legal and technical challenges to the establishment of a standard for limiting partisan gerrymandering, and a few methods have been proposed thus far.
-All methods for examining gerrymandering use observations of the results of one or more elections to make inferences about the tendency of a given redistricting plan to lead to biased outcomes.  
-Here we propose an empirical Bayesian framework which allows an analyst to make such inferences accurately by using all available election results for the redistricting plan in question in a robust and consistent statistical model.
-The framework can be used with any gerrymandering metric.
-
-Additionally, we propose a new measure of gerrymandering called the specific asymmetry which we believe will stand up better to judicial and technical tests than any other measure proposed thus far.
+We propose a new measure of gerrymandering called the specific asymmetry which we believe will stand up better to judicial and technical tests than any other measure proposed thus far.
 The specific asymmetry does not rely on proportionality of seats and votes, is applicable to any level of statewide partisanship, does not require national results as a baseline, and measures bias at the popular vote that actually occurred as opposed to some other hypothetical popular vote. 
 All other available metrics fall short in at least one of these aspects, which leaves them vulnerable to criticism and manipulation by those seeking to gerrymander or to defend an existing gerrymander.
 
-We analyze the magnitude and persistence of partisan bias under a particular districting plan by using the empirical Bayesian model to compute the expected value of the specific asymmetry.
-This analysis technique is applied to the United States congressional elections from 1972-2016 to examine the total and net effects of partisan bias in recent history.
-We also examine the Act 43 map for the Wisconsin State Assembly, which is the subject of \emph{Whitford v. Gill}.
 
 Keywords: Redistricting, gerrymander, Whitford v. Gill, 
 
@@ -73,92 +66,6 @@ However, even when redistricting is fair, single winner voting systems tend not 
 A second example is the mean median difference test \cite{Wang__,Wang_2016_10.1089/elj.2016.0387,McDonald_2015_10.1089/elj.2015.0358}, which fits with existing rulings since it measures partisan bias without regard to proportionality and is simple enough to be calculated by a judge without an expert witness.
 However, it is only effective in measuring bias for states which are close to even in terms of partisanship. \cite{Wang_2016_10.1089/elj.2016.0387}
 
-Several standards have been proposed in literature, and for clarity we describe a standard as consisting of two parts.
-The first part is a metric, which is some quantity that can be calculated from a given election result and is a measure of the unfairness or bias.
-The second part is a model (or in the absence of a statistical model per se an analysis of the metric in historical elections), which allows one to asses whether or not the observed value of the metric can be regarded as the result of chance in an otherwise unbiased redistricting plan, or if bias is a persistent feature of the plan.
-For example, the plaintiffs in Whitford v. Gill used a metric called the efficiency gap \cite{Stephanopoulos_2014_}, which measures the discrepancy in the so called wasted votes between the two major parties.
-An examination of historical election data determined that it is reasonable to assume that observing an efficiency gap of greater than 7\% in favor of the redistricting party would typically be predictive of efficiency gaps favoring that party for the entire redistricting cycle.
-Browning, Grofman and King proposed a metric based on the deficit in seats at 50\% votes in a seats votes curve \cite{Browning_1987_,Grofman_2008_}, which was used in a Bayesian model for evaluating redistricting plans in \cite{Gelman_1994_,Gelman_1994_a}.
-Nagle has proposed several other metrics based on the seats votes curve \cite{Nagle_2015_10.1089/elj.2015.0311}, including the geometric area between the seats votes curve and its reflection, although no accompanying model was proposed.
-
-A special group of standards are those where a particular metric is associated with an existing analytic statistical model.
-Among these are the lopsided wins test, the mean median difference test, and the chi square test proposed by Wang \cite{Wang__,Wang_2016_10.1089/elj.2016.0387}.
-These standards are attractive because they are based on statistics with properties that are well understood, that are used broadly for applications across many fields, and are relatively simple.
-However, these tests have some drawbacks.
-Namely, the models used for computing the significance level for those tests are valid asymptotically as the number of districts increases, meaning that the statistical power of these standards is diminished for states with just a few districts.
-Additionally, a null distribution must be specified for each of the test statistics in question. 
-However, the null distributions used in the t-test and chi squared test are well established and the effect of the null distribution on the mean median difference test is small in many cases. \cite{Cabilio_1996_10.2307/3315744,Zheng_2010_}
-Lastly, these models assume that samples are independent and identically distributed (IID), which is an assumption that is crucial for the tests to be analytic (and hence simple) but not necessarily realistic for elections.
-For instance, the IID assumption would imply that the probability of a deeply partisan Republican district being won by a Republican is the same as the probability of a deeply partisan Democratic district in the same state being won by a Republican.
-Violation of the IID assumption can have a noticeable effect on statistical tests, for an example in securities law see \cite{Gel_2009_10.1093/lpr/mgp008}. 
-Use of this assumption may make this group of standards too restrictive or too permissive depending on the specific circumstances.
-Despite these objections, standards based on analytic models are potentially very powerful due to their relative simplicity and their ability to be solved without sophisticated analysis.
-We are currently investigating the effect the IID assumption has on the robustness of such standards.
-
-Another group of standards are those based on Monte Carlo simulation.
-A major advantages of Monte Carlo based standards are flexibility, since they do not require the metrics to be analytically integrable, and thus can be used with a wide variety of metrics or even multiple metrics in combinations.
-Additionally, once implemented by a computer algorithm, it is quick and easy to look at the data in many different ways.
-
-An example is test III proposed by Wang \cite{Wang__,Wang_2016_10.1089/elj.2016.0387}, where the metric used was the proportion of seats won by a party, and the model was a Monte Carlo technique where 'fantasy' congressional delegations were sampled from national congressional voting results.
-This method can be used to establish whether or not a party's vote share wins them seats excessively relative to a national baseline.
-A second example of a Monte Carlo based standard is that of Chen et al \cite{Chen_2015_10.1089/elj.2015.0317,Chen_2016_10.1016/j.electstud.2016.06.014}, where electoral maps satisfying basic redistricting criteria are generated randomly and compared against the actual map.
-The standard that we propose is also based on Monte Carlo integration.
-The metric, which we refer to as the specific asymmetry (see section \ref{sec:MB}), is a measure of partisan bias that determines discrepancy in seats won by the losing party under a reversal in statewide partisanship.  
-The model, described in section \ref{sec:FB}, uses a Monte Carlo technique based on draws from an empirically estimated probability model for district and statewide partisanship.
-The drawback of Monte Carlo based standards is complexity relative to analytic standards which do not require a computer to implement.
-Since Monte Carlo is a numerical integration method, as opposed to analytic, it take a lot more computer processing power, and thus isn't as well suited for use in optimization algorithms, relative to analytic methods.
-Nonetheless, Monte Carlo techniques are highly conventional tools that are in widespread use across numerous disciplines \cite{Kroese_2014_10.1002/wics.1314}, and are useful for examining bias in redistricting.
-
-The empirical Bayesian framework that we propose is not only appropriate for assessing bias that has existed in past redistricting plans, but it is useful for understanding how bias could be introduced into future redistricting plans, even as strategies for gerrymandering change in response to the introduction of a hypothetical standard.
-In fact, the empirical Bayesian model that we propose is compatible with all of the metrics we have discussed thus far, and can be used as part of a standard itself, or can be used to test the robustness of standards that do not require Monte Carlo simulation. 
-We therefore contend that regardless of whether or not the approach we present is an acceptable judicial standard itself, it remains a powerful tool for assessing partisan bias in redistricting plans that will prove useful for researchers and advocates of redistricting reform.
-For example, the Monte Carlo technique can be used to evaluate the properties of metrics which do not have well known analytic statistical properties such as the efficiency gap and the specific asymmetry metric proposed in section \ref{sec:MB}, or to evaluate the effect of the IID assumption for metrics which do have known analytic properties such as the mean median difference and the t-test.
-Additionally, the technique could be used to help develop an understanding of the conditions where different metrics may agree or disagree with one another.
-For fast reference, table \ref{tab:Stand} summarizes each of the standards discussed here. 
-
-\begin{table}[htb!]
-\centering
-\caption{Summary of the metrics and models employed by various gerrymandering standards \label{tab:Stand}}
-\begin{tabular}{|l|l|l|}
-\hline
-Standard & Metric & Model\\
-\hline
-\hline
-Grofman and King & Deficit in Seats at 50\% of the vote & None proposed\\
-\hline
-Nagle & Various metrics of seats & None proposed\\
-      & votes curve asymmetry &  \\
-\hline
-Stephanopolous and McGhee & Efficiency gap & None proposed,\\
-                          &                & historical analysis used\\
-                          &                & in \emph{Whitford v. Gill}\\
-\hline
-Gelman et al & Deficit in Seats at 50\% of the vote, & Bayesian simulation\\
-             & various others & \\
-\hline
-Mean Median Difference & Mean median difference & asymptotic distribution \\
- &                                              & (unit normal) \\
- &                                              & assuming IID samples \\
-\hline
-Chi square test & Party in state and national  & asymptotic distribution  \\
-                & winning vote share variances  & (chi squared) \\
-                &   & assuming IID samples \\
-\hline
-Lopsided wins test & Difference in party  & asymptotic distribution  \\
-                   &  mean winning vote share & (student's t) \\
-                   &   & assuming IID samples \\
-\hline
-Test III \cite{Wang_2016_10.1089/elj.2016.0387} & Party seat share & MC sampling of national \\
-or 'excess seats test'         &                  & district voting results\\
-\hline
-Chen and Rodden & Party seat share & MC sampling of randomly \\
-         &                         & generated districting plans\\
-\hline
-Present study & Specific Asymmetry & MC sampling of the \\
-              &                    & empirical Bayesian model\\
-\hline
-\end{tabular}
-\end{table}
 
 \section{Measuring Bias with the Specific Asymmetry\label{sec:MB}}
 
