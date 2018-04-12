@@ -1,0 +1,168 @@
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.6]{../Figures/Other/probability_model.png}
+        \caption{Schematic illustration of empirical Bayesian probability model}\label{fig:ProbModel}
+    \end{center}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.8]{../Figures/HistoricAsymmetry/VarHist.png}
+        \caption{Distribution of sample variance of district partisanship over contested elections in each cycle. The green lines are the result of fitting the variances to a beta distribution}\label{fig:varHist}
+    \end{center}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.45]{../Figures/WI2010/sv_curves_assembly.png}
+        \caption{Some election outcome seats-votes curves generated from the probability model for Wisconsin 2010 Assembly districts}\label{fig:SVAssembly2010}
+    \end{center}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.8]{../Figures/HistoricAsymmetry/sv.png}
+        \caption{Democratic vote share and seat share with asymmetry removed 1972-2016}\label{fig:AsymRemoved}
+    \end{center}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.8]{../Figures/ExpectedAsymmetry/netAsym.png}
+        \caption{Net national asymmetry based on 10,000 simulations}\label{fig:NetAsym}
+    \end{center}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.8]{../Figures/ExpectedAsymmetry/netAsymHist.png}
+        \caption{Net national asymmetry based on 10,000 simulations}\label{fig:NetAsymHist}
+    \end{center}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.8]{../Figures/HistoricAsymmetry/MeanHist.png}
+        \caption{Distribution of mean district partisanship for each cycle}\label{fig:meanHist}
+    \end{center}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.8]{../Figures/ExpectedAsymmetry/80vs10.png}
+        \caption{Histograms of the simulated asymmetries in Texas and California in the 1980's, and Pennsylvania and North Carolina in the 2010s}\label{fig:80vs10}
+    \end{center}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.8]{../Figures/ExpectedAsymmetry/totalAsym.png}
+        \caption{Total national asymmetry based on 10,000 simulations}\label{fig:totalAsym}
+    \end{center}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.8]{../Figures/ExpectedAsymmetry/asymRank.png}
+        \caption{Expected asymmetry as a percentage of seats ranked in descending order for each redistricting cycle}\label{fig:asymRank}
+    \end{center}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.8]{../Figures/ExpectedAsymmetry/diff2000to2010.png}
+        \caption{Changes in the expected specific asymmetry from the 2000 redistricting cycle to the 2010 cycle. The arrow indicates the direction of the change in asymmetry.}\label{fig:Asym2000to2010}
+    \end{center}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.35]{../Figures/WI_compared/precincts_pop_combined.png}
+        \caption{2016 Assembly election results by precinct, projected onto Assembly districts before and after Act 43. Left: 2000 cycle districts, Right: 2010 cycle districts}\label{fig:MapsWI}
+    \end{center}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.85]{../Figures/WI2010/WI_2000_2010_seats.png}
+        \caption{Republican Seat Counts in Assembly elections, using 2000 cycle districts vs 2010 cycle districts. The X's indicate that a result has been cross aggregated, meaning results were computed on a different district map than the one that actually existed at the time of the election.}\label{fig:Seats20002010}
+    \end{center}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.85]{../Figures/WI2010/WI_2000_2010.png}
+        \caption{Historical asymmetry in Assembly elections, using 2000 cycle districts vs 2010 cycle districts. The X's indicate that a result has been cross aggregated, meaning results were computed on a different district map than the one that actually existed at the time of the election.  The dashed lines represent the statistical expectations, and the shaded areas represent the 50\% confidence intervals.}\label{fig:Asym20002010}
+    \end{center}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.85]{../Figures/WI2010/WI_2000_2010diff.png}
+        \caption{Difference in seats won by Republicans in the two maps. The dashed blue line shows the difference in expected asymmetry between the two maps, the blue and light blue shaded regions represent 50\% and 90\% confidence intervals}\label{fig:Asym20002010diff}
+    \end{center}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.25]{../Figures/WI_compared/3x2.png}
+        \caption{Partisan vote packing in Wisconsin Assembly elections. Top: 2000 cycle districts, Bottom: 2010 cycle districts, Left to right: 2012, 2014, and 2016 elections.}\label{fig:DistrictMaps}
+    \end{center}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.40]{../Figures/WI_compared/districts_compared_deltas.png}
+        \caption{Partisan vote packing in Wisconsin Assembly elections, using 2016 election data.  Outlined in green are areas where Republicans packed Democratic votes.}\label{fig:DistrictMapDelta}
+    \end{center}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.25]{../Figures/WI_compared/Betas_cropped.png}
+        \caption{Beta distributions for Wisconsin 2010-cycle Assembly districts, Top: 2000 cycle districts, Bottom: 2010 cycle districts}\label{fig:BetasWI}
+    \end{center}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.25]{../Figures/WI_compared/asymmetry_cropped.png}
+        \caption{Specific asymmetry likelihoods, Top: 2000 cycle districts, Bottom: 2010 cycle districts}\label{fig:LikelihoodsAsymmetry}
+    \end{center}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.25]{../Figures/WI_compared/district_partisanship_cropped.png}
+        \caption{District partisanship likelihoods, Top: 2000 cycle districts, Bottom: 2010 cycle districts}\label{fig:LikelihoodsDistrictPartisanship}
+    \end{center}
+\end{figure}
+\efloatseparator
+ 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.25]{../Figures/WI_compared/seats_cropped.png}
+        \caption{Seat count likelihoods, Top: 2000 cycle districts, Bottom: 2010 cycle districts.}\label{fig:LikelihoodsSeatCounts}
+    \end{center}
+\end{figure}
+\efloatseparator
+ 
