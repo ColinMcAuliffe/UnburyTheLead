@@ -198,6 +198,11 @@ This is true in the sense that we could not predict what the distribution of vot
 In other words, while the specific asymmetry may be phrased as a sort of hypothetical, it measures a \emph{real} electoral disadvantage endured by one party resulting from that party winning seats less efficiently than the opposite party due to voter packing and cracking.
 Further, as the magnitude of the structural disadvantage to one party increases due to a more aggressive gerrymander, the specific asymmetry increases as well.
 
+If instead the asymmetry was measured at 50-50, this would not necessarily be the case.  
+Indeed, a malicious designer could use a computer algorithm to automatically maximize the actual number of seats their party wins above symmetry at the actual popular vote, while keeping the measured difference at the hypothetical (and counterfactual) 50-50 vote share nearly zero.  
+In effect, "gaming the system".
+Our proposed measure, "specific asymmery", on the other hand, cannot be gamed this way, because the structural disadvantage is measured at the actual popular vote.
+
 The metric can be calculated deterministically from the results of a single election, and when combined with the sampling method in section \ref{sec:FB}, a quantity representing the distribution of likely asymmetries analogous to equation \ref{eq:intAsym} can be computed.
 Sampling the specific asymmetry to compute likely asymmetries is preferable to using the integral in equation \ref{eq:intAsym}, since the specific asymmetry has units of seats.
 This is an intuitive unit of measure which makes it easier to communicate results with legal experts as well as the general public.
