@@ -66,3 +66,18 @@ off-year/on-year
 dem incumbency / rep incumbency
 1.222 / 1.202
 0.03660666519985473
+
+----------------
+
+now that i have the incumbency effect extracted, i want to add it to our beta model as described and do a generic house projection.  
+
+shouldn't be too hard to integrate with my existing beta model code.
+
+and then maybe add incumbencies for 2018, do a projection off that, and compute the log-likelihood of the actual outcome, given the beta model.
+since there's built-in correlation, in the form of the national popular vote, this should be calculated by monte carlo integration - running the full simulation a million times and finding the fraction of outcomes that are exactly correct, and taking the logarithm of that.  
+
+then i think that would be enough "meat" so to speak for progress for a working paper.
+
+* extracting an incumbency effect parameter (more accurately than others, imo) for use with the beta model
+* adding incumbency effects to the beta model
+* testing and validation of the above two
