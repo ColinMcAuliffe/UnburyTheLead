@@ -1,0 +1,68 @@
+And I was thinking we might be able to create more detailed and accurate projections using our model.  We can use the data we got from sam wang's assistant/student.  But we'd have to make it account for the incumbency effect in order to be competitive.  So today i've been thinking about how to do that.
+
+And my thinking is, to keep it simple, we just use a regression analysis to get a point estimate of incumbency effect.  But a problem with that is if it's an additive effect, adding a 4% advantage to a 98% victory is 102%.  So we can make it more realistic by having an incumbency effect that falls to 0 at the extreme.
+
+So that's the first half of the problem.  The second half is integrating that into our probability model.   And I think I figured out how to do it.  Below are my notes.  This is for projecting nation-wide house seats, in 2018. (I choose the most recent election so that we can do validation.)
+
+Incumbency advantage
+----------------------
+A simple additive component to percent of votes is unrealistic because it can result in vote totals over 100%.
+
+Assuming a regression analysis approach, two potential ways to model incumbency advantage are:
+
+1. Model it as an additive component to vote %, that drops to zero at either extreme.  For instance you could model it as a beta distribution with a=b, multiplied by a constant
+2. Incumbency advantage can be counted as a multiplicative component on turnout (1.08?), that is applied to the incumbent's party.
+
+The second method is simpler (it has fewer free variables), and can be justified by presuming that incumbeny effects are primarily due to increased voter turnout for the incumbent party due to name recognition.
+But this justification is not as important as whether it fits the empirical data well.
+
+Method 2, projecting outcomes with new incumbency values:
+1. subtract historical incumbency advantage by dividing old incumbent party vote totals by 1.08 (or whatever it comes out to after regression analysis).
+2. add incumbency advantage by multiplying new incumbent party vote totals by 1.08 (or whatever it is).
+3. continue with normal method outlined in the paper
+
+We can get a better ideal of country-wide swing beta distribution, because for that we can use all elections.
+But while we can remove incumbency effects from previous elections, we can't add them past the current districts, 
+because the people were different.
+
+So we have to construct a local system that's compatible with an incumbency neutral global system.
+
+So instead we: 
+1. construct a full incumbency neutral model, with the current districting cycle data, and a global model with all elections
+2. then we we substitute in our global betas to our local model
+3. compute the district-level percentages using the local incumbency-neutral beta's, and multiplicatively adjust them to match the global incumbency-neutral
+4. add then multiple the pct votes of the incumbent party by the incumbency adjustment.  So for instance a 50/50 would become a 0.5/0.54.  
+5. now treat the 0.5 and 0.54 as if they were vote counts, and recompute the percentage.  So now it 0.519...% for the incumbent.
+
+----------------
+
+Also I've given a little more though to how to extend it beyond a point estimate.
+
+One can use a sort of quasi-bayesian method, by computing the log likelihood, when combined with our beta model, of the outcomes of the elections where an incumbent was challenged, for different values of the incumbency effect.
+
+One can then do linear interpolation from here to construct a full curve, over all possible values of the incumbency effect.  this is your probability density function.  now just divide by the are under the curve to normalize it.
+
+--------------
+splitting incumbency effect into on year/off year doesn't make a significant difference.
+neither does splitting it into democratic/republican incumbent.
+
+incumbency effect only reduces unexplained variation by about 0.33%.
+splitting it either way adds less than  0.0015% to that.
+
+studies that show otherwise are likely over-fitting the data.
+
+no incumbency effect
+0.040027829718357194
+
+single incumbency effect
+1.210
+0.036609347578635626
+
+off-year/on-year
+1.200 / 1.214
+0.036594334764464415
+
+
+dem incumbency / rep incumbency
+1.222 / 1.202
+0.03660666519985473
