@@ -42,10 +42,20 @@ public class Election {
 		boolean actual_dem_win = dem_imputed > rep_imputed;
 		return ((predict_dem_win && actual_dem_win) || (!predict_dem_win && !actual_dem_win)) ? 0.0 : 1.0;
 	}
-	
+	public double getDelta(double inc_effect, double popPVI) {
+		double dem = districtPVI*popPVI;
+		double rep = (1-districtPVI)*(1-popPVI);
+		if(dem_incu) dem *= inc_effect;
+		if(rep_incu) rep *= inc_effect;
+		double predictedPVI = dem / (dem + rep); 
+		double actualPVI = dem_imputed /(dem_imputed + rep_imputed);
+		return Math.abs(predictedPVI-actualPVI);
+	}
+	/*
 	public double getDelta() {
 		return Math.abs(districtPVI - getElectionPVI());
 	}
+	*/
 	public void fromLine(String s) {
 		String[] ss = s.split(",");
 		

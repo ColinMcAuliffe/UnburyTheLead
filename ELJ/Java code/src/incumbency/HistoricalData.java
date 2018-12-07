@@ -29,7 +29,12 @@ public class HistoricalData {
 			File f = jfc.getSelectedFile();
 			filename = f.getAbsolutePath();
 		}
-		HistoricalData d = new HistoricalData(filename,new int[]{1990,2000});
+		//HistoricalData d = new HistoricalData(filename,new int[]{1980});
+		//HistoricalData d = new HistoricalData(filename,new int[]{1990});
+		//HistoricalData d = new HistoricalData(filename,new int[]{2000});
+		//HistoricalData d = new HistoricalData(filename,new int[]{2010});
+		//HistoricalData d = new HistoricalData(filename,new int[]{1990,2000});
+		HistoricalData d = new HistoricalData(filename,new int[]{2000,2010});
 	}
 	
 	HistoricalData(String filename, int[] cycle) {
@@ -129,7 +134,7 @@ public class HistoricalData {
 		for( int i = 0; i < cycle.length; i++) {
 			num_elections += electionsByCycle.get(cycle[i]).size();
 		}
-		for( double on_inc_test = 1.00; on_inc_test < 1.25; on_inc_test += 0.001) {
+		for( double on_inc_test = 1.00; on_inc_test < 1.5; on_inc_test += 0.001) {
 			//for( double off_inc_test = 1.05; off_inc_test < 1.25; off_inc_test += 0.002) {
 			double off_inc_test = on_inc_test;
 				double d = 0;
@@ -150,14 +155,15 @@ public class HistoricalData {
 					}
 					
 					//4 compute total absolute deviation
-					d += getTotalDeviation(electionsByCycle.get(cycle[i]));
+					d += getTotalDeviation(electionsByCycle.get(cycle[i]),on_inc_test,0.50);
 					w += getTotalIncorrects(electionsByCycle.get(cycle[i]),on_inc_test,0.50);
 				}
+				System.out.println(""+df.format(off_inc_test)+", "+(d/num_elections));
 				if( d < min_val) {
 					min_val = d;
 					on_year = on_inc_test; 
 					off_year = off_inc_test; 
-					System.out.println("new min: "+df.format(off_inc_test)+": "+df.format(on_inc_test)+": "+(d/num_elections)+": "+(w/num_elections));
+					//System.out.println("new min: "+df.format(off_inc_test)+": "+df.format(on_inc_test)+": "+(d/num_elections)+": "+(w/num_elections));
 				}
 				//System.out.println(df.format(inc_test)+": "+d);
 			//}
@@ -210,10 +216,10 @@ public class HistoricalData {
 	}
 	
 	
-	public double getTotalDeviation(Vector<Election> elections) {
+	public double getTotalDeviation(Vector<Election> elections, double inc, double pop) {
 		double d = 0;
 		for( Election e : elections) {
-			d += e.getDelta();
+			d += e.getDelta(inc,pop);
 		}
 		return d;
 	}
