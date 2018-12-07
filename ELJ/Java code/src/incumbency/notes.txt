@@ -43,6 +43,26 @@ One can use a sort of quasi-bayesian method, by computing the log likelihood, wh
 One can then do linear interpolation from here to construct a full curve, over all possible values of the incumbency effect.  this is your probability density function.  now just divide by the are under the curve to normalize it.
 
 --------------
+
+main loop for incumbency parameter extraction:
+	
+	//1 compute adjusted for all elections (using given incumbency %)
+	computeAdjusted(electionsByCycle.get(cycle[i]), off_inc_test, on_inc_test);
+	
+	//2 compute mean center, per year
+	for( Entry<Integer,Vector<Election>> e : electionsByCycleThenYear.get(cycle[i]).entrySet()) {
+		meanCenter(e.getValue());
+	}
+	
+	//3 compute cycle-district average
+	for( Entry<String,Vector<Election>> e : electionsByCycleThenStateDistrict.get(cycle[i]).entrySet()) {
+		computeDistrictPVI(e.getValue());
+	}
+	
+	//4 compute total absolute deviation of per-district-per-election pvi from average per-district pvi
+	d += getTotalDeviation(electionsByCycle.get(cycle[i]));
+---------------
+
 splitting incumbency effect into on year/off year doesn't make a significant difference.
 neither does splitting it into democratic/republican incumbent.
 
