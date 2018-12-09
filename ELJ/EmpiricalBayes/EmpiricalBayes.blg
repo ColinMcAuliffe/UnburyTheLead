@@ -1,50 +1,10 @@
-This is BibTeX, Version 0.99d (TeX Live 2017)
-Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
-The top-level auxiliary file: EmpiricalBayes.aux
-A level-1 auxiliary file: largeStatesTab.aux
+This is BibTeX, Version 0.99dThe top-level auxiliary file: EmpiricalBayes.aux
 The style file: unsrt.bst
-Database file #1: gerrymandering.bib
-Warning--empty year in Wang__
-Warning--empty journal in Remliger_2017_
-You've used 23 entries,
-            1791 wiz_defined-function locations,
-            603 strings with 8300 characters,
-and the built_in function-call counts, 5117 in all, are:
-= -- 489
-> -- 178
-< -- 1
-+ -- 69
-- -- 46
-* -- 405
-:= -- 819
-add.period$ -- 69
-call.type$ -- 23
-change.case$ -- 23
-chr.to.int$ -- 0
-cite$ -- 25
-duplicate$ -- 202
-empty$ -- 506
-format.name$ -- 46
-if$ -- 1093
-int.to.chr$ -- 0
-int.to.str$ -- 23
-missing$ -- 22
-newline$ -- 118
-num.names$ -- 23
-pop$ -- 32
-preamble$ -- 1
-purify$ -- 0
-quote$ -- 0
-skip$ -- 80
-stack$ -- 0
-substring$ -- 464
-swap$ -- 22
-text.length$ -- 1
-text.prefix$ -- 0
-top$ -- 0
-type$ -- 0
-warning$ -- 2
-while$ -- 59
-width$ -- 25
-write$ -- 251
-(There were 2 warnings)
+I couldn't open database file gerrymandering.bib
+---line 9 of file EmpiricalBayes.aux
+ : \bibdata{gerrymandering
+ :                        }
+I'm skipping whatever remains of this command
+I found no \citation commands---while reading file EmpiricalBayes.aux
+I found no database files---while reading file EmpiricalBayes.aux
+(There were 3 error messages)

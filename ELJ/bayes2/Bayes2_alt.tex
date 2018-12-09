@@ -190,52 +190,7 @@ And then substituting in the formulal for PVI produces:
 error = \sum_{d,e}{\left|  f[ avg(f^{-1}(vote(d,e'),s,i(d,e')) ,s,i(d,e) ] - vote(d,e)\right|}
 \end{equation}
 
-This is our error function to minimize.  We then write a computer program to test different values of our incumbency effect parameter, s, from 0.5 to 1.5, in increments of 0.01, and find the value that minimizes this error.  Furthermore, we plot this curve and visually confirm that it has no local minima besides the global minimum, thus confirming that our function is "well-behaved" in the sense that this approach to minimizing it produces a reasonable and reliable solution.
-
-\subsection{potential further simplification (notes}
-Since the composition of an invertible function with it's inverse produces the original, and f() is an invertible function,
-
-\begin{equation}
-vote(d,e) =f[ (f^{-1}(vote(d,e),s,i(d,e)) ,s,i(d,e) ]
-\end{equation}
-
-Therefore,
-
-\begin{equation}
-error = \sum_{d,e}{\left|  f[ avg(f^{-1}(vote(d,e'),s,i(d,e')) ,s,i(d,e) ] - f[ (f^{-1}(vote(d,e),s,i(d,e)) ,s,i(d,e) ])\right|}
-\end{equation}
-
-If f() is distributive, this implies
-
-\begin{equation}
-error = \sum_{d,e}{\left|  f[ avg(f^{-1}(vote(d,e'),s,i(d,e'))) - f^{-1}(vote(d,e),s,i(d,e))) ,s,i(d,e) ]\right|}
-\end{equation}
-
-Since f(x) has the same sign as x, the absolute value operator can be moved inside of f().
-
-\begin{equation}
-minimize \left( \sum_{d,e}{ \left| avg[ f^{-1}( vote(d,e'), s,i(d,e')) ] - f^{-1}( vote(d,e),s,i(d,e)) \right| } \right)
-\end{equation}
-
-
-And (actual vote balance - incumbency) is simply the incumbency-neutralized outcome.  And in equation 2) we see that district PVI is simply the average of that.  So what we are really minimizing here is the deviation of the incumbency-neutralized outcomes from their average.
-
-\begin{equation}
-error = \sum_{districts} \mid avg(vote_{actual} - incumbency) - (vote_{actual} - incumbency) \mid
-\end{equation}
-
-So in conclusion, our statistical regression procedure to find the strength of the incumbency effect is: find the incumbency effect strength that minimizes the deviation of the incumbency-neutralized outcomes from their average.  This maximizes the accuracy of predictions made with this effect.
-
-A final note on our notation.  For the sake of clarity and ease of reading, we were being a bit informal.  The incumbency effect should really be expressed as a function, incumbency effect(vote balance, effect strength).  
-
-Where we wrote: vote balance + incumbency, we mean more generally incumbency(vote , strength)
-Where we wrote: vote balance - incumbenc, we mean more generally incumbency-1(vote , strength)
-
-The math all works out the same.  And in the end the final equation is:
-
-\begin{equation}
-minimize \left( \sum_{districts}{ \left| avg[ f^{-1}( vote_{actual}, strength) ] - f^{-1}( vote_{actual}, strength) \right| } \right)
-\end{equation}
+This is our error function to minimize.  We then write a computer program to test different values of our incumbency effect parameter, s, from 1.0 to 1.5, in increments of 0.01, and find the value that minimizes this error.  Furthermore, we plot this curve and visually confirm that it has no local minima besides the global minimum, thus confirming that our function is "well-behaved" in the sense that this approach to minimizing it produces a reasonable and reliable solution.
 
 \subsection{Results of incumbency estimation}
 
@@ -243,13 +198,23 @@ Using U.S. House election results for all 50 states, for all elections from 1972
 
 In order to obtain vote counts in uncontested races we used an imputation procedure. The two party vote shares in an uncontested district are taken as the average of the vote shares for that district in the same cycle. If a district is uncontested for an entire election cycle, then the vote share is taken to be equal to the average of the most partisan district for the winning party. The voter turnout in the uncontested district is then taken as the average turnout in all contested elections in that state and election year. Generally it is preferable to impute uncontested results using presidential results at the district level, but such data was not available for the entire time period under study. Like all methods for examining gerrymandering, the specific asymmetry and the Bayesian simulation method are sensitive to the particular imputation technique employed, although a comprehensive study of this sensitivity is beyond the scope of our present work.
 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.5]{Figures/incumbency.png}
+        \caption{Prediction error as a function of incumbency effect strength}\label{fig:incumbency}
+    \end{center}
+\end{figure}
+
 We found that the following turnout multipliers minimized prediction error for the corresponding cycles:
 
 \begin{itemize}
-\item 1981-1991: 1.15
-\item 1991-2001: 1.21
-\item 2001-2011: 1.21
+\item 1981-1991: 1.25
+\item 1991-2001: 1.20
+\item 2001-2011: 1.11
+\item 2011-2021 (partial): 1.01
 \end{itemize}
+
+For the 2011-2021 cycle, we only had three elections to predict, instead of the usual five.  This may account for the lower estimated incumbency effect strength.  In all cases, the error function is roughly parabolic, suggesting that the minima are robust and global.
 
 Additionally we considered the possibility that the strength of the incumbency effect is different for each party, and the possibility that it's different in election years with a presidential election, verses years without (midterms).  To assess how strong these potential differences are, we calculated the average prediction error resulting from 3 different methods of accounting for incumbency, versus not accounting for incumbency at all.  We found that that average absolute prediction error:
 
@@ -333,9 +298,40 @@ We then used our 2-level Beta-Gamma-Binomial model to compute likelihoods curves
 
 These methods can also be applied at state and local levels (e.g. state legislative, city council), and on different types of districts (e.g. police districts, voting wards)
 
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.5]{Figures/original_method/2010_ush.png}
+        \caption{2010 U.S. House districts, seats-votes likelhoods}\label{fig:2010_ush}
+    \end{center}
+\end{figure}
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.5]{Figures/original_method/2000_ush.png}
+        \caption{2000 U.S. House districts, seats-votes likelhoods}\label{fig:2000_ush}
+    \end{center}
+\end{figure}
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.5]{Figures/original_method/BD__ush.png}
+        \caption{Compactness optimized U.S. House districts, seats-votes likelhoods}\label{fig:BD_ush}
+    \end{center}
+\end{figure}
+\begin{figure}[htb!]
+    \begin{center}
+        \includegraphics[scale=0.5]{Figures/original_method/SM__ush.png}
+        \caption{Multi-objective optimized U.S. House districts, seats-votes likelhioods}\label{fig:SM_ush}
+    \end{center}
+\end{figure}
+
+Our results indicate that in the 2010 redistricting cycle, Republicans systematically gerrymandered the U.S. House, giving Democratic voters a large structural disadvantage. The popular vote would have to favor Democrats by more than an 8 percent margin, just to give them a majority of seats.  This contrasts sharply with what seats-votes likelihoods would be like if elections were still held under the districts from the 2000-cycle redistricting.  If the partisan gerrymandering in 2010 did not occur, Democratic voters would only have to win the popular vote by a little over 5 percent margin in order to get half of the U.S. house seats.
+
+If instead all states in the country used an algorithm to optimize compactness of districts, the result would be about the same.  This suggests that most of the gerrymandering in the 2000-cycle was accidental; that it was due to political self-sorting, as opposed to deliberate gerrymandering.  If instead all states in the country used an alogirhtm that also minimized seats-votes curve asymmetry, the amount of partisan gerrymandering would be further reduced, and Democrats would only have to win the popular vote by a 3 percent margin in order to win the majority of seats.
+
+Taken together, these results appear to indicate that automated redistricting provides more partisanly fair results than manually-drawn maps, regardless of the algorithm used.  Our results further show that compactness-only algorithms still leave a substantial amount of partisan gerrymandering, which gives a large class of voters (roughly half the country) a systematic structural disadvantage to representation.  Including a partisan-symmetry criteria in the optimization algorithm substantially reduces this harm.
+
 \section{Conclusion}
 
-We made three separate improvements to our Bayesian Empirical model of election result likelihoods that we presented in a previous paper.  We then tested the efficacy of these improvements using historical U.S. House election returns.  We found that, measured in log-likelihood of actual returns, our changes let to a slight improvement in accuracy.  Finally, we used this probability model to project outcome likelihoods for various alternative redistricting algorithms, and analyze these likelihoods in four different ways.
+We made three separate improvements to our Bayesian Empirical model of election result likelihoods that we presented in a previous paper.  We then tested the efficacy of these improvements using historical U.S. House election returns.  We found that, measured in log-likelihood of actual returns, our changes led to a slight improvement in accuracy.  Finally, we used this probability model to project outcome likelihoods for various alternative redistricting algorithms, and analyze these likelihoods in four different ways.
 
 We found that the current official method for redistricting (hand-drawn) produces the least representative and least responsive outcomes of all those considered.  Conversely, heuristic optimization produces the most representative and responsive outcomes.  We also found that multi-member districts produce far more representative and responsive outcomes than their single-member counterparts.
 
