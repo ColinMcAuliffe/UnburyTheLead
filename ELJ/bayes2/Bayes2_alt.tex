@@ -65,12 +65,12 @@ e               & election                                                \\
 p               & political party                                         \\
 s               & the incumbency effect strength                          \\
 popular(e)      & the total popular vote in election e                    \\
-vote(d,e)       & actual vote in district d, election e                   \\
+vote(d,e)       & the actual vote in district d, election e                   \\
 avg()           & the average value taken over all elections in the cycle \\
-i(d,e)          & Who the incumbent is in district d, election e          \\
+i(d,e)          & who the incumbent is in district d, election e          \\
 f(d,e,s)               & incumbency effect function                              \\
-PVI(d)          & The incumbency-neutral PVI for district d                                   \\
-aPVI(d,i(d,e))       & The incumbency-boosted PVI for district d, election e   
+PVI(d)          & the incumbency-neutral PVI for district d                                   \\
+aPVI(d,i(d,e))       & the incumbency-boosted PVI for district d, election e   
 \end{tabular}
 
 
@@ -327,7 +327,7 @@ Our results indicate that in the 2010 redistricting cycle, Republicans systemati
 
 If instead all states in the country used an algorithm to optimize compactness of districts, the result would be about the same.  This suggests that most of the gerrymandering in the 2000-cycle was accidental; that it was due to political self-sorting, as opposed to deliberate gerrymandering.  If instead all states in the country used an alogirhtm that also minimized seats-votes curve asymmetry, the amount of partisan gerrymandering would be further reduced, and Democrats would only have to win the popular vote by a 3 percent margin in order to win the majority of seats.
 
-Taken together, these results appear to indicate that automated redistricting provides more partisanly fair results than manually-drawn maps, regardless of the algorithm used.  Our results further show that compactness-only algorithms still leave a substantial amount of partisan gerrymandering, which gives a large class of voters (roughly half the country) a systematic structural disadvantage to representation.  Including a partisan-symmetry criteria in the optimization algorithm substantially reduces this harm.
+Taken together, these results appear to indicate that automated redistricting provides more partisanly fair results than manually-drawn maps, regardless of the algorithm used.  Our results further show that compactness-only algorithms still leave a substantial amount of partisan gerrymandering, which gives a large class of voters (roughly half the country) a systematic structural disadvantage to representation.  This harm can be reduced substantially by including a partisan-symmetry criteria in the optimization algorithm.
 
 \section{Conclusion}
 
