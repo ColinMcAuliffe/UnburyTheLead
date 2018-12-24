@@ -32,7 +32,7 @@
 %\usepackage{babel}
 
 \begin{document}
-\title{A Bayesian method for Assessing the Extent and Durability of Partisan Gerrymanders}
+\title{A comparison of the effects of Redstricting Algorithms on Partisan Gerrymandering}
 
 \author{Kevin Baas and Colin McAuliffe}
 
@@ -333,9 +333,15 @@ Our results indicate that in the 2010 redistricting cycle, Republicans systemati
 
 If instead all states in the country used an algorithm to optimize compactness of districts, the result would be about the same.  This suggests that most of the gerrymandering in the 2000-cycle was accidental; that it was due to political self-sorting, as opposed to deliberate gerrymandering.  If instead all states in the country used an alogirhtm that also minimized seats-votes curve asymmetry, the amount of partisan gerrymandering would be further reduced, and Democrats would only have to win the popular vote by a 3 percent margin in order to win the majority of seats.
 
-Finally, using multi-member proportional districts appears to completely eliminate partisan gerrymandering, in addition to making the seat allocations more proportional and more responsive to changes in voter sentiment.  Our nation-wide statistical analysis of alternative redistricting algorithms suggests that, when it comes to representation and responsiveness, the voting and tallying system is far more important than the redistricting algoorithm.  In other words, if the goal is to eliminate gerrymandering and make elections more responsive, then instead of focusing on how changes to the redistricting process can reduce or eliminate gerrymandering, we should be focused on a fundamental overhaul on how congressional seats are assigned.
+Finally, using multi-member proportional districts appears to further reduce partisan gerrymandering, in addition to making the seat allocations more proportional and more responsive to changes in voter sentiment.  Our nation-wide statistical analysis of alternative redistricting algorithms suggests that, when it comes to representation and responsiveness, the voting and tallying system is far more important than the redistricting algoorithm.  In other words, if the goal is to eliminate gerrymandering and make elections more responsive, then instead of focusing on how changes to the redistricting process can reduce or eliminate gerrymandering, we should be focused on a fundamental overhaul on how congressional seats are assigned.
 
-Taken together, these results appear to indicate that automated redistricting provides more partisanly fair results than manually-drawn maps, regardless of the algorithm used.  Our results further show that compactness-only algorithms still leave a substantial amount of partisan gerrymandering, which gives a large class of voters (roughly half the country) a systematic structural disadvantage to representation.  This harm can be reduced substantially by including a partisan-symmetry criteria in the optimization algorithm, and it can be almost completely eliminated by using multi-member proportional districts.  Furhtermore, multi-member proportional districts are more responsive to changes in voter sentiment, and produce more proportional representation.
+We were surprised to find that even with multi-member proportional districts, there remains a small amount of partisan asymmetry in favor of Republicans.
+A possible explanation for this might be that states with low population could be biasing the results.
+These states will have few seats per district, so the districts won't be as proportional, and will tend to produce results more similiar to single-member districts - results that over-represent the majority.
+Low population states tend to be predominately rural, and rural voters tend to vote Republican.  So this would have a systematic partisan effect in favor of Republicans.
+Without further analysis, it's unclear how much of the observed asymmetry is due to this effect, but a possible solution for this might to be to ignore state boundaries; to treat the entire country as one state and redistrict it with 87 multi-member districts of five seats each.
+
+Taken together, these results appear to indicate that automated redistricting provides more partisanly fair results than manually-drawn maps, regardless of the algorithm used.  Our results further show that compactness-only algorithms still leave a substantial amount of partisan gerrymandering, which gives a large class of voters (roughly half the country) a systematic structural disadvantage to representation.  This harm can be reduced substantially by including a partisan-symmetry criteria in the optimization algorithm.  Additionally, multi-member proportional districts are more responsive to changes in voter sentiment, and produce more proportional representation.
 
 \section{Conclusion}
 
