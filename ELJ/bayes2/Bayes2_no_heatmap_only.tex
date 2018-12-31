@@ -61,6 +61,8 @@ Using a Bayesian model enables us to calculate complete likelihood curves, as op
 
 In an effort to give a comprehensive visual representation of these likelihoods, we graph a 3-dimensional chart showing on one axis a potential popular vote fraction, on another axis a potential seat count, and on the third, the probability of that combination.  The function being graphed is z = p( vote percent, seat count). "z" is represented by color saturation (darkness).  In this way, the chart resembles a "heat map".
 
+Additionaly, we graph the 2-axis reflection of this function on the same chart, in gray. This is to make it easier to see asymmetry.
+
 \section{What the U.S. House would be like under alternative districting algorithms}
 
 We used presidential election data from 2004, 2008, and 2012 elections, at voting ward resolution, from Stephen Wolf of DailyKo's Google drive.  We then used AutoRedistrict to design heuristically optimized districts for all 50 states, for single member and multi-member proportional districts, both for the current 435 seat count and a theoretically expanded seat count of 593.  To this we added the current actual districts, the previous census cycle's districts, and compactness-optimized districts created using BDistricting.   We then used AutoRedistrict to combine the district shapes with the ward-resolution election vote counts, and export district-resolution election vote counts, for all 3 elections.
@@ -72,31 +74,31 @@ These methods can also be applied at state and local levels (e.g. state legislat
 \begin{figure}[htb!]
     \begin{center}
         \includegraphics[scale=0.5]{Figures/original_method/2010_ush.png}
-        \caption{2010 U.S. House districts, seats-votes likelhoods}\label{fig:2010_ush}
+        \caption{2010 U.S. House districts, seats-votes likelhoods, 1 gridline = 1.25 percent}\label{fig:2010_ush}
     \end{center}
 \end{figure}
 \begin{figure}[htb!]
     \begin{center}
         \includegraphics[scale=0.5]{Figures/original_method/2000_ush.png}
-        \caption{2000 U.S. House districts, seats-votes likelhoods}\label{fig:2000_ush}
+        \caption{2000 U.S. House districts, seats-votes likelhoods, 1 gridline = 1.25 percent}\label{fig:2000_ush}
     \end{center}
 \end{figure}
 \begin{figure}[htb!]
     \begin{center}
         \includegraphics[scale=0.5]{Figures/original_method/BD__ush.png}
-        \caption{Compactness optimized U.S. House districts, seats-votes likelhoods}\label{fig:BD_ush}
+        \caption{Compactness optimized U.S. House districts, seats-votes likelhoods, 1 gridline = 1.25 percent}\label{fig:BD_ush}
     \end{center}
 \end{figure}
 \begin{figure}[htb!]
     \begin{center}
         \includegraphics[scale=0.5]{Figures/original_method/SM__ush.png}
-        \caption{Multi-objective optimized U.S. House districts, seats-votes likelhioods}\label{fig:SM_ush}
+        \caption{Multi-objective optimized U.S. House districts, seats-votes likelhioods, 1 gridline = 1.25 percent}\label{fig:SM_ush}
     \end{center}
 \end{figure}
 \begin{figure}[htb!]
     \begin{center}
-        \includegraphics[scale=0.5]{Figures/original_method/FV_droop_ush.png}
-        \caption{Multi-member proportional U.S. House districts, seats-votes likelhioods}\label{fig:FV_ush}
+        \includegraphics[scale=0.5]{Figures/original_method/FV_ush.png}
+        \caption{Multi-member proportional U.S. House districts, seats-votes likelhioods, 1 gridline = 1.25 percent}\label{fig:FV_ush}
     \end{center}
 \end{figure}
 
